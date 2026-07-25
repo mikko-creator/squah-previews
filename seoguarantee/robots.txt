@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mikko-creator.github.io/squah-previews/seoguarantee/sitemap.xml
