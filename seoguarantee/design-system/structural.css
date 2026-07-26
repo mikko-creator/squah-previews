@@ -1468,37 +1468,34 @@ p.tg-hero__sub{ font-family:var(--ds-font-body); font-size:clamp(1.06rem,1.9vw,1
 .tg-seal__ico{ flex:0 0 auto; width:22px; height:22px; color:var(--ds-success); margin-top:1px; }
 .tg-seal__ico svg{ width:100%; height:100%; }
 
-/* HOME HERO — Las Vegas skyline atmosphere (owner-directed; HERO-COMPOSITIONS #7).
-   The ONE full-bleed hero band: a surface-dark section carrying the promise over an
-   abstract Las Vegas skyline. surface-dark already flips the tokens (ink -> light,
-   seal -> dark panel, eyebrow -> accent); this block adds the skyline image + a
-   legibility scrim, and the on-dark fixes the base atoms do NOT already carry
-   (the clipped display word, the ghost button, the seal badge). Scoped to
-   .tg-hero--vegas so no other page is touched. */
-.tg-hero--vegas{ isolation:isolate; }
-.tg-hero--vegas::before{
+/* HOME HERO — "Ascension" (owner-directed; HERO-COMPOSITIONS #5, full-bleed image + overlay).
+   A surface-dark band: an abstract ascending growth-climb image full-bleed, with the promise
+   overlaid on the LEFT over a left-to-right scrim (the image reads on the right). surface-dark
+   flips the tokens (ink -> light); this block adds the image + scrim and the on-dark fixes the
+   base atoms do NOT carry (the clipped display word, the eyebrow, the ghost button). Mirrors the
+   approved preview mockup; uses the standard .tg-sec padding rhythm (no min-height) so
+   section-rhythm stays uniform. Scoped to .tg-hero--ascension so no other page is touched. */
+.tg-hero--ascension{ isolation:isolate; }
+.tg-hero--ascension::before{
   content:""; position:absolute; inset:0; z-index:var(--ds-z-base); pointer-events:none;
-  background:url("../assets/img/hero-vegas-skyline.jpg") center bottom / cover no-repeat;
-  opacity:.95;
+  background:url("../assets/img/hero-ascension.jpg") 72% center / cover no-repeat;
 }
-.tg-hero--vegas::after{
+.tg-hero--ascension::after{
   content:""; position:absolute; inset:0; z-index:var(--ds-z-base); pointer-events:none;
-  background:
-    linear-gradient(180deg,rgba(0,0,0,.50) 0%,rgba(0,0,0,.10) 34%,rgba(0,0,0,.16) 58%,rgba(0,0,0,.60) 100%),
-    linear-gradient(90deg,rgba(0,0,0,.64) 0%,rgba(0,0,0,.30) 48%,rgba(0,0,0,0) 80%);
+  background:linear-gradient(90deg,rgba(20,16,25,.95) 0%,rgba(20,16,25,.86) 32%,rgba(20,16,25,.45) 60%,rgba(20,16,25,.05) 100%);
 }
-.tg-hero--vegas .tg-grad{
+.tg-hero--ascension .tg-eyebrow{ color:var(--ds-accent-light); }
+.tg-hero--ascension .tg-hero__lead{ max-width:660px; }
+.tg-hero--ascension h1.tg-display{ font-size:clamp(2.1rem,4.4vw,3.5rem); line-height:1.02; letter-spacing:-.018em; max-width:none; }
+.tg-hero--ascension .tg-grad{
   background:linear-gradient(100deg,var(--ds-accent-light),var(--ds-accent));
-  -webkit-background-clip:text; background-clip:text;
-  -webkit-text-fill-color:transparent; color:transparent;
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent;
 }
-.tg-hero--vegas .tg-hero__sub,
-.tg-hero--vegas .tg-fine{ text-shadow:0 1px 3px rgba(0,0,0,.55),0 2px 18px rgba(0,0,0,.5); }
-.tg-hero--vegas .tg-btn__ghost{ color:var(--ds-ink-on-dark); border-color:rgba(255,255,255,.26); }
-.tg-hero--vegas .tg-btn__ghost:hover{ color:var(--ds-accent-light); border-color:var(--ds-accent-light); }
-.tg-hero--vegas .tg-seal{ border-color:rgba(255,255,255,.10); }
-.tg-hero--vegas .tg-seal__badge{ background:var(--ds-accent-deep); color:var(--ds-ink-on-dark); }
-.tg-hero--vegas .tg-seal__emblem{ height:auto; aspect-ratio:1 / 1; }
+.tg-hero--ascension .tg-btn__ghost{ color:var(--ds-ink-on-dark); border-color:rgba(255,255,255,.34); }
+.tg-hero--ascension .tg-btn__ghost:hover{ color:var(--ds-accent-light); border-color:var(--ds-accent-light); }
+@media (max-width:820px){
+  .tg-hero--ascension::after{ background:linear-gradient(180deg,rgba(20,16,25,.74) 0%,rgba(20,16,25,.90) 100%); }
+}
 
 /* PROOF (dark punctuation band) */
 .tg-proof__showcase{ display:grid; grid-template-columns:.92fr 1.08fr; gap:clamp(24px,4vw,52px); align-items:center; margin-bottom:clamp(30px,4.4vw,54px); }
