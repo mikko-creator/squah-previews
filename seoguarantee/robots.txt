@@ -1,4 +1,9 @@
+# robots.txt — First Page SEO Guarantee
+# Written for the PRODUCTION origin below. If this build is deployed to a staging or preview
+# host first, replace the Allow with "Disallow: /" for that host, or the staging copy will be
+# crawled and will compete with the production site.
+
 User-agent: *
 Allow: /
 
-Sitemap: https://mikko-creator.github.io/squah-previews/seoguarantee/sitemap.xml
+Sitemap: https://seoguarantee.com/sitemap.xml

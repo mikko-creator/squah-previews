@@ -1,159 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://seoguarantee.com/about</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/blog</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/branding-design</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/content-marketing</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/cro</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/full-suite</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/get-started</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/</loc>
+    <lastmod>2026-08-07</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/about.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://seoguarantee.com/industries</loc>
+    <lastmod>2026-08-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/blog.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://seoguarantee.com/locations</loc>
+    <lastmod>2026-08-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/branding-design.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/content-marketing.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/contractors.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/cro.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/ddm-garage-doors.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/dental.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/full-suite.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://seoguarantee.com/pricing</loc>
+    <lastmod>2026-08-07</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/get-started.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://seoguarantee.com/privacy</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/reputation-management</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/results</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/seo</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/services</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/terms</loc>
+    <lastmod>2026-08-07</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://seoguarantee.com/the-guarantee</loc>
+    <lastmod>2026-08-07</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/home-services.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/hvac.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://seoguarantee.com/videos</loc>
+    <lastmod>2026-08-07</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/industries.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/law-firm.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/locations.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/medical-spa.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/privacy.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/reputation-management.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/results.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/seo.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/services.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/terms.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/the-blez.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/the-guarantee.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://mikko-creator.github.io/squah-previews/seoguarantee/web-design.html</loc>
-    <lastmod>2026-07-26</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://seoguarantee.com/web-design</loc>
+    <lastmod>2026-08-07</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>

@@ -1,139 +1,186 @@
-/* ============================================================================
-   SEOGUARANTEE - BRAND-CARD CONCEPT B / "EDITORIAL"
-   First Page SEO Guarantee (SEOGuarantee) / Las Vegas SEO agency.
-   Direction: premium, trustworthy, magazine-grade. A money-back first-page
-   guarantee read as an AUTHORITATIVE PROMISE, not a hype ad.
-   theme_polarity = LIGHT  ·  identity = purple #7F2199 -> violet #A13CBC
-   Type: Fraunces (high-contrast display serif) + Inter (humanist body sans).
-   Signature: the purple->violet GRADIENT as a clipped-text fill on the accent
-   display word + a soft accent glow.
-   Values are IDENTITY-authored for this concept; the SYSTEM families
-   (spacing / motion / z-index / opacity / grain) are copied verbatim from the
-   canonical 00-globals/tokens/tokens.css.
-   ============================================================================ */
+/* -----------------------------------------------------------------------------
+   WEBFONT LOADER. This @import MUST stay the first rule in the file (CSS requires
+   @import before any other rule) so that ANY artifact linking this sheet gets the
+   three locked faces.
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700&display=swap');
+   WHY IT LIVES HERE, not in each page shell: the FEEL specimen rendered with the
+   display face falling back to Georgia because the sheet NAMED the families but
+   nothing LOADED them, and the specimen carried no font link of its own. Naming a
+   family without loading it is a silent failure: the page still renders, just in
+   the wrong typeface, which defeats R3 entirely. Binding the loader to the token
+   sheet means every page, template and specimen that links the tokens inherits the
+   faces, so the trap cannot recur downstream.
+
+   Weights loaded match what the build actually uses: Bricolage 600/700/800 across
+   the optical-size axis, Space Grotesk 400/500/600/700, Space Mono 400/700.
+   ----------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* =============================================================================
+   seoguarantee-tokens.css  ::  THE LOCKED BRAND TOKEN API
+   -----------------------------------------------------------------------------
+   Locked from the OWNER-PICKED brand card: _design/_tournament/brand-card/b-merged/
+   (concept B "SIGNAL" as the base, with concept C's Display d1 grafted in).
+
+   OWNER DECISIONS ENCODED HERE
+     Pick        : concept B, plus C's display face and gradient d1 (2026-07-30)
+     R1          : no em or en dashes anywhere in shipped content
+     R2          : ONE control radius sitewide, ONE height per button tier
+     R3          : modern typeface, NOT the default-AI set. Bricolage Grotesque
+                   display, Space Grotesk body, Space Mono data. None of the ten
+                   avoid-list faces appear.
+     R4          : no competitor pricing anywhere in copy
+   DERIVED FROM C7 (_handoff/visual-direction.md), never invented
+     surface_dominance balanced (dark_ratio 0.402) / primary_surface DARK / energy BOLD
+
+   THEME POLARITY: DARK.
+     :root therefore carries the DARK ground as the page canvas, --ds-ink is the
+     off-white body ink, and --ds-ink-heading follows --ds-ink (a light ink).
+     Setting --ds-ink-heading to --ds-primary-deep here would paint every h1/h2/h3
+     near-black on a near-black ground, which is the documented dark-on-dark trap.
+
+   CONTRAST: every pairing below was computed before this sheet was written.
+     ink on primary-deep 18.37:1 / ink on bg-surface 16.54:1 / ink on bg-surface-2
+     15.59:1 / ink-soft on bg-surface 8.21:1 / accent-light on primary-deep 8.59:1
+     / accent-deep on white 8.25:1 / ink-on-dark on primary 6.05:1.
+     --ds-accent (#C10B83) is 3.43:1 on the ground: LARGE display, borders and
+     icons ONLY. It is never body text. Use --ds-accent-light for accent text.
+
+   IDENTITY values come from this brand's own audit. The SYSTEM families
+   (z-index / opacity / motion-extension) are brand-agnostic and are copied from
+   the canonical .claude/design-system-unified/00-globals/tokens/tokens.css so the
+   API is COMPLETE and constrained at lock time (G-TOK-COMPLETE).
+   ============================================================================= */
 
 :root{
-  /* ---------------------------------------------------------------------------
-     COLOR / 17 required roles (LIGHT polarity)
-     --------------------------------------------------------------------------- */
-  --ds-primary:        #7F2199;  /* brand purple / CTA surfaces (white text = 7.7:1) */
-  --ds-primary-deep:   #141019;  /* THE NEAR-BLACK DARK GROUND (faint purple cast) / .section--dark bg + footer bg + heading ink. NOT a deep purple. ink-on-dark on it = 17.7:1 */
-  --ds-primary-soft:   #F5EBF8;  /* pale purple tint / eyebrows, soft cards, tinted bands */
-  --ds-accent:         #A13CBC;  /* violet / large display, borders, icons, on-dark text. NOT small text on light */
-  --ds-accent-ink:     #7A1E92;  /* darkened accent / SMALL text on light (eyebrows, labels, badges). 8.2:1 on surface, 8.6:1 on surface-2 */
-  --ds-accent-soft:    #F3E7F8;  /* tinted violet background / soft badges, wash panels */
-  --ds-accent-deep:    #6B1683;  /* deepened accent / dark-band CTA surface + small accent text on light. 10.2:1 on #fff; ink-on-dark on it = 9.6:1 */
-  --ds-accent-light:   #D28FE6;  /* lightened accent / accent FOREGROUND on dark grounds. 7.9:1 on primary-deep, 7.5:1 on ink */
-  --ds-bg-surface:     #FAF8FB;  /* page ground / cool off-white paper (NOT pure #fff) */
-  --ds-bg-surface-2:   #FFFFFF;  /* elevated card surface / crisp white lifted off the paper */
-  --ds-bg-warm:        #F7F2EC;  /* warm-ivory alternate band (.section--warm) / figure-ground variety against the cool paper */
-  --ds-ink:            #1A1622;  /* default text / near-black with a faint purple warmth. 16.8:1 on surface */
-  --ds-ink-heading:    var(--ds-primary-deep);  /* THEME-POLAR: light brand -> = primary-deep (near-black headings) */
-  --ds-ink-soft:       #5A5266;  /* secondary text / muted purple-gray. 7.0:1 on surface */
-  --ds-line:           #E7E1EC;  /* borders / dividers / soft purple-gray hairline */
-  --ds-ink-on-dark:    #FBF7FC;  /* near-white text on dark / accent surfaces */
-  --ds-scrim:          rgba(20,16,25,.55);  /* image-overlay legibility scrim (brand-tinted dark) */
 
-  /* COLOR / optional roles */
-  --ds-warning:        #C4342E;  /* refined brick red / urgent flags only */
-  --ds-warning-soft:   #FBEAE8;
-  --ds-success:        #1F8A54;  /* editorial green / form valid, check flourishes */
-  --ds-success-soft:   #E4F4EA;
-  --ds-signature:      #A13CBC;  /* personality flourish / kept in-brand (the violet stop) */
+  /* ---- COLOR :: identity (17 required) ---------------------------------- */
+  --ds-primary:        #8B2FB0;  /* brand purple. CTA surfaces, brand bands */
+  --ds-primary-deep:   #080310;  /* THE DARK GROUND. dark band bg, footer bg. near-black by contract */
+  --ds-primary-soft:   #241033;  /* tinted panels, eyebrow beds, wash floor */
+  --ds-accent:         #C10B83;  /* the signal colour. LARGE display, borders, icons ONLY */
+  --ds-accent-ink:     #8A0A5E;  /* darkened accent for SMALL text on light */
+  --ds-accent-soft:    #330722;  /* tinted accent background */
+  --ds-accent-deep:    #96096A;  /* deepened accent. small text on white, 8.25:1 */
+  --ds-accent-light:   #F77FCB;  /* lightened accent. accent TEXT on dark, 8.59:1 */
 
-  /* ---------------------------------------------------------------------------
-     GRADIENT GROUP / the SIGNATURE lives here (purple->violet clipped text)
-     --------------------------------------------------------------------------- */
-  --ds-accent-2:       #A13CBC;  /* second gradient stop = the violet */
-  --ds-grad-brand:     linear-gradient(135deg,var(--ds-primary),var(--ds-accent-2));   /* #7F2199 -> #A13CBC */
-  --ds-grad-text:      linear-gradient(100deg,var(--ds-primary),var(--ds-accent-2));   /* SIGNATURE / clipped-text fill for the accent display word */
-  --ds-grad-hero:      linear-gradient(135deg,var(--ds-primary-deep),var(--ds-primary) 55%,var(--ds-accent));
-  --ds-fade-to-paper:  linear-gradient(180deg,rgba(250,248,251,0) 0%,var(--ds-bg-surface) 65%);
+  /* ---- CTA SURFACE :: deliberately NOT theme-remapped ------------------------
+     WHY THIS PAIR EXISTS. .surface-dark remaps --ds-accent to --ds-accent-light so
+     accent TEXT stays legible on the deepest ground. That remap is correct for text
+     and WRONG for a filled surface: a button reading background:var(--ds-accent)
+     silently turned light pink inside .surface-dark, and with the near-white button
+     ink that measured 2.14:1, below even the large-text floor. The FEEL specimen
+     caught it in the hero band.
+     So the CTA surface gets its own tokens, carrying the LITERAL owner-approved
+     magenta rather than var(--ds-accent), because a var() would re-resolve against
+     the remapped value at use time and reintroduce the bug. .surface-dark does not
+     touch these, so the primary CTA is one colour on every band sitewide.
+     Measured: --ds-cta-ink on --ds-cta = 5.20:1, AA for normal text. */
+  --ds-cta:            #C10B83;  /* the ONE primary-CTA fill. never remapped by any surface class */
+  --ds-cta-ink:        var(--ds-ink-on-dark);  /* safe as a var: ink-on-dark is not remapped either */
+  /* Interactive-fill aliases. generate-token-card.mjs styles its live interaction-state demos from
+     --ds-accent-bright and --ds-on-accent; with those undefined it fell back to its own hardcoded
+     #06c, so the token lock card showed BLUE buttons on a magenta brand. Measured: rgb(0,102,204).
+     Pointing them at the CTA pair makes the card show the real interactive fill. */
+  --ds-accent-bright:  var(--ds-cta);
+  --ds-on-accent:      var(--ds-cta-ink);
+  --ds-bg-surface:     #0E0716;  /* page ground (dark polarity) */
+  --ds-bg-surface-2:   #170E24;  /* elevated card / panel surface */
+  --ds-bg-warm:        #1B1029;  /* warm-tinted alternate band */
+  --ds-ink:            #EDE9F2;  /* default body text (light, per dark polarity) */
+  --ds-ink-heading:    var(--ds-ink);  /* THEME-POLAR. dark brand: follows the LIGHT ink */
+  --ds-ink-soft:       #ADA3B8;  /* secondary text and labels */
+  --ds-line:           #2A1E38;  /* borders, dividers, hairlines */
+  --ds-ink-on-dark:    #F5F2F8;  /* text on dark or accent surfaces */
+  --ds-scrim:          rgba(8,3,16,.74);  /* image-overlay legibility scrim */
 
-  /* ---------------------------------------------------------------------------
-     TYPOGRAPHY
-     --------------------------------------------------------------------------- */
-  --ds-font-display:   'Fraunces','Georgia','Times New Roman',serif;      /* high-contrast editorial display serif */
-  --ds-font-body:      'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;  /* clean humanist body sans */
-  --ds-font-mono:      ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace; /* small labels / measurements */
+  /* ---- COLOR :: optional ------------------------------------------------ */
+  --ds-signature:      #E59C02;  /* retained brand gold. far end of the d1 gradient, rare highlight */
+  --ds-success:        #2E9E5B;
+  --ds-success-soft:   #10321F;
+  --ds-warning:        #E0563F;
+  --ds-warning-soft:   #351310;
 
-  /* ---------------------------------------------------------------------------
-     TYPE SCALE + STRUCTURAL-CONSUMPTION ALIASES
-     Consumed by seoguarantee-structural.css (bare-element h1/h2/h3 + the bw-*/tg-*
-     skins) and the T-FEATURE template. The locked TOKENS sheet historically carried
-     no type-scale layer; these literals are DERIVED from the confirmed feel-specimen
-     + the chrome clamp() literals + the winning T-FEATURE (Proof-Led) template so the
-     linked sheets resolve site-wide instead of relying on per-page bridges. The 5
-     color aliases are var(--ds-*) indirections that track the surface flip
-     automatically (accent-bright/divider/ink-faint flip on .surface-dark via their
-     targets; accent-strong/on-accent are intentionally surface-stable). ZERO brand hex.
-     --------------------------------------------------------------------------- */
-  --ds-fs-display:     clamp(2.9rem, 6.6vw, 5.2rem);
-  --ds-fs-h1:          clamp(2.4rem, 5.2vw, 4rem);
-  --ds-fs-h2:          clamp(1.9rem, 4.2vw, 3rem);
-  --ds-fs-h3:          clamp(1.3rem, 2.2vw, 1.7rem);
-  --ds-fs-body:        1rem;
-  --ds-fs-caption:     .74rem;
-  --ds-lh-body:        1.6;
-  --ds-lh-tight:       1.04;
-  --ds-tracking-label: .16em;
-  --ds-tracking-disp:  -.01em;
-  --ds-accent-strong:  var(--ds-accent-deep);
-  --ds-accent-bright:  var(--ds-accent);
-  --ds-on-accent:      var(--ds-ink-on-dark);
-  --ds-divider:        var(--ds-line);
-  --ds-ink-faint:      var(--ds-ink-soft);
+  /* ---- GRADIENT --------------------------------------------------------- */
+  --ds-accent-2:       #E59C02;  /* second stop, the gold */
+  --ds-grad-brand:     linear-gradient(135deg,var(--ds-primary),var(--ds-accent));
+  --ds-grad-text:      linear-gradient(100deg,var(--ds-accent-light),var(--ds-signature));  /* the owner-approved d1 gradient */
+  --ds-grad-hero:      linear-gradient(135deg,#241033 0%,#8B2FB0 54%,#C10B83 100%);
+  --ds-fade-to-paper:  linear-gradient(180deg,rgba(14,7,22,0) 0%,var(--ds-bg-surface) 65%);
 
-  /* ---------------------------------------------------------------------------
-     RADIUS / 3 role tokens (SOFTER per Direction B: surface ~16px)
-     --------------------------------------------------------------------------- */
-  --ds-r-control:      8px;    /* buttons / inputs / badges / chips / bullets, softened */
-  --ds-r-surface:      16px;   /* cards / panels / media frames, editorial soft corners */
-  --ds-r-pill:         999px;  /* full-round */
+  /* ---- TYPOGRAPHY (R3: none of the ten avoid-list faces) ---------------- */
+  /* DOUBLE quotes are deliberate, not style preference. generate-token-card.mjs derives the
+     token card's Google Fonts <link> by matching /"([^"]+)"/ against these values, so a
+     single-quoted family name (equally valid CSS) makes that derivation find nothing, the card
+     ships with no font link, and the whole type system renders in the Georgia fallback. That was
+     a MEASURED defect on this build: the card's display stack probed at the exact same width as
+     Georgia. Keep these double-quoted. */
+  --ds-font-display:   "Bricolage Grotesque",Georgia,serif;
+  --ds-font-body:      "Space Grotesk",system-ui,-apple-system,sans-serif;
+  --ds-font-mono:      "Space Mono",ui-monospace,SFMono-Regular,monospace;
 
-  /* ---------------------------------------------------------------------------
-     SHADOW / layered, editorial-soft, with a faint purple bloom on the lift
-     --------------------------------------------------------------------------- */
-  --ds-shadow-card:    0 2px 8px rgba(20,16,25,.06),0 12px 32px rgba(20,16,25,.08);
-  --ds-shadow-lift:    0 8px 24px rgba(20,16,25,.10),0 28px 64px rgba(127,33,153,.14);
-  --ds-shadow-rest:    0 1px 2px rgba(20,16,25,.05);
-  --ds-shadow-card-2stop: 0 4px 20px rgba(20,16,25,.06),0 12px 40px rgba(20,16,25,.09);
+  /* ---- RADIUS (3 constrained roles. R2: one control value sitewide) ----- */
+  --ds-r-control:      6px;    /* buttons, inputs, badges, tags, chips, bullets */
+  --ds-r-surface:      12px;   /* cards, panels, media frames */
+  --ds-r-pill:         999px;  /* pills, avatars, icon rounds */
 
-  /* ---------------------------------------------------------------------------
-     SPACING + LAYOUT  (scale copied verbatim from canonical tokens.css)
-     --------------------------------------------------------------------------- */
-  --ds-space-2xs: 4px;  --ds-space-xs: 8px;  --ds-space-sm: 14px;  --ds-space-md: 24px;
-  --ds-space-lg: 40px;  --ds-space-xl: 64px; --ds-space-2xl: 96px;
-  --ds-section-py:    clamp(72px,9vw,128px);  /* editorial generous vertical rhythm */
-  --ds-container-max: 1160px;
+  /* ---- SHADOW ----------------------------------------------------------- */
+  --ds-shadow-rest:    0 1px 2px rgba(0,0,0,.30);
+  --ds-shadow-card:    0 1px 0 rgba(255,255,255,.05),0 12px 34px rgba(0,0,0,.55);
+  --ds-shadow-lift:    0 1px 0 rgba(255,255,255,.09),0 22px 56px rgba(193,11,131,.22);
 
-  /* ---------------------------------------------------------------------------
-     MOTION  (base 2 + extension / values copied verbatim from canonical)
-     --------------------------------------------------------------------------- */
-  --ds-ease:      cubic-bezier(.4,0,.2,1);
-  --ds-dur:       .25s;
-  --ds-dur-fast:  .2s;    /* micro-interactions / confident hover */
-  --ds-dur-slow:  .6s;    /* scroll-reveal / entrance */
-  --ds-ease-out:  cubic-bezier(.16,1,.3,1);  /* strong expo-out / count-ups, "arrive" motion */
-  --ds-dur-data:  1.4s;   /* OFF-SCALE / JS count-up (read via getComputedStyle) */
+  /* ---- SPACING + LAYOUT ------------------------------------------------- */
+  --ds-space-2xs:      4px;
+  --ds-space-xs:       8px;
+  --ds-space-sm:       14px;
+  --ds-space-md:       24px;
+  --ds-space-lg:       40px;
+  --ds-space-xl:       64px;
+  --ds-space-2xl:      96px;
+  --ds-section-py:     clamp(56px,8vw,112px);
+  --ds-container-max:  1180px;
 
-  /* ---------------------------------------------------------------------------
-     Z-INDEX SCALE  (8 semantic layers / copied verbatim from canonical)
-     --------------------------------------------------------------------------- */
-  --ds-z-below:   -1;
-  --ds-z-base:     0;
-  --ds-z-raised:   1;
-  --ds-z-sticky:  1000;
-  --ds-z-overlay: 1040;
-  --ds-z-drawer:  1050;
-  --ds-z-modal:   1060;
-  --ds-z-toast:   1080;
+  /* ---- MOTION :: the 2 required workhorses ----------------------------- */
+  --ds-ease:           cubic-bezier(.4,0,.2,1);
+  --ds-dur:            .2s;
 
-  /* ---------------------------------------------------------------------------
-     OPACITY SCALE  (6 steps / copied verbatim from canonical)
-     --------------------------------------------------------------------------- */
+  /* ---- GLOBALS OVERLAY :: the locked design language ------------------- */
+  --ds-glass-bg:       rgba(23,14,36,.72);
+  --ds-glass-blur:     blur(16px) saturate(180%);
+  --ds-glass-border:   rgba(237,233,242,.14);
+  --ds-hairline:       rgba(237,233,242,.12);
+  --ds-inset-hi:       inset 0 1px 0 rgba(255,255,255,.07);
+  --ds-glow:           0 0 52px rgba(193,11,131,.30);
+  --ds-glow-wash:      radial-gradient(60% 70% at 50% 0%,rgba(193,11,131,.20),transparent 70%);
+  /* CENTRED bloom, for the R7 floating founder cut-out. Distinct from --ds-glow-wash, whose geometry
+     is top-anchored (at 50% 0%) for band washes. A floating figure needs the bloom centred BEHIND it,
+     so it cannot reuse the wash. Added at SYSTEM so structural.css can carry the treatment token-pure
+     (the FEEL specimen prototyped it with raw rgba, which G8 tolerates in a specimen but not in a
+     structural sheet). */
+  --ds-glow-bloom:     radial-gradient(circle,rgba(193,11,131,.34) 0%,rgba(139,47,176,.18) 44%,transparent 68%);
+  --ds-grain:          radial-gradient(rgba(255,255,255,.035) 1px,transparent 1px);
+  --ds-grid:           linear-gradient(rgba(193,11,131,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(193,11,131,.10) 1px,transparent 1px);
+  --ds-grid-size:      36px 36px;
+  --ds-divider-h:      80px;
+  --ds-icon-tint:      brightness(0) saturate(100%) invert(72%) sepia(38%) saturate(2400%) hue-rotate(285deg) brightness(103%) contrast(96%);
+
+  /* =========================================================================
+     SYSTEM FAMILIES :: brand-agnostic, copied from the canonical globals
+     tokens.css so this API is COMPLETE at lock time. Values are NOT brand
+     decisions and must not be re-tuned per brand.
+     ====================================================================== */
+
+  /* ---- Z-INDEX scale (8 semantic layers, drawer above its scrim) -------- */
+  --ds-z-below:        -1;
+  --ds-z-base:         0;
+  --ds-z-raised:       1;
+  --ds-z-sticky:       1000;
+  --ds-z-overlay:      1040;
+  --ds-z-drawer:       1050;
+  --ds-z-modal:        1060;
+  --ds-z-toast:        1080;
+
+  /* ---- OPACITY scale --------------------------------------------------- */
   --ds-opacity-muted:    .72;
   --ds-opacity-disabled: .45;
   --ds-opacity-faint:    .12;
@@ -141,42 +188,40 @@
   --ds-opacity-texture:  .40;
   --ds-opacity-veil:     .85;
 
-  /* ---------------------------------------------------------------------------
-     GLOBALS OVERLAY / modern-wow (15 tokens; 3 motion members live above)
-     Authored for the purple identity. Accent rgb: 127,33,153 · violet 161,60,188
-     --------------------------------------------------------------------------- */
-  --ds-glass-bg:     rgba(20,16,25,.72);            /* dark glass nav/panel fill (from primary-deep) */
-  --ds-glass-blur:   blur(16px) saturate(180%);
-  --ds-glass-border: rgba(255,255,255,.14);
-  --ds-hairline:     rgba(20,16,25,.10);            /* 1px low-opacity border */
-  --ds-inset-hi:     inset 0 1px 0 rgba(255,255,255,.10);  /* inset top highlight */
-  --ds-glow:         0 0 48px rgba(127,33,153,.38); /* soft accent glow / the signature bloom on CTA/hero */
-  --ds-glow-drop:    drop-shadow(0 10px 26px rgba(127,33,153,.28)); /* filter-form accent glow (emblem/mark drop) */
-  --ds-glow-wash:    radial-gradient(60% 70% at 72% 14%,rgba(161,60,188,.16),transparent 70%);
-  --ds-grain:        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
-  --ds-grid:         linear-gradient(rgba(127,33,153,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(127,33,153,.08) 1px,transparent 1px);
-  --ds-grid-size:    44px 44px;
-  --ds-divider-h:    80px;
-  --ds-icon-tint:    brightness(0) saturate(100%) invert(17%) sepia(64%) saturate(3200%) hue-rotate(281deg) brightness(88%) contrast(104%);
+  /* ---- MOTION extension ------------------------------------------------ */
+  --ds-dur-fast:       .2s;
+  --ds-dur-slow:       .6s;
+  --ds-ease-out:       cubic-bezier(.16,1,.3,1);
+  --ds-dur-data:       1.4s;  /* OFF-SCALE. read by the JS count-up via getComputedStyle */
 }
 
-/* ============================================================================
-   DUAL-SURFACE / the DARK PUNCTUATION band (visual-direction C7 §2:
-   "Dark / purple punctuation sections"). Drop class="surface-dark" (or
-   data-surface="dark") on any section and every surface-dependent token
-   flips so components re-skin with no dark-on-dark trap. All flips clear
-   WCAG AA on the dark ground (ink 17.7:1, ink-soft 10.2:1, accent 7.9:1).
-   ============================================================================ */
-.surface-dark,[data-surface="dark"]{
-  --ds-bg-surface:   #141019;  /* SURFACE / the near-black ground */
-  --ds-bg-surface-2: #211830;  /* SURFACE / a lifted dark panel */
-  --ds-bg-warm:      #1B1426;  /* SURFACE / warm-dark alternate */
-  --ds-ink:          #FBF7FC;  /* INK / light body on dark */
-  --ds-ink-heading:  #FBF7FC;  /* INK / light headings on dark */
-  --ds-ink-soft:     #C6BAD2;  /* INK / muted light secondary */
-  --ds-line:         rgba(255,255,255,.14);  /* LINE / light hairline */
-  --ds-accent:       #D28FE6;  /* ACCENT / lightened violet reads on dark */
-  --ds-accent-ink:   #D28FE6;  /* ACCENT / small accent text on dark */
-  --ds-shadow-card:  0 2px 8px rgba(0,0,0,.40),0 16px 40px rgba(0,0,0,.50);   /* SHADOW */
-  --ds-shadow-lift:  0 10px 30px rgba(0,0,0,.50),0 30px 70px rgba(127,33,153,.35); /* SHADOW */
+/* =============================================================================
+   .surface-dark :: the DEEPER band on an already-dark brand
+   -----------------------------------------------------------------------------
+   This brand's page canvas is already dark (--ds-bg-surface #0E0716), so
+   .surface-dark is NOT an inversion here. It is the DEEPEST band: the near-black
+   ground used for the footer, the closing CTA anchor and any full-bleed dark
+   section. It re-asserts every ink and surface var so a card or console dropped
+   inside such a section can never inherit a mismatched ink (the dark-on-dark and
+   cream-on-white traps C7 section 2 names).
+   ============================================================================= */
+.surface-dark{
+  --ds-bg-surface:     var(--ds-primary-deep);   /* #080310 */
+  --ds-bg-surface-2:   #140A20;                  /* elevated surface INSIDE the deepest band */
+  --ds-bg-warm:        #180C26;
+  --ds-ink:            #F5F2F8;                  /* re-asserted, never inherited */
+  --ds-ink-heading:    #F5F2F8;
+  --ds-ink-soft:       #B6AAC2;
+  --ds-line:           #2E2140;
+  --ds-accent:         var(--ds-accent-light);   /* the light accent reads on the deepest ground. TEXT use */
+  --ds-accent-ink:     var(--ds-accent-light);
+  /* --ds-cta and --ds-cta-ink are INTENTIONALLY absent from this block. Remapping them
+     is what produced the 2.14:1 hero button. A filled CTA must not follow text polarity. */
+  --ds-hairline:       rgba(245,242,248,.16);
+  --ds-glass-bg:       rgba(8,3,16,.78);
+}
+
+/* Reduced motion is honored globally: every transition collapses. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
 }

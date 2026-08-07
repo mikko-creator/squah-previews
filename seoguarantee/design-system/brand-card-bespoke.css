@@ -1,159 +1,644 @@
+/* =============================================================================
+   brand-card-bespoke.css  ::  THE BESPOKE TIER (the CEILING)
+   -----------------------------------------------------------------------------
+   Loads ON TOP of seoguarantee-tokens.css + seoguarantee-structural.css.
+
+   WHAT THIS TIER IS. The elevation reserved for the flagship pages and the home.
+   Where the standard tier is restrained, this tier spends: full-bleed atmosphere,
+   the display face at its largest, the founder cut-out at HERO scale, a cinematic
+   closing anchor. It is the same design language at higher intensity, never a
+   different design.
+
+   THE RULE THAT KEEPS IT PREMIUM. Every device here is a ONE-PER-PAGE device. One
+   hero, one hero-scale figure, one gradient statement, one cinematic close. Stack
+   two and the page reads busy rather than expensive, which is the failure this tier
+   exists to avoid.
+
+   TOKEN-PURE. Zero hex literals. Buttons are NOT redefined: R2 fixes one radius and
+   one height per tier in the structural sheet.
+
+   NAMING NOTE. Display-font classes carry the .h- prefix (.h-statement below). That
+   is the design system's marker for an element set in the display face, and the G8
+   A3 check reads it to confirm a ch measure resolves against the right font.
+   ============================================================================= */
+
+/* the tier marker, for design previews only. Never shipped on a client page. */
+.tier-flag{
+  position:fixed;top:0;left:0;right:0;
+  z-index:var(--ds-z-sticky);
+  display:flex;align-items:center;justify-content:center;gap:var(--ds-space-xs);
+  padding:7px;
+  font-family:var(--ds-font-mono);
+  font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--ds-ink-on-dark);
+  background:var(--ds-primary-deep);
+  border-bottom:1px solid var(--ds-accent);
+}
+.tier-flag b{color:var(--ds-accent-light)}
+
+/* =============================================================================
+   BESPOKE HERO :: the type-led statement band. Atmosphere is layered, not painted:
+   a top-anchored wash over a faint grid bed, both behind the content.
+   ============================================================================= */
+.bsp-hero{
+  position:relative;
+  padding-block:calc(var(--ds-section-py) * 1.25);
+  overflow:visible;                    /* NEVER clip: hero descenders must not cut */
+  text-align:center;
+}
+.bsp-hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:var(--ds-grid);
+  background-size:var(--ds-grid-size);
+  opacity:var(--ds-opacity-faint);
+  pointer-events:none;
+  z-index:var(--ds-z-below);
+}
+.bsp-hero::after{
+  content:"";position:absolute;inset:0;
+  background:var(--ds-glow-wash);
+  pointer-events:none;
+  z-index:var(--ds-z-below);
+}
+.bsp-hero .inner{position:relative;z-index:var(--ds-z-raised)}
+.bsp-hero h1{
+  font-size:clamp(42px,7vw,78px);
+  letter-spacing:-.035em;
+  max-width:17ch;
+  margin-inline:auto;
+}
+.bsp-hero .lead,.bsp-hero .lede{margin-inline:auto;max-width:54ch}
+.bsp-hero .ctas{justify-content:center;margin-top:var(--ds-space-lg)}
+
+/* =============================================================================
+   HERO-SCALE FOUNDER :: R7 at full size. Still isolated, still floating, still no
+   frame. Only james-undercut.png is large enough to carry this scale; j1/j2/j3 top
+   out near 300px and must stay on .figure.accent in the standard tier.
+   ============================================================================= */
+.bsp-figure{min-height:520px}
+.bsp-figure img{max-height:490px}
+/* THE 118% BLOOM IS A HERO DEVICE AND IS NOW SCOPED TO ONE. Unscoped, it overhangs its own box by 9%
+   on each side, which a full-bleed hero absorbs and a narrow column does not: in a side column the
+   right-hand 9% lands past the container and the PAGE gains horizontal scroll. Measured on
+   system-proof.html, whose band 3 puts this figure in a plain split: scrollWidth 908 at 900, 970 at
+   960, 1037 at 1024, 1116 at 1100, 1199 at 1180. It went unseen because the SYSTEM check sampled only
+   1440 and 390, and this bug lives between them. */
+.bsp-hero .bsp-figure::before{width:118%}
+.bsp-figure::before{width:100%}
+
+/* =============================================================================
+   THE GRADIENT STATEMENT :: one per page. The owner-approved d1 treatment at its
+   largest, for the single line the page is actually about.
+   ============================================================================= */
+.h-statement{
+  font-family:var(--ds-font-display);
+  font-size:clamp(34px,5.4vw,64px);
+  font-weight:800;
+  line-height:1.04;
+  letter-spacing:-.035em;
+  max-width:26ch;
+  color:var(--ds-ink-heading);
+}
+.h-statement em{
+  font-style:normal;
+  color:var(--ds-accent-light);
+  background:var(--ds-grad-text);
+  -webkit-background-clip:text;
+  background-clip:text;
+}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){
+  .h-statement em{color:transparent}
+}
+
+/* =============================================================================
+   PROOF CONSOLE :: the elevated stat break. A raised panel with the hairline inset,
+   sitting on the band rather than bounded by rules like the standard tier.
+   ============================================================================= */
+.bsp-console{
+  background:var(--ds-bg-surface-2);
+  border:1px solid var(--ds-line);
+  border-radius:var(--ds-r-surface);
+  box-shadow:var(--ds-shadow-lift),var(--ds-inset-hi);
+  padding:var(--ds-space-lg);
+}
+.bsp-console .stat b{font-size:clamp(40px,5vw,60px)}
+
+/* =============================================================================
+   CINEMATIC CLOSE :: the closing anchor. Pair with .surface-dark. One CTA only,
+   which is the restraint the composition blueprint requires.
+   ============================================================================= */
+.bsp-close{
+  position:relative;
+  text-align:center;
+  padding-block:calc(var(--ds-section-py) * 1.15);
+  overflow:visible;
+}
+.bsp-close::before{
+  content:"";position:absolute;
+  left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(880px,92%);aspect-ratio:1;
+  border-radius:var(--ds-r-pill);
+  background:var(--ds-glow-bloom);
+  pointer-events:none;
+  z-index:var(--ds-z-below);
+}
+.bsp-close .inner{position:relative;z-index:var(--ds-z-raised)}
+.bsp-close h2{font-size:clamp(30px,4.4vw,54px);margin-inline:auto}
+.bsp-close .lead,.bsp-close .lede{margin-inline:auto;max-width:50ch}
+/* .ctas is a flexbox, so the band's text-align:center does NOT centre it. Without this the closing
+   CTA sits hard left under centred copy, which is exactly what the SYSTEM proof page caught. */
+.bsp-close .ctas{justify-content:center}
+
+/* =============================================================================
+   CAPABILITY RAIL :: the ribbon of what the one fee covers. Scrolls rather than
+   animates, so it can never become an accessibility problem.
+   ============================================================================= */
+.bsp-rail{
+  display:flex;gap:var(--ds-space-lg);
+  align-items:center;
+  font-family:var(--ds-font-mono);
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ds-ink-soft);
+  border-block:1px solid var(--ds-line);
+  padding-block:var(--ds-space-sm);
+  overflow-x:auto;
+  white-space:nowrap;
+}
+.bsp-rail .dot{
+  flex:none;width:6px;height:6px;
+  border-radius:var(--ds-r-pill);
+  background:var(--ds-accent);
+}
+
+@media (max-width:860px){
+  .bsp-hero{padding-block:calc(var(--ds-section-py) * .95)}
+  .bsp-hero h1{max-width:100%}
+  .bsp-figure{min-height:340px}
+  .bsp-figure img{max-height:330px}
+  /* Must be capped HERE too: .bsp-figure::before and .figure::before have equal specificity, and this
+     sheet loads later, so structural's mobile cap would otherwise lose to the 118% above.
+     The .bsp-hero variant needs its OWN cap: scoping the bloom to the hero raised its specificity to
+     0-2-1, which outranks this 0-1-1 rule, so without the line below a hero figure would keep 118% on
+     a phone and hand back exactly the overflow this block exists to prevent. */
+  .bsp-figure::before,
+  .bsp-hero .bsp-figure::before{width:100%}
+  .h-statement{max-width:100%}
+}
+
+
+/* =============================================================================
+   T-MARQUEE :: THE LEDGER OF INCLUSION  (owner pick, concept C)
+   -----------------------------------------------------------------------------
+   Migrated OUT of the concept preview style block and INTO this tier sheet, because
+   promote-concept STRIPS a concept style block: every rule left inline would assemble
+   unstyled on the built page. This is the vocabulary every T-MARQUEE page draws from.
+   TOKEN-PURE: zero hex, every value a var(--ds-*).
+   ============================================================================= */
+
 /* ============================================================================
-   BESPOKE TIER — per-page signature stylesheet (the CEILING)
-   ----------------------------------------------------------------------------
-   Loads ON TOP of <slug>-tokens.css + <slug>-structural.css. The crafted layer a
-   marquee / flagship page carries: cinematic product canvas, immersive showcase
-   panels, oversized stat band, glow closer. TOKEN-PURE — every value references
-   var(--*); the dark stage is the tokens' dark surface, not a hardcoded black.
-   This sheet is a TEMPLATE: it is brand-agnostic and copies verbatim per client.
+   CONCEPT C "THE LEDGER OF INCLUSION" :: concept-local composition ONLY.
+
+   TOKEN-PURE: zero hex literals, zero raw rgba. Every colour, radius, shadow, space,
+   duration and easing resolves through var(--ds-*).
+   R2 UNTOUCHED: there is NO .btn rule anywhere in this block, so the one control radius
+   and the one height per tier stay exactly where seoguarantee-structural.css declares them.
+   R7 UNTOUCHED: no rule here frames, radiuses, clips or shadows a .figure. The founder
+   cut-outs stay isolated and floating on .figure / .figure.accent / .bsp-figure; only
+   NON-founder imagery gets .inc-frame.
+   CHROME UNTOUCHED: no header, mega, drawer, precta or footer selector appears here.
+
+   REUSE FIRST (the orphan-class discipline). Every repeated surface on this page rides the
+   sheets that already ship: .card for the disclosure rows / routing index / cross-link chips,
+   .stats + .stat for the closing tally, .list-checks measure conventions, .figure for the
+   founder, and the bespoke tier's .bsp-figure / .bsp-rail / .bsp-console / .bsp-close /
+   .h-statement. What is declared below is the LEDGER vocabulary itself, which does not exist
+   in any sheet yet and is written to be migrated into brand-card-bespoke.css on promote.
    ============================================================================ */
 
-/* ----------------------------------------------------------------------------
-   TOKEN BRIDGE (brand-agnostic). This tier stub was authored against a generic
-   short-name var vocabulary (--bg/--ink/--mono/...) that the SYSTEM-GRAFT does
-   not emit (it emits the --ds-* families). Map each short name to the client's
-   locked --ds-* token so the sheet is token-VALID + renders on the brand system.
-   Every value is a var(--ds-*) alias or a token-composed value; ZERO brand hex.
-   Copies verbatim per client (every client ships the same --ds-* token API).
-   Built from .claude/design-system-unified 00-globals tokens (the --ds-* API).
-   ---------------------------------------------------------------------------- */
-:root{
-  --bg:               var(--ds-bg-surface);
-  --bg-2:             var(--ds-bg-surface-2);
-  --bg-warm:          var(--ds-bg-warm);
-  --card-bg:          var(--ds-bg-surface-2);
-  --card-border:      var(--ds-line);
-  --ink:              var(--ds-ink);
-  --ink-soft:         var(--ds-ink-soft);
-  --ink-faint:        var(--ds-ink-soft);
-  --on-accent:        var(--ds-ink-on-dark);
-  --line:             var(--ds-line);
-  --line-2:           var(--ds-line);
-  --accent:           var(--ds-accent);
-  --accent-hot:       var(--ds-accent-2);
-  --accent-soft:      var(--ds-accent-soft);
-  --accent-tint-14:   var(--ds-accent-soft);
-  --accent-tint-22:   var(--ds-accent-soft);
-  --font:             var(--ds-font-body);
-  --mono:             var(--ds-font-mono);
-  --ease:             var(--ds-ease);
-  --pad:              var(--ds-section-py);
-  --r-lg:             var(--ds-r-surface);
-  --shadow:           var(--ds-shadow-card);
-  --shadow-rest:      var(--ds-shadow-rest);
-  --shadow-accent:    var(--ds-glow);
-  --shadow-cinematic: var(--ds-shadow-lift);
-  --grad-accent:      var(--ds-grad-brand);
-  --glass-inset:      var(--ds-inset-hi);
+/* ---- 0 :: row rhythm + the 14 named beats -----------------------------------
+   The structural sheet's .row gap is INTRA-row (between cols) only, so two stacked rows in
+   one container sit flush. The beat classes are the brief's section_seq names; each carries a
+   REAL job here, an anchor offset clearing the sticky .site-header, so none of them is a bare
+   undefined marker. */
+main .container > .row + .row{margin-top:var(--ds-space-xl)}
+
+.bespoke-hero,.pain-it-kills,.live-demo,.benefit-pillars,
+.capability-showcase-1,.capability-showcase-2,.capability-showcase-3,
+.replaces-wedge,.full-teardown,.inclusion-value,.real-proof,
+.cross-link-rail,.objection-faq,.dual-cta-close{
+  scroll-margin-top:calc(var(--ds-space-2xl) + var(--ds-space-lg));
 }
 
-/* the whole bespoke page sits on the dark premium surface */
-body { background: var(--bg); color: var(--ink); }
-
-/* tier ribbon */
-.tier-flag { position: fixed; top: 0; left: 0; right: 0; z-index: 60; display: flex; justify-content: center; gap: 10px; align-items: center;
-  padding: 7px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink);
-  background: var(--bg-2); border-bottom: 1px solid var(--line); }
-.tier-flag b { color: var(--accent-hot); }
-
-/* HERO — split, asymmetric, oversized display */
-.pb-hero { min-height: 92vh; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 48px; padding-block: 8vh var(--pad); }
-.pb-hero .copy { position: relative; z-index: 2; }
-.pb-hero h1 { max-width: 13ch; margin-top: 18px; }
-.pb-hero .lead { margin-top: 22px; }
-.pb-hero .cta { margin-top: 34px; }
-.pb-hero .bigtype { top: 4%; bottom: auto; font-size: clamp(80px,16vw,240px); }
-
-/* CINEMATIC PRODUCT CANVAS (the signature bespoke moment) */
-.stage { perspective: 2200px; position: relative; z-index: 2; }
-.builder { width: 132%; max-width: none; transform: rotateY(-9deg) rotateX(2.5deg) translateZ(0);
-  border-radius: var(--r-lg); overflow: hidden; background: var(--bg-2); border: 1px solid var(--line);
-  box-shadow: var(--shadow-cinematic); }
-.b-bar { display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: var(--bg-warm); border-bottom: 1px solid var(--line-2); }
-.b-dots { display: flex; gap: 7px; }
-.b-dots i { width: 11px; height: 11px; border-radius: 50%; background: var(--line); }
-.b-url { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); background: var(--bg); padding: 6px 14px; border-radius: 7px; flex: 1; }
-.b-body { display: grid; grid-template-columns: 168px 1fr; min-height: 380px; }
-.b-side { background: var(--bg-2); border-right: 1px solid var(--line-2); padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; }
-.b-side .lbl { font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin: 8px 4px 2px; }
-.b-row { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; font-size: 12.5px; color: var(--ink-soft); }
-.b-row .ic { width: 15px; height: 15px; border-radius: 4px; background: rgba(255,255,255,.12); }
-.b-row.on { background: var(--accent-tint-14); color: var(--ink); }
-.b-row.on .ic { background: var(--accent); box-shadow: var(--shadow-accent); }
-.b-canvas { padding: 22px; background: var(--bg); display: flex; flex-direction: column; gap: 14px; position: relative; }
-.blk { border-radius: 10px; border: 1px solid var(--line); background: var(--card-bg); padding: 16px; }
-.blk.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow-accent); }
-.blk .h { height: 14px; width: 55%; border-radius: 4px; background: rgba(255,255,255,.22); }
-.blk .l { height: 8px; width: 80%; border-radius: 4px; background: rgba(255,255,255,.10); margin-top: 9px; }
-.blk.hero-blk { background: var(--grad-accent); border-color: var(--card-border); }
-.blk-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
-.blk-grid .c { height: 60px; border-radius: 8px; background: var(--card-bg); border: 1px solid var(--line-2); }
-.sel-tag { position: absolute; font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--on-accent); background: var(--accent); padding: 3px 8px; border-radius: 5px; transform: translateY(-50%); }
-
-/* floating handle + stat chips */
-.b-float { position: absolute; right: -26px; top: 34%; background: var(--bg-2); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 10px; }
-.b-float .sq { width: 26px; height: 26px; border-radius: 7px; background: var(--grad-accent); box-shadow: var(--shadow-accent); }
-.b-float .t { font-size: 11px; }
-.b-float .t b { display: block; }
-.b-float .t span { color: var(--ink-faint); font-family: var(--mono); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
-.float-stat { position: absolute; z-index: 3; background: var(--bg-2); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px 16px; box-shadow: var(--shadow); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-.float-stat .n { font-family: var(--font); font-weight: 800; font-size: 22px; letter-spacing: -.03em; color: var(--ink); }
-.float-stat .n .z { color: var(--accent-hot); }
-.float-stat .c { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); margin-top: 2px; }
-
-/* PAIN — struck-through stack collapse */
-.collapse { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center; }
-.stack-old { display: flex; flex-direction: column; gap: 10px; }
-.tool { display: flex; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--card-bg); position: relative; }
-.tool .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-faint); }
-.tool .nm { font-weight: 600; color: var(--ink-soft); }
-.tool .pr { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--ink-faint); }
-.tool.struck .nm, .tool.struck .pr { text-decoration: line-through; text-decoration-color: var(--accent-tint-22); }
-.collapse .arrow { font-size: 40px; color: var(--accent); }
-.one-box { border-radius: var(--r-lg); padding: 34px; background: var(--bg-2); border: 1px solid var(--card-border); box-shadow: var(--shadow-accent), var(--glass-inset); position: relative; }
-.one-box::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(80% 60% at 80% 10%, var(--accent-tint-14), transparent 60%); pointer-events: none; }
-
-/* IMMERSIVE SHOWCASE PANELS */
-.panel { position: relative; border-radius: var(--r-lg); overflow: hidden; min-height: 460px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; padding: 48px; border: 1px solid var(--line); background: var(--bg); isolation: isolate; }
-.panel.flip > .pl-copy { order: 2; }
-.panel .bigtype { font-size: clamp(54px,11vw,150px); }
-.pl-copy { position: relative; z-index: 2; }
-.pl-art { position: relative; z-index: 2; }
-.tpl-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
-.tpl { aspect-ratio: 3/4; border-radius: 12px; border: 1px solid var(--line); overflow: hidden; box-shadow: var(--shadow-rest); }
-.tpl i { display: block; height: 38%; background: var(--grad-accent); }
-.tpl em { display: block; height: 62%; background: var(--bg-2); }
-.gauge-wrap { display: flex; align-items: center; gap: 30px; }
-.ring { width: 170px; height: 170px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--accent) 0 96%, rgba(255,255,255,.08) 96% 100%); position: relative; }
-.ring::before { content: ""; position: absolute; inset: 14px; border-radius: 50%; background: var(--bg); }
-.ring b { position: relative; font-family: var(--font); font-weight: 800; font-size: 48px; letter-spacing: -.04em; color: var(--ink); }
-.bars { display: flex; flex-direction: column; gap: 12px; flex: 1; }
-.bar { display: flex; align-items: center; gap: 12px; font-size: 12px; color: var(--ink-soft); font-family: var(--mono); }
-.bar .track { flex: 1; height: 8px; border-radius: 999px; background: rgba(255,255,255,.07); overflow: hidden; }
-.bar .fill { height: 100%; border-radius: 999px; background: var(--grad-accent); }
-
-/* PROOF stat band */
-.proof-band { position: relative; }
-.proof-band .resglow { position: absolute; inset: auto 0 0 0; height: 60%; background: radial-gradient(70% 100% at 50% 100%, var(--accent-tint-14), transparent 70%); pointer-events: none; }
-.stats-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; }
-.stats-3 .s { padding: 0 30px; border-left: 1px solid var(--line-2); }
-.stats-3 .s:first-child { border-left: 0; padding-left: 0; }
-.stats-3 .cap { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); margin-top: 8px; }
-
-/* CLOSER */
-.closer { position: relative; text-align: center; overflow: hidden; }
-.closer .glowbg { position: absolute; inset: 0; background: radial-gradient(60% 120% at 50% 120%, var(--accent-tint-22), transparent 60%); z-index: 0; pointer-events: none; }
-.closer h2 { max-width: 16ch; margin-inline: auto; }
-.closer .bigtype { font-size: clamp(70px,16vw,220px); }
-
-@media (max-width: 960px) {
-  .pb-hero { grid-template-columns: 1fr; gap: 60px; }
-  .builder { width: 100%; transform: none; }
-  .b-float, .float-stat { position: static; margin-top: 12px; -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .collapse { grid-template-columns: 1fr; }
-  .collapse .arrow { transform: rotate(90deg); justify-self: center; }
-  .panel { grid-template-columns: 1fr; }
-  .panel.flip > .pl-copy { order: 0; }
-  .stats-3 { grid-template-columns: 1fr; gap: 24px; }
-  .stats-3 .s { border-left: 0; padding-left: 0; }
+/* ---- 1 :: the account label + the ledger body measure ---------------------- */
+.inc-tag{
+  display:flex;align-items:baseline;flex-wrap:wrap;gap:var(--ds-space-xs);
+  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ds-accent-light);margin:0 0 var(--ds-space-md);
 }
+.inc-tag b{color:var(--ds-ink-soft);font-weight:400}
+p.inc-body{color:var(--ds-ink-soft);font-size:16.5px;max-width:60ch;margin-top:var(--ds-space-md)}
+p.inc-body.first{margin-top:0}
+/* the running total: a display-face line that closes a register block */
+p.inc-total{
+  font-family:var(--ds-font-display);font-weight:700;letter-spacing:-.024em;
+  font-size:clamp(21px,2.6vw,32px);line-height:1.1;color:var(--ds-ink-heading);
+  margin:var(--ds-space-md) 0 0;max-width:26ch;
+}
+
+/* ---- 2 :: the posting register. Ruled rows, ordinal in NORMAL FLOW ---------
+   The ordinal is a grid CELL, never an absolutely positioned badge: a badge inside a row's
+   border box paints on top of the row text and fails the render overlap check. */
+.inc-ledger{list-style:none;margin:var(--ds-space-lg) 0 0;padding:0;border-top:1px solid var(--ds-line)}
+.inc-ledger li{
+  display:grid;grid-template-columns:46px minmax(0,1fr) auto;
+  gap:var(--ds-space-sm);align-items:center;
+  padding:var(--ds-space-sm) 0;border-bottom:1px solid var(--ds-line);
+}
+.inc-ledger__n{font-family:var(--ds-font-mono);font-size:11px;letter-spacing:.16em;color:var(--ds-accent-light)}
+.inc-ledger__t{font-size:15.5px;color:var(--ds-ink)}
+
+/* ---- 3 :: the status token. The one glyph the whole page turns on ---------- */
+.inc-mark{
+  justify-self:start;
+  font-family:var(--ds-font-mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ds-accent-light);border:1px solid var(--ds-accent);
+  border-radius:var(--ds-r-control);padding:3px var(--ds-space-xs);white-space:nowrap;
+}
+.inc-mark--debit{color:var(--ds-ink-soft);border-color:var(--ds-line)}
+
+/* ---- 4 :: the OWNER slip. A gap is PRINTED, never styled away ------------- */
+.inc-slip{
+  border:1px solid var(--ds-line);
+  border-radius:var(--ds-r-surface);
+  background:var(--ds-primary-soft);
+  padding:var(--ds-space-lg);
+  /* the accent edge is an INSET SHADOW, not a 3px border: a thicker border shifts this panel's text
+     2px off every other panel's, which is exactly the stagger the owner flagged. */
+  box-shadow:inset 3px 0 0 0 var(--ds-accent),var(--ds-inset-hi);
+  height:100%;
+}
+.inc-slip .inc-tag{margin-bottom:var(--ds-space-xs)}
+p.inc-slip__t{color:var(--ds-ink-soft);font-size:14px;margin:0;max-width:72ch}
+
+/* ---- 5 :: the live ledger bar (LIVE-DEMO-SECTIONS #2) ---------------------
+   Transform-only pulse on a glass pill. Nothing here animates opacity, so the bar is fully
+   legible at load and the reduced-motion block freezes it to a solid dot. */
+.inc-live{
+  display:inline-flex;align-items:center;flex-wrap:wrap;gap:var(--ds-space-sm);
+  border:1px solid var(--ds-glass-border);border-radius:var(--ds-r-pill);
+  background:var(--ds-glass-bg);
+  -webkit-backdrop-filter:var(--ds-glass-blur);backdrop-filter:var(--ds-glass-blur);
+  box-shadow:var(--ds-inset-hi),var(--ds-shadow-card);
+  padding:var(--ds-space-xs) var(--ds-space-md);
+  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ds-ink-soft);
+}
+.inc-live b{color:var(--ds-accent-light);font-weight:400}
+.inc-live__dot{
+  width:8px;height:8px;flex:none;
+  border-radius:var(--ds-r-pill);background:var(--ds-accent);
+  box-shadow:var(--ds-glow);
+  animation:inc-pulse 1.9s var(--ds-ease) infinite;
+}
+@keyframes inc-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.6)}}
+
+/* ---- 6 :: the six-module disclosure track. Rides .card ------------------- */
+.inc-modules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:var(--ds-space-md);margin-top:var(--ds-space-lg)}
+.inc-module>summary{
+  display:flex;align-items:center;gap:var(--ds-space-sm);flex-wrap:wrap;
+  cursor:pointer;list-style:none;min-height:34px;
+}
+.inc-module>summary::-webkit-details-marker{display:none}
+.inc-module summary b{flex:1 1 auto;font-size:19px}
+.inc-module__n{font-family:var(--ds-font-mono);font-size:11px;letter-spacing:.16em;color:var(--ds-accent-light)}
+.inc-module[open]{border-color:var(--ds-accent)}
+/* MEASURED, not assumed. Chromium collapses a closed details through content-visibility on
+   ::details-content, which keeps the hidden paragraph IN the box tree: it still computes
+   display:block and visibility:visible, and getBoundingClientRect returns a phantom box running
+   straight through the next card's title. Rendered at 375 the page PAINTED correctly and still
+   reported eight text collisions to a rect-measuring pass. Taking a closed row's paragraph out of
+   layout makes the measured geometry equal the painted geometry. */
+.inc-module:not([open])>p{display:none}
+
+/* ---- 7 :: the bento. The offset grid the whole concept is built on ------- */
+.inc-bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--ds-space-md);margin-top:var(--ds-space-lg)}
+.inc-bento>*{
+  margin:0;padding:var(--ds-space-lg);
+  background:var(--ds-bg-surface-2);
+  border:1px solid var(--ds-line);
+  border-radius:var(--ds-r-surface);
+  box-shadow:var(--ds-shadow-card),var(--ds-inset-hi);
+}
+.inc-bento__a{grid-column:span 3}
+.inc-bento__b{grid-column:span 3}
+.inc-bento__c{grid-column:span 2}
+.inc-bento__d{grid-column:span 4;padding:0;overflow:hidden;min-height:230px}
+.inc-bento h3{margin:0 0 var(--ds-space-sm)}
+.inc-bento p{color:var(--ds-ink-soft);font-size:15px;margin:0}
+.inc-bento__d img{display:block;width:100%;height:100%;max-height:290px;object-fit:cover}
+
+/* ---- 8 :: framed media. NON-founder imagery only (R7) -------------------- */
+.inc-frame{
+  position:relative;overflow:hidden;margin:0;
+  border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);
+  background:var(--ds-primary-deep);box-shadow:var(--ds-shadow-card);
+}
+.inc-frame img{display:block;width:100%;height:100%;object-fit:cover}
+.inc-frame--tall{height:100%;min-height:360px;max-height:600px}
+.inc-frame--wide{aspect-ratio:16/10;max-height:330px}
+
+/* ---- 9 :: the routing index + the cross-link chips. Both ride .card ------ */
+.inc-routes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--ds-space-md);margin-top:var(--ds-space-lg)}
+.inc-chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--ds-space-md);margin-top:var(--ds-space-lg)}
+.inc-route b,.inc-chip b,.inc-module summary b{
+  display:block;font-family:var(--ds-font-display);font-weight:700;
+  letter-spacing:-.022em;color:var(--ds-ink-heading);
+}
+.inc-route b{font-size:18px}
+.inc-chip b{font-size:21px;font-weight:800}
+.inc-route em,.inc-chip em{
+  display:block;margin-top:var(--ds-space-sm);font-style:normal;
+  font-family:var(--ds-font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ds-accent-light);
+}
+
+/* ---- 10 :: the struck / kept pair (SECTION-COMPONENTS #29) --------------- */
+.inc-side{border-top:2px solid var(--ds-line);padding-top:var(--ds-space-md);height:100%}
+.inc-side--struck{border-top-style:dashed}
+.inc-side--kept{border-top-color:var(--ds-accent)}
+.inc-side h3{margin:0 0 var(--ds-space-sm)}
+.inc-side p{color:var(--ds-ink-soft);font-size:15.5px;margin:var(--ds-space-sm) 0 0;max-width:52ch}
+.inc-steps{list-style:none;margin:var(--ds-space-sm) 0 0;padding:0;display:grid;gap:0}
+.inc-steps li{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--ds-space-sm);align-items:baseline;
+  padding:var(--ds-space-xs) 0;border-bottom:1px dashed var(--ds-line);
+  font-size:15px;color:var(--ds-ink-soft);
+}
+.inc-steps li b{font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.16em;color:var(--ds-ink-soft);font-weight:400}
+
+/* ---- 11 :: the teardown. Five strands, and the SEAMS between them -------- */
+.inc-strands{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;
+  margin-top:var(--ds-space-lg);border-top:1px solid var(--ds-line);
+}
+.inc-strands>div{padding:var(--ds-space-md)}
+.inc-strands>div+div{border-left:1px dashed var(--ds-accent)}
+.inc-strands b{
+  display:block;margin-bottom:var(--ds-space-xs);
+  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ds-accent-light);font-weight:400;
+}
+.inc-strands p{color:var(--ds-ink-soft);font-size:14px;margin:0}
+p.inc-seamnote{
+  margin:var(--ds-space-sm) 0 0;padding-top:var(--ds-space-sm);
+  border-top:1px solid var(--ds-hairline);
+  font-family:var(--ds-font-mono);font-size:11px;line-height:1.7;letter-spacing:.04em;
+  color:var(--ds-ink-soft);max-width:78ch;
+}
+.inc-costs{display:grid;gap:0;margin-top:var(--ds-space-lg);border-top:1px solid var(--ds-line)}
+.inc-costs>div{
+  display:grid;grid-template-columns:27px minmax(0,1fr);gap:var(--ds-space-sm);align-items:baseline;
+  padding:var(--ds-space-sm) 0;border-bottom:1px solid var(--ds-line);
+}
+.inc-costs b{font-family:var(--ds-font-mono);font-size:11px;letter-spacing:.16em;color:var(--ds-accent-light);font-weight:400}
+.inc-costs p{color:var(--ds-ink-soft);font-size:15px;margin:0}
+/* the one accent panel on the page: the same scope, posted as a single line */
+.inc-oneplan{
+  margin-top:var(--ds-space-lg);padding:var(--ds-space-lg);
+  border:1px solid var(--ds-accent);border-radius:var(--ds-r-surface);
+  background:var(--ds-accent-soft);
+  box-shadow:var(--ds-glow),var(--ds-inset-hi);
+}
+.inc-oneplan p{color:var(--ds-ink);font-size:16.5px;margin:0;max-width:66ch}
+
+/* ---- 12 :: the inclusion matrix (PRICING-SECTIONS #2) ------------------- */
+.inc-matrixwrap{margin-top:var(--ds-space-lg);overflow-x:auto}
+.inc-matrix{width:100%;border-collapse:collapse;font-size:14.5px}
+.inc-matrix caption{
+  caption-side:top;text-align:left;padding-bottom:var(--ds-space-sm);
+  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ds-ink-soft);
+}
+.inc-matrix th,.inc-matrix td{
+  text-align:left;padding:var(--ds-space-sm);vertical-align:middle;
+  border-bottom:1px solid var(--ds-line);
+}
+.inc-matrix thead th{
+  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:400;color:var(--ds-ink-soft);border-bottom:1px solid var(--ds-accent);
+}
+.inc-matrix thead th span{
+  display:block;margin-top:var(--ds-space-2xs);
+  font-family:var(--ds-font-display);font-size:16px;font-weight:800;letter-spacing:-.02em;
+  text-transform:none;color:var(--ds-ink-heading);
+}
+.inc-matrix tbody th{font-family:var(--ds-font-body);font-size:15px;font-weight:600;color:var(--ds-ink)}
+
+/* ---- 13 :: the question register ---------------------------------------- */
+.inc-q{border-top:2px solid var(--ds-accent);padding-top:var(--ds-space-md);margin:0}
+.inc-a{border-top:1px solid var(--ds-line);padding-top:var(--ds-space-md)}
+.inc-a p{color:var(--ds-ink-soft);font-size:15.5px;margin:0;max-width:64ch}
+
+/* ---- 14 :: depth + motion carriers -------------------------------------- */
+.inc-lift{transition:transform var(--ds-dur) var(--ds-ease),box-shadow var(--ds-dur) var(--ds-ease),border-color var(--ds-dur) var(--ds-ease)}
+.inc-lift:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-lift);border-color:var(--ds-accent)}
+/* the token grain layer. isolation keeps the z-below pseudo behind the content and above the
+   band background, so it textures the surface without ever covering a glyph. */
+.inc-grain{position:relative;isolation:isolate}
+.inc-grain::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:var(--ds-z-below);
+  background-image:var(--ds-grain);background-size:3px 3px;
+  opacity:var(--ds-opacity-texture);
+}
+/* scroll reveal, transform ONLY. Opacity is never touched, so every element is painted at
+   load whether or not the browser supports scroll-driven animation. */
+@supports (animation-timeline:view()){
+  .inc-reveal{animation:inc-rise linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
+}
+@keyframes inc-rise{from{transform:translateY(16px)}to{transform:none}}
+
+/* ---- 15 :: responsive. Nothing may scroll sideways at 375 --------------- */
+/* MEASURED at 1024: the bespoke tier widens the hero bloom to 118% of its column, and between the
+   860 mobile cap and the point where the 1180 container starts leaving page margin, that pseudo
+   element runs 3px past the viewport and scrolls the whole page sideways. A pseudo cannot be seen by
+   an element-by-element overflow scan, which is why it is capped here explicitly. This belongs in
+   brand-card-bespoke.css next to the existing 860 cap; it is written here so the concept renders
+   clean at every reviewed width. */
+@media (max-width:1200px){
+  .bsp-figure::before{width:100%}
+}
+
+@media (max-width:1000px){
+  .inc-strands{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .inc-strands>div+div{border-left:0}
+  .inc-strands>div{border-bottom:1px dashed var(--ds-accent)}
+  .inc-routes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .inc-chips{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  main .container > .row + .row{margin-top:var(--ds-space-lg)}
+  .inc-bento{grid-template-columns:1fr}
+  .inc-bento>*{grid-column:auto}
+  .inc-bento__d{min-height:0}
+  .inc-modules{grid-template-columns:1fr}
+  .inc-frame--tall{height:auto;min-height:0;aspect-ratio:16/10;max-height:300px}
+  .inc-side{height:auto}
+}
+@media (max-width:700px){
+  .inc-matrix,.inc-matrix tbody,.inc-matrix tr,.inc-matrix th,.inc-matrix td{display:block;width:100%}
+  /* a table-caption whose table has gone display:block shrink-wraps to an anonymous table box and
+     wrapped to three words per line at 375. Measured in the render, not assumed. */
+  .inc-matrix caption{display:block}
+  .inc-matrix thead{display:none}
+  .inc-matrix tbody tr{border-bottom:1px solid var(--ds-line);padding-block:var(--ds-space-sm)}
+  .inc-matrix th,.inc-matrix td{border-bottom:0;padding:2px 0}
+  .inc-matrix td{display:flex;justify-content:space-between;align-items:baseline;gap:var(--ds-space-sm)}
+  .inc-matrix td::before{
+    content:attr(data-tier);
+    font-family:var(--ds-font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ds-ink-soft);
+  }
+}
+@media (max-width:560px){
+  .inc-strands{grid-template-columns:1fr}
+  .inc-routes,.inc-chips{grid-template-columns:1fr}
+  .inc-ledger li{grid-template-columns:34px minmax(0,1fr)}
+  .inc-ledger li .inc-mark{grid-column:2}
+}
+@media (prefers-reduced-motion:reduce){
+  .inc-live__dot{animation:none}
+  .inc-lift:hover{transform:none}
+  .inc-reveal{animation:none}
+}
+
+
+/* =============================================================================
+   OWNER FIX PASS :: alignment + box parity + hero density
+   -----------------------------------------------------------------------------
+   Owner, on the concept-C pick: "several boxes that don't have the same size and are
+   inconsistent", "some text boxes are misaligned", and "a huge blank space in the hero
+   below the navigation bar, I want all CTAs visible above the fold".
+   Every number below was MEASURED in the render, not guessed.
+   ============================================================================= */
+
+/* --- HERO DENSITY. Measured at 1440x900: the sticky header ends at 186 and the h1 did not start
+   until 363, so 177px of the first screen was empty, and the CTA row finished at y=793 which drops
+   below the fold on any 720 or 768 tall laptop. The section carried a full --ds-section-py (112px at
+   this width) on top of the header, which a hero directly under a 186px sticky chrome does not need. */
+.bespoke-hero{padding-block:var(--ds-space-md) var(--ds-section-py)}
+p.inc-body{}
+.bespoke-hero p.inc-body{margin-top:var(--ds-space-sm)}
+.bespoke-hero .ctas{margin-top:var(--ds-space-md)}
+/* the two hero owner-slips are a side-by-side pair and must read as one object, not two heights */
+.bespoke-hero .row{align-items:stretch}
+.bespoke-hero .row>.col{display:flex;flex-direction:column}
+
+/* --- CARD PARITY. Three capability cards measured 155 / 132 / 155 on the SAME row: the middle one
+   simply had less copy. Cards that sit shoulder to shoulder must share a height or the row reads as
+   broken, so the row stretches and each card fills it. */
+/* The direction is NOT optional here, and leaving it at the initial `row` was a real layout break, not
+   a stylistic one. This rule was written when every column in the family held exactly one card, where
+   direction does not show. The retention band puts a figure AND a card in the same column, and in a
+   351px third-column the pair went side by side: the figure took 192px and the card was left 159px to
+   set body copy in, which stretched that card to 940px tall and dragged the whole section to 1505px.
+   Stacking them is what the column was always meant to do; the card then flexes into whatever height
+   is left, which preserves the shoulder-to-shoulder parity this block exists for. */
+.capability-showcase-3 .row{align-items:stretch}
+.capability-showcase-3 .col{display:flex;flex-direction:column}
+.capability-showcase-3 .card{flex:1 1 auto;width:100%}
+
+/* --- ROW HEIGHT PARITY + MOBILE MEDIA ORDER, FOR THE BESPOKE TIER. Both laws already exist in the
+   standard tier as .row--stretch and .rc-medialeft, and NEITHER of them reaches a page in this tier:
+   build.mjs links brand-card-bespoke.css INSTEAD of brand-card-standard.css, a ternary rather than an
+   addition, so a bespoke page that writes row--stretch is styled by nothing at all. full-suite carries
+   one such no-op today. These are the same two rules under the tier's own inc- prefix.
+
+   The columns are deliberately NOT made flex containers here, and that restraint is the whole point.
+   The standard tier pairs its stretch with `.row--stretch>.col{display:flex;flex-direction:column}`,
+   and doing the same on content-marketing handed the section-density gate a false column pair built
+   from the prose column's own heading and body: its worst-ratio reading went from 0.51 to 0.68 and the
+   section failed harder after the fix than before it. Stretching the row already gives every column the
+   row's height; the figure only has to fill the column it is already sitting in. */
+.inc-evenrow{align-items:stretch}
+/* width:100% is load bearing, not tidiness. .inc-frame--wide carries `aspect-ratio:16/10`, and an
+   element with an aspect-ratio and a definite HEIGHT derives its WIDTH from that height instead of from
+   its column, which blew the document 157px wide on the standard tier's equivalent rule before the
+   render hard-gate caught it. Both axes definite means the ratio yields and object-fit does the work. */
+.inc-evenrow > .col > .inc-frame{height:100%;width:100%}
+/* Stretching the ROW equalises the COLUMNS, which is not the same thing as equalising what sits in
+   them: a card whose copy runs to a second line still ended taller than its two siblings on the same
+   row, which is the uneven-box read the owner has objected to before. The card fills the column it is
+   already in, by height rather than by becoming a flex child, for the reason given above. */
+.inc-evenrow > .col > .card{height:100%}
+@media (max-width:860px){
+  .inc-medialeft > .col:first-child{order:2}
+}
+
+/* --- MATRIX COLUMN PARITY. Auto table layout sized the tier columns from their content, giving
+   277 / 277 / 285 and a 293 label column. Fixed layout makes the three tier columns identical, which
+   is what a price comparison has to be to be read as a comparison. */
+/* DESKTOP ONLY, and the min-width query is the whole point. Below 861 the matrix stops being a table
+   and stacks into per-row cards, and a first-child width would have overridden that: a media query adds
+   no specificity, so `.inc-matrix th:first-child` (0-2-1) outranks the stack's `.inc-matrix th` (0-1-1)
+   no matter which one is written last. Fencing it above the breakpoint is what keeps the phone stack. */
+@media (min-width:861px){
+  .inc-matrix{table-layout:fixed}
+  .inc-matrix th:first-child,.inc-matrix td:first-child{width:26%}
+}
+
+@media (max-width:860px){
+  /* the hero's top inset is already small on a phone; keep the pair stacking full width */
+  .bespoke-hero .row>.col{display:block}
+  .capability-showcase-3 .col{display:block}
+}
+
+/* =============================================================================
+   THE CONSULTATION REQUEST :: the F3 conversion affordance
+   -----------------------------------------------------------------------------
+   No .btn rule appears here. R2 fixes one control radius and one height per tier in the
+   structural sheet, and a form is exactly where that discipline usually gets broken.
+   ============================================================================= */
+.inc-form{
+  margin-top:var(--ds-space-md);padding:var(--ds-space-md);
+  border:1px solid var(--ds-line);border-radius:var(--ds-r-surface);
+  background:var(--ds-bg-surface-2);
+  box-shadow:var(--ds-shadow-card),var(--ds-inset-hi);
+}
+.inc-form__grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--ds-space-sm);margin-block:var(--ds-space-sm);
+}
+.inc-form__field{display:flex;flex-direction:column;gap:var(--ds-space-2xs);min-width:0}
+.inc-form__field--wide{grid-column:1 / -1}
+.inc-form__field label{
+  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ds-ink-soft);
+}
+/* inputs inherit the ONE control radius; height comes from padding + line-height, matching .btn */
+.inc-form__field input,
+.inc-form__field textarea{
+  font-family:var(--ds-font-body);font-size:15.5px;line-height:1.5;
+  color:var(--ds-ink);
+  background:var(--ds-primary-soft);
+  border:1px solid var(--ds-line);
+  border-radius:var(--ds-r-control);
+  padding:var(--ds-space-xs) var(--ds-space-sm);
+  width:100%;
+}
+.inc-form__field textarea{resize:vertical}
+.inc-form__field input:focus-visible,
+.inc-form__field textarea:focus-visible{border-color:var(--ds-accent)}
+/* the form column and its owner slip are a pair and must read as one object */
+.inc-formcol{display:flex;flex-direction:column}
+.inc-formcol .inc-form{flex:1 1 auto}
+
+@media (max-width:860px){
+  .inc-form__grid{grid-template-columns:1fr}
+  .inc-formcol{display:block}
+}
+
+/* The closing band centres its copy, and a form must not inherit that: centred labels sitting over
+   left-aligned inputs read as broken alignment, which is precisely what the owner flagged. The owner
+   slip beside it is running prose and belongs left for the same reason. */
+.bsp-close .inc-form,
+.bsp-close .inc-slip{text-align:left}
