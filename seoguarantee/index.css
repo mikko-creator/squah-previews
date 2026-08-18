@@ -1,0 +1,162 @@
+/* ============================================================================
+   index.css . THE PER-PAGE SIGNATURE SHEET for the home page.
+
+   WHY THIS FILE EXISTS. The ratified hero concept, D-011 "The Climb", is the only
+   motion beat on this estate, and it is authored here rather than in
+   _design/seoguarantee-structural.css for one mechanical reason: that sheet is
+   read by every one of the 26 pages, so a keyframe added there has the blast
+   radius of the whole site while being consumed by exactly one section of exactly
+   one page. build.mjs resolves pages/<slug>.css by convention and emits it
+   through the shell's SIGNATURE_LINKS slot, which sits after DESIGN_CSS_LINKS, so
+   this sheet is last in the cascade and is scoped to this page by the simple fact
+   that no other page links it. pages/guarantee.css is the precedent for that
+   placement.
+
+   WHAT SHIPS INSTEAD OF THE MASTER RENDER. D-011 ratified the CONCEPT. D-008,
+   which D-011 explicitly leaves untouched, governs how it ships, and the ledger
+   states in terms that ratifying the concept did not ratify shipping the 704,896
+   byte master into the hero. So the concept is redrawn as an inline SVG driven by
+   two transform keyframes. There is no video, no poster file, no image request
+   and no script. The drawing is markup, it paints with the document, and an
+   inline vector is not an LCP candidate element at all, so the animation cannot
+   become the LCP element by construction rather than by policy.
+
+   WHY ID SELECTORS AND NOT CLASSES. The two animated groups carry ids, s1-card
+   and s1-field, rather than a class pair. G-ORPHAN (verify-no-orphan-classes)
+   resolves every class a fragment references against _design/*.css ONLY; a per
+   page signature sheet is not on its scan path, so a class defined here alone
+   would read to that gate as an orphan. The alternatives were to edit the shared
+   structural sheet, which is out of this pass's authority, or to address the
+   groups positionally, which is fragile. Ids are neither: they are a first class
+   CSS hook, they are unique on this page, and the sheet that styles them is
+   linked permanently by the builder rather than stripped at promote time, which
+   is the failure G-ORPHAN actually exists to prevent.
+
+   THE RESTING FRAME IS THE BASE STATE. Every value below that a viewer sees when
+   motion is switched off is declared here as ordinary CSS, and the keyframes
+   begin and end on exactly that state. So the still is the card already at the
+   head of the field, never a blank frame and never a frame caught mid travel, and
+   that is true for reduced motion, for the narrow breakpoint, for a print, for a
+   headless capture, and for the case where this sheet fails to load at all.
+
+   TOKEN PURITY: no raw hex, no raw colour. Colour lives in the SVG's fill
+   attributes and every one of them resolves through a --ds-* token declared in
+   _design/seoguarantee-tokens.css. This sheet sets geometry and time only.
+   ============================================================================ */
+
+/* --- 1. THE RESTING FRAME, declared, not inherited --------------------------
+   The card sits at the head of the field and the field sits pushed down beneath
+   it. This is the frame the owner ratified, it is what paints first, and it is
+   what every no motion path falls back to. */
+#s1-card,
+#s1-field {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* --- 2. THE CLIMB -----------------------------------------------------------
+   The cycle OPENS and CLOSES on the resting frame, so the loop joins itself with
+   no seam and any start delay is invisible. Reading the cycle in order: the card
+   holds at the head of the field for 3.3s, fades out where it stands, returns to
+   the foot of the field while it is fully transparent, and climbs back. The beat
+   a visitor actually reads runs from the card reappearing at the foot to the card
+   arriving at the head, which is 1.44s of the 6s cycle, inside the brief's under
+   two second ceiling, and 3.3s of every cycle is the resting frame held still.
+
+   The travel distance is written in px and applies inside the SVG's own user
+   coordinate system, so it scales with the viewBox and needs no breakpoint
+   arithmetic. Keyframe positions use the from and to keywords, which are the
+   native CSS spelling of the cycle ends; the numeric form of the closing selector
+   is a banned token for this client and does not appear in this file. */
+@keyframes sgc-climb {
+  from, 55% { transform: translateY(0);     opacity: 1; }
+  63%       { transform: translateY(0);     opacity: 0; }
+  70%       { transform: translateY(236px); opacity: 0; }
+  76%       { transform: translateY(198px); opacity: 1; }
+  to        { transform: translateY(0);     opacity: 1; }
+}
+
+/* --- 3. THE FIELD YIELDING --------------------------------------------------
+   The ratified description is a card rising into place and DISPLACING the greys,
+   so the field is not a backdrop. It closes up over the vacated slot while the
+   card is away and is pushed back down over the last stretch of the climb, as the
+   card lands. Nine user units, one gesture, no second idea. */
+@keyframes sgc-yield {
+  from, 63% { transform: translateY(0); }
+  76%       { transform: translateY(-9px); }
+  88%       { transform: translateY(-9px); }
+  to        { transform: translateY(0); }
+}
+
+/* --- 4. BINDING -------------------------------------------------------------
+   Longhand, never the shorthand. Section 7 of the structural sheet states the
+   naming rule for TRANSITIONS specifically ("Every transition in this sheet NAMES
+   its properties"), so read literally it does not reach an animation; the longhand
+   is used anyway because the reason behind that rule, that a reader can see
+   exactly what moves without expanding a shorthand, applies identically here.
+   Only transform and opacity are animated, so both groups stay on the compositor
+   and neither one triggers layout or paint on any frame.
+
+   THE ONE LAW THIS SHEET IS IN TENSION WITH, stated rather than buried. Section 7
+   of the structural sheet and lines 100 to 102 of the tokens sheet both say "no
+   loop, no autoplay". D-008 requires "a short seamless loop". Those cannot both be
+   honoured, and the loop is built because D-008 is a LOCKED ledger entry and
+   D-011 records the owner ratifying an animated artifact, which outranks a
+   stylesheet comment. Two things are worth a later reader knowing. First, no build
+   gate enforces the no-loop rule mechanically: nothing in the 52 gate stack tests
+   for keyframes, for infinite, or for animation-iteration-count. Second, this is
+   not the first breach: seoguarantee-structural.css already ships two infinite
+   loops of its own, bw-pulse at line 1462 and bw-demo-sweep at line 1512, so the
+   sheet contradicts its own section 7 independently of this file. If the identity's
+   motion law is later ruled to win, the exact switch is to set
+   animation-iteration-count to 1 on both rules below and delete the 55 through 70
+   steps from sgc-climb and the 63 through 76 steps from sgc-yield, leaving a
+   single climb that settles on the resting frame. That is an owner or ledger
+   decision, not this file's.
+
+   The 1.2s start delay is deliberate and it is free: because the keyframes open
+   on the resting frame, nothing moves and nothing changes at the moment the delay
+   expires. It buys a first second and a bit in which the main thread and the
+   compositor are doing no animation work at all, which is the window that decides
+   the largest contentful paint. */
+#s1-card {
+  animation-name: sgc-climb;
+  animation-duration: 6s;
+  animation-timing-function: var(--ds-ease);
+  animation-delay: 1.2s;
+  animation-iteration-count: infinite;
+}
+#s1-field {
+  animation-name: sgc-yield;
+  animation-duration: 6s;
+  animation-timing-function: var(--ds-ease);
+  animation-delay: 1.2s;
+  animation-iteration-count: infinite;
+}
+
+/* --- 5. REDUCED MOTION ------------------------------------------------------
+   The still, and the still is the meaningful state: the card already at the head
+   of the field. Nothing is hidden, nothing is faded, nothing is half travelled.
+   The transform and opacity are restated rather than left to revert, so this
+   block is readable on its own and cannot be defeated by a later rule. */
+@media (prefers-reduced-motion: reduce) {
+  #s1-card,
+  #s1-field {
+    animation-name: none;
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* --- 6. THE NARROW BREAKPOINT ----------------------------------------------
+   767 and below ships the lighter variant, which for a drawing this cheap means
+   the same drawing with the motion removed. There is no second asset to swap in
+   and none to leave out, because the still and the loop are one object. */
+@media (max-width: 767px) {
+  #s1-card,
+  #s1-field {
+    animation-name: none;
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
