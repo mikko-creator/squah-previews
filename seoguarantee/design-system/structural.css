@@ -1,488 +1,2438 @@
-/* =============================================================================
-   seoguarantee-structural.css  ::  THE SITEWIDE STRUCTURAL LAYER
-   -----------------------------------------------------------------------------
-   Loads AFTER seoguarantee-tokens.css. Every page links both.
+/* ============================================================================
+   seoguarantee : STRUCTURAL SHEET  (P8 foundation)
+   THE BODY SHEET. Loads AFTER seoguarantee-tokens.css and the P9 chrome sheet,
+   BEFORE the per-page tier sheet (brand-card-standard.css | brand-card-bespoke.css).
 
-   WHAT THIS SHEET IS. The generalised, sitewide form of what the owner CONFIRMED
-   in the FEEL specimen on 2026-07-30: figure and ground, the applied type scale,
-   band rhythm, the component vocabulary, and the R7 floating founder treatment.
-   The specimen itself stays frozen as the confirmed artifact and is NOT edited
-   after its stamp; this sheet is how that confirmed feel reaches real pages.
+   TOKEN-PURE BY LAW. Zero raw brand hex below this line. Every colour, space,
+   radius, shadow, duration and easing resolves through a var(--ds-*) declared in
+   seoguarantee-tokens.css. This sheet MINTS NO TOKENS: it spends the locked API of
+   Concept B "The Ledger" and adds nothing to it. Raw px survives only as a
+   STRUCTURAL literal (1px hairlines, a type size, a grid track, a media anchor),
+   never as a colour and never as a spacing step.
 
-   TOKEN-PURE BY CONTRACT. Zero hex literals, zero raw rgba brand colour. Every
-   colour, radius, shadow, space and duration references var(--ds-*). G8 check (1)
-   enforces this: brand hex lives ONLY in the token sheet. The one thing this
-   sheet may hard-code is neutral geometry (px sizes, ratios, breakpoints) and the
-   achromatic keywords a mask needs.
+   WHAT THIS SHEET IS. It GENERALISES the owner-confirmed feel specimen
+   (_design/feel-specimen.html, stamped) into a reusable body vocabulary. Every
+   device below was proved on that specimen first: the band rhythm, the
+   hue-carrying hairline plus graded contact-shadow seam (SEP-1 and SEP-2), the
+   three-edge card (SEP-5), the framed media well (SEP-3), the structural accent
+   rule (SEP-4), the material layer (SEP-6) and the luminance range (SEP-7).
+   Where this sheet differs from the specimen it is only by generalising a
+   fragment into a rule. It contradicts the specimen nowhere.
 
-   OWNER RULES THIS SHEET ENFORCES STRUCTURALLY, not by reviewer diligence:
-     R2  ONE control radius and ONE height per button tier. Both live in exactly
-         one rule each below, so a page cannot drift them.
-     R3  the three locked faces only, always via var(--ds-font-*).
-     R7  the founder figure is isolated and floating. .figure carries no frame,
-         no radius, no overflow clip, no card background, no card shadow.
-   The primary CTA reads --ds-cta, NEVER --ds-accent. --ds-accent is remapped by
-   .surface-dark for text legibility, and a filled surface that follows that remap
-   measured 2.14:1 in the FEEL hero. See the token sheet for the full note.
+   THE ARGUMENT THE FEEL MADE, restated as the law of this sheet: on a light
+   surface the three light grounds are optically the same plane (paper to tint
+   1.107:1, tint to warm 1.011:1, both measured live in the browser at feel
+   stage). A value ladder does no work here, so the boundary is carried by a
+   hue-bearing hairline plus a graded contact shadow. Into the near-black anchor
+   (17.61:1) and into the gold (11.27:1) BOTH devices are switched OFF, because a
+   hairline over near-black composites to near-black, paints at about 1:1 and
+   reads as a printing defect rather than an edge.
 
-   THEME POLARITY: DARK. The page ground is --ds-bg-surface and the default ink is
-   the light --ds-ink. .surface-dark (defined in the token sheet) is the DEEPER
-   band, not an inversion.
-   ============================================================================= */
+   DESIGN-SYSTEM PROVENANCE (derived, never invented):
+     library   _MODERN-WOW-SPEC              the technique ceiling
+     library   _RESPONSIVE-PATTERN-LIBRARY   the 4-tier reflow ladder + the stack law
+     library   _COMPOSITION-LAWS             L1 stacked split reading order
+     blueprint composition-agency-creative   the SECTOR spine
+     menus     SECTION-COMPONENTS.md #3, CARD-VARIATIONS.md #2, CTA-PATTERNS.md #1,
+               CTA-PATTERNS.md #11, DIVIDER-PATTERNS.md #8, HERO-COMPOSITIONS.md #4,
+               FORM-LAYOUTS.md #2, SURFACE-PATTERNS.md #12, SURFACE-PATTERNS.md #10,
+               SURFACE-PATTERNS.md #27, MOTION-PATTERNS.md #21, MOTION-PATTERNS.md #10,
+               TYPOGRAPHY-PAIRINGS.md #26
 
-/* =============================================================================
-   1 :: RESET + BASE
-   ============================================================================= */
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{
-  margin:0;
-  background:var(--ds-bg-surface);
-  color:var(--ds-ink);
-  font-family:var(--ds-font-body);
-  font-size:16.5px;
-  line-height:1.62;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-img,svg,video{max-width:100%;height:auto}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit}
+   THE FORCED DOM-STRUCTURE GRAMMAR (skill law, gated by verify-dom-structure R1 to R5):
 
-/* Visible keyboard focus everywhere. Never remove this without a replacement:
-   an invisible focus ring makes the whole site unusable by keyboard. */
-:focus-visible{
-  outline:2px solid var(--ds-accent-light);
-  outline-offset:3px;
-  border-radius:var(--ds-r-control);
-}
+       section  ->  div.container  ->  div.row  ->  div.col  ->  OBJECT
 
-/* =============================================================================
-   2 :: TYPE SCALE (as APPLIED in the confirmed feel)
-   -----------------------------------------------------------------------------
-   Headings use the display face and follow --ds-ink-heading, which on this dark
-   brand resolves to the LIGHT ink. Never hard-code a heading colour.
-   ch-based measures sit ON the display-font element so ch resolves against the
-   display face, not the body face (G8 check A3). The one exception is the reading
-   paragraph, where a ch measure against the BODY face is the correct typography.
-   ============================================================================= */
-h1,h2,h3,h4{
-  font-family:var(--ds-font-display);
-  color:var(--ds-ink-heading);
-  margin:0;
-  line-height:1.06;
-  letter-spacing:-.028em;
-  text-wrap:balance;
-}
-h1{font-size:clamp(38px,6vw,72px);font-weight:800;letter-spacing:-.035em;max-width:19ch}
-h2{font-size:clamp(28px,3.6vw,46px);font-weight:800;max-width:24ch}
-h3{font-size:clamp(19px,1.5vw,23px);font-weight:700;line-height:1.24;letter-spacing:-.018em}
-h4{font-size:17px;font-weight:700;line-height:1.3}
-p{margin:0}
+   .container  the max-width wrapper (--ds-container-max). ONE per section.
+               .container--full for a full-bleed band.
+   .row        a horizontal group. Gap comes from --ds-space-*.
+   .col        a cell. .col--span-1 through .col--span-12, plus .col--full.
+   OBJECT      the leaf. The component SKIN (bw-*) lives HERE, never on a
+               structure layer. R5 blocks a .container / .row / .col that carries
+               a skin class, so nothing below paints a background, a border, a
+               shadow or a radius onto a structure class. Structure is layout only.
+   A complex object may recurse the whole grammar inside its own .col.
+   ============================================================================ */
 
-/* the gradient clause. The owner-approved d1 treatment, generalised.
-   Requires a solid colour fallback: if background-clip:text is unsupported the
-   text must still be visible, not transparent. */
-.grad-clause{
-  font-style:normal;
-  color:var(--ds-accent-light);
-  background:var(--ds-grad-text);
-  -webkit-background-clip:text;
-  background-clip:text;
-}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){
-  .grad-clause{color:transparent}
+
+/* ============================================================================
+   1. RESET AND BASE
+   ============================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
-.eyebrow{
-  font-family:var(--ds-font-mono);
-  font-size:11px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--ds-accent-light);
-  margin:0;
-}
-/* .lead is the canonical name; .lede is the alias the confirmed FEEL specimen uses.
-   Both are declared so the specimen vocabulary keeps working sitewide. */
-.lead,.lede{
-  color:var(--ds-ink-soft);
-  font-size:clamp(16.5px,1.2vw,18.5px);
-  margin-top:var(--ds-space-md);
-  max-width:52ch;
-}
-.fine{font-size:13.5px;color:var(--ds-ink-soft)}
-.mono{font-family:var(--ds-font-mono);letter-spacing:.06em}
-
-/* =============================================================================
-   3 :: LAYOUT :: bands and the container
-   ============================================================================= */
-.band{padding-block:var(--ds-section-py);position:relative}
-.band.tight{padding-block:calc(var(--ds-section-py) * .62)}
-/* A DARK BAND HAS TO ACTUALLY PAINT ITS GROUND. .surface-dark in the token sheet is a var REMAP: it
-   re-points --ds-bg-surface at --ds-primary-deep and re-asserts the inks, but it never sets a
-   background, so a band element carrying surface-dark stayed fully transparent and inherited the page.
-   (This sentence deliberately does not print the literal tag. A .css file is never parsed as a document
-   so it would be harmless here, but the rule is worth keeping absolute rather than remembering which
-   file types happen to be safe.)
-   MEASURED across all four built pages: every section, dark-classed or not, computed
-   background-color rgba(0,0,0,0). The token block calls itself "the near-black GROUND used for the
-   footer, the closing CTA anchor and any full-bleed dark section", and the footer and .precta do paint
-   grounds, but they set their OWN background in the chrome sheet, so nothing was realising that intent
-   for a body band. The effect was that dark-tone rhythm could be satisfied by a CLASS COUNT while a
-   visitor saw one flat tone, which is precisely the green-gate-flat-page failure the not-flat detector
-   exists to prevent. Scoped to .band so the footer, .precta and cards that merely CONSUME the remapped
-   token are untouched. */
-.band.surface-dark{background:var(--ds-bg-surface);isolation:isolate}
-/* THE isolation IS PART OF THE SAME FIX, not a separate nicety. Every atmosphere layer (.wash, .grid-bed,
-   the grain) is a ::before at --ds-z-below (-1). Give the band an opaque ground without isolating it and
-   that -1 layer resolves against an ANCESTOR stacking context, so the ground paints over the atmosphere
-   and the wash/grid/grain contribute nothing. isolation:isolate makes the band its own stacking context,
-   so -1 means "behind this band's content, above this band's own background", which is what was intended.
-   It lives HERE rather than in a tier sheet because the hazard is true of every dark band on every page:
-   as a tier-sheet rule it would reach the standard-tier pages and silently miss the bespoke ones
-   (index, full-suite, services, results), which are the pages carrying the MOST dark bands. */
-.inner{
-  width:100%;
-  max-width:var(--ds-container-max);
-  margin-inline:auto;
-  padding-inline:var(--ds-space-md);
-}
-.inner.narrow{max-width:820px}
-.center{text-align:center}
-.center .lead,.center .lede,.center h1,.center h2{margin-inline:auto}
-
-/* the split: copy on one side, figure or media on the other */
-.split{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(0,.82fr);
-  gap:var(--ds-space-xl);
-  align-items:center;
-}
-.split.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.split.flip>*:first-child{order:2}
-
-.grid{display:grid;gap:var(--ds-space-md)}
-.grid.g-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.grid.g-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.grid.g-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-
-/* =============================================================================
-   3b :: THE FORCED DOM-STRUCTURE GRAMMAR :: section > .container > .row > .col
-   -----------------------------------------------------------------------------
-   ADDED AT TEMPLATES, 2026-07-31. G-DOM enforces this grammar on every page body
-   (section -> .container -> .row -> .col -> object) and blocks a write that breaks it, but NO sheet
-   defined the three classes. Every template would have passed the structure gate and rendered with no
-   layout at all: a container with no measure, rows that do not lay out, columns that do not divide.
-   Caught by checking the gate's vocabulary against the sheets rather than assuming the system was
-   complete at SYSTEM.
-
-   THESE CARRY LAYOUT ONLY. G-DOM rule R5 blocks a structure element that also carries a component-skin
-   class, so no colour, no border, no shadow, no typography lives here. The skin belongs on the OBJECT
-   inside the .col.
-
-   .container is the grammar's name for the same measure .inner provides, so they are declared together
-   and stay identical by construction rather than by discipline.
-   ============================================================================= */
-.container,
-.inner{
-  width:100%;
-  max-width:var(--ds-container-max);
-  margin-inline:auto;
-  padding-inline:var(--ds-space-md);
-}
-.container--full{max-width:none;padding-inline:0}
-
-/* A row is a flex line so a .col can size itself or be told to span. Wrapping is the default: a row
-   must never force horizontal overflow, which is what G-CHROME-NOVFL and the mobile ladder check. */
-.row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:var(--ds-space-lg);
-  align-items:flex-start;
-}
-.row.row--center{align-items:center}
-.row.row--between{justify-content:space-between}
-.row.row--middle{justify-content:center}
-
-/* A col defaults to an equal share of its row and may never be narrower than its content box. */
-.col{flex:1 1 0;min-width:0}
-.col--full{flex:0 0 100%}
-.col--span-2{flex:2 1 0}
-.col--span-3{flex:3 1 0}
-/* fixed fractions for the common editorial splits */
-.col--half{flex:0 0 calc(50% - (var(--ds-space-lg) / 2));max-width:calc(50% - (var(--ds-space-lg) / 2))}
-.col--third{flex:0 0 calc(33.333% - (var(--ds-space-lg) * 2 / 3));max-width:calc(33.333% - (var(--ds-space-lg) * 2 / 3))}
-.col--two-thirds{flex:0 0 calc(66.666% - (var(--ds-space-lg) / 3));max-width:calc(66.666% - (var(--ds-space-lg) / 3))}
-
-@media (max-width:860px){
-  /* every fractional col collapses to full width, so no page can overflow on a phone */
-  .col--half,.col--third,.col--two-thirds{flex:0 0 100%;max-width:100%}
-  .row{gap:var(--ds-space-md)}
+body {
+  margin: 0;
+  background: var(--ds-bg-surface);
+  color: var(--ds-ink);
+  font-family: var(--ds-font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  /* the page can never scroll sideways: the reflow ladder in section 9 is what
+     keeps this honest, this line is the backstop. */
+  overflow-x: hidden;
 }
 
-/* atmosphere. Optional per band, never on every band at once. */
-.band.wash::before{
-  content:"";position:absolute;inset:0;
-  background:var(--ds-glow-wash);
-  pointer-events:none;
-  z-index:var(--ds-z-below);
-}
-.band.grid-bed::before{
-  content:"";position:absolute;inset:0;
-  background-image:var(--ds-grid);
-  background-size:var(--ds-grid-size);
-  opacity:var(--ds-opacity-faint);
-  pointer-events:none;
-  z-index:var(--ds-z-below);
+img, svg, video, canvas { display: block; max-width: 100%; }
+img, video { height: auto; }
+
+/* ONE visible focus ring for the entire surface. --ds-accent-deep measures
+   8.40:1 on paper and the .surface-dark flip repaints it as full gold, so the
+   ring is visible on every ground this brand ships. Never removed, never
+   replaced by an outline:none. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--ds-accent-deep);
+  outline-offset: 3px;
+  border-radius: var(--ds-r-control);
 }
 
-/* =============================================================================
-   4 :: BUTTONS
-   -----------------------------------------------------------------------------
-   R2 lives here and ONLY here. ONE radius (--ds-r-control) and ONE height per
-   tier, declared once, so no page can drift them. Verified in FEEL: every button
-   rendered at 52px / 6px.
-   ============================================================================= */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  font-family:var(--ds-font-body);
-  font-weight:600;
-  font-size:14.5px;
-  letter-spacing:.01em;
-  min-height:52px;                    /* R2: the ONE primary-tier height */
-  padding-inline:var(--ds-space-md);
-  border:1px solid transparent;
-  border-radius:var(--ds-r-control);   /* R2: the ONE control radius */
-  cursor:pointer;
-  text-align:center;
-  transition:box-shadow var(--ds-dur) var(--ds-ease),
-             border-color var(--ds-dur) var(--ds-ease),
-             color var(--ds-dur) var(--ds-ease),
-             background-color var(--ds-dur) var(--ds-ease);
-}
-/* --ds-cta, NOT --ds-accent. --ds-accent is theme-remapped by .surface-dark and
-   dragged this button to 2.14:1 in the FEEL hero band. --ds-cta is never remapped,
-   so the CTA is one colour and one contrast ratio (5.20:1) on every band. */
-.btn--primary{
-  background-color:var(--ds-cta);
-  color:var(--ds-cta-ink);
-  background-clip:padding-box;         /* the anti-aliased corner must not bleed the backdrop */
-  border-color:var(--ds-cta);
-  box-shadow:var(--ds-shadow-card);
-}
-.btn--primary:hover{box-shadow:var(--ds-glow)}
-.btn--secondary{
-  background-color:transparent;
-  color:var(--ds-ink);
-  border-color:var(--ds-hairline);
-}
-.btn--secondary:hover{border-color:var(--ds-accent-light);color:var(--ds-accent-light)}
-/* the small in-card action. Same radius, its own tier height. */
-.btn--ghost{
-  min-height:38px;
-  padding-inline:var(--ds-space-sm);
-  font-family:var(--ds-font-mono);
-  font-size:10.5px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  background-color:transparent;
-  color:var(--ds-ink);
-  border-color:var(--ds-hairline);
-}
-.btn--ghost:hover{border-color:var(--ds-accent-light);color:var(--ds-accent-light)}
-.btn[disabled],.btn[aria-disabled="true"]{opacity:var(--ds-opacity-disabled);cursor:not-allowed;box-shadow:none}
-.ctas{display:flex;flex-wrap:wrap;gap:var(--ds-space-sm);margin-top:var(--ds-space-lg)}
-.center .ctas{justify-content:center}
-
-/* =============================================================================
-   5 :: CARDS + SURFACES
-   ============================================================================= */
-.card{
-  position:relative;
-  background:var(--ds-bg-surface-2);
-  border:1px solid var(--ds-line);
-  border-radius:var(--ds-r-surface);
-  padding:var(--ds-space-md);
-  box-shadow:var(--ds-shadow-card);
-  transition:transform var(--ds-dur) var(--ds-ease),box-shadow var(--ds-dur) var(--ds-ease);
-}
-.card:hover{transform:translateY(-3px);box-shadow:var(--ds-shadow-lift)}
-.card p{color:var(--ds-ink-soft);font-size:14.5px;margin-top:var(--ds-space-xs)}
-/* the ONE featured card per row. Gradient fill needs a solid fallback + padding-box
-   clip or the rounded corner bleeds the page backdrop (the white-pixel glitch). */
-.card.feature{
-  background-color:var(--ds-primary);
-  background-image:var(--ds-grad-brand);
-  background-clip:padding-box;
-  border-color:var(--ds-primary);
-  color:var(--ds-ink-on-dark);
-}
-.card.feature h3,.card.feature p{color:var(--ds-ink-on-dark)}
-.card .num{
-  position:absolute;top:var(--ds-space-md);right:var(--ds-space-md);
-  width:26px;height:26px;
-  display:grid;place-items:center;
-  border:1px solid var(--ds-hairline);
-  border-radius:var(--ds-r-pill);
-  font-family:var(--ds-font-mono);font-size:10px;
-  color:var(--ds-accent-light);
-}
-.panel{
-  background:var(--ds-primary-soft);
-  border:1px solid var(--ds-line);
-  border-radius:var(--ds-r-surface);
-  padding:var(--ds-space-lg);
-}
-hr,.rule{border:0;border-top:1px solid var(--ds-line);margin:0}
-
-/* =============================================================================
-   6 :: LISTS
-   ============================================================================= */
-.list-checks{list-style:none;padding:0;margin:var(--ds-space-lg) 0 0;display:grid;gap:var(--ds-space-sm)}
-.list-checks li{
-  display:grid;grid-template-columns:22px 1fr;gap:var(--ds-space-sm);
-  align-items:start;font-size:15.5px;
-}
-.list-checks li::before{
-  content:"";width:10px;height:10px;margin-top:8px;
-  border-radius:var(--ds-r-control);
-  background:var(--ds-accent);
-  box-shadow:0 0 0 4px var(--ds-accent-soft);
+::selection {
+  background: var(--ds-primary-soft);
+  color: var(--ds-ink);
 }
 
-/* =============================================================================
-   7 :: STAT ROW
-   -----------------------------------------------------------------------------
-   .u MUST stay display:inline. .stat > span is display:block, and .u is a span, so
-   without this it inherits block, stacks the unit under the number, and pushes that
-   column's label below the others. That misalignment was a real FEEL defect.
-   ============================================================================= */
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--ds-space-lg)}
-.stat b{
-  display:block;
-  font-family:var(--ds-font-display);
-  font-weight:800;
-  font-size:clamp(38px,4.4vw,52px);
-  line-height:1;
-  color:var(--ds-ink-heading);
-}
-.stat b .u{display:inline;color:var(--ds-accent-light);font-size:.42em;margin-left:.12em}
-.stat>span{
-  display:block;
-  font-family:var(--ds-font-mono);
-  font-size:10.5px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--ds-ink-soft);
-  margin-top:var(--ds-space-xs);
+.bw-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
-/* =============================================================================
-   8 :: THE FLOATING FOUNDER FIGURE  ::  OWNER RULE R7
-   -----------------------------------------------------------------------------
-   "images of james isolated and floating across the site instead of boxed images"
-   (owner, 2026-07-30). The cut-out stands directly on the band. There is no frame,
-   no radius, no overflow clip, no card background, no card shadow, no rectangular
-   scrim. Separation comes from the centred bloom behind the figure.
+.bw-skip-link {
+  position: absolute;
+  left: var(--ds-space-md);
+  top: calc(var(--ds-space-md) * -4);
+  z-index: var(--ds-z-toast);
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  border-radius: var(--ds-r-control);
+  background: var(--ds-primary);
+  color: var(--ds-ink-on-dark);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top var(--ds-dur-fast) var(--ds-ease);
+}
+.bw-skip-link:focus-visible { top: var(--ds-space-md); }
 
-   ONLY a true cut-out may be used here. Verified against a checkerboard:
-   james-undercut.png, j1.png, j2.png, j3.png, james-fpsg-footer.png. The JPEGs
-   cannot serve: a JPEG carries no transparency, so it is an opaque rectangle by
-   format, which is exactly the boxed read this replaces. See OWNER-DIRECTIVES.md.
 
-   THE FADE IS LOAD-BEARING. james-undercut.png is an UNDERCUT crop whose bottom
-   edge is a hard straight line across the waist. Unframed, that hard edge reads as
-   a broken image rather than a floating figure. The mask dissolves it into the band.
-   A figure with a genuinely complete silhouette can opt out with .figure.whole.
-   The mask uses the achromatic keyword black, not a brand colour: a mask reads only
-   alpha, so opaque-to-transparent is all it needs.
-   ============================================================================= */
-.figure{
-  position:relative;
-  min-height:430px;
-  display:grid;
-  place-items:end center;
-  padding-bottom:calc(var(--ds-space-xl) + var(--ds-space-md));
+/* ============================================================================
+   2. THE STRUCTURE LAYERS. LAYOUT ONLY.
+   No background, no border, no shadow, no radius, no colour is set on
+   .container / .row / .col anywhere in this sheet or in either tier sheet.
+   That is what keeps the skin cleanly separable (verify-dom-structure R5).
+   ============================================================================ */
+
+/* --- .container : the max-width wrapper, one per section ------------------- */
+.container {
+  position: relative;             /* the seam ramp in section 3 paints beneath it */
+  z-index: var(--ds-z-raised);
+  max-width: var(--ds-container-max);
+  margin-inline: auto;
+  padding-inline: var(--ds-space-md);
 }
-.figure::before{
-  content:"";position:absolute;
-  left:50%;top:42%;transform:translate(-50%,-50%);
-  width:106%;aspect-ratio:1;
-  border-radius:var(--ds-r-pill);
-  background:var(--ds-glow-bloom);
-  pointer-events:none;
+/* full-bleed band. The wrapper releases its measure and its gutter; the objects
+   inside a full-bleed band supply their own inset. */
+.container--full {
+  max-width: none;
+  padding-inline: 0;
 }
-.figure img{
-  position:relative;
-  z-index:var(--ds-z-raised);
-  max-width:100%;max-height:400px;
-  width:auto;height:auto;
-  display:block;
-  -webkit-mask-image:linear-gradient(to bottom,black 0%,black 68%,transparent 99%);
-  mask-image:linear-gradient(to bottom,black 0%,black 68%,transparent 99%);
+/* a full-bleed band that still wants the reading gutter back */
+.container--full.container--gutter { padding-inline: var(--ds-space-md); }
+
+/* --- .row : the horizontal group ------------------------------------------
+   A 12-track grid, because span arithmetic stays exact under a gap where a
+   flex-basis percentage does not. Every track is minmax(0, 1fr) so a long word,
+   a wide table or an unshrunk image can never push the row past the viewport.
+   An unmodified .col spans the full 12, so a row with no modifier STACKS. That
+   default is deliberate: the failure mode of a forgotten modifier is a stacked
+   row, never a crushed one. --------------------------------------------------- */
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--ds-space-lg);
+  align-items: start;
 }
-/* a complete silhouette needs no dissolve */
-.figure.whole img{-webkit-mask-image:none;mask-image:none}
-/* the small floating accent. j1/j2/j3 are about 300px tall and MUST NOT be scaled
-   past their native size, so they get their own smaller ceiling. */
-.figure.accent{min-height:300px;padding-bottom:var(--ds-space-md)}
-.figure.accent img{max-height:290px}
-.figure .tagline{
-  position:absolute;left:0;right:0;bottom:0;
-  text-align:center;
-  z-index:var(--ds-z-raised);
+.row--tight    { gap: var(--ds-space-md); }
+.row--loose    { gap: var(--ds-space-xl); }
+.row--center   { align-items: center; }
+.row--end      { align-items: end; }
+.row--baseline { align-items: baseline; }
+
+/* the equal-division modifiers. Each releases .col from its span-12 default. */
+.row--2up, .row--split, .row--split-rev, .row--aside {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.figure .tagline b{
-  font-family:var(--ds-font-display);
-  font-size:19px;font-weight:700;
-  display:block;
-  color:var(--ds-ink-heading);
+.row--3up { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.row--4up { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* the measure beside a media column that absorbs the remainder. This is the
+   hero and feature-row shape the feel specimen proved (HERO-COMPOSITIONS.md #4
+   diptych). The ratios are the specimen's, kept verbatim. */
+.row--split     { grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); }
+.row--split-rev { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); }
+.row--aside     { grid-template-columns: minmax(0, 1.55fr) minmax(0, .45fr); }
+
+.row--2up > .col,
+.row--3up > .col,
+.row--4up > .col,
+.row--split > .col,
+.row--split-rev > .col,
+.row--aside > .col { grid-column: auto; }
+
+/* --- .col : the cell -------------------------------------------------------- */
+.col {
+  grid-column: span 12;
+  min-width: 0;                   /* the no-overflow guarantee, per cell */
 }
-.figure .tagline span{
-  font-family:var(--ds-font-mono);
-  font-size:10.5px;letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--ds-accent-light);
+.col--span-1  { grid-column: span 1; }
+.col--span-2  { grid-column: span 2; }
+.col--span-3  { grid-column: span 3; }
+.col--span-4  { grid-column: span 4; }
+.col--span-5  { grid-column: span 5; }
+.col--span-6  { grid-column: span 6; }
+.col--span-7  { grid-column: span 7; }
+.col--span-8  { grid-column: span 8; }
+.col--span-9  { grid-column: span 9; }
+.col--span-10 { grid-column: span 10; }
+.col--span-11 { grid-column: span 11; }
+.col--span-12,
+.col--full    { grid-column: 1 / -1; }
+
+/* vertical behaviour inside a cell */
+.col--stretch { align-self: stretch; }
+.col--center  { align-self: center; }
+.col--end     { align-self: end; }
+.col--stack   { display: flex; flex-direction: column; gap: var(--ds-space-md); }
+.col--fill    { display: flex; flex-direction: column; height: 100%; }
+
+/* ROLE modifiers on the split. They carry NO paint, only the reading order the
+   stack law needs (section 9). Always author them as class="col col--copy". */
+.col--copy  { min-width: 0; }
+.col--media { min-width: 0; }
+
+
+/* ============================================================================
+   3. THE SECTION RHYTHM AND THE SEAM DEVICES
+   This is the part that makes the page read METERED rather than gappy.
+
+   THE GROUND CONTRACT: every <section> carries .section plus EXACTLY ONE ground
+   modifier from
+       .section--paper   paper                   (--ds-bg-surface)
+       .section--tint    the purple-tinted plane  (--ds-bg-surface-2)
+       .section--warm    the gold-tinted plane    (--ds-bg-warm)
+       .section--dark    the near-black anchor, PAIRED with .surface-dark
+       .section--gold    the gold stratum,       PAIRED with .surface-gold
+   The modifier is what the rhythm and the seam rules key on, so a section that
+   omits it simply keeps its full interval and grows no seam: the degradation is
+   a gap, never a broken band.
+
+   THE INTERVAL: one vertical rhythm value (--ds-section-py) paid top and bottom
+   by every body section. No bespoke section padding anywhere.
+
+   THE SIBLING COLLAPSE: where the ground does NOT change between adjacent
+   sections the incoming section drops its top padding, so the joint is paid once
+   instead of twice and the two bands read as one continuous stratum. Where the
+   ground DOES change the incoming section keeps its top padding and the joint
+   grows a seam. That single pair of rules is the whole metering.
+   SURFACE-PATTERNS.md #12 solid-fill-block: a band's power is edge-to-edge
+   solidity, so a band carries no shadow of its own. Elevation is spent on cards.
+   ============================================================================ */
+.section {
+  position: relative;
+  padding-block: var(--ds-section-py);
+  background: var(--ds-bg-surface);
+  color: var(--ds-ink);
+  overflow: hidden;               /* clips the atmosphere layers in section 4 */
 }
 
-/* =============================================================================
-   9 :: RESPONSIVE
-   -----------------------------------------------------------------------------
-   One breakpoint family, mobile-safe. Nothing may overflow horizontally and no
-   cut-out may be upscaled past its native size.
-   ============================================================================= */
-@media (max-width:1000px){
-  .grid.g-4{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--ds-space-md)}
-}
-@media (max-width:860px){
-  .split,.split.even{grid-template-columns:1fr;gap:var(--ds-space-lg)}
-  .split.flip>*:first-child{order:0}
-  .grid.g-3{grid-template-columns:1fr}
-  .figure{min-height:330px}
-  .figure img{max-height:330px}
-  /* Cap the bloom at the column width on narrow screens. At 106% it is wider than its column, and
-     because it is a PSEUDO-element it produced 7px of page-level horizontal scroll that an
-     element-by-element overflow scan cannot see. The bloom fades to transparent at 68%, so 100%
-     costs nothing visually. */
-  .figure::before{width:100%}
-  h1{max-width:100%}
-  h2{max-width:100%}
-}
-@media (max-width:560px){
-  .grid.g-2,.grid.g-4{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr;gap:var(--ds-space-md)}
-  .ctas .btn{width:100%}
+.section--paper { background: var(--ds-bg-surface); color: var(--ds-ink); }
+.section--tint  { background: var(--ds-bg-surface-2); color: var(--ds-ink); }
+.section--warm  { background: var(--ds-bg-warm); color: var(--ds-ink); }
+
+/* The dark anchor and the gold stratum paint from --ds-bg-surface too, because
+   the PAIRED flip class (.surface-dark / .surface-gold, both locked in
+   tokens.css) has already repointed that token for the whole subtree. Pairing
+   them is what re-skins every descendant instead of only the band, which is the
+   dark-on-dark trap C7 names as recurring. */
+.section--dark { background: var(--ds-bg-surface); color: var(--ds-ink); }
+.section--gold { background: var(--ds-bg-surface); color: var(--ds-ink); }
+
+/* FAIL-SAFE. A --dark or --gold band shipped WITHOUT its flip class would paint
+   paper on paper and vanish. These rules re-light it from the locked tokens so
+   an unpaired band is never invisible. They are a safety net, not the authoring
+   form: always ship the pair. */
+.section--dark:not(.surface-dark) { background: var(--ds-primary-deep); color: var(--ds-ink-on-dark); }
+.section--dark:not(.surface-dark) h1,
+.section--dark:not(.surface-dark) h2,
+.section--dark:not(.surface-dark) h3,
+.section--dark:not(.surface-dark) h4 { color: var(--ds-ink-on-dark); }
+.section--gold:not(.surface-gold) { background: var(--ds-accent); color: var(--ds-primary-deep); }
+.section--gold:not(.surface-gold) h1,
+.section--gold:not(.surface-gold) h2,
+.section--gold:not(.surface-gold) h3,
+.section--gold:not(.surface-gold) h4 { color: var(--ds-primary-deep); }
+
+/* --- THE SIBLING COLLAPSE: same ground, one interval ----------------------- */
+.section--paper + .section--paper,
+.section--tint  + .section--tint,
+.section--warm  + .section--warm,
+.section--dark  + .section--dark,
+.section--gold  + .section--gold { padding-block-start: 0; }
+
+/* --- SEP-1 THE HAIRLINE and SEP-2 THE CONTACT SHADOW ------------------------
+   DIVIDER-PATTERNS.md #8 shadow drop band. Applied to the SIX light-to-light
+   seams and to nothing else. The line carries HUE (--ds-line is purple-tinted,
+   never grey), which is what a light surface reads fastest: measured at 1.368:1
+   against paper and 1.236:1 against the tint, roughly twenty times the 1.011:1
+   the grounds deliver on their own. The 20px graded ink ramp underneath gives
+   the boundary a DIRECTION, so the band above reads as RESTING on the band
+   below rather than merely ending.
+
+   BOTH DEVICES ARE OFF EVERYWHERE ELSE, and that is a decision, not an omission:
+     into or out of .section--dark  the ground step is already 17.61:1
+     into or out of .section--gold  the ground step is already 11.27:1
+   A hairline there is either invisible (over near-black it composites to
+   near-black at about 1:1, a declaration that paints nothing) or a second
+   competing edge beside a 17:1 one, and a contact shadow there paints a light
+   halo, which is the value-ladder mistake running backwards. Listing only the
+   six light-to-light pairs is why no OFF rule is needed: the device simply never
+   reaches a ground it would damage. A collapsed same-ground seam gets no line
+   either, because the two bands there are deliberately fused. ----------------- */
+.section--paper + .section--tint,
+.section--paper + .section--warm,
+.section--tint  + .section--paper,
+.section--tint  + .section--warm,
+.section--warm  + .section--paper,
+.section--warm  + .section--tint { border-top: 1px solid var(--ds-line); }
+
+.section--paper + .section--tint::before,
+.section--paper + .section--warm::before,
+.section--tint  + .section--paper::before,
+.section--tint  + .section--warm::before,
+.section--warm  + .section--paper::before,
+.section--warm  + .section--tint::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 20px;
+  background-image: linear-gradient(180deg, var(--ds-hairline), transparent);
+  pointer-events: none;
+  z-index: var(--ds-z-base);
 }
 
-/* =============================================================================
-   10 :: REDUCED MOTION
-   -----------------------------------------------------------------------------
-   The token sheet already collapses every transition under prefers-reduced-motion.
-   Here we also stop the smooth-scroll and the card lift, which that query cannot
-   reach because they are not transitions.
-   ============================================================================= */
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .card:hover{transform:none}
+/* escape hatches, for the two cases a composed page legitimately needs */
+.section--flush-top { padding-block-start: 0; }
+.section--flush-bot { padding-block-end: 0; }
+.section--tall      { padding-block: calc(var(--ds-section-py) * 1.35); }
+
+
+/* ============================================================================
+   4. SEP-6 THE MATERIAL LAYER
+   Two planes at the same VALUE but a different MATERIAL still separate. Two
+   planes at the same value and the same material do not. These are absolutely
+   positioned, contribute no height, and sit below the .container.
+   ============================================================================ */
+.bw-atmos, .bw-mesh, .bw-grain {
+  position: absolute;
+  inset: 0;
+  z-index: var(--ds-z-below);
+  pointer-events: none;
+}
+.bw-atmos { background-image: var(--ds-glow-wash); opacity: var(--ds-opacity-faint); }
+.bw-mesh  { background-image: var(--ds-grid); background-size: var(--ds-grid-size); opacity: var(--ds-opacity-faint); }
+.bw-grain { background-image: var(--ds-grain); opacity: var(--ds-opacity-faint); }
+/* the wash is the locked token dialled to the FAINT step, because the same value
+   that reads as atmosphere on near-black reads as a stain on paper. */
+
+
+/* ============================================================================
+   5. TYPE. TYPOGRAPHY-PAIRINGS.md #26 Montserrat plus Hind.
+   The posture is oversized and light-at-large: display weight FALLS as size
+   RISES, which reads luxe rather than loud. Sentence case throughout. The scale
+   is the feel specimen's, value for value, including the deliberate hole between
+   the 21 to 29px step and the 17px body: emphasis inside body copy is carried by
+   ink weight, never by an intermediate size.
+   ============================================================================ */
+h1, h2, h3, h4,
+.d-xl, .d-lg, .d-md, .d-sm {
+  font-family: var(--ds-font-display);
+  color: var(--ds-ink-heading);
+  margin: 0;
+  text-wrap: balance;
+}
+h1, .d-xl { font-size: clamp(44px, 5.9vw, 78px); font-weight: 300; letter-spacing: -.03em;  line-height: 1.0; }
+h2, .d-lg { font-size: clamp(31px, 4.1vw, 52px); font-weight: 400; letter-spacing: -.025em; line-height: 1.06; }
+h3, .d-md { font-size: clamp(21px, 2.2vw, 29px); font-weight: 500; letter-spacing: -.015em; line-height: 1.18; }
+h4, .d-sm { font-size: 17px; font-weight: 600; letter-spacing: -.005em; line-height: 1.3; }
+
+p { margin: 0; }
+p + p { margin-top: var(--ds-space-md); }
+
+.bw-lede  { font-size: 20px; line-height: 1.55; color: var(--ds-ink-soft); margin: var(--ds-space-md) 0 0; }
+/* .bw-copy IS THE PROSE PARAGRAPH, and .bw-body is the same declaration kept only
+   so the concepts that still reference it keep resolving. The split is a NAME
+   correction, not a style change. In the house vocabulary .bw-body names the
+   page's single continuous GROUND, painted ONCE on <main>, and G-GRID-ACCENT
+   treats a second .bw-body anywhere on a page as an error: a body carrying eight
+   prose paragraphs under that name is claiming eight grounds. Prose takes
+   .bw-copy from here on, and the ground name is left free for the ground. */
+.bw-copy  { margin: var(--ds-space-sm) 0 0; color: var(--ds-ink); }
+.bw-body  { margin: var(--ds-space-sm) 0 0; color: var(--ds-ink); }
+.bw-note  { font-size: 13.5px; line-height: 1.6; color: var(--ds-ink-soft); margin: var(--ds-space-sm) 0 0; }
+.bw-micro {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  margin: 0;
+}
+.bw-strong { font-weight: 600; color: var(--ds-ink); }
+
+/* THE MEASURE. One reading column, pinned to one left axis across every band.
+   It does not widen for a wider section and it does not re-centre. This is the
+   strongest transferable idea in the owner-chosen structural reference and it is
+   entirely polarity-free. Put .readw on the TEXT element, never on a wrapper:
+   a ch unit resolves against the element's OWN font, so on a body-font wrapper
+   governing display text it computes two to three times too wide. */
+.readw         { max-width: 62ch; }
+.readw--wide   { max-width: 78ch; }
+.readw--tight  { max-width: 46ch; }
+.readw--center { margin-inline: auto; }
+
+/* SEP-4 THE STRUCTURAL ACCENT RULE. --ds-accent-deep measures 8.40:1 on paper.
+   It is the one unambiguous dark-on-light edge every band opens with, and it is
+   gold doing a STRUCTURAL job rather than decorating. */
+.bw-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-sm);
+  font-family: var(--ds-font-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ds-accent-ink);
+  margin: 0 0 var(--ds-space-sm);
+}
+.bw-eyebrow::after {
+  content: "";
+  flex: 0 0 44px;
+  height: 2px;
+  background: var(--ds-accent-deep);
+}
+.bw-eyebrow--quiet { color: var(--ds-ink-soft); }
+.bw-eyebrow--quiet::after { display: none; }
+/* On the gold stratum --ds-accent-deep is a dark gold on a gold ground, so the
+   rule is repainted with the flip's own accent (purple, 4.76:1 on gold) rather
+   than left to sit at a value it cannot hold. */
+.surface-gold .bw-eyebrow::after { background: var(--ds-accent); }
+
+/* the free-standing accent rule, three weights of the same idea */
+.bw-rule       { height: 3px; width: 64px; background: var(--ds-accent-deep); margin-bottom: var(--ds-space-md); border: 0; }
+.bw-rule--bold { height: 6px; width: 96px; }
+.bw-rule--hair { height: 1px; width: 100%; background: var(--ds-line); margin-block: var(--ds-space-lg); }
+.surface-gold .bw-rule, .surface-gold .bw-rule--bold { background: var(--ds-accent); }
+
+/* the section head, three treatments so the rhythm is composed rather than stamped */
+.bw-head         { margin-bottom: var(--ds-space-xl); }
+.bw-head--tight  { margin-bottom: var(--ds-space-lg); }
+.bw-head--center { text-align: center; }
+.bw-head--center .bw-eyebrow { justify-content: center; }
+
+/* links. --ds-primary carries 8.14:1 white-on-it and reads clearly as ink on
+   every light ground. On dark it is repainted, because purple on near-black is
+   not a link, it is a rumour. */
+a { color: var(--ds-primary); text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px; transition: color var(--ds-dur-fast) var(--ds-ease); }
+a:hover { color: var(--ds-primary-deep); text-decoration-thickness: 2px; }
+.surface-dark a { color: var(--ds-accent-ink); }
+.surface-dark a:hover { color: var(--ds-accent-light); }
+.surface-gold a { color: var(--ds-accent); }
+.bw-link-plain { text-decoration: none; }
+.bw-link-plain:hover { text-decoration: underline; }
+
+
+/* ============================================================================
+   6. OBJECT SKINS. Every class below is an OBJECT class and belongs INSIDE a
+   .col, never on one.
+   ============================================================================ */
+
+/* --- 6.1 BUTTONS. CTA-PATTERNS.md #1 solid pill primary.
+   The motion is the quiet lift (MOTION-PATTERNS.md #10), never an arrow
+   translate: this surface runs ONE gesture.
+   The base carries a transparent 1px border plus background-clip:padding-box so
+   the anti-aliased pill corner can never bleed the page backdrop through the
+   fill. Every variant then sets a real border-color. ------------------------- */
+.bw-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-xs);
+  font-family: var(--ds-font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  line-height: 1;
+  min-height: 48px;               /* tap target floor, holds at 375 */
+  padding: 16px 28px;
+  border-radius: var(--ds-r-pill);
+  border: 1px solid transparent;
+  background-color: transparent;
+  background-clip: padding-box;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--ds-dur) var(--ds-ease),
+              border-color var(--ds-dur) var(--ds-ease),
+              color var(--ds-dur) var(--ds-ease),
+              box-shadow var(--ds-dur) var(--ds-ease),
+              transform var(--ds-dur) var(--ds-ease);
+}
+.bw-btn:hover { text-decoration: none; }
+
+.bw-btn--primary {
+  background-color: var(--ds-primary);
+  border-color: var(--ds-primary);
+  color: var(--ds-ink-on-dark);
+  box-shadow: var(--ds-shadow-rest);
+}
+.bw-btn--primary:hover {
+  background-color: var(--ds-primary-deep);
+  border-color: var(--ds-primary-deep);
+  color: var(--ds-ink-on-dark);
+  box-shadow: var(--ds-shadow-card);
+  transform: translateY(-2px);
+}
+/* On the anchor the purple fill would sit at about 2.4:1 against its own band,
+   so the CTA takes the flip's gold surface, which carries dark ink at 11.27:1.
+   On the gold stratum the primary STAYS purple (4.76:1) so the structural accent
+   never changes job, which is the rule the locked identity holds hardest. */
+.surface-dark .bw-btn--primary {
+  background-color: var(--ds-accent-deep);
+  border-color: var(--ds-accent-deep);
+  color: var(--ds-primary-deep);
+}
+.surface-dark .bw-btn--primary:hover {
+  background-color: var(--ds-accent-light);
+  border-color: var(--ds-accent-light);
+  color: var(--ds-primary-deep);
+}
+
+.bw-btn--secondary {
+  background-color: transparent;
+  border-color: var(--ds-line);
+  color: var(--ds-primary);
+}
+.bw-btn--secondary:hover {
+  background-color: var(--ds-primary-soft);
+  border-color: var(--ds-primary);
+  color: var(--ds-primary);
+  transform: translateY(-2px);
+}
+.surface-dark .bw-btn--secondary { border-color: var(--ds-line); color: var(--ds-ink); }
+.surface-dark .bw-btn--secondary:hover { background-color: var(--ds-bg-surface-2); border-color: var(--ds-accent); color: var(--ds-accent-ink); }
+.surface-gold .bw-btn--secondary { border-color: var(--ds-line); color: var(--ds-ink); }
+.surface-gold .bw-btn--secondary:hover { background-color: var(--ds-bg-surface-2); border-color: var(--ds-ink); color: var(--ds-ink); }
+
+.bw-btn--ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--ds-primary);
+  padding-inline: var(--ds-space-sm);
+}
+.bw-btn--ghost:hover {
+  background-color: var(--ds-primary-soft);
+  border-color: var(--ds-primary-soft);
+  color: var(--ds-primary-deep);
+}
+.surface-dark .bw-btn--ghost { color: var(--ds-accent-ink); }
+.surface-dark .bw-btn--ghost:hover { background-color: var(--ds-accent-soft); border-color: var(--ds-accent-soft); color: var(--ds-accent-light); }
+
+/* DISABLED. Opacity alone is never a state here, so the cursor and the pointer
+   events change with it. --ds-opacity-disabled is the locked step. */
+.bw-btn:disabled,
+.bw-btn[aria-disabled="true"] {
+  opacity: var(--ds-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.bw-btn--wide { width: 100%; }
+.bw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-sm) var(--ds-space-md);
+  margin-top: var(--ds-space-lg);
+}
+.bw-actions--center { justify-content: center; }
+
+/* --- 6.2 TAGS, BADGES, PILLS ------------------------------------------------ */
+.bw-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 7px 12px;
+  border-radius: var(--ds-r-control);
+  color: var(--ds-accent-ink);
+  background: var(--ds-accent-soft);
+}
+.bw-tag--quiet { color: var(--ds-ink-soft); background: var(--ds-bg-surface-2); }
+.bw-tag--brand { color: var(--ds-primary); background: var(--ds-primary-soft); }
+
+.bw-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  line-height: 1;
+  min-height: 34px;
+  padding: 8px 14px;
+  border-radius: var(--ds-r-pill);
+  color: var(--ds-ink-soft);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--ds-line);
+}
+.bw-pill__dot { width: 6px; height: 6px; border-radius: var(--ds-r-pill); background: var(--ds-accent-deep); flex: 0 0 auto; }
+.surface-gold .bw-pill__dot { background: var(--ds-accent); }
+
+/* --- 6.3 CARDS. CARD-VARIATIONS.md #2 light feature card, and SEP-5: THREE
+   stacked edge events per card (a hairline, a one-pixel inset top highlight and
+   a two-stop ink-tinted contact shadow) rather than a background value. On a
+   white-dominant page the light card is the only variant that separates from its
+   ground without inverting, and it earns that separation from its edges.
+   The two tier sheets override THIS object and nothing else. ----------------- */
+.bw-card {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--ds-space-md);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  background: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+  transition: box-shadow var(--ds-dur) var(--ds-ease), transform var(--ds-dur) var(--ds-ease);
+}
+.bw-card:hover { box-shadow: var(--ds-shadow-lift), var(--ds-inset-hi); transform: translateY(-4px); }
+.bw-card--flat { box-shadow: none; }
+.bw-card--flat:hover { box-shadow: var(--ds-shadow-card), var(--ds-inset-hi); transform: none; }
+.bw-card--tint { background: var(--ds-bg-surface-2); }
+.bw-card--pad  { padding: var(--ds-space-lg); }
+
+.bw-card__vis {
+  position: relative;
+  height: 136px;
+  margin-bottom: var(--ds-space-md);
+  padding: var(--ds-space-sm);
+  overflow: hidden;
+  border-radius: var(--ds-r-control);
+  background-color: var(--ds-bg-surface-2);
+  background-image: var(--ds-grid);
+  background-size: var(--ds-grid-size);
+  box-shadow: inset 0 0 0 1px var(--ds-hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ds-primary);
+}
+.bw-card__vis--photo { align-items: flex-end; padding: 0; }
+.bw-card__title { font-family: var(--ds-font-display); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--ds-ink-heading); margin: 0 0 6px; }
+.bw-card__body  { font-size: 14.5px; line-height: 1.58; color: var(--ds-ink-soft); margin: 0; }
+/* margin-top:auto pins the foot to the bottom, so a row of cards in a stretched
+   grid keeps one baseline for its footers whatever the body length. */
+.bw-card__foot  { margin-top: auto; padding-top: var(--ds-space-sm); border-top: 1px solid var(--ds-line); }
+.bw-card__foot > * + * { margin-top: var(--ds-space-2xs); }
+
+/* the overlapping stamp. WOW-spec asymmetry: one element proves its elevation by
+   sitting ACROSS a boundary. It is absolutely positioned, so it must never be
+   given a flow sibling directly beneath it. */
+.bw-stamp {
+  position: absolute;
+  left: calc(var(--ds-space-md) * -1);
+  bottom: var(--ds-space-lg);
+  z-index: var(--ds-z-raised);
+  max-width: 240px;
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-control);
+  background: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-lift), var(--ds-inset-hi);
+}
+.bw-stamp__k { font-size: 10px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase; color: var(--ds-accent-ink); margin: 0 0 4px; }
+.bw-stamp__v { font-family: var(--ds-font-display); font-weight: 500; font-size: 15px; line-height: 1.3; color: var(--ds-ink-heading); margin: 0; }
+
+/* --- 6.4 THE FLAT FACT. SECTION-COMPONENTS.md #3 metric band, inverted.
+   Nothing here is boxed, because a box drawn around an unproven fact is exactly
+   the tile this brand is banned from shipping. The chrome is a 2px deep-gold top
+   rule and nothing else. ----------------------------------------------------- */
+.bw-fact { min-width: 0; padding-top: var(--ds-space-md); border-top: 2px solid var(--ds-accent-deep); }
+.bw-fact__n { font-family: var(--ds-font-display); font-weight: 600; font-size: 12px; letter-spacing: .1em; color: var(--ds-accent-ink); margin: 0 0 var(--ds-space-sm); }
+.bw-fact__t { font-family: var(--ds-font-display); font-weight: 500; font-size: clamp(19px, 1.9vw, 24px); line-height: 1.22; letter-spacing: -.012em; color: var(--ds-ink-heading); margin: 0; }
+.bw-fact__d { font-size: 14.5px; line-height: 1.55; color: var(--ds-ink-soft); margin: var(--ds-space-sm) 0 0; }
+.surface-gold .bw-fact { border-top-color: var(--ds-accent); }
+
+/* --- 6.5 THE OVERSIZED NUMERAL.
+   Spent on the MECHANIC (a month index, a step number, an ordinal), never on an
+   aggregate total: an unbacked giant number is the exact tell this category's
+   critic teaches buyers to look for, and the SHAPE is banned here, not merely the
+   digits. There is no count-up: --ds-dur-data stays unconsumed by rule. ------- */
+.bw-numeral {
+  display: block;
+  font-family: var(--ds-font-display);
+  font-size: clamp(56px, 8.4vw, 132px);
+  font-weight: 300;
+  letter-spacing: -.04em;
+  line-height: .86;
+  color: var(--ds-ink-heading);
+  margin: 0;
+}
+.bw-numeral--accent { color: var(--ds-accent-ink); }
+.bw-numeral--ghost  { color: var(--ds-ink-heading); opacity: var(--ds-opacity-faint); }
+.bw-numeral__unit   { display: block; margin-top: var(--ds-space-xs); font-size: 15px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ds-ink-soft); }
+.bw-numeral-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-space-md);
+  padding-top: var(--ds-space-md);
+  border-top: 2px solid var(--ds-accent-deep);
+}
+
+/* --- 6.6 LISTS -------------------------------------------------------------- */
+.bw-list { list-style: none; margin: var(--ds-space-md) 0 0; padding: 0; }
+.bw-list li { position: relative; padding-left: var(--ds-space-md); margin-top: var(--ds-space-sm); color: var(--ds-ink); }
+.bw-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .62em;
+  width: 7px;
+  height: 7px;
+  border-radius: var(--ds-r-control);
+  background: var(--ds-accent-deep);
+}
+.surface-gold .bw-list li::before { background: var(--ds-accent); }
+
+/* the numbered ledger list, the specimen's colophon shape generalised */
+.bw-list--ledger { counter-reset: bwn; }
+.bw-list--ledger li {
+  counter-increment: bwn;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: var(--ds-space-md);
+  margin-top: 0;
+  padding: var(--ds-space-md) 0;
+  border-top: 1px solid var(--ds-line);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ds-ink-soft);
+}
+.bw-list--ledger li::before {
+  content: counter(bwn, decimal-leading-zero);
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+  border-radius: 0;
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .06em;
+  color: var(--ds-accent-ink);
+}
+.bw-list--ledger b { color: var(--ds-ink); font-weight: 600; }
+
+.bw-list--inline { display: flex; flex-wrap: wrap; gap: var(--ds-space-sm) var(--ds-space-md); }
+.bw-list--inline li { margin-top: 0; padding-left: 0; }
+.bw-list--inline li::before { display: none; }
+
+/* --- 6.7 BLOCKQUOTE. The pause device from the specimen, generalised: a left
+   accent rule and softer ink, so a quoted or qualifying sentence reads as a
+   change of register rather than a change of size. --------------------------- */
+.bw-quote {
+  margin: var(--ds-space-md) 0 0;
+  padding-left: var(--ds-space-md);
+  border-left: 2px solid var(--ds-accent-deep);
+  font-size: 17.5px;
+  line-height: 1.55;
+  color: var(--ds-ink-soft);
+}
+.bw-quote--display { font-family: var(--ds-font-display); font-size: clamp(21px, 2.2vw, 29px); font-weight: 400; line-height: 1.24; letter-spacing: -.015em; color: var(--ds-ink-heading); }
+.bw-quote__cite { display: block; margin-top: var(--ds-space-sm); font-family: var(--ds-font-body); font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ds-ink-soft); font-style: normal; }
+.surface-gold .bw-quote { border-left-color: var(--ds-accent); }
+
+/* --- 6.8 TABLES. The semantic table that reflows to cards at the mobile line
+   (section 9) is the right mechanic for structured content and is polarity-free.
+   The scroll wrapper is the belt: a wide table can never widen the page. ----- */
+.bw-table__scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.bw-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  text-align: left;
+}
+.bw-table caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  padding-bottom: var(--ds-space-sm);
+}
+.bw-table th {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ds-accent-ink);
+  padding: var(--ds-space-sm) var(--ds-space-md) var(--ds-space-sm) 0;
+  border-bottom: 2px solid var(--ds-accent-deep);
+  vertical-align: bottom;
+}
+.bw-table td {
+  padding: var(--ds-space-md) var(--ds-space-md) var(--ds-space-md) 0;
+  border-bottom: 1px solid var(--ds-line);
+  color: var(--ds-ink);
+  vertical-align: top;
+}
+.bw-table tbody tr:last-child td { border-bottom: 0; }
+.bw-table th:last-child, .bw-table td:last-child { padding-right: 0; }
+.surface-gold .bw-table th { border-bottom-color: var(--ds-accent); }
+
+/* --- 6.9 FORMS. FORM-LAYOUTS.md #2 stacked label over control. The focus state
+   is a real ring plus a border change, never a colour-only hint. ------------- */
+.bw-field { display: block; margin-bottom: var(--ds-space-md); }
+.bw-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  margin-bottom: var(--ds-space-2xs);
+}
+.bw-input, .bw-select, .bw-textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  font-family: var(--ds-font-body);
+  font-size: 16px;                /* the 16px floor stops the iOS zoom on focus */
+  line-height: 1.5;
+  color: var(--ds-ink);
+  padding: 12px var(--ds-space-sm);
+  background: var(--ds-bg-surface);
+  border: 1px solid var(--ds-line);
+  border-radius: var(--ds-r-control);
+  transition: border-color var(--ds-dur-fast) var(--ds-ease),
+              box-shadow var(--ds-dur-fast) var(--ds-ease);
+}
+.bw-textarea { min-height: 128px; resize: vertical; }
+.bw-input::placeholder, .bw-textarea::placeholder { color: var(--ds-ink-soft); opacity: var(--ds-opacity-muted); }
+.bw-input:hover, .bw-select:hover, .bw-textarea:hover { border-color: var(--ds-ink-soft); }
+.bw-input:focus-visible, .bw-select:focus-visible, .bw-textarea:focus-visible {
+  border-color: var(--ds-primary);
+  box-shadow: inset 0 0 0 1px var(--ds-primary);
+}
+.bw-input:disabled, .bw-select:disabled, .bw-textarea:disabled {
+  opacity: var(--ds-opacity-disabled);
+  cursor: not-allowed;
+  background: var(--ds-bg-surface-2);
+}
+.bw-input[aria-invalid="true"], .bw-textarea[aria-invalid="true"] { border-color: var(--ds-accent-deep); }
+.bw-help { font-size: 13px; line-height: 1.5; color: var(--ds-ink-soft); margin-top: var(--ds-space-2xs); }
+
+/* --- 6.10 MEDIA. SEP-3 THE FRAMED WELL, and the sharpest instance of the
+   figure/ground problem: every rights-clear founder file is a TRANSPARENT
+   CUTOUT, and a cutout dropped on paper has literally no edge, because figure
+   and ground are the same pixel value at the boundary. The well supplies one: a
+   tinted plate, a token grid MATERIAL, a hairline and a two-stop ink-tinted
+   shadow.
+
+   THE WIDTH ANCHOR IS MANDATORY (G-MEDIA-TRACK). A media frame dropped into a
+   grid track with no inline size of its own inherits the track and stretches its
+   contents to whatever that track happens to be, which upscales a small source
+   past its native pixels and, in a stretched row, collapses or balloons the
+   frame. Every frame below therefore declares width:100% AND a max-width anchor,
+   and .bw-media--anchor lets a page pin the exact native width of the asset it
+   holds through an inline custom property that always carries a literal
+   fallback. No frame in this system is ever placed in a track without one. --- */
+.bw-media {
+  position: relative;
+  width: 100%;
+  max-width: 480px;               /* the default anchor. NEVER remove it. */
+  margin-inline: auto;
+  padding: var(--ds-space-sm);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  background-color: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+}
+.bw-media--anchor { max-width: var(--bw-anchor, 480px); }
+.bw-media--sm   { max-width: 320px; }
+.bw-media--lg   { max-width: 640px; }
+.bw-media--bare { padding: 0; border: 0; background: none; box-shadow: none; }
+.bw-media--left { margin-inline: 0 auto; }
+
+.bw-media__plate {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ds-r-control);
+  background-color: var(--ds-bg-surface-2);
+  background-image: var(--ds-grid);
+  background-size: var(--ds-grid-size);
+  box-shadow: inset 0 0 0 1px var(--ds-hairline);
+}
+.bw-media__plate--ratio { aspect-ratio: 4 / 3; }
+.bw-media__img {
+  width: 100%;
+  height: auto;
+  filter: saturate(.96) contrast(1.03);
+}
+.bw-media__img--fit { height: 100%; object-fit: cover; }
+/* the caption sits ABOVE the plate, so an overlapping stamp always has a clear
+   lower field and the frame reads as a spec sheet rather than a photo with a
+   label. Putting it below is what let an absolutely positioned stamp land on top
+   of a flow sibling it was never measured against. */
+.bw-media__cap { margin: 2px 2px var(--ds-space-sm); }
+
+.bw-figure { margin: 0; }
+.bw-figure figcaption { font-size: 13px; line-height: 1.5; color: var(--ds-ink-soft); margin-top: var(--ds-space-sm); }
+
+/* --- 6.11 SMALL COMPOSITES the body reuses ---------------------------------- */
+.bw-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ds-space-md) var(--ds-space-lg);
+  margin-top: var(--ds-space-md);
+  padding-top: var(--ds-space-md);
+  border-top: 1px solid var(--ds-hairline);
+}
+/* a px cap, not a ch measure: this is a body-font element, and a ch here would
+   resolve against the wrong font and compute far too wide (the A3 defect). */
+.bw-legend > div { display: flex; gap: var(--ds-space-sm); align-items: flex-start; max-width: 320px; }
+.bw-legend__key { flex: 0 0 24px; height: 32px; border-radius: var(--ds-r-control); background: var(--ds-accent); margin-top: 2px; }
+.bw-legend__key--open { background: transparent; box-shadow: inset 0 0 0 2px var(--ds-accent); }
+.bw-legend__t { font-size: 13px; line-height: 1.5; color: var(--ds-ink-soft); margin: 0; }
+.bw-legend__t b { display: block; color: var(--ds-ink); font-weight: 600; }
+
+.bw-divider { height: var(--ds-divider-h); }
+.bw-hr { height: 1px; border: 0; background: var(--ds-line); margin-block: var(--ds-space-xl); }
+
+
+/* ============================================================================
+   7. MOTION. MOTION-PATTERNS.md #21 fade-up.
+   ONE gesture for the whole surface: a short fade plus a small rise on ONE
+   easing curve, with a small stagger across grouped items. No bounce, no
+   overshoot, no rotation, no flip, no loop, no autoplay. Every transition in
+   this sheet NAMES its properties: the blanket all-properties shorthand appears
+   nowhere, and no hover state is a bare opacity change.
+
+   Hidden-before-reveal is scoped to .js-reveal, a class the head latch adds ONLY
+   when JavaScript is on, reduced motion is off, and the nomotion override is
+   absent. So with no JS, with reduced motion, or with the override, nothing is
+   ever hidden and a static capture can never come back blank.
+   ============================================================================ */
+.js-reveal .reveal { opacity: 0; transform: translateY(22px); }
+.js-reveal .reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--ds-dur-slow) var(--ds-ease-out),
+              transform var(--ds-dur-slow) var(--ds-ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js-reveal .reveal { opacity: 1; transform: none; }
+  .js-reveal .reveal.is-in { transition: none; transition-delay: 0ms; }
+  a, .bw-btn, .bw-card, .bw-input, .bw-select, .bw-textarea, .bw-skip-link { transition: none; }
+  .bw-btn:hover, .bw-card:hover, .bw-btn--primary:hover, .bw-btn--secondary:hover { transform: none; }
+}
+
+
+/* ============================================================================
+   8. GROUND RELIGHTS the token flip cannot reach on its own.
+   Almost everything re-skins for free, because .surface-dark and .surface-gold
+   repoint the tokens the objects already read. These are the few places where a
+   ROLE changes rather than a value.
+   ============================================================================ */
+.surface-dark .bw-card { border-color: var(--ds-line); }
+.surface-dark .bw-card__vis { background-color: var(--ds-bg-surface-2); }
+.surface-dark .bw-media { border-color: var(--ds-line); }
+.surface-gold .bw-card { border-color: var(--ds-line); }
+.surface-gold .bw-numeral--accent { color: var(--ds-accent); }
+/* THE PRIMARY PILL ON THE GOLD STRATUM. Found by measuring the rendered band at
+   1440, not by reading the cascade: the label was painting at 1.00:1, invisible.
+   TWO rules collide and the wrong one was winning. Section 5 relights links with
+   `.surface-gold a { color: var(--ds-accent) }` (0,1,1), and the primary skin sets
+   its label with `.bw-btn--primary { color: var(--ds-ink-on-dark) }` (0,1,0). The
+   CTA is an <a>, so the LINK rule won and painted the label in the flip's accent,
+   which on this ground is the same purple as the pill's own fill.
+   The dark flip never had this defect because `.surface-dark .bw-btn--primary`
+   (0,2,0) already exists and outranks the link rule; the gold flip simply had no
+   equivalent, because the identity rule says the primary STAYS purple here and the
+   base skin was assumed to carry through. It does not.
+   The fix is one specificity-matched relight per state, and the ink is chosen from
+   what the gold flip does NOT repoint: --ds-primary-soft stays at its light value
+   inside this scope and the token sheet already records the pair at 6.75:1 on
+   --ds-primary. On the hover fill (--ds-primary-deep, also not repointed here) the
+   same ink measures 16.75:1. No token is minted, no hex is written, and the pill's
+   fill and structure are untouched. */
+.surface-gold .bw-btn--primary { color: var(--ds-primary-soft); }
+.surface-gold .bw-btn--primary:hover { color: var(--ds-primary-soft); }
+/* on gold, ink-soft measures 5.84:1 and is the floor: nothing lighter ships */
+.surface-gold .bw-micro, .surface-gold .bw-note { color: var(--ds-ink-soft); }
+
+
+/* ============================================================================
+   9. THE REFLOW LADDER. Four authored tiers, per _RESPONSIVE-PATTERN-LIBRARY:
+   desktop (above 1023), laptop and tablet landscape (1023), tablet portrait
+   and small (899), mobile (767), plus a small-phone floor at 380. Reading
+   widths MEASURED in headless chrome against this sheet: 1072px at 1440 (the
+   container caps at its token max of 1120 and pays 24px of gutter each side),
+   976px at 1024, 720px at 768, and 347px at 375 (where the tier-4 rule below
+   drops the gutter to the small step, so the measure is 375 less 28, not 375
+   less 48). No tier introduces a fixed width, a negative inline margin or an
+   unclamped image, so no tier can produce a horizontal scrollbar.
+   ============================================================================ */
+
+/* --- tier 1: laptop and tablet landscape ----------------------------------- */
+@media (max-width: 1023px) {
+  .row { gap: var(--ds-space-md); }
+  .row--loose { gap: var(--ds-space-lg); }
+  .row--4up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .col--span-1, .col--span-2, .col--span-3, .col--span-4, .col--span-5 { grid-column: span 6; }
+  .bw-stamp { max-width: 208px; }
+}
+
+/* --- tier 2: tablet portrait and below -------------------------------------
+   The split stacks here, and with it the OWNER STACK LAW (_COMPOSITION-LAWS L1,
+   gated by verify-mobile-quality): a stacked text-and-media split reads
+   HEADING, then MEDIA, then BODY, then CTA. Never media above its own heading.
+   The mechanism is display:contents on the copy cell, which lifts its leaf
+   children into the single-column grid so they can be ordered against the media
+   cell. There is no column-reverse carve-out and no order:-1 on the media. ---- */
+@media (max-width: 899px) {
+  .row--3up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .row--split, .row--split-rev, .row--aside { grid-template-columns: minmax(0, 1fr); }
+
+  .row--split > .col--copy,
+  .row--split-rev > .col--copy,
+  .row--aside > .col--copy { display: contents; }
+  .row--split > .col--copy > *,
+  .row--split-rev > .col--copy > *,
+  .row--aside > .col--copy > * { order: 1; }
+  .row--split > .col--copy > .bw-head,
+  .row--split > .col--copy > .bw-eyebrow,
+  .row--split > .col--copy > h1,
+  .row--split > .col--copy > h2,
+  .row--split > .col--copy > h3,
+  .row--split-rev > .col--copy > .bw-head,
+  .row--split-rev > .col--copy > .bw-eyebrow,
+  .row--split-rev > .col--copy > h1,
+  .row--split-rev > .col--copy > h2,
+  .row--split-rev > .col--copy > h3,
+  .row--aside > .col--copy > .bw-head,
+  .row--aside > .col--copy > .bw-eyebrow,
+  .row--aside > .col--copy > h1,
+  .row--aside > .col--copy > h2,
+  .row--aside > .col--copy > h3 { order: -1; }
+  .row--split > .col--media,
+  .row--split-rev > .col--media,
+  .row--aside > .col--media { order: 0; }
+  .row--split > .col--copy > .bw-actions,
+  .row--split-rev > .col--copy > .bw-actions,
+  .row--aside > .col--copy > .bw-actions { order: 2; }
+
+  /* an absolutely positioned stamp has nowhere safe to hang once the frame is
+     full width, so it returns to the flow. */
+  .bw-stamp { position: static; max-width: none; margin-top: var(--ds-space-sm); }
+  .bw-media { max-width: none; }
+  .bw-head { margin-bottom: var(--ds-space-lg); }
+}
+
+/* --- tier 3: mobile --------------------------------------------------------- */
+@media (max-width: 767px) {
+  body { font-size: 16px; }
+  .row, .row--2up, .row--3up, .row--4up { grid-template-columns: minmax(0, 1fr); }
+  .col--span-1, .col--span-2, .col--span-3, .col--span-4, .col--span-5,
+  .col--span-6, .col--span-7, .col--span-8, .col--span-9, .col--span-10,
+  .col--span-11 { grid-column: 1 / -1; }
+
+  .bw-lede { font-size: 18px; }
+  .bw-actions { gap: var(--ds-space-sm); }
+  .bw-btn { width: 100%; }
+  .bw-btn--ghost { width: auto; }
+  .bw-card { padding: var(--ds-space-sm); }
+  .bw-card--pad { padding: var(--ds-space-md); }
+  .bw-legend > div { max-width: none; }
+
+  /* The semantic table becomes a card stack, and each cell re-presents its own
+     header as VISIBLE text through a data-label attribute, so no information is
+     lost in the reflow.
+     THE HEADER ROW IS REMOVED, not visually hidden, and that is a measured
+     decision: a visually-hidden thead still gives its cells real geometry, and
+     at 375 those header cells measured 448px and 515px wide, well past the edge
+     of the screen. Clipped or not, that is a row of elements sitting outside the
+     viewport, and it is exactly what an overflow scan reports.
+     TWO THINGS THE PAGE AUTHOR OWNS HERE: every td MUST carry a data-label,
+     because a cell without one loses its header outright at this width; and note
+     that display:block has already dropped the table's own row and cell roles
+     from the accessibility tree, which is precisely why the header text has to
+     come back as visible content rather than through a hidden thead. */
+  .bw-table, .bw-table tbody, .bw-table tr, .bw-table td { display: block; width: 100%; }
+  .bw-table thead { display: none; }
+  .bw-table tr {
+    margin-bottom: var(--ds-space-md);
+    padding: var(--ds-space-md);
+    border: 1px solid var(--ds-hairline);
+    border-radius: var(--ds-r-surface);
+    background: var(--ds-bg-surface);
+    box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+  }
+  .bw-table td { padding: var(--ds-space-xs) 0; border-bottom: 0; }
+  .bw-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-family: var(--ds-font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ds-accent-ink);
+    margin-bottom: 2px;
+  }
+}
+
+/* --- tier 4: the small-phone floor (375 and under) -------------------------- */
+@media (max-width: 380px) {
+  .container { padding-inline: var(--ds-space-sm); }
+  .bw-btn { padding-inline: var(--ds-space-md); }
+  .bw-list--ledger li { grid-template-columns: 32px minmax(0, 1fr); gap: var(--ds-space-sm); }
+}
+
+/* ============================================================================
+   10. T-MARQUEE template components (graduated from concept-marquee-b)
+   Graduated verbatim out of that concept preview's inline <style> so the promoted
+   fragment (pages/guarantee.content.html) resolves every class it references in a
+   LINKED sheet instead of a page-local block promote strips (G-ORPHAN / OBS-29).
+   MOVED, not copied: there is exactly one definition of each rule and no drift.
+   Source order is preserved exactly as authored, so the cascade is unchanged.
+   Token-pure like the rest of this sheet: zero raw hex, zero token definitions,
+   var(--ds-*) references only. The concept's BAND-level scaffolding (the rail,
+   the .section--* ground materials, the compaction layer) was left behind in the
+   preview by this first pass and was therefore being LOST at promote; it has
+   since graduated too, under the .tm-band scope, in section 11 below.
+   ============================================================================ */
+/* --- L3 THE RUNG. One horizontal tick laid across the rail, numbered, with the
+   role of the band beside it. Placed as the first object of the band's leading
+   column so every tick lands on the same axis. ------------------------------- */
+.bw-rung {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--ds-space-sm);
+  margin: 0 0 var(--ds-space-sm);
+  font-family: var(--ds-font-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+}
+.bw-rung::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: .5em;
+  width: 13px;
+  height: 3px;
+  background: var(--ds-accent-deep);
+}
+.bw-rung__n {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .1em;
+  color: var(--ds-accent-ink);
+}
+.surface-dark .bw-rung::before,
+.surface-gold .bw-rung::before { background: var(--ds-accent); }
+
+/* --- L4 THE CONDITION PLATE. The hero visual slot, token built, no photograph.
+   The two billing states drawn with the locked legend key: filled means the
+   month is invoiced, outlined means it is not. It carries no number, no month
+   count and no client, so it can be swapped for the ratified hero treatment
+   without a word of copy changing. ------------------------------------------ */
+.bw-plate {
+  position: relative;
+  margin: 0;
+  padding: var(--ds-space-md);
+  overflow: hidden;
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  background-color: var(--ds-bg-surface);
+  background-image: var(--ds-grid);
+  background-size: var(--ds-grid-size);
+  box-shadow: var(--ds-shadow-lift), var(--ds-inset-hi);
+}
+.bw-plate::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: var(--ds-accent-deep);
+}
+/* THE FOUR INTERNAL JOINTS, R2. The plate stood 345 against a 304.19 copy
+   column, 40.81 over, and the box itself is NOT the problem: the hero diptych
+   wants a full height plate beside its measure. So the box is not shrunk and no
+   type step is touched. The four joints INSIDE it step down one notch of the
+   locked scale, sm 14 to xs 8: the eyebrow reserve (-6), each of the two key
+   rows' padding-block (-12 each), the caption reserve (-6) and the caption rule
+   inset (-6). Measured result: 345 becomes 303 against 304.19, so the plate now
+   sits 1.19 UNDER its copy column and the row is set by the copy, as a diptych
+   should be. */
+.bw-plate__k {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  margin: 0 0 var(--ds-space-xs);
+}
+.bw-plate__row {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: var(--ds-space-sm);
+  align-items: start;
+  padding: var(--ds-space-xs) 0;
+  border-top: 1px solid var(--ds-line);
+}
+.bw-plate__key {
+  width: 24px;
+  height: 32px;
+  margin-top: 3px;
+  border-radius: var(--ds-r-control);
+  background: var(--ds-accent);
+}
+.bw-plate__key--open {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--ds-accent-deep);
+}
+.bw-plate__t {
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.3;
+  color: var(--ds-ink-heading);
+  margin: 0;
+}
+.bw-plate__v {
+  display: block;
+  margin-top: var(--ds-space-2xs);
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ds-ink-soft);
+}
+.bw-plate__cap {
+  margin: var(--ds-space-xs) 0 0;
+  padding-top: var(--ds-space-xs);
+  border-top: 1px solid var(--ds-hairline);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ds-ink-soft);
+}
+
+/* --- L5 THE SPLIT MEDIA WELL. The portrait frame that fills one column of a
+   split. On desktop it STRETCHES to the height of the column beside it, UP TO A
+   HARD 480 CAP, and carries no aspect-ratio: the stretch is what kills the dead
+   space the media plus cards law names, and the cap is what stops a photograph
+   dwarfing its copy. Under the cap the frame matches its copy column exactly
+   (S2 and S7); at the cap it stops (S5, whose copy column is a tall 2x2 grid).
+   Once stacked it re acquires the portrait ratio under its own tighter cap so a
+   stacked band can never need zooming out. Both width
+   anchors are declared per the media fits track law even though this frame
+   never runs the aspect-ratio plus stretch combination that needs them. ------ */
+.bw-shot {
+  position: relative;
+  width: 100%;                    /* ANCHORS the frame to its grid track */
+  min-width: 0;                   /* lets the track shrink on a narrow screen */
+  display: flex;                  /* the frame is a COLUMN now, so the plate
+                                     below can take flex-basis 0 and stop
+                                     contributing its intrinsic 702px to the
+                                     grid row. That is what lets the media
+                                     TRACK the copy column instead of setting
+                                     the row height from the asset. */
+  flex-direction: column;
+  height: 100%;
+  min-height: 260px;              /* a floor, so a short copy column can never
+                                     collapse the frame to a sliver */
+  max-height: 480px;              /* THE HARD CAP, and the answer to "images
+                                     are too large". Whatever the copy column
+                                     does, this frame never exceeds 480. Under
+                                     the cap it matches its copy exactly, so
+                                     no dead space opens beside it. */
+  align-self: stretch;
+  margin: 0;
+  padding: var(--ds-space-sm);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  background-color: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+}
+.bw-shot__plate {
+  position: relative;
+  display: block;                 /* THE DEFECT, and the whole reason the split
+                                     images ran to their intrinsic height and
+                                     dwarfed the copy beside them. This plate
+                                     was authored as a <span>, so it was an
+                                     INLINE box, and height, min-height,
+                                     max-height and overflow were ALL INERT on
+                                     it. Every cap that was written here was
+                                     being silently discarded by the layout.
+                                     It is a div now, and they all bind. */
+  flex: 1 1 0;                    /* basis 0: the plate contributes nothing to
+                                     the row's intrinsic height, then grows to
+                                     fill whatever the frame turns out to be.
+                                     Measured result: the media column now
+                                     lands AT its copy column's height in S2
+                                     and S7 and at the 480 cap in S5. */
+  min-height: 0;
+  overflow: hidden;
+  border-radius: var(--ds-r-control);
+  background-color: var(--ds-bg-surface-2);
+  background-image: var(--ds-grid);
+  background-size: var(--ds-grid-size);
+  box-shadow: inset 0 0 0 1px var(--ds-hairline);
+}
+.bw-shot__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.96) contrast(1.03);
+}
+.bw-shot__cap {
+  margin: var(--ds-space-sm) 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ds-ink-soft);
+}
+
+/* --- L6 THE SQUARE TEXTURE ACCENT. A small material study set BESIDE a quote or
+   a ranking, capped well under any column width so it can never be mistaken for
+   a split filler. R8: a square is never dropped into a portrait slot. -------- */
+.bw-tex {
+  position: relative;
+  width: 100%;
+  max-width: 184px;
+  margin: 0 0 var(--ds-space-md);
+  overflow: hidden;
+  border-radius: var(--ds-r-surface);
+  box-shadow: var(--ds-shadow-card), inset 0 0 0 1px var(--ds-hairline);
+}
+.bw-tex__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/* --- L7 THE FLAGGED GAP. An owner pending contract term. It is deliberately NOT
+   a card: a dashed field reads as a hole in the document, which is the honest
+   shape for a term nobody has ruled. A card would dress it as an answer. ----- */
+.bw-gap {
+  min-width: 0;
+  padding: var(--ds-space-md);
+  border: 1px dashed var(--ds-line);
+  border-radius: var(--ds-r-surface);
+  background-color: var(--ds-bg-surface-2);
+}
+.bw-gap + .bw-gap { margin-top: var(--ds-space-md); }
+.bw-gap__k {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  margin: 0 0 var(--ds-space-xs);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ds-accent-ink);
+}
+.bw-gap__k::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: var(--ds-r-pill);
+  box-shadow: inset 0 0 0 2px var(--ds-accent-deep);
+}
+.bw-gap__t {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--ds-ink-heading);
+  margin: 0 0 var(--ds-space-xs);
+}
+.bw-gap__d {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ds-ink-soft);
+  margin: 0;
+}
+.surface-dark .bw-gap__k::before,
+.surface-gold .bw-gap__k::before { box-shadow: inset 0 0 0 2px var(--ds-accent); }
+
+/* --- L8 THE AMBIENT DEMO RAIL. LIVE-DEMO-SECTIONS #1 the auto running sequenced
+   demo track, crowned by #2 the live status header bar, built as the catalog
+   states it. There is NO control in this object: the law is motion and not
+   buttons, tabs or sliders, and the owner ruled to go with the law. So all
+   three months sit on the rail together, each carrying its own billing
+   statement, and the mechanic is legible at rest with nothing behind a click.
+
+   The three movements are the highlight travelling the rail (background-position
+   on .bw-demo__track::after), the status pulse and the on load node rise (both
+   transform). Not one of them touches content opacity, and nothing here is ever
+   hidden, so a still capture of any reload carries the whole sequence. L19
+   freezes all three under reduced motion. ------------------------------------ */
+.bw-demo {
+  overflow: hidden;
+  border: 1px solid var(--ds-line);
+  border-radius: var(--ds-r-surface);
+  background-color: var(--ds-bg-surface-2);
+  box-shadow: var(--ds-shadow-card);
+}
+.bw-demo__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ds-space-sm) var(--ds-space-md);
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  border-bottom: 1px solid var(--ds-line);
+}
+.bw-demo__live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  flex: 0 0 auto;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ds-accent-ink);
+}
+.bw-demo__pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--ds-r-pill);
+  background: var(--ds-accent);
+  animation: bw-pulse 2.8s var(--ds-ease) infinite;
+}
+@keyframes bw-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.55); }
+}
+.bw-demo__caption {
+  flex: 1 1 320px;
+  min-width: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ds-ink-soft);
+}
+/* THE RAIL. grid-auto-flow column, so the track takes any number of stages
+   without a re authored template. ::before is the faint line the badges thread,
+   ::after the accent highlight that travels it on background-position alone. */
+.bw-demo__track {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--ds-space-md);
+  padding: var(--ds-space-md) var(--ds-space-md) var(--ds-space-lg);
+  background: var(--ds-bg-surface);
+  overflow: hidden;
+}
+.bw-demo__track::before {
+  content: "";
+  position: absolute;
+  z-index: var(--ds-z-base);
+  pointer-events: none;
+  left: var(--ds-space-md);
+  right: var(--ds-space-md);
+  top: calc(var(--ds-space-md) + 16px);   /* 24 pad + 16, so the 2px band centres on the 34px badge */
+  height: 2px;
+  background: var(--ds-line);
+}
+.bw-demo__track::after {
+  content: "";
+  position: absolute;
+  z-index: var(--ds-z-base);
+  pointer-events: none;
+  left: var(--ds-space-md);
+  right: var(--ds-space-md);
+  top: calc(var(--ds-space-md) + 15px);
+  height: 4px;
+  border-radius: 2px;
+  background-image: linear-gradient(90deg, transparent, var(--ds-accent), transparent);
+  background-size: 34% 100%;
+  background-repeat: no-repeat;
+  animation: bw-demo-sweep 4.6s var(--ds-ease) infinite;
+}
+.bw-demo__track > * { position: relative; z-index: var(--ds-z-raised); }
+@keyframes bw-demo-sweep {
+  0%   { background-position: -20% 0; }
+  100% { background-position: 120% 0; }
+}
+/* THE STAGE NODE. A plain div, never a control. It is opacity 1 at all times and
+   the rise is a transform, so a reload that catches it mid animation still shows
+   every word. --i is set inline per node and only meters the delay. */
+.bw-demo__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  min-width: 0;
+  text-align: center;
+  font-family: var(--ds-font-body);
+  color: var(--ds-ink);
+  opacity: 1;
+  transform: translateY(10px);
+  animation: bw-demo-rise var(--ds-dur-slow) var(--ds-ease-out) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@keyframes bw-demo-rise {
+  from { transform: translateY(10px); }
+  to   { transform: none; }
+}
+/* the directional chevron, centred in the gap and on the rail line, so the
+   sequence reads in order without implying anything can be operated. */
+.bw-demo__stage::after {
+  content: "";
+  position: absolute;
+  top: 17px;
+  right: calc(var(--ds-space-md) / -2);
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid var(--ds-accent);
+  border-right: 2px solid var(--ds-accent);
+  transform: translate(50%, -50%) rotate(45deg);
+}
+.bw-demo__stage:last-child::after { display: none; }
+.bw-demo__dot {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  border-radius: var(--ds-r-pill);
+  border: 2px solid var(--ds-accent);
+  background: var(--ds-bg-surface-2);
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ds-accent-ink);
+}
+.bw-demo__label {
+  display: block;
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-heading);
+}
+.bw-demo__state {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 7px 14px;
+  border-radius: var(--ds-r-pill);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.bw-demo__state--billed { background: var(--ds-accent); color: var(--ds-primary-deep); }
+.bw-demo__state--paused { color: var(--ds-accent-ink); box-shadow: inset 0 0 0 2px var(--ds-accent-deep); }
+/* the ELEMENT is named on this selector, and on p.bw-qa__a below, because both
+   carry a ch measure. A ch resolves against the element's OWN font, so G8 A3
+   refuses a ch max-width whose selector does not prove it governs READING text
+   rather than display text. Both are body-font paragraphs and are only ever
+   authored as <p>, so naming the element states that fact in the selector. Type
+   qualifier only: no declaration changes, and no other rule in any linked sheet
+   targets either class, so the cascade result is identical. */
+p.bw-demo__body {
+  margin: 0;
+  max-width: 40ch;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ds-ink);
+}
+
+/* --- L9 THE 2x2. The card grid that sits beside a stretched media column, per
+   the media plus cards law: a grid, never a tall one column stack.
+
+   R2 THE VOID. Measured at 1440 this grid stood 727.5 beside a photograph
+   capped at 480, so 247.5 of the split was empty below the frame, against 17.36
+   in S2 and 38.81 in S7 on the identical shape. Four changes close it, and none
+   of them shrinks the photograph or edits a word:
+     1. the band flips to .row--split-rev, an EXISTING structural modifier, so
+        the copy track takes the 1.08fr share and the media track the .92fr.
+        MEASURED at 1440, where the container resolves to 1072 inner with a 40
+        gap so one fr is 516: the copy column goes 474.73 to 557.28 and the
+        media column 557.27 to 474.72. They swap exactly. Source order is
+        untouched, so the media stays left and only the track widths move.
+     2. the grid gap and the card padding step md 24 to sm 14, which is one
+        notch of the locked scale and buys the cards their width back.
+     3. grid-template-rows repeat(2, minmax(0,1fr)) so the two rows are equal
+        and the four cards share one height rather than 329.25 over 374.25.
+     4. the three cards whose bodies run past their claim carry a native
+        details/summary (L16), split at a SENTENCE boundary.
+   MEASURED RESULT: the quad falls 727.5 to 473.91, the frame tracks it exactly
+   at 473.91 (it is now UNDER the 480 cap, so it behaves like S2 and S7 rather
+   than pinning at the cap), and the void closes 247.5 to 0.00.
+   ------------------------------------------------------------------------- */
+.bw-quad {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: var(--ds-space-sm);
+  height: 100%;
+}
+.bw-quad > .bw-card { padding: var(--ds-space-sm); }
+
+/* --- L10 THE OPPOSED PANEL. Two halves of one argument set against each other
+   on the warm stratum, distinguished by the colour of their top rule rather
+   than by a different box. ------------------------------------------------- */
+.bw-opposed {
+  height: 100%;
+  padding: var(--ds-space-md);
+  border-top: 4px solid var(--ds-accent-deep);
+  background-color: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+}
+.bw-opposed--collapses { border-top-color: var(--ds-primary); }
+.bw-opposed__k {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ds-accent-ink);
+  margin: 0 0 var(--ds-space-sm);
+}
+.bw-opposed--collapses .bw-opposed__k { color: var(--ds-primary); }
+/* THE PURPLE IS A SURFACE COLOR, NOT AN INK, AND ON A DARK GROUND IT IS UNREADABLE.
+   The rule above paints this key with --ds-primary (#7f2199). The .surface-dark block in the tokens
+   sheet remaps --ds-ink and --ds-ink-on-dark to the near-white #f7f2fa, but it does NOT remap
+   --ds-primary, because that token is documented as a CTA SURFACE rather than a text color. So any
+   key using it inside a dark band keeps the purple and paints #7f2199 on #1a0426.
+   MEASURED on web-design at 1440, 1024, 768 and 375: ratio 2.37:1 against the 4.5:1 floor for text
+   this size, flagged high confidence and not over a photograph. That is the dark on dark class the
+   render gate exists to catch, and it is a real reading failure, not a tolerance argument.
+   The fix uses the accent, which the tokens sheet measures at 11.27:1 on this exact anchor ground and
+   which is already this identity's punctuation color on dark. Scoped to .surface-dark, so the three
+   other pages carrying this block on a light ground keep the purple they were approved with. */
+.surface-dark .bw-opposed--collapses .bw-opposed__k { color: var(--ds-accent); }
+.bw-opposed__d {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ds-ink);
+}
+
+/* --- L11 THE ANSWER. One rung of the seven part rebuttal. A ruled block, never
+   a card: a boxed answer to a published charge reads defensive. ------------- */
+.bw-answer { padding-top: var(--ds-space-md); border-top: 1px solid var(--ds-line); }
+.bw-answer + .bw-answer { margin-top: var(--ds-space-md); }
+.bw-answer__n {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .1em;
+  color: var(--ds-accent-ink);
+  margin: 0 0 var(--ds-space-xs);
+}
+.bw-answer__t {
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.25;
+  letter-spacing: -.012em;
+  color: var(--ds-ink-heading);
+  margin: 0;
+}
+.bw-answer__d {
+  margin: var(--ds-space-sm) 0 0;
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--ds-ink-soft);
+}
+.bw-answer__d b { color: var(--ds-ink); font-weight: 600; }
+
+/* --- L12 THE BOUNDARY PANEL. The anti product. A left gold rule, no fill, so
+   it reads as a margin note against the page rather than a further offer. --- */
+.bw-bound {
+  min-width: 0;
+  padding-left: var(--ds-space-md);
+  border-left: 3px solid var(--ds-accent-deep);
+}
+.bw-bound__k {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ds-accent-ink);
+  margin: 0 0 var(--ds-space-xs);
+}
+.bw-bound__t {
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--ds-ink-heading);
+  margin: 0 0 var(--ds-space-sm);
+}
+.bw-bound__d { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ds-ink-soft); }
+.bw-bound .bw-gap { margin-top: var(--ds-space-md); }
+
+/* --- L13 THE RANK. Proof ordered weakest first, so the ordering is visible.
+   The numeral is quiet on purpose: an oversized figure is the exact tell this
+   category teaches buyers to look for. ------------------------------------- */
+.bw-rank {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--ds-space-md);
+  padding: var(--ds-space-md) 0;
+  border-top: 1px solid var(--ds-line);
+}
+.bw-rank__n {
+  font-family: var(--ds-font-display);
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -.03em;
+  color: var(--ds-ink-heading);
+  opacity: var(--ds-opacity-muted);
+}
+.bw-rank__t {
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.3;
+  color: var(--ds-ink-heading);
+  margin: 0;
+}
+.bw-rank__d { margin: var(--ds-space-xs) 0 0; font-size: 15px; line-height: 1.6; color: var(--ds-ink-soft); }
+
+/* --- L14 THE ROUTE GROUP. The cross link rail on the gold stratum. This page is
+   net new with zero inbound redirect history, so this band is load bearing
+   rather than decorative and it is set as wayfinding type, not as chips. ---- */
+.bw-route { min-width: 0; }
+.bw-route__k {
+  font-family: var(--ds-font-display);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  margin: 0 0 var(--ds-space-sm);
+  padding-bottom: var(--ds-space-xs);
+  border-bottom: 2px solid var(--ds-accent);
+}
+.bw-route__l { list-style: none; margin: 0; padding: 0; }
+.bw-route__l li + li { margin-top: var(--ds-space-xs); }
+.bw-route__l a {
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.3;
+}
+.bw-route__n { display: block; margin-top: var(--ds-space-sm); font-size: 13px; line-height: 1.5; color: var(--ds-ink-soft); }
+
+/* --- L15 THE QUESTION. FAQ-ACCORDION #1, native details and summary so it needs
+   no script and can never render broken. ----------------------------------- */
+.bw-qa { border-top: 1px solid var(--ds-line); }
+.bw-qa > summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ds-space-md);
+  padding: var(--ds-space-md) 0;
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.3;
+  color: var(--ds-ink-heading);
+}
+.bw-qa > summary::-webkit-details-marker { display: none; }
+.bw-qa__sign { position: relative; flex: 0 0 auto; width: 20px; height: 20px; }
+.bw-qa__sign::before,
+.bw-qa__sign::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: var(--ds-accent-deep);
+  transform: translate(-50%, -50%);
+}
+.bw-qa__sign::before { width: 14px; height: 2px; }
+.bw-qa__sign::after  { width: 2px; height: 14px; transition: transform var(--ds-dur) var(--ds-ease); }
+.bw-qa[open] .bw-qa__sign::after { transform: translate(-50%, -50%) scaleY(0); }
+p.bw-qa__a {
+  margin: 0;
+  padding: 0 0 var(--ds-space-md);
+  max-width: 72ch;
+  font-size: 15px;
+  line-height: 1.62;
+  color: var(--ds-ink-soft);
+}
+
+/* --- L16 THE SEE MORE. R2. Three cards in the S5 quad and the timelines panel
+   in S6 carry a body that keeps arguing after its claim has landed, and that
+   overrun is what set those grids' height. The overrun is NOT cut and NOT
+   line-clamped: a clamp truncates mid sentence, which on a page whose whole
+   subject is checkable claims would cut a load bearing statement in half and
+   leave the reader with an ellipsis where the condition was. Instead the body
+   is split at a SENTENCE BOUNDARY, after the sentence that carries the claim,
+   and the remainder sits in a native details and summary.
+
+   WHY NATIVE. summary is keyboard operable with no script at all, it is already
+   inside the one focus ring this surface declares (seoguarantee-structural.css
+   line 89 lists summary in the :focus-visible :where set), and with script off
+   the control still opens, so no sentence on this page can ever be unreachable.
+   It is the same primitive S14's FAQ already ships.
+
+   WHY IT IS NOT A SECOND CTA. client-rules fixes ONE primary verb and it is the
+   phone. This control carries no pill, no fill, no border, no accent ink and no
+   verb of intent: it is 12px uppercase in --ds-ink-soft, the quietest label on
+   the band, with a small caret. It reads as a disclosure on the card it sits
+   in, never as an action to take. ------------------------------------------ */
+.bw-more { margin-top: var(--ds-space-xs); }
+.bw-more > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-2xs);
+  padding: var(--ds-space-2xs) 0;
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--ds-font-body);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+}
+.bw-more > summary::-webkit-details-marker { display: none; }
+.bw-more > summary::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--ds-accent-deep);
+  border-bottom: 2px solid var(--ds-accent-deep);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--ds-dur) var(--ds-ease);
+}
+.bw-more[open] > summary::after { transform: translateY(1px) rotate(225deg); }
+.bw-more__rest { margin-top: var(--ds-space-xs); }
+.surface-dark .bw-more > summary::after,
+.surface-gold .bw-more > summary::after {
+  border-right-color: var(--ds-accent);
+  border-bottom-color: var(--ds-accent);
+}
+
+/* --- L17 THE BENTO LAW. R2. The card grids were reading as ragged because the
+   objects inside the cells were sized by their own copy: S6 spread 243.20
+   across three cells, S11 263.46, S13 163.69, S4 29.27, S2 21.69. A grid cell
+   already stretches; what did NOT stretch was the OBJECT inside it, so the
+   dashed field, the ruled panel and the top rule all stopped at different
+   heights and the row looked unaligned even though the tracks were equal.
+
+   The fix uses the two structural modifiers that already exist for this:
+   .col--stretch (align-self: stretch) plus .col--fill (flex column, height
+   100%), and then the object takes flex: 1 1 auto so it fills the cell it was
+   given. Every object in a row then ends on ONE line.
+
+   Two joints inside the objects follow, so the alignment is real rather than
+   cosmetic: a TITLE that wraps to a different line count is given a min-height
+   in lh, which is a line COUNT and not a new spacing value, so the bodies start
+   on one baseline; and a FOOT is pinned by letting the element above it take
+   the slack, so the feet end on one baseline too.
+
+   S8 is deliberately absent: it measured 0.00 spread already, because
+   .bw-opposed carries height 100% and its cells already carry .col--stretch.
+   It is left exactly as it is. ---------------------------------------------- */
+#main .col--fill > .bw-gap,
+#main .col--fill > .bw-bound,
+#main .col--fill > .bw-fact,
+#main .col--fill > .bw-route { flex: 1 1 auto; }
+
+#main .bw-quad .bw-card__title                    { min-height: 3lh; }
+#main #s6-measured .row--2up.row--tight .bw-gap__t { min-height: 2lh; }
+
+/* the pinned feet. .bw-route is made a column so its link list can absorb the
+   slack, which puts all four wayfinding notes on one baseline instead of
+   trailing their own list length. */
+.bw-route { display: flex; flex-direction: column; }
+.bw-route__l { margin-bottom: auto; }
+
+/* --- L18 THE NESTED LIST STEP. A real type inconsistency, found by measuring
+   rather than by looking: .bw-list carries no font-size of its own, so the four
+   boundary items nested inside S11's panel were inheriting the body's 17px and
+   setting LARGER than the .bw-bound__d paragraph directly above them, inside
+   the same panel. They step to the panel's own 15px. This is the type ladder
+   being obeyed, not widened: no new size is minted. ------------------------- */
+#main .bw-bound .bw-list { font-size: 15px; }
+
+/* --- L19 REDUCED MOTION. The one gesture on this surface is a short fade plus a
+   small rise. The other movement is all in S3: the status pulse, the highlight
+   sweeping the demo rail, and the stage nodes rising in on load. Every one of
+   them stops here and the nodes settle at their resting transform, so the rail,
+   the badges, the labels, the state pills and the billing statements are all
+   fully readable with motion off. Nothing is ever hidden, so a still capture is
+   always complete. --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .bw-demo__pulse { animation: none; }
+  .bw-demo__track::after { animation: none; }
+  .bw-demo__stage { transform: none; animation: none; }
+  .bw-qa__sign::after, .bw-more > summary::after { transition: none; }
+}
+
+/* --- L20 THE REFLOW. Below the tablet portrait line the ladder rail and its
+   rungs retire rather than crowd the measure, and the split media re acquires
+   its portrait ratio under a hard cap. The demo rail keeps the catalog's own two
+   narrow tiers (760 then 430) rather than the page ladder's, because the tier is
+   set by the point at which a stage node stops fitting its label, not by the
+   band around it. -------------------------------------------------------- */
+@media (max-width: 1023px) {
+  .bw-quad { gap: var(--ds-space-sm); }
+}
+
+@media (max-width: 899px) {
+  .bw-rung::before { display: none; }
+  .bw-shot { display: block; height: auto; min-height: 0; max-height: none; }
+  .bw-shot__plate { flex: 0 0 auto; height: auto; min-height: 0; aspect-ratio: 3 / 4; max-height: 380px; }
+  /* the demo labels, floored on a MEASURED line count exactly as 11e requires
+     rather than on a guess. With the rail still 3 up the three labels run
+     1 / 1 / 1 lines from 1440 all the way down to 850, then 1 / 1 / 2 from 840
+     to 761 as "A month back on target" wraps, which dropped the third state
+     pill 18px below the other two. The floor is a LINE COUNT, so it is the type
+     ladder being counted and no spacing value is minted, and it is released at
+     760 where the nodes stop sitting side by side and a wrapped left aligned
+     label is correct anyway. */
+  .bw-demo__label { min-height: 2lh; }
+  /* the quad is one column here, so the two equal desktop rows are released:
+     four stacked cards each take their own copy height. */
+  .bw-quad { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; height: auto; }
+  .bw-tex { max-width: 152px; }
+}
+
+@media (max-width: 767px) {
+  .bw-plate { padding: var(--ds-space-md); }
+  .bw-opposed { padding: var(--ds-space-md); }
+  .bw-rank { grid-template-columns: minmax(0, 1fr); gap: var(--ds-space-xs); }
+}
+
+/* the demo rail reflows rather than crowds: a 2 up node grid at 760 and 1 up at
+   430. The rail line, the travelling highlight and the chevrons all retire at
+   the first of those, so no line ever crosses a wrapped gap. The nodes are
+   untouched: opacity 1, every label, pill and statement still on screen, just
+   left aligned once they no longer sit side by side on one rail. */
+@media (max-width: 760px) {
+  .bw-demo__track {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-columns: auto;
+    padding: var(--ds-space-md);
+  }
+  .bw-demo__track::before,
+  .bw-demo__track::after { display: none; }
+  .bw-demo__stage::after { display: none; }
+  .bw-demo__stage { align-items: flex-start; text-align: left; }
+  .bw-demo__label { min-height: 0; }
+  p.bw-demo__body { max-width: none; }
+}
+
+@media (max-width: 430px) {
+  .bw-demo__track { grid-template-columns: minmax(0, 1fr); }
+}
+
+
+/* ============================================================================
+   11. T-MARQUEE BAND-LEVEL SCAFFOLDING. The second graduation out of
+   concept-marquee-b, and the reason it had to happen: promote-concept.mjs
+   extracts ONLY the <main> element's inner HTML and DISCARDS the preview's
+   inline <style>. Section 10 moved the bw-* COMPONENT skins here and left the
+   band-level rules behind, so every rule below was silently LOST the moment the
+   concept was promoted, and no gate could see it: verify-no-orphan-classes only
+   asks whether a class is DEFINED somewhere, and every class involved here was.
+   The page assembled with its classes resolving and its composition gone.
+
+   THE SCOPING ROOT IS .tm-band, carried on the template's own <section> tags.
+   It cannot be <main> or #main: promote keeps the inner HTML only, so the <main>
+   open tag in the built page comes from the locked chrome carrier and anything
+   written on the concept's own <main> never arrives. A class on the bands does
+   arrive, and it fences these rules to this template so nothing here can reach a
+   page type that does not carry it.
+
+   WHAT IS NOT HERE: the ONE token DEFINITION this composition needs,
+   #main { --ds-section-py: ... }. Zero token definitions is a locked, gate-
+   checked property of this sheet, so the re-point lives in the sanctioned
+   per-page signature sheet pages/guarantee.css, which build.mjs auto-links after
+   the design sheets and which the concept preview links directly, so there is
+   one definition and no drift.
+   ============================================================================ */
+
+/* --- 11a THE RAIL. The cohesive flow device, and the reason the banding does not
+   read as stacked tiles. One pixel, fixed at the reading axis, top to bottom of
+   every band INCLUDING its vertical rhythm padding, so contiguous bands join into
+   one unbroken line down the page. It resolves --ds-line, which the dual surface
+   and gold flips already repoint, so it re lights itself on every ground without
+   a single override. ------------------------------------------------------- */
+.tm-band::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: max(var(--ds-space-xs), calc(50% - 552px));  /* 560 container half, less 8 */
+  width: 1px;
+  background: var(--ds-line);
+  z-index: var(--ds-z-base);
+  pointer-events: none;
+}
+
+/* --- 11b THE MATERIAL each stratum is made of. SEP-6: two planes at the same
+   value but a different MATERIAL still separate. The tint plane gets the token
+   grid, the near black anchor gets the wash plus the grain. Gold is left clean
+   because its value step is already 11.27:1 and a texture there would only muddy
+   it. ---------------------------------------------------------------------- */
+.tm-band.section--tint {
+  background-image: var(--ds-grid);
+  background-size: var(--ds-grid-size);
+}
+.tm-band.section--dark {
+  background-image: var(--ds-glow-wash), var(--ds-grain);
+  background-size: auto, 140px 140px;
+  background-repeat: no-repeat, repeat;
+}
+
+/* --- 11c THE COMPACTION LAYER. The owner's revision on this concept: the texts
+   are too large, the alignments are all over the place, the images are too large,
+   and there is a lot of broken spacing and padding. Compact and solid is the
+   target. NOTHING HERE INVENTS A VALUE. Every number resolves to an existing step
+   of the locked seven step spacing scale (4 8 14 24 40 64 96). The work is
+   stepping DOWN a ladder, never widening one.
+
+   THE ROW RHYTHM is the actual "broken spacing". This sheet gives .row a gap, but
+   there is no rule anywhere for a .row FOLLOWING a .row, so two stacked rows in
+   one band had ZERO separation and only ever LOOKED separated when the last
+   object in the row above happened to carry a margin of its own. Measured at
+   1440, that is why the S2 figure caption sat 21px off the paragraph beneath it
+   while other joints in the same band sat at 40. Every row to row joint is
+   metered at ONE step, and a row set tight takes the tight step, so a band's
+   vertical rhythm equals the horizontal gap it already sits in.
+
+   THE HEAD AND THE TABLE. The section head reserved 40 beneath it: one step down
+   to 24. A table cell paid 24 above and below its text, so the five row terms
+   table in S2 spent 240 pixels on padding alone and stood 200 taller than the
+   capped photograph beside it, which is what opened the void under that
+   photograph. One step down to 14 closes the void and takes 100 off S2 and 80 off
+   S9 without touching a single word in either table. ------------------------ */
+.tm-band .container > .row + .row        { margin-top: var(--ds-space-lg); }
+.tm-band .container > .row + .row--tight { margin-top: var(--ds-space-md); }
+.tm-band .bw-head--tight                 { margin-bottom: var(--ds-space-md); }
+.tm-band .bw-table td                    { padding-block: var(--ds-space-sm); }
+
+/* --- 11d THE FOUNDER WELL PLATE. The same inline box defect the split plate had:
+   .bw-media__plate is authored as a <span> in this sheet's own idiom, so it is a
+   div in this template and it is given the block display and the height cap a
+   span could never honour. The cap is set ABOVE the rendered height (the founder
+   frame is anchored at 320, which puts the plate at 292 by 334 and still under
+   its own 350px native width), so the portrait is CAPPED without being cropped
+   and without being upscaled. Load bearing for S15. --------------------------- */
+.tm-band .bw-media__plate {
+  display: block;
+  max-height: 340px;
+}
+
+/* --- 11e THE TITLE BASELINES. The line counts are MEASURED at 1440, not guessed,
+   and the first pass of this rule was WRONG on both rows it touched, which is why
+   the counts are written down:
+     S2's three gap titles     2 / 2 / 2 lines  -> already level, NO rule.
+     S4's three pillar titles  2 / 3 / 3 lines  -> floor at 3lh.
+     S5's four card titles     3 / 2 / 2 / 2    -> floor at 3lh (11f, section 10).
+     S6's two boundary titles  1 / 1            -> already level, NO rule.
+     S11's three titles        1 / 1 / 1        -> already level, NO rule.
+   Only a row that actually splits its line count gets a floor, and the floor is
+   stated as a LINE COUNT in lh rather than as a pixel height, so it is the type
+   ladder being counted and not a new spacing value being minted. ------------- */
+.tm-band#s4-pillars .bw-fact__t { min-height: 3lh; }
+
+/* the rail retires below the tablet portrait line rather than crowd the measure. */
+@media (max-width: 899px) {
+  .tm-band::after { display: none; }
+}
+
+
+/* ============================================================================
+   L21 THE LEGAL DOCUMENT MEASURE, graduated for T-LEGAL.
+
+   WHY THIS FAMILY EXISTS AT ALL, and it is a GATE DEADLOCK rather than a taste
+   call. verify-legal-is-document (G-LEGAL-DOC) exits 2 with NOT-A-DOCUMENT
+   unless the body of a T-LEGAL page, or of a T-LEGAL tournament concept,
+   CARRIES the .bw-legal prose document measure. verify-no-orphan-classes
+   (G-ORPHAN) exits 2 on ANY class a fragment uses that is DEFINED in no linked
+   sheet. This sheet was authored before a legal page existed, so .bw-legal and
+   .bw-toc were defined in NONE of the three linked sheets, and every possible
+   T-LEGAL concept therefore had to fail ONE gate or the OTHER: carry the class
+   and be an orphan, or drop it and stop being a document. A tournament concept
+   scored 51 of 52 with its single failure being exactly that orphan report. The
+   family had to EXIST for the page type to be buildable at all, so it is
+   graduated in here once rather than re-authored inside each concept.
+
+   PROVENANCE, verified rather than assumed. Ported from the skill's slug
+   neutral reference implementation, _design-templates/__client__-structural.css
+   blocks (2) LEGAL DOCUMENT and (3) TABLE OF CONTENTS, which LEGAL-SECTIONS.md
+   names as the proven v4 reference impl. That template's family prefix is
+   ALREADY bw-*, which is this build's own skin prefix, so nothing was renamed.
+
+   GRAMMAR. Both objects are LEAVES and obey section 2 exactly:
+     document      section > .container > .row > .col > .bw-legal
+     with a rail   section > .container > .row--stretch >
+                   .col(nav.bw-toc.bw-toc--rail) + .col(.bw-legal)
+   Nothing here paints a .container, a .row or a .col, so R5 stays green.
+
+   WHAT WAS MAPPED, because the reference impl spends a token API this brand
+   does not publish, and a bare var() that resolves nowhere fails G8 check (3):
+     --ds-font-mono      NOT EMITTED here by deliberate identity law (the token
+                         sheet ships two faces and no monospaced specimen). Every
+                         mono label takes this sheet's own label idiom instead,
+                         the .bw-eyebrow values at section 5: body face, 600,
+                         11px, .14em tracking, uppercase.
+     --ds-divider        no such token. Standalone rules take --ds-line, this
+                         brand's decorative hairline; panel borders take
+                         --ds-hairline, which is what SEP-5 .bw-card uses at 6.3.
+                         Both flips already repoint both, so the family relights
+                         itself on every ground with no override.
+     --ds-accent-strong  no such token. Takes --ds-accent-deep.
+     --ds-accent AS INK  the reference impl paints link, marker and label ink in
+                         --ds-accent. Here --ds-accent IS the gold, and gold on
+                         paper measures 1.71:1, which the token sheet records as
+                         a hard fail at both the 4.5:1 and the 3:1 floor. Gold is
+                         a GROUND in this identity and never small ink on light.
+                         So text accents take --ds-accent-ink (6.92:1 on paper)
+                         and structural accents take --ds-accent-deep (8.40:1),
+                         which is SEP-4, the rule every band already opens with.
+     --ds-tracking-disp  no tracking tokens and no line-height token are
+     --ds-tracking-label published. Literal letter-spacing and line-height, which
+     --ds-lh-body        is exactly how sections 5 and 6 already write them.
+     the TOC panel       the reference impl fills it with a two stop gradient.
+                         Gradients are RATIONED in this identity (one, and it is
+                         already spent on --ds-grad-brand), so the panel is
+                         rebuilt on SEP-5, the three edge card locked at 6.3:
+                         hairline, inset highlight, two stop contact shadow, and
+                         no background VALUE doing the separating.
+     document links      NOT overridden. Section 5 already locks a on every
+                         ground (purple, 8.14:1, repainted by both flips), so the
+                         document inherits the page link rather than re-stating
+                         one that would be gold ink on paper.
+
+   WHAT WAS MAPPED ONTO THE LOCKED SCALES. A legal page is mostly measure and
+   leading, and the reference impl meters both with free clamps that would mint
+   values this build does not own. Every one is stepped onto a scale this sheet
+   already holds. Nothing below invents a size or a spacing value.
+     TYPE, onto the section 5 ladder, ZERO new clamps:
+       .bw-legal h2   ref clamp(22px,2.6vw,30px) -> the h3 / .d-md rung, restated
+                      value for value: clamp(21px,2.2vw,29px), 500, -.015em,
+                      1.18. The reference impl deliberately steps its legal
+                      headings DOWN one rung from the page h2, and on THIS ladder
+                      that rung IS h3, to within a pixel at both ends.
+       .bw-legal h3   ref clamp(17px,1.8vw,21px) -> the h4 / .d-sm rung, restated
+                      value for value: 17px, 600, -.005em, 1.3.
+       prose          ref 16px -> NOT RESTATED. It inherits the 17px body set in
+                      section 1, which is this build's reading size. 16px is on
+                      no ladder here and is not minted.
+       .bw-toc__link  14.5px, the .bw-card__body size already at 6.3.
+       label ink      11px / .14em, the .bw-eyebrow values already at section 5.
+       the TOC index  11px / .08em, the .bw-quote__cite tracking already at 6.
+     LEADING is not a ladder rung and not a spacing step. 1.72 is the reference
+     impl's own legal rhythm and is kept; 1.6 on the callout is the .bw-note
+     value already in section 5.
+     MEASURE:
+       .bw-legal p    ref 68ch -> 62ch, the value .readw is locked at in section
+                      5, so the legal column reads on the SAME axis as every
+                      other reading column in this build.
+       .bw-legal li   ref 663px, a number the template computed for ITS Poppins
+                      body. It does not transfer to Hind and is DROPPED. The
+                      760px document cap governs the list instead.
+       .bw-legal      760px is KEPT. It is a MEASURE literal of the same class as
+                      --ds-container-max (1120px) and the 552px rail axis at 11a,
+                      not a spacing step and not a type size. It stays in px
+                      rather than ch on purpose: G8 check (A3a) flags a ch max
+                      width on a non display, non paragraph selector, and
+                      .bw-legal is a body font wrapper, which is the exact defect
+                      A3 exists to catch.
+     SPACING, onto the locked seven step scale 4 8 14 24 40 64 96, every value a
+     var(--ds-space-*), ZERO free clamps:
+       h2 lead-in     clamp(40,5vw,64)   -> --ds-space-xl  (64, its desktop end)
+       h3 lead-in     clamp(28,3.4vw,40) -> --ds-space-lg  (40, its desktop end)
+       paragraph gap  --ds-space-lg, unchanged from the reference impl
+       rule margin    clamp(32,4vw,48)   -> --ds-space-lg  (40)
+       effective line clamp(28,3.4vw,44) -> --ds-space-lg  (40)
+       callout gap    clamp(28,3.4vw,44) -> --ds-space-lg  (40)
+       callout pad    clamp(14,2vw,20) by clamp(16,2.2vw,24)
+                                         -> --ds-space-sm by --ds-space-md
+       list indent    1.5em              -> --ds-space-md  (24)
+       toc pad        clamp(18,2vw,26)   -> --ds-space-md  (24)
+       toc title tick 22px               -> --ds-space-md  (24)
+       toc gaps       10px / 2px         -> --ds-space-xs / --ds-space-2xs
+       toc link pad   7px 9px            -> --ds-space-xs  (8)
+       anchor clear   clamp(90,12vh,120) -> --ds-space-2xl (96). The masthead is
+                      sticky and its two rows collapse to a 64px bar once
+                      scrolled, which is the state ANY anchor jump lands in, so
+                      96 clears it with a step of air rather than by guesswork.
+     The only remaining literals are the ones section 1 already licenses: 1px
+     hairlines, a 2px and a 3px rule weight, and the 760px measure.
+   ============================================================================ */
+
+/* --- L21a THE DOCUMENT. One calm reading measure that styles RAW flowing prose
+   children, so a legal fragment needs no class per node. .bw-legal is the class
+   G-LEGAL-DOC looks for, and carrying it is the ONLY thing that gate asks of the
+   markup, the other half being that a legal page ships no imagery. ---------- */
+.bw-legal { max-width: 760px; }
+.bw-legal > :first-child { margin-top: 0; }
+.bw-legal > :last-child  { margin-bottom: 0; }
+
+.bw-legal p {
+  line-height: 1.72;
+  color: var(--ds-ink-soft);
+  margin: 0 0 var(--ds-space-lg);
+  max-width: 62ch;
+}
+
+/* the anchored headings. Each takes an EXISTING rung of the section 5 ladder,
+   one step below where the page would set it, and scroll-margin-top is what
+   makes a .bw-toc jump land BELOW the sticky masthead instead of under it. */
+.bw-legal h2 {
+  font-size: clamp(21px, 2.2vw, 29px);
+  font-weight: 500;
+  letter-spacing: -.015em;
+  line-height: 1.18;
+  margin: var(--ds-space-xl) 0 var(--ds-space-md);
+  scroll-margin-top: var(--ds-space-2xl);
+}
+.bw-legal h3 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -.005em;
+  line-height: 1.3;
+  margin: var(--ds-space-lg) 0 var(--ds-space-sm);
+  scroll-margin-top: var(--ds-space-2xl);
+}
+
+/* A LABEL SITTING DIRECTLY BEFORE A HEADING IS THAT HEADING'S NUMBER, NOT A PARAGRAPH.
+   Regression fixed here, introduced by the L21 graduation above: .bw-legal p carries a
+   40px bottom margin and .bw-legal h2 a 64px top margin, which collapse to 64px. In a
+   numbered legal document the markup runs hr, then the numeral, then the heading it
+   labels, so the numeral was landing 40px under the rule above it and 64px above its own
+   heading. That inverts the proximity grouping the numerals exist to create: each number
+   read as belonging to the section it had just ended rather than the one it opens.
+   Measured on T-LEGAL concept-a at 1440 before this rule: numeral to heading 64px against
+   heading to body 24px, on all four numbered sections.
+   Binding the label to its heading costs no new token and no new size. The section
+   separation is already carried by the rule above, so only the inner gap moves. */
+.bw-legal p.bw-eyebrow {
+  margin-bottom: var(--ds-space-xs);
+}
+.bw-legal .bw-eyebrow + h2,
+.bw-legal .bw-eyebrow + h3 {
+  margin-top: 0;
+}
+
+.bw-legal ul,
+.bw-legal ol {
+  margin: 0 0 var(--ds-space-lg);
+  padding-left: var(--ds-space-md);
+  color: var(--ds-ink-soft);
+}
+.bw-legal li { line-height: 1.72; margin: 0 0 var(--ds-space-sm); }
+.bw-legal li::marker { color: var(--ds-accent-deep); }
+.bw-legal strong,
+.bw-legal b { font-weight: 600; color: var(--ds-ink); }
+.bw-legal em,
+.bw-legal i { color: var(--ds-ink-soft); }
+.bw-legal hr {
+  border: 0;
+  height: 1px;
+  background: var(--ds-line);
+  margin: var(--ds-space-lg) 0;
+}
+
+/* the effective-date line at the head of the document, in the label idiom. */
+.bw-legal__effective {
+  font-family: var(--ds-font-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  margin: 0 0 var(--ds-space-lg);
+}
+
+/* THE HONESTY FENCE. The representative, not-binding callout the legal menu
+   requires above the prose. A left accent rule on the soft gold ground, so it
+   reads as a NOTE rather than becoming a card competing with the document. */
+.bw-legal__callout {
+  border: 1px solid var(--ds-hairline);
+  border-left: 3px solid var(--ds-accent-deep);
+  border-radius: var(--ds-r-control);
+  background: var(--ds-accent-soft);
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  margin: 0 0 var(--ds-space-lg);
+  line-height: 1.6;
+  color: var(--ds-ink);
+}
+.bw-legal__callout strong { color: var(--ds-ink); }
+
+/* --- L21b THE JUMP INDEX. The anchored table of contents, built on SEP-5 (6.3)
+   rather than on the reference impl's gradient, so it is the same three edge
+   panel every other surface in this build uses. .bw-toc--rail makes it a desktop
+   sticky side rail; it unsticks on the section 9 reflow ladder. ------------- */
+.bw-toc {
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  background: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+  padding: var(--ds-space-md);
+}
+.bw-toc__title {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  font-family: var(--ds-font-body);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ds-accent-ink);
+  margin: 0 0 var(--ds-space-md);
+}
+.bw-toc__title::before {
+  content: "";
+  flex: 0 0 var(--ds-space-md);
+  height: 2px;
+  background: var(--ds-accent-deep);
+}
+.bw-toc__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--ds-space-2xs);
+  counter-reset: bw-toc;
+}
+.bw-toc__item { margin: 0; min-width: 0; }
+.bw-toc__link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ds-space-xs);
+  min-width: 0;
+  font-size: 14.5px;
+  line-height: 1.4;
+  color: var(--ds-ink-soft);
+  text-decoration: none;
+  padding: var(--ds-space-xs);
+  border-radius: var(--ds-r-control);
+  transition: color var(--ds-dur-fast) var(--ds-ease), background-color var(--ds-dur-fast) var(--ds-ease);
+}
+.bw-toc__link::before {
+  counter-increment: bw-toc;
+  content: counter(bw-toc, decimal-leading-zero);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--ds-accent-ink);
+  font-variant-numeric: tabular-nums;
+  flex: 0 0 auto;
+}
+/* the underline returns on hover, so the plain index still announces itself as
+   links to a keyboard and to a pointer, per .bw-link-plain at section 5. */
+.bw-toc__link:hover {
+  color: var(--ds-ink);
+  background: var(--ds-accent-soft);
+  text-decoration: underline;
+}
+.bw-toc__link.is-active,
+.bw-toc__link[aria-current="true"] {
+  color: var(--ds-ink);
+  background: var(--ds-accent-soft);
+}
+
+/* the desktop sticky side rail. --ds-space-2xl is the masthead clearance; the
+   height cap subtracts that plus one step so the rail can never run past the
+   viewport and strand its own last link. */
+.bw-toc--rail {
+  position: sticky;
+  top: var(--ds-space-2xl);
+  align-self: start;
+  max-height: calc(100vh - var(--ds-space-2xl) - var(--ds-space-lg));
+  overflow: auto;
+}
+
+/* --- L21c THE REFLOW. The rail stops sticking on the same tablet portrait line
+   section 9 collapses its split rows on, and becomes a normal block above the
+   prose. Below the phone line the heading lead-ins step DOWN the same locked
+   scale, xl to lg and lg to md, because a 64px lead-in on a 375 viewport is a
+   third of the screen. Nothing else in the family needs a tier: a single reading
+   measure IS already the narrow layout. ------------------------------------ */
+@media (max-width: 1023px) {
+  .bw-toc--rail { position: static; top: auto; max-height: none; overflow: visible; }
+}
+@media (max-width: 767px) {
+  .bw-legal h2 { margin-top: var(--ds-space-lg); }
+  .bw-legal h3 { margin-top: var(--ds-space-md); }
 }

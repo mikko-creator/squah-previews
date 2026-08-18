@@ -1,325 +1,485 @@
-/* =============================================================================
-   seoguarantee-chrome.css  ::  THE LOCKED CHROME
-   -----------------------------------------------------------------------------
-   Owner pick, 2026-07-30: CONCEPT C "SUITE".
-     nav    : NAV-PATTERNS.md #7 Centered logo + below-it mega-nav with dropdowns
-     footer : FOOTER-STYLES.md #5 6-col mega footer (C1 has exactly six footer groups)
-   Source of the pick: _design/_tournament/chrome/concept-c/preview.html
-   Brief: _design/_tournament/chrome/BRIEF.md
+/* ============================================================================
+   seoguarantee-chrome.css
+   THE LOCKED GLOBAL CHROME for seoguarantee (First Page SEO Guarantee),
+   Direction B, "The Masthead". Lifted whole from the P9 chrome tournament
+   winner at _design/_tournament/chrome/direction-b/preview.html.
 
-   Loads AFTER seoguarantee-tokens.css + seoguarantee-structural.css, on every page.
+   WHAT THIS IS. The site frame and nothing else: the two row masthead header,
+   the services mega sheet, the mobile drawer, the pre footer CTA band, the
+   editorial masthead footer, and the skip link. Every selector is namespaced
+   ch- so the whole frame can be carried by one block and stamped onto every
+   page. Section names and numbers below match the tournament source so the two
+   files can be diffed line for line.
 
-   TOKEN-PURE. Zero hex literals. Same contract as the structural and tier sheets.
+   DESIGN-SYSTEM PROVENANCE (derived, never invented):
+     menu      NAV-PATTERNS.md #7 "Centered logo + below-it mega-nav with
+               dropdowns". Row 1 carries utility and the CTA, Row 2 is the
+               navigation, and Row 2 hides on scroll while Row 1 stays.
+     menu      FOOTER-STYLES.md #19 "Editorial masthead style", the back of the
+               periodical, plus FOOTER-STYLES.md #21 "Pre-footer CTA section
+               above" as the closing band.
+     library   _MODERN-WOW-SPEC : depth, edges, figure and ground, motion,
+               restraint.
+     blueprint composition-agency-creative : the sector spine.
+     menus     SURFACE-PATTERNS, MOTION-PATTERNS and TYPOGRAPHY-PAIRINGS for the
+               rule work, the row collapse, and the masthead setting.
 
-   ZERO JAVASCRIPT. The mega and the drawer open with CSS only, because the chrome is inlined verbatim
-   into every page and verify-shell-purity forbids inline <style> on assembled pages, so there is
-   nowhere page-local for a script's styles to live either. The mechanisms:
-     - MEGA   : opens on hover OR focus-within of the nav row, and stays open while the pointer or
-                focus is inside the panel itself. Keyboard reaches it by tabbing into the nav.
-     - DRAWER : a hidden checkbox (#nav-toggle) that a <label class="burger"> flips. The drawer and
-                the scrim are sibling-selected off :checked. No script, works with JS disabled.
-   KNOWN COMPROMISE, stated not hidden: because the panel is a SIBLING of <nav> (it must be, or its
-   links leak into the top-level nav labels G-CHROME-NAV compares), the hover target is the whole nav
-   row rather than the Services item alone. So the mega opens on hover of any nav item. The
-   alternatives are a script, or moving the panel inside <nav> and relying on a class the label
-   remover drops, which trades a real gate guarantee for a cosmetic nicety. Revisit if the owner
-   objects.
+   LOAD ORDER. This sheet ASSUMES seoguarantee-tokens.css and then
+   seoguarantee-structural.css have ALREADY loaded. It consumes --ds-* and
+   DEFINES no custom property of its own; it also relies on structural.css for
+   .container / .row / .col and for the .surface-dark flip it overrides once,
+   below. Loading it without those two leaves every value unresolved.
 
-   R2 IS NOT RESTYLED HERE. Buttons come from the structural sheet: one control radius, one height per
-   tier. This sheet never sets .btn geometry.
-   R7 applies in the footer too: no founder image is boxed.
-   ============================================================================= */
+   ZERO raw brand hex below this line. Every colour resolves through --ds-*.
 
-/* =============================================================================
-   0 :: GLOBAL KEYBOARD FOCUS RING (WCAG 2.4.7)
-   -----------------------------------------------------------------------------
-   Role-based, not per-class, so any control this sheet introduces later inherits it. A keyboard,
-   screen-reader or switch user must be able to SEE where focus is. The ring paints on the generic
-   interactive roles; the click-only suppression below is the modern keyboard-only idiom and is safe
-   ONLY because the painting rule exists.
-   ============================================================================= */
+   NOT CARRIED OVER from the tournament preview: section 4, the scaffolding
+   bands (.ch-hero, .ch-hero__wash, .ch-hero__h, .ch-hero__p and
+   .ch-scaffold-note). Those existed only so the preview page had something to
+   scroll past while the folded bar was judged. They are page content, not
+   chrome, so the number 4 is deliberately absent below rather than reused.
+   ============================================================================ */
+
+/* ****************************************************************************
+   DIRECTION B CHROME. Namespaced ch- so it can be lifted whole.
+   **************************************************************************** */
+
+/* ---- 0. THE GLOBAL KEYBOARD FOCUS RING ----------------------------------- */
+/* NOT from the tournament preview: the preview inherited this ring from
+   structural.css and shipped only its own per-control rings. The chrome sheet
+   is the authoritative interactive surface, so it must state the global ring
+   itself (WCAG 2.4.7, Focus Visible).
+   The VALUES are a verbatim restatement of structural.css:89, so nothing is
+   repainted: --ds-accent-deep measures 8.40:1 on paper and the .surface-dark
+   flip repaints it as full gold, so the ring is visible on every ground this
+   brand ships. Never removed, never replaced by an outline:none.
+   The FORM differs on purpose. structural.css writes the selector as
+   :where(a, button, ...), which is 0,1,0. Written flat here it is 0,1,1, so it
+   still loses to every per-control ch- ring below (each is 0,2,0) and those
+   keep their own treatment: .ch-svc, for instance, sets outline:none plus an
+   inset box-shadow and is unaffected. */
 a:focus-visible,
 button:focus-visible,
-label:focus-visible,
-summary:focus-visible,
-.btn:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
-[tabindex]:focus-visible{
-  outline:2px solid var(--ds-accent-light);
-  outline-offset:2px;
-  border-radius:var(--ds-r-control);
-}
-a:focus:not(:focus-visible),
-button:focus:not(:focus-visible),
-summary:focus:not(:focus-visible),
-input:focus:not(:focus-visible),
-select:focus:not(:focus-visible),
-textarea:focus:not(:focus-visible){outline:none}
-/* the drawer checkbox is visually hidden, so its focus has to surface on the burger label */
-.nav-toggle:focus-visible ~ * .burger{outline:2px solid var(--ds-accent-light);outline-offset:3px}
-
-/* THE SKIP LINK. The carrier has always shipped <a class="skip-link"> as the first focusable element,
-   but NOTHING styled it, so it rendered as plain static text reading "Skip to content" in the top-left
-   corner of every built page (measured: position:static, 124x21px at 0,2, painting). A skip link is
-   supposed to be invisible until a keyboard user tabs to it, so this was both a visual defect on every
-   page and a broken affordance. It is hidden by CLIPPING rather than by display:none or visibility,
-   because either of those removes it from the tab order and destroys the only thing it exists to do.
-   On focus it drops into view as a real, hit-testable control. */
-.skip-link{
-  position:absolute;left:var(--ds-space-sm);top:var(--ds-space-sm);
-  z-index:var(--ds-z-overlay);
-  width:1px;height:1px;overflow:hidden;
-  clip-path:inset(50%);
-  white-space:nowrap;
-}
-.skip-link:focus{
-  width:auto;height:auto;overflow:visible;
-  clip-path:none;
-  padding:var(--ds-space-xs) var(--ds-space-md);
-  border-radius:var(--ds-r-control);
-  background:var(--ds-cta);color:var(--ds-cta-ink);
-  font-size:14px;text-decoration:none;
+[tabindex]:focus-visible {
+  outline: 3px solid var(--ds-accent-deep);
+  outline-offset: 3px;
+  border-radius: var(--ds-r-control);
 }
 
-/* =============================================================================
-   1 :: HEADER :: three rows (utility, centered logo, nav row)
-   ============================================================================= */
-.site-header{position:sticky;top:0;z-index:var(--ds-z-sticky);background:var(--ds-primary-deep)}
-
-/* the zero-JS drawer toggle. Visually hidden, never display:none, so it stays focusable. */
-.nav-toggle{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
-  clip-path:inset(50%);white-space:nowrap;border:0}
-
-/* ---- row 1 :: utility strip. The offer and the phone, always visible. ---- */
-.hb-utility{border-bottom:1px solid var(--ds-line);background:var(--ds-bg-surface)}
-.hb-utility .u-inner{max-width:var(--ds-container-max);margin-inline:auto;
-  padding:7px var(--ds-space-md);display:flex;align-items:center;gap:var(--ds-space-md);
-  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ds-ink-soft)}
-.hb-utility b{color:var(--ds-accent-light);font-weight:400}
-.hb-utility .u-tel{margin-left:auto;color:var(--ds-ink)}
-.hb-utility .u-tel:hover{color:var(--ds-accent-light)}
-
-/* ---- row 2 :: the CENTERED logo row (the #7 signature) ---- */
-.hb-logo{max-width:var(--ds-container-max);margin-inline:auto;padding:var(--ds-space-md);
-  display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
-.brand{justify-self:center;display:flex;align-items:center}
-/* the logo artwork is WHITE-ONLY (verified 2026-07-30: invisible on a white plate). Safe here because
-   the header is dark. It must never be placed on a light surface. */
-.brand img{height:42px;width:auto;display:block}
-.hb-logo .hb-left{font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ds-ink-soft)}
-.hb-logo .hb-right{justify-self:end;display:flex;align-items:center;gap:var(--ds-space-sm)}
-
-/* ---- row 3 :: the NAV row, which owns the mega ---- */
-.hb-navrow{border-top:1px solid var(--ds-line);border-bottom:1px solid var(--ds-line)}
-.primary-nav{max-width:var(--ds-container-max);margin-inline:auto;padding:0 var(--ds-space-md)}
-.primary-nav .nav-list{display:flex;align-items:stretch;justify-content:center;
-  gap:0;list-style:none;margin:0;padding:0}
-.nav-link{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
-  font-family:var(--ds-font-body);font-size:13.5px;font-weight:600;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--ds-ink);
-  padding:14px var(--ds-space-md);background:none;border:0;cursor:pointer;
-  border-bottom:2px solid transparent;
-  transition:color var(--ds-dur) var(--ds-ease),background-color var(--ds-dur) var(--ds-ease)}
-.nav-link:hover,.nav-link[aria-expanded="true"]{
-  color:var(--ds-accent-light);background-color:var(--ds-primary-soft);
-  border-bottom-color:var(--ds-accent)}
-.nav-link svg{width:9px;height:9px;flex:none;opacity:var(--ds-opacity-muted)}
-.nav-link[aria-current="page"]{color:var(--ds-accent-light);border-bottom-color:var(--ds-accent)}
-
-/* the burger is a LABEL, not a button, so the checkbox can drive the drawer without script */
-.burger{display:none;width:44px;height:44px;align-items:center;justify-content:center;
-  background:none;border:1px solid var(--ds-hairline);border-radius:var(--ds-r-control);cursor:pointer}
-.burger span{display:block;width:18px;height:2px;background:var(--ds-ink);position:relative}
-.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;
-  background:var(--ds-ink)}
-.burger span::before{top:-6px}
-.burger span::after{top:6px}
-
-/* =============================================================================
-   2 :: MEGA :: the primary element of this archetype
-   -----------------------------------------------------------------------------
-   Closed by default. Opens on hover/focus of the nav row and stays open while the pointer or focus is
-   inside the panel. The panel is a SIBLING of <nav>, never a descendant, so its links can never leak
-   into the top-level nav labels G-CHROME-NAV compares against the drawer.
-   ============================================================================= */
-#mega{position:absolute;left:0;right:0;top:100%;background:var(--ds-bg-surface-2);
-  border-bottom:1px solid var(--ds-line);box-shadow:var(--ds-shadow-card);display:none}
-.hb-navrow:hover + #mega,
-.hb-navrow:focus-within + #mega,
-#mega:hover,
-#mega:focus-within{display:block}
-.mega__inner{max-width:var(--ds-container-max);margin-inline:auto;
-  padding:var(--ds-space-lg) var(--ds-space-md);
-  display:grid;grid-template-columns:1fr .78fr;gap:var(--ds-space-xl);align-items:stretch}
-.mega__cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--ds-space-md);
-  align-content:start}
-.mega__eyebrow{grid-column:1 / -1;font-family:var(--ds-font-mono);font-size:10px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--ds-accent-light);margin:0}
-.mega__item{display:block;padding:var(--ds-space-sm);border:1px solid var(--ds-line);
-  border-radius:var(--ds-r-surface);background:var(--ds-primary-deep)}
-.mega__item b{display:block;font-family:var(--ds-font-display);font-size:15px;font-weight:700;
-  color:var(--ds-ink-heading)}
-.mega__item span{display:block;font-size:12.5px;color:var(--ds-ink-soft);margin-top:4px}
-.mega__item:hover{border-color:var(--ds-accent)}
-.mega__item:hover b{color:var(--ds-accent-light)}
-/* the feature rail MUST stretch the full column height. G-CHROME-PARITY fails below a 0.85 ratio,
-   which is the documented 235-vs-424 bug: a panel that does not fill its row reads as a render fault.
-   It stretches because the grid row is align-items:stretch and this is a flex column, never a fixed
-   height. */
-.mega__feature{display:flex;flex-direction:column;justify-content:space-between;
-  background-color:var(--ds-primary);background-image:var(--ds-grad-brand);
-  background-clip:padding-box;
-  border-radius:var(--ds-r-surface);padding:var(--ds-space-lg);color:var(--ds-ink-on-dark)}
-.mega__feature h4{font-family:var(--ds-font-display);font-size:clamp(20px,2vw,26px);line-height:1.08;
-  margin:0;color:var(--ds-ink-on-dark)}
-.mega__feature p{font-size:13.5px;margin:var(--ds-space-sm) 0 var(--ds-space-md);
-  color:var(--ds-ink-on-dark);opacity:var(--ds-opacity-veil)}
-.mega__feature .price{font-family:var(--ds-font-mono);font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;opacity:var(--ds-opacity-veil);margin:0 0 var(--ds-space-xs)}
-
-/* =============================================================================
-   3 :: MOBILE DRAWER :: id MUST be mobile-drawer (G-CHROME-PARITY queries it)
-   -----------------------------------------------------------------------------
-   Driven by #nav-toggle:checked. Zero script. The scrim is a label for the same checkbox, so a tap
-   anywhere outside the panel closes the drawer.
-   ============================================================================= */
-/* OFF-CANVAS, NOT A DISPLAY TOGGLE. Two reasons, both real:
-   1. `display:none` removes the drawer from layout entirely, so it has no width until it opens. A closed
-      drawer that measures 0 is indistinguishable from a BROKEN drawer, which is what masked the defect
-      below for so long. Off-canvas keeps it laid out and measurable at all times.
-   2. It is the standard slide-in pattern and is animatable, where a display toggle is not.
-   The state selector is :root:has(), NOT the sibling combinator. `~` only matches elements sharing a
-   parent, and the toggle sits inside the header while the drawer is a body child, so
-   `.nav-toggle:checked ~ #mobile-drawer` could NEVER match: THE MOBILE NAVIGATION DID NOT OPEN AT ALL.
-   Proven by rendering the styled carrier at 375 and forcing the checkbox checked, with the drawer
-   staying hidden. Scoping from :root makes the rule independent of where the toggle sits, so
-   restructuring the chrome cannot silently break the drawer again. */
-#mobile-drawer{position:fixed;inset:0 0 0 auto;width:min(88vw,380px);z-index:var(--ds-z-drawer);
-  background:var(--ds-primary-deep);border-left:1px solid var(--ds-line);
-  padding:var(--ds-space-md);overflow-y:auto;
-  transform:translateX(100%);visibility:hidden;
-  transition:transform var(--ds-dur) var(--ds-ease),visibility 0s linear var(--ds-dur)}
-.drawer-scrim{position:fixed;inset:0;z-index:var(--ds-z-overlay);background:var(--ds-scrim);
-  opacity:0;visibility:hidden;cursor:pointer;
-  transition:opacity var(--ds-dur) var(--ds-ease),visibility 0s linear var(--ds-dur)}
-:root:has(.nav-toggle:checked) #mobile-drawer{transform:translateX(0);visibility:visible;
-  transition:transform var(--ds-dur) var(--ds-ease),visibility 0s}
-:root:has(.nav-toggle:checked) .drawer-scrim{opacity:1;visibility:visible;
-  transition:opacity var(--ds-dur) var(--ds-ease),visibility 0s}
-.drawer__head{display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:var(--ds-space-md)}
-/* width:auto is REQUIRED, not decorative. The markup carries width="403" height="85" so the intrinsic
-   size is known and layout does not shift on load. Setting only a CSS height leaves that 403px width
-   ATTRIBUTE in force, so the logo renders 403 wide by its CSS height: a 2.5x horizontal stretch.
-   Owner-reported on the footer 2026-07-31; the same bug was latent here and would have appeared the
-   moment the drawer opened. Every logo placement sets BOTH dimensions. */
-.drawer__head img{height:28px;width:auto}
-/* the close control is also a label driving the same checkbox */
-.drawer__close{display:inline-flex;align-items:center;justify-content:center;
-  min-height:38px;padding-inline:var(--ds-space-sm);cursor:pointer;
-  font-family:var(--ds-font-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ds-ink);border:1px solid var(--ds-hairline);border-radius:var(--ds-r-control)}
-.drawer__close:hover{border-color:var(--ds-accent-light);color:var(--ds-accent-light)}
-/* top-level rows. <summary> is a top-level trigger the nav lib reads; the panel <div> is dropped. */
-.drawer__link,.drawer__nav summary{display:flex;align-items:center;justify-content:space-between;
-  width:100%;font-family:var(--ds-font-body);font-size:15px;font-weight:600;letter-spacing:.04em;
-  text-transform:uppercase;color:var(--ds-ink);
-  padding:14px 0;border-bottom:1px solid var(--ds-line);
-  cursor:pointer;list-style:none}
-.drawer__nav summary::-webkit-details-marker{display:none}
-.drawer__nav summary::after{content:"+";font-family:var(--ds-font-mono);color:var(--ds-accent-light)}
-.drawer__nav details[open] summary::after{content:"\2212"}
-.acc__panel{padding:var(--ds-space-xs) 0 var(--ds-space-sm) var(--ds-space-sm)}
-.acc__panel a{display:block;font-size:14px;color:var(--ds-ink-soft);padding:7px 0;text-transform:none}
-.acc__panel a:hover{color:var(--ds-accent-light)}
-.drawer__cta{margin-top:var(--ds-space-md);display:grid;gap:var(--ds-space-xs)}
-
-/* =============================================================================
-   4 :: PRECTA :: exactly ONE closing CTA, on every page
-   ============================================================================= */
-.precta{background-color:var(--ds-primary);background-image:var(--ds-grad-brand);
-  padding-block:var(--ds-space-xl);text-align:center;color:var(--ds-ink-on-dark)}
-.precta h2{font-size:clamp(26px,3.4vw,40px);margin-inline:auto;color:var(--ds-ink-on-dark)}
-.precta .lead,.precta .lede{margin-inline:auto;max-width:48ch;color:var(--ds-ink-on-dark);
-  opacity:var(--ds-opacity-veil)}
-.precta .ctas{justify-content:center}
-
-/* =============================================================================
-   5 :: FOOTER :: 6-col mega footer (FOOTER-STYLES #5)
-   -----------------------------------------------------------------------------
-   Six columns because C1 declares exactly six footer groups. NO street address and NO email: C1
-   states the live site publishes neither while third-party directories list a different address, so
-   shipping one would publish an unverified NAP. City and state only. NO client portal link (SEC-1).
-   ============================================================================= */
-.site-footer{background:var(--ds-primary-deep);color:var(--ds-ink)}
-.ft-body{max-width:var(--ds-container-max);margin-inline:auto;
-  padding:var(--ds-space-xl) var(--ds-space-md)}
-.ft-brandrow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-space-md);
-  padding-bottom:var(--ds-space-lg);border-bottom:1px solid var(--ds-line);
-  margin-bottom:var(--ds-space-lg)}
-/* THE OWNER-REPORTED BUG. height alone let the markup's width="403" win, rendering the 403x85 logo at
-   403x34: stretched 2.5x horizontally. width:auto restores the true 4.74 aspect ratio. */
-.ft-brandrow img{height:34px;width:auto}
-.ft-brandrow .ft-claim{font-family:var(--ds-font-display);font-size:clamp(17px,1.7vw,22px);
-  font-weight:700;color:var(--ds-ink-heading);margin:0}
-.ft-brandrow .ft-claim em{font-style:normal;color:var(--ds-accent-light);
-  background:var(--ds-grad-text);-webkit-background-clip:text;background-clip:text}
-@supports ((-webkit-background-clip:text) or (background-clip:text)){
-  .ft-brandrow .ft-claim em{color:transparent}
+/* ---- 1. THE TWO ROW MASTHEAD BAR ----------------------------------------- */
+.ch-hdr {
+  position: sticky;
+  top: 0;
+  z-index: var(--ds-z-sticky);
+  background: var(--ds-primary-deep);
+  box-shadow: var(--ds-shadow-card-2stop);
 }
-.ft-cols{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:var(--ds-space-lg)}
-.ft-cols h3{font-family:var(--ds-font-mono);font-size:10px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--ds-accent-light);margin:0 0 var(--ds-space-sm);font-weight:400}
-.ft-cols ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
-.ft-cols a{font-size:13.5px;color:var(--ds-ink-soft)}
-.ft-cols a:hover{color:var(--ds-ink)}
-.ft-cols .ft-nap a{font-family:var(--ds-font-mono);font-size:12.5px;color:var(--ds-ink)}
-.ft-cols .ft-nap a:hover{color:var(--ds-accent-light)}
-.ft-legal{border-top:1px solid var(--ds-line);margin-top:var(--ds-space-lg);
-  padding-top:var(--ds-space-md);font-size:12.5px;color:var(--ds-ink-soft);margin-bottom:0}
+.ch-hdr .container { position: relative; }
 
-/* =============================================================================
-   6 :: RESPONSIVE
-   -----------------------------------------------------------------------------
-   Collapse at max-width:1100px, NOT 768px. G-CHROME-NOVFL renders 375/768/834/1024/1200/1440 and
-   fails closed on any horizontal overflow. A prior build collapsed at 768 and overflowed the whole
-   769 to 1128 band: 264px at 834, 203px at 900, 95px at 1024. Show the burger wherever the desktop
-   bar cannot fit.
-   ============================================================================= */
-@media (max-width:1100px){
-  .hb-navrow{display:none}
-  #mega{display:none !important}
-  .hb-logo .hb-left{display:none}
-  .burger{display:flex}
-  /* TWO COLUMNS, not three. .hb-left is display:none here, and a display:none element is REMOVED from
-     the grid entirely, so the remaining two items fell into columns 1 and 2 and the third column sat
-     EMPTY: the burger ended 110px short of the header's right edge. Measured, not guessed. */
-  .hb-logo{grid-template-columns:auto 1fr}
-  .brand{justify-self:start}
-  .hb-right{justify-self:end}
-  /* pull only the burger out to the header edge, so the row keeps its 24px gutter rhythm while the tap
-     target still hugs the edge the way a phone header should. */
-  .burger{margin-inline-end:calc(var(--ds-space-md) * -1 + 4px)}
+/* ROW 1: utility left, wordmark centred, the one CTA right. Stays on scroll. */
+.ch-row1 {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--ds-space-md);
+  min-height: 84px;
+  transition: min-height var(--ds-dur) var(--ds-ease);
 }
-@media (min-width:1101px) and (max-width:1199px){
-  .nav-link{padding-inline:var(--ds-space-sm);font-size:12.5px}
+.ch-hdr[data-scrolled="true"] .ch-row1 { min-height: 64px; }
+.ch-util { display: flex; align-items: center; gap: 18px; }
+.ch-util__i {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--ds-font-mono, ui-monospace, Consolas, monospace);
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ds-accent-light);
 }
-@media (max-width:1000px){
-  .ft-cols{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ch-util__i svg { width: 13px; height: 13px; flex: 0 0 auto; opacity: .85; }
+/* the grafted email: a utility affordance, never a second CTA */
+.ch-util__i--mail { text-decoration: none; text-transform: none; letter-spacing: .04em; }
+.ch-util__i--mail:hover { color: var(--ds-accent); }
+/* the grafted offer marker on the guarantee item */
+.ch-dot { width: 6px; height: 6px; border-radius: var(--ds-r-pill); background: var(--ds-accent); flex: 0 0 auto; }
+.ch-nav__link--offer { gap: 9px; }
+.ch-logo { justify-self: center; display: inline-flex; align-items: center; }
+.ch-logo img { display: block; height: 40px; width: auto; transition: height var(--ds-dur) var(--ds-ease); }
+.ch-hdr[data-scrolled="true"] .ch-logo img { height: 30px; }
+.ch-cta-slot { justify-self: end; display: flex; align-items: center; gap: 12px; }
+
+/* THE PHONE PILL IS OUTSIDE THE NAV, in Row 1, for the parity reason recorded
+   in Direction A: it is a CTA, the drawer drops CTAs by contract, and nav
+   parity between desktop and drawer is enforced. Carrying it as a nav item
+   would fail that parity check the moment the drawer dropped it. */
+.ch-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 22px;
+  border-radius: var(--ds-r-control);
+  border: 1px solid var(--ds-accent);
+  background: var(--ds-accent);
+  color: var(--ds-primary-deep);
+  font-family: var(--ds-font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: var(--ds-shadow-rest);
+  transition: box-shadow var(--ds-dur) var(--ds-ease), transform var(--ds-dur) var(--ds-ease);
 }
-@media (max-width:700px){
-  .ft-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .hb-utility .u-inner .u-offer{display:none}
-  .brand img{height:34px}
+.ch-phone:hover { box-shadow: var(--ds-glow), var(--ds-shadow-card); transform: translateY(-2px); }
+.ch-phone:focus-visible { outline: 2px solid var(--ds-accent-light); outline-offset: 3px; }
+.ch-phone__ic { width: 15px; height: 15px; flex: 0 0 auto; }
+
+/* ROW 2: the full width navigation rule. Hides on scroll, which is the whole
+   behavioural signature of this archetype. */
+.ch-row2 {
+  border-top: 1px solid var(--ds-glass-border);
+  overflow: hidden;
+  max-height: 62px;
+  opacity: 1;
+  transition: max-height var(--ds-dur-slow) var(--ds-ease),
+              opacity var(--ds-dur) var(--ds-ease),
+              border-color var(--ds-dur) var(--ds-ease);
 }
-@media (max-width:460px){
-  .ft-cols{grid-template-columns:1fr}
-  .hb-utility .u-inner b{display:none}
+.ch-hdr[data-scrolled="true"] .ch-row2 { max-height: 0; opacity: 0; border-top-color: transparent; }
+.ch-nav__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-xl);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 62px;
+}
+.ch-nav__item { position: static; }
+.ch-nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 19px 2px;
+  font-family: var(--ds-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ds-ink-on-dark);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.ch-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--ds-accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--ds-dur) var(--ds-ease);
+}
+.ch-nav__link:hover::after,
+.ch-nav__link:focus-visible::after,
+.ch-nav__item[data-open="true"] .ch-nav__link::after { transform: scaleX(1); }
+.ch-nav__link:focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 3px; }
+.ch-caret { width: 9px; height: 9px; flex: 0 0 auto; transition: transform var(--ds-dur) var(--ds-ease); }
+.ch-nav__item[data-open="true"] .ch-caret { transform: rotate(180deg); }
+
+/* ---- 2. THE MEGA MENU: a full width editorial sheet ---------------------- */
+/* Different composition from A on purpose. A puts two service columns beside a
+   tall featured card. B runs the seven services as a THREE column index under a
+   rule, with the featured strip lying across the foot of the panel, which is how
+   a contents page is set. */
+.ch-mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: var(--ds-z-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity var(--ds-dur) var(--ds-ease),
+              transform var(--ds-dur) var(--ds-ease),
+              visibility 0s linear var(--ds-dur);
+}
+.ch-nav__item[data-open="true"] .ch-mega { opacity: 1; visibility: visible; transform: translateY(0); transition-delay: 0s; }
+.ch-mega::before { content: ""; position: absolute; left: 0; right: 0; top: -12px; height: 12px; }
+.ch-mega__panel {
+  margin-top: 12px;
+  border-radius: var(--ds-r-surface);
+  border: 1px solid var(--ds-glass-border);
+  background: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-lift), var(--ds-inset-hi);
+  overflow: hidden;
+}
+.ch-mega__hd {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ds-space-md);
+  padding: var(--ds-space-md) var(--ds-space-lg);
+  border-bottom: 1px solid var(--ds-hairline);
+  background: var(--ds-bg-surface-2);
+}
+.ch-mega__eyebrow {
+  font-family: var(--ds-font-display);
+  font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ds-accent-ink); margin: 0;
+}
+.ch-mega__all { font-size: 13px; color: var(--ds-primary); text-decoration: none; font-weight: 600; }
+.ch-mega__all:hover { color: var(--ds-primary-deep); }
+
+/* The rules are drawn as CELL BORDERS, not as a gap over a hairline coloured
+   grid. Seven services in three columns leaves two empty cells in the last row,
+   and a gap-fill paints those as a grey hole where nothing exists. Borders let
+   the empty cells simply be the panel. Caught in the render. */
+.ch-svcs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: var(--ds-bg-surface);
+}
+.ch-svc {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px var(--ds-space-md);
+  background: var(--ds-bg-surface);
+  border-right: 1px solid var(--ds-hairline);
+  border-bottom: 1px solid var(--ds-hairline);
+  text-decoration: none;
+  transition: background var(--ds-dur-fast) var(--ds-ease);
+}
+.ch-svcs .ch-svc:nth-child(3n) { border-right: 0; }
+.ch-svc:hover, .ch-svc:focus-visible { background: var(--ds-primary-soft); outline: none; }
+.ch-svc:focus-visible { box-shadow: inset 0 0 0 2px var(--ds-accent-deep); }
+.ch-svc__n {
+  flex: 0 0 auto;
+  font-family: var(--ds-font-mono, ui-monospace, Consolas, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--ds-accent-ink);
+  padding-top: 3px;
+  min-width: 22px;
+}
+.ch-svc__t { display: block; font-family: var(--ds-font-display); font-size: 15px; font-weight: 600; color: var(--ds-ink-heading); line-height: 1.25; }
+.ch-svc__d { display: block; font-size: 12.5px; color: var(--ds-ink-soft); line-height: 1.45; margin-top: 3px; }
+
+/* the featured strip lies ACROSS the foot of the sheet */
+.ch-feat {
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  align-items: stretch;
+  border-top: 1px solid var(--ds-hairline);
+  background: var(--ds-primary-deep);
+}
+.ch-feat__media { position: relative; min-height: 150px; overflow: hidden; }
+.ch-feat__media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ch-feat__scrim { position: absolute; inset: 0; background: var(--ds-scrim); }
+.ch-feat__body { padding: var(--ds-space-md) var(--ds-space-lg); display: flex; flex-direction: column; justify-content: center; }
+.ch-feat__eyebrow { font-family: var(--ds-font-display); font-size: 10.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--ds-accent-light); margin: 0 0 8px; }
+.ch-feat__line { font-family: var(--ds-font-display); font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--ds-ink-on-dark); margin: 0 0 10px; max-width: 44ch; }
+.ch-feat__link { font-size: 13px; font-weight: 600; color: var(--ds-accent); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; }
+.ch-feat__link:hover { color: var(--ds-accent-light); }
+.ch-feat__link span { transition: transform var(--ds-dur-fast) var(--ds-ease); }
+.ch-feat__link:hover span { transform: translateX(4px); }
+
+/* ---- 3. MOBILE ----------------------------------------------------------- */
+.ch-burger {
+  display: none;
+  width: 44px; height: 44px;
+  align-items: center; justify-content: center;
+  border-radius: var(--ds-r-control);
+  border: 1px solid var(--ds-glass-border);
+  background: transparent; color: var(--ds-ink-on-dark); cursor: pointer;
+}
+.ch-burger:focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 2px; }
+.ch-burger svg { width: 20px; height: 20px; }
+
+.ch-scrim {
+  position: fixed; inset: 0; z-index: var(--ds-z-overlay);
+  background: var(--ds-scrim);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--ds-dur) var(--ds-ease), visibility 0s linear var(--ds-dur);
+}
+/* Enters from the RIGHT. The tournament preview slid it in from the left, which
+   was my own flourish and not the archetype: NAV-PATTERNS #7 specifies a
+   "slide-from-right panel". Correcting it restores fidelity to the picked
+   archetype AND satisfies the parity gate's rule that the opener hug the
+   header's right edge, since a right hand drawer wants a right hand trigger. */
+.ch-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(360px, 88vw);
+  z-index: var(--ds-z-drawer);
+  display: flex; flex-direction: column;
+  background: var(--ds-primary-deep);
+  border-left: 1px solid var(--ds-glass-border);
+  box-shadow: var(--ds-shadow-lift);
+  transform: translateX(100%);
+  transition: transform var(--ds-dur-slow) var(--ds-ease);
+  overflow-y: auto;
+}
+body[data-drawer="open"] .ch-scrim { opacity: 1; visibility: visible; transition-delay: 0s; }
+body[data-drawer="open"] .ch-drawer { transform: translateX(0); }
+.ch-drawer__hd { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--ds-glass-border); }
+.ch-drawer__logo { height: 30px; width: auto; display: block; }
+.ch-drawer__x {
+  width: 44px; height: 44px; display: grid; place-items: center;
+  border-radius: var(--ds-r-control); border: 1px solid var(--ds-glass-border);
+  background: transparent; color: var(--ds-ink-on-dark); cursor: pointer;
+}
+.ch-drawer__x:focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 2px; }
+.ch-drawer__x svg { width: 16px; height: 16px; }
+.ch-drawer__body { padding: 12px 20px 24px; }
+.ch-acc { border-bottom: 1px solid var(--ds-glass-border); }
+.ch-acc__link, .ch-acc__btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 16px 0;
+  font-family: var(--ds-font-display); font-size: 15px; font-weight: 600;
+  letter-spacing: .09em; text-transform: uppercase;
+  color: var(--ds-ink-on-dark); text-decoration: none;
+  background: none; border: 0; text-align: left; cursor: pointer;
+}
+.ch-acc__link:focus-visible, .ch-acc__btn:focus-visible { outline: 2px solid var(--ds-accent); outline-offset: 2px; }
+.ch-acc__panel { display: none; padding-bottom: 10px; }
+.ch-acc[data-open="true"] .ch-acc__panel { display: block; }
+.ch-acc[data-open="true"] .ch-caret { transform: rotate(180deg); }
+.ch-acc__sub {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 11px 0; font-size: 14.5px; color: var(--ds-accent-light); text-decoration: none;
+}
+.ch-acc__sub em { font-style: normal; font-family: var(--ds-font-mono, ui-monospace, Consolas, monospace); font-size: 10.5px; color: var(--ds-accent-deep); }
+.ch-acc__sub:hover { color: var(--ds-accent); }
+.ch-drawer__cta { margin-top: 22px; display: flex; }
+.ch-drawer__cta .ch-phone { flex: 1; justify-content: center; }
+
+/* ---- 5. PRE FOOTER CTA (FOOTER-STYLES #21) ------------------------------- */
+/* B's closing band is the DARK inversion of A's gold one, so the two directions
+   differ at the close as well as at the top. */
+.ch-cta { position: relative; background: var(--ds-primary-deep); overflow: hidden; padding-block: var(--ds-space-2xl); text-align: center; }
+.ch-cta__wash { position: absolute; inset: 0; background: var(--ds-glow-wash); pointer-events: none; }
+.ch-cta__grain { position: absolute; inset: 0; background-image: var(--ds-grain); opacity: var(--ds-opacity-texture); pointer-events: none; }
+.ch-cta__rule { width: 64px; height: 3px; background: var(--ds-accent); margin: 0 auto 20px; }
+.ch-cta__eyebrow { font-family: var(--ds-font-display); font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ds-accent); margin: 0 0 14px; }
+.ch-cta__h { font-family: var(--ds-font-display); font-size: clamp(31px, 4.1vw, 52px); font-weight: 500; line-height: 1.08; letter-spacing: -.022em; color: var(--ds-ink-on-dark); margin: 0 auto 16px; max-width: 22ch; }
+.ch-cta__sub { font-size: 15.5px; line-height: 1.6; color: var(--ds-accent-light); margin: 0 auto 28px; max-width: 50ch; }
+.ch-cta__phone {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 17px 34px; border-radius: var(--ds-r-control);
+  background: var(--ds-accent); color: var(--ds-primary-deep);
+  font-family: var(--ds-font-display); font-size: 18px; font-weight: 700; letter-spacing: .01em;
+  text-decoration: none; border: 1px solid var(--ds-accent);
+  box-shadow: var(--ds-glow), var(--ds-shadow-card-2stop);
+  transition: transform var(--ds-dur) var(--ds-ease), box-shadow var(--ds-dur) var(--ds-ease);
+}
+/* structural.css:455 is `.surface-dark a { color: var(--ds-accent-ink) }`, at
+   0,1,1, which OUTRANKS the 0,1,0 class rule above. Inside the dark flip that
+   token repaints to the light gold, so this gold pill was painting a gold label
+   on itself at about 1.25:1: an invisible CTA. The pill states its own colour at
+   a winning specificity; deep ink on gold is 11.27:1.
+   Its sibling structural.css:457, `.surface-gold a { color: var(--ds-accent) }`,
+   is the same 0,1,1 trap on the flipped GOLD ground. This chrome never sets the
+   pill on .surface-gold, so no second override ships; a later band that does
+   needs the same winning-specificity statement or it repeats the defect. */
+.surface-dark .ch-cta__phone { color: var(--ds-primary-deep); }
+.ch-cta__phone:hover { transform: translateY(-3px); box-shadow: var(--ds-glow), var(--ds-shadow-lift); }
+.ch-cta__phone:focus-visible { outline: 2px solid var(--ds-accent-light); outline-offset: 4px; }
+.ch-cta__ic { width: 19px; height: 19px; flex: 0 0 auto; }
+.ch-cta__risk { display: block; margin-top: 16px; font-size: 13px; color: var(--ds-accent-light); }
+
+/* ---- 6. FOOTER (FOOTER-STYLES #19, editorial masthead) ------------------- */
+.ch-ft { background: var(--ds-bg-surface); color: var(--ds-ink); border-top: 3px solid var(--ds-accent-deep); }
+.ch-ft__top { padding-block: var(--ds-space-xl) var(--ds-space-lg); text-align: center; border-bottom: 1px solid var(--ds-line); }
+.ch-ft__mark { height: 46px; width: auto; display: block; margin: 0 auto 16px; }
+.ch-ft__tagline { font-family: var(--ds-font-display); font-size: 15px; font-weight: 500; color: var(--ds-ink-heading); margin: 0; letter-spacing: .01em; }
+/* the masthead credits: the periodical device, carrying the real NAP */
+.ch-mast { padding-block: var(--ds-space-lg); border-bottom: 1px solid var(--ds-line); }
+.ch-mast__k { font-family: var(--ds-font-display); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ds-accent-ink); margin: 0 0 8px; }
+.ch-mast__v { font-size: 14.5px; line-height: 1.65; color: var(--ds-ink); margin: 0; font-style: normal; }
+.ch-mast__v a { color: var(--ds-primary); text-decoration: none; }
+.ch-mast__v a:hover { text-decoration: underline; }
+.ch-mast__dirs {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 10px;
+  font-family: var(--ds-font-display); font-size: 13px; font-weight: 600;
+  color: var(--ds-primary); text-decoration: none;
+}
+.ch-mast__dirs:hover { color: var(--ds-primary-deep); }
+.ch-mast__dirs span { transition: transform var(--ds-dur-fast) var(--ds-ease); }
+.ch-mast__dirs:hover span { transform: translateX(3px); }
+.ch-ftcol__t { font-family: var(--ds-font-display); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ds-accent-ink); margin: 0 0 12px; }
+.ch-ftcol__l { list-style: none; margin: 0; padding: 0; }
+.ch-ftcol__l li + li { margin-top: 8px; }
+.ch-ftcol__l a { font-size: 14px; color: var(--ds-ink-soft); text-decoration: none; }
+.ch-ftcol__l a:hover { color: var(--ds-primary); }
+.ch-ft__links { padding-block: var(--ds-space-lg); }
+.ch-ft__legal { border-top: 1px solid var(--ds-line); padding-block: var(--ds-space-md); display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
+.ch-ft__legal p, .ch-ft__legal a { font-size: 12.5px; color: var(--ds-ink-soft); margin: 0; text-decoration: none; }
+.ch-ft__legal a:hover { color: var(--ds-primary); }
+
+/* ---- 7. SKIP LINK -------------------------------------------------------- */
+.ch-skip {
+  position: absolute; left: 12px; top: -60px; z-index: var(--ds-z-toast);
+  padding: 12px 20px; border-radius: var(--ds-r-control);
+  background: var(--ds-accent); color: var(--ds-primary-deep);
+  font-family: var(--ds-font-display); font-weight: 600; font-size: 14px; text-decoration: none;
+  transition: top var(--ds-dur) var(--ds-ease);
+}
+.ch-skip:focus { top: 12px; }
+
+/* ---- 8. REFLOW ----------------------------------------------------------- */
+@media (max-width: 1099px) {
+  .ch-nav__list { gap: var(--ds-space-lg); }
+  .ch-nav__link { font-size: 12px; letter-spacing: .08em; }
+  .ch-svcs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ch-svcs .ch-svc:nth-child(3n) { border-right: 1px solid var(--ds-hairline); }
+  .ch-svcs .ch-svc:nth-child(2n) { border-right: 0; }
+}
+@media (max-width: 979px) {
+  .ch-row2 { display: none; }
+  .ch-row1 { grid-template-columns: auto 1fr auto; min-height: 66px; }
+  /* Hide the utility ITEMS, never the .ch-util cell itself. That cell is the
+     burger's parent, and display:none on a parent cannot be undone by
+     display:flex on the child: the whole subtree stops generating boxes. The
+     rule this replaces hid .ch-util, so the burger measured 0 by 0 at every
+     width below 980 and THE MOBILE DRAWER COULD NOT BE OPENED AT ALL.
+     Measured at 390 and at 768: burger 0x0, hidden by ancestor .ch-util, click
+     impossible; Directions A and C were 44x44 and opened. It survived the first
+     render harness because that forced the drawer with ?open=drawer, which
+     proves the drawer renders while never touching the control that opens it. */
+  .ch-util__i { display: none; }
+  .ch-burger { display: flex; }
+  /* The burger moves to the RIGHT END of row 1 at mobile, to sit with the drawer
+     it opens. Done with grid `order` rather than by moving markup, so the carrier
+     stays byte-identical to the locked source. The cta slot is empty here (the
+     phone pill is hidden below 980), so it collapses to zero width on the left
+     and the logo keeps the centre. The parity gate requires the opener to hug the
+     header's right edge and to be the rightmost visible control; both hold. */
+  .ch-cta-slot { order: 1; }
+  .ch-logo { order: 2; }
+  .ch-util { order: 3; justify-content: flex-end; }
+  .ch-logo { justify-self: center; }
+  .ch-logo img { height: 30px; }
+  .ch-cta-slot .ch-phone { display: none; }
+}
+@media (min-width: 980px) { .ch-scrim, .ch-drawer { display: none; } }
+@media (max-width: 767px) {
+  .ch-ft__top { padding-block: var(--ds-space-lg) var(--ds-space-md); }
 }
 
-/* Reduced motion: the token sheet collapses transitions. The mega and drawer are display toggles, so
-   they open instantly either way, which is a further argument for the CSS-only mechanism. */
+/* ---- 9. MOTION GATE ------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  .ch-row1, .ch-row2, .ch-logo img, .ch-mega, .ch-svc, .ch-phone, .ch-drawer,
+  .ch-scrim, .ch-cta__phone, .ch-nav__link::after, .ch-caret { transition: none; }
+  .ch-phone:hover, .ch-cta__phone:hover { transform: none; }
+}

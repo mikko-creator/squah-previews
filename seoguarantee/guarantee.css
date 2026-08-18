@@ -1,0 +1,40 @@
+/* ============================================================================
+   guarantee.css . THE PER-PAGE SIGNATURE SHEET for the guarantee page.
+
+   WHY THIS FILE EXISTS, and why it holds exactly one rule.
+   The T-MARQUEE concept this page is promoted from carries one page-scoped TOKEN
+   DEFINITION: the band interval re-point that is the whole of the owner's
+   compaction revision. It cannot live in _design/seoguarantee-structural.css,
+   because "zero token definitions" is a locked and gate-checked property of that
+   sheet: the tokens sheet is the single definition site for the vocabulary and
+   the structural sheet only ever REFERENCES it. It also cannot stay in the
+   concept preview's inline <style>, because promote-concept.mjs extracts only
+   the <main> element's inner HTML and discards the preview's head entirely, so
+   an inline definition is dropped the moment the page is promoted.
+
+   pages/<page>.css IS the sanctioned home. build.mjs resolves it by convention
+   (build(): css = existsSync(pages/<slug>.css) ? '<slug>.css' : '') and emits it
+   through the shell's {{SIGNATURE_LINKS}} slot, which sits AFTER
+   {{DESIGN_CSS_LINKS}} in the head, so this sheet is last in the cascade and
+   scoped to this one page by the simple fact that no other page links it. The
+   concept preview links this same file directly, so there is ONE definition of
+   the value and the preview and the built page cannot drift apart.
+
+   Everything else the concept's page layer carried is pure STYLING and has
+   graduated to seoguarantee-structural.css section 11, fenced under .tm-band so
+   it cannot reach another page type.
+
+   TOKEN PURITY: no raw hex, no raw colour, no invented value. The interval
+   resolves to an existing step of the locked seven step spacing scale.
+   ============================================================================ */
+
+/* THE INTERVAL. The band interval was clamp(64px, 8vw, 112px), so at 1440 every
+   band paid 112 top and 112 bottom and two bands on different grounds sat 224
+   apart. It steps down one notch to --ds-space-xl, a flat 64.
+
+   It is re-pointed as a TOKEN rather than as a padding override on purpose: the
+   structural sheet's sibling collapse zeroes padding-block-start on a same-ground
+   pair, and that collapse is what fuses the fused bands into one stratum. An
+   override written at .section would have out-specified the collapse and broken
+   the fusion. Re-pointing the token leaves the whole metering intact. */
+#main { --ds-section-py: var(--ds-space-xl); }

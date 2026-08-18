@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI/UX Design | Turn The Traffic We Win Into Leads</title>
+<meta name="description" content="Interface and experience design that turns traffic into calls, included in the one agreed monthly fee you owe only while the agreed metrics are delivered.">
+<meta name="robots" content="noindex">
+
+<link rel="icon" type="image/png" href="assets/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Hind:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="design-system/tokens.css?v=489bae2b">
+  <link rel="stylesheet" href="design-system/chrome.css?v=9423a7c8">
+  <link rel="stylesheet" href="design-system/structural.css?v=81235918">
+  <link rel="stylesheet" href="design-system/brand-card-standard.css?v=8122240d">
+
+</head>
+<body>
+
+<a class="ch-skip" href="#main">Skip to content</a>
+
+<header class="ch-hdr" id="chHdr" data-scrolled="false">
+  <div class="container">
+    <div class="ch-row1">
+      <div class="ch-util">
+        <button class="ch-burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <span class="ch-util__i">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          Las Vegas, Nevada
+        </span>
+        <span class="ch-util__i">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5.2l3.4 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Mon to Fri
+        </span>
+        
+        <a class="ch-util__i ch-util__i--mail" href="mailto:support@seoguarantee.com">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          support@seoguarantee.com
+        </a>
+      </div>
+
+      <a class="ch-logo" href="#main" aria-label="First Page SEO Guarantee, home">
+        <img src="assets/seoguarantee.com_wp-content_themes_theme-child_images_seoguarantee-logo-w.png"
+             width="250" height="122" alt="First Page SEO Guarantee">
+      </a>
+
+      <div class="ch-cta-slot">
+        <a class="ch-phone" href="tel:+17024207272">
+          <svg class="ch-phone__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2L21 14.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 5.2 2 2 0 0 1 6 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          (702) 420-7272
+        </a>
+      </div>
+    </div>
+
+    <div class="ch-row2">
+      <nav class="ch-nav" aria-label="Primary">
+        <ul class="ch-nav__list">
+          
+          <li class="ch-nav__item"><a class="ch-nav__link ch-nav__link--offer" href="#main"><span class="ch-dot" aria-hidden="true"></span>The Guarantee</a></li>
+
+          <li class="ch-nav__item" id="megaItem" data-open="false">
+            <button class="ch-nav__link" id="megaBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="megaPanel">
+              Services
+              <svg class="ch-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3.2 5 7l4-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+
+            <div class="ch-mega" id="megaPanel" role="region" aria-label="Services">
+              <div class="ch-mega__panel">
+                <div class="ch-mega__hd">
+                  <p class="ch-mega__eyebrow">Contents, one agreed fee</p>
+                  <a class="ch-mega__all" href="#main">See what is included</a>
+                </div>
+
+                <div class="ch-svcs">
+                  <a class="ch-svc" href="#main"><span class="ch-svc__n">01</span><span><span class="ch-svc__t">SEO Services</span><span class="ch-svc__d">The ranking work the guarantee is written against.</span></span></a>
+                  <a class="ch-svc" href="#main"><span class="ch-svc__n">02</span><span><span class="ch-svc__t">Web Design</span><span class="ch-svc__d">The site the rankings land on.</span></span></a>
+                  <a class="ch-svc" href="#main"><span class="ch-svc__n">03</span><span><span class="ch-svc__t">UI/UX Design</span><span class="ch-svc__d">How the page behaves once they arrive.</span></span></a>
+                  <a class="ch-svc" href="#main"><span class="ch-svc__n">04</span><span><span class="ch-svc__t">Web Development</span><span class="ch-svc__d">Build, speed and crawlability.</span></span></a>
+                  <a class="ch-svc" href="#main"><span class="ch-svc__n">05</span><span><span class="ch-svc__t">CRO Services</span><span class="ch-svc__d">Turning arrivals into calls.</span></span></a>
+                  <a class="ch-svc" href="#main"><span class="ch-svc__n">06</span><span><span class="ch-svc__t">Graphic Design</span><span class="ch-svc__d">The assets the campaigns run on.</span></span></a>
+                  <a class="ch-svc" href="#main"><span class="ch-svc__n">07</span><span><span class="ch-svc__t">Branding</span><span class="ch-svc__d">The identity all of it carries.</span></span></a>
+                </div>
+
+                <div class="ch-feat">
+                  <div class="ch-feat__media">
+                    <img src="assets/seoguarantee.com_wp-content_themes_theme-child_images_full-suite-image.jpg"
+                         width="1920" height="1216" alt="The full suite of services delivered together" loading="lazy">
+                    <span class="ch-feat__scrim"></span>
+                  </div>
+                  <div class="ch-feat__body">
+                    <p class="ch-feat__eyebrow">The Full Suite</p>
+                    <p class="ch-feat__line">All seven are included in the one agreed monthly fee, not sold as tiers.</p>
+                    <a class="ch-feat__link" href="#main">See what is included <span aria-hidden="true">&rarr;</span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="ch-nav__item"><a class="ch-nav__link" href="#main">Results</a></li>
+          <li class="ch-nav__item"><a class="ch-nav__link" href="#main">Who We Work With</a></li>
+          <li class="ch-nav__item"><a class="ch-nav__link" href="#main">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<div class="ch-scrim" id="scrim"></div>
+<aside class="ch-drawer" id="drawer" aria-label="Menu" aria-hidden="true">
+  <div class="ch-drawer__hd">
+    <img class="ch-drawer__logo"
+         src="assets/seoguarantee.com_wp-content_themes_theme-child_images_seoguarantee-logo-w.png"
+         width="250" height="122" alt="First Page SEO Guarantee">
+    <button class="ch-drawer__x" id="drawerX" type="button" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="ch-drawer__body">
+    <div class="ch-acc"><a class="ch-acc__link" href="#main">The Guarantee</a></div>
+    <div class="ch-acc" id="accServices" data-open="false">
+      <button class="ch-acc__btn" type="button" aria-expanded="false">
+        Services
+        <svg class="ch-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3.2 5 7l4-3.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="ch-acc__panel">
+        <a class="ch-acc__sub" href="#main"><em>01</em> SEO Services</a>
+        <a class="ch-acc__sub" href="#main"><em>02</em> Web Design</a>
+        <a class="ch-acc__sub" href="#main"><em>03</em> UI/UX Design</a>
+        <a class="ch-acc__sub" href="#main"><em>04</em> Web Development</a>
+        <a class="ch-acc__sub" href="#main"><em>05</em> CRO Services</a>
+        <a class="ch-acc__sub" href="#main"><em>06</em> Graphic Design</a>
+        <a class="ch-acc__sub" href="#main"><em>07</em> Branding</a>
+      </div>
+    </div>
+    <div class="ch-acc"><a class="ch-acc__link" href="#main">Results</a></div>
+    <div class="ch-acc"><a class="ch-acc__link" href="#main">Who We Work With</a></div>
+    <div class="ch-acc"><a class="ch-acc__link" href="#main">About</a></div>
+    <div class="ch-drawer__cta">
+      <a class="ch-phone" href="tel:+17024207272">
+        <svg class="ch-phone__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2L21 14.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 5.2 2 2 0 0 1 6 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        (702) 420-7272
+      </a>
+    </div>
+  </div>
+</aside>
+
+<main id="main">
+
+
+
+
+
+<section class="section section--paper" id="s1-hero" aria-labelledby="s1h">
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">UI and UX design</p>
+          <h1 id="s1h">UI and UX design that turns the positions we win into enquiries, inside one agreed monthly fee you owe only while we are delivering the ranking metrics in your contract.</h1>
+        </div>
+        <p class="bw-lede readw reveal">Journeys, navigation, page templates, enquiry forms, mobile behaviour. In any month the contracted metrics are not being delivered, the design work carries on and your billing pauses until results are back on track.</p>
+        
+        <div class="bw-actions reveal">
+          <a class="bw-btn bw-btn--primary" href="contact-us.html">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2L21 14.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 5.2 2 2 0 0 1 6 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            CALL US
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--full"><div class="bw-divider" aria-hidden="true"></div></div>
+    </div>
+
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">Included, and conditioned</p>
+          <h2 class="d-md" id="s1bh">The interface work is inside the fee, and the fee is inside the condition.</h2>
+        </div>
+        <blockquote class="bw-quote bw-quote--display readw reveal">UI/UX design is included in the one monthly fee you agree up front, and that fee is only owed for the months we are delivering the ranking metrics named in your contract: in any month we are not, the design work carries on and your billing pauses until results are back on track.</blockquote>
+        <p class="bw-copy readw reveal">The one agreed monthly fee covers Search Engine Optimization, Website Design and <a href="web-development.html">Development</a>, Content Writing, Reputation Management, <a href="cro-services.html">Conversion Optimization</a>, Graphic Design, Branding, and Consulting.</p>
+        <p class="bw-note readw reveal">One agreed monthly fee covers SEO, web, CRO, branding and design. Quoted per business after a competitive review.</p>
+      </div>
+    </div>
+
+    <div class="row row--3up row--tight">
+      <div class="col col--stretch col--fill">
+        <div class="bw-opposed reveal">
+          <p class="bw-opposed__k">Interface work is inside the fee</p>
+          <p class="bw-opposed__d">It never waits behind its own quote, which matters because interface problems are usually discovered mid-campaign rather than at the start.</p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-opposed reveal">
+          <p class="bw-opposed__k">We are paid on the outcome rather than the hours</p>
+          <p class="bw-opposed__d">That is why it is included. The model came first and the inclusion follows from it.</p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-opposed reveal">
+          <p class="bw-opposed__k">One team designs the journey and runs the campaign</p>
+          <p class="bw-opposed__d">Nobody here is optimising a page they are not allowed to change, and nobody is waiting on a third party to implement what they recommended.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--span-8">
+        <div class="bw-bound reveal">
+          <p class="bw-bound__k">What it replaces</p>
+          <p class="bw-bound__d">What the fee replaces is a separate UX engagement, or a freelance designer briefed second-hand by whoever happens to hold the search contract. No figure is stated on either side of that.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--full">
+        <figure class="bw-figure reveal">
+          <svg viewBox="0 30 720 190" role="img" aria-label="A diagram of three moves in a row: a search result, the page it leads to, and the action taken on that page, joined by two arrows.">
+            <g fill="none" style="stroke:var(--ds-line)" stroke-width="1.5">
+              <path d="M212 130 H262"/><path d="M254 124 L262 130 L254 136"/>
+              <path d="M462 130 H512"/><path d="M454 124 L462 130 L454 136"/>
+            </g>
+            <g style="fill:var(--ds-bg-surface-2);stroke:var(--ds-line)" stroke-width="1.5">
+              <rect x="12" y="76" width="200" height="108" rx="13"/>
+              <rect x="262" y="76" width="200" height="108" rx="13"/>
+            </g>
+            <rect x="512" y="76" width="200" height="108" rx="13" style="fill:var(--ds-bg-surface);stroke:var(--ds-accent-deep)" stroke-width="2.5"/>
+            <g style="font-family:var(--ds-font-display);font-size:12.5px;font-weight:600;letter-spacing:1.2px;fill:var(--ds-accent-ink)">
+              <text x="34" y="112">A SEARCH RESULT</text><text x="284" y="112">THE PAGE</text><text x="534" y="112">THE ACTION</text>
+            </g>
+            <g style="font-family:var(--ds-font-display);font-size:19px;font-weight:500;fill:var(--ds-ink-heading)">
+              <text x="34" y="150">Arrives</text><text x="284" y="150">Finds it</text><text x="534" y="150">Acts</text>
+            </g>
+            <text x="284" y="206" style="font-size:13px;fill:var(--ds-ink-soft)">the middle move is what this page owns</text>
+          </svg>
+          <figcaption>The route this page is responsible for, drawn as three moves. The third frame is outlined because it is the one the interface either earns or loses. No client, no phrase, no position and no figure appears in it.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--dark surface-dark" data-surface="dark" id="s2-worth" aria-labelledby="s2h">
+  <div class="container">
+    <div class="row row--split row--center">
+      <div class="col col--copy col--stack">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">The ceiling of a ranking</p>
+          <h2 class="d-md" id="s2h">Why the interface decides what a ranking is worth.</h2>
+        </div>
+        <p class="bw-lede readw reveal">The objectives run in a fixed order: get traffic, generate high quality leads, convert those leads to sales. This page is about what happens between the first and the second.</p>
+      </div>
+      <div class="col col--media col--center">
+        <figure class="bw-figure reveal">
+          <svg viewBox="0 20 420 240" role="img" aria-label="A diagram of one visit arriving and then forking into two outcomes: an enquiry, drawn filled, and a bounce, drawn as an open outline.">
+            <g fill="none" style="stroke:var(--ds-line)" stroke-width="1.5">
+              <path d="M118 140 H160 V78 H208"/><path d="M200 72 L208 78 L200 84"/>
+              <path d="M118 140 H160 V202 H208"/><path d="M200 196 L208 202 L200 208"/>
+            </g>
+            <rect x="10" y="112" width="108" height="56" rx="12" style="fill:var(--ds-bg-surface);stroke:var(--ds-line)" stroke-width="1.5"/>
+            <text x="30" y="146" style="font-family:var(--ds-font-display);font-size:16px;font-weight:500;fill:var(--ds-ink-heading)">One visit</text>
+            <rect x="208" y="50" width="200" height="56" rx="12" style="fill:var(--ds-accent)"/>
+            <rect x="208" y="174" width="200" height="56" rx="12" fill="none" style="stroke:var(--ds-accent-deep)" stroke-width="2.5"/>
+            <text x="230" y="84" style="font-family:var(--ds-font-display);font-size:16px;font-weight:500;fill:var(--ds-primary-deep)">An enquiry</text>
+            <text x="230" y="208" style="font-family:var(--ds-font-display);font-size:16px;font-weight:500;fill:var(--ds-ink-heading)">A bounce</text>
+          </svg>
+          <figcaption>One visit, two outcomes. The fork is the seconds after the click, and it is the part this page is responsible for. Generic outcomes, with no client, no rate and no figure.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--full"><div class="bw-divider" aria-hidden="true"></div></div>
+    </div>
+
+    <div class="row row--3up row--tight">
+      <div class="col col--stretch col--fill">
+        <div class="bw-bound reveal">
+          <p class="bw-bound__k">The ceiling</p>
+          <p class="bw-bound__t">A position produces a visit, and nothing more.</p>
+          <p class="bw-bound__d">That is the honest ceiling of a ranking. What the visit becomes is decided in the seconds after the click, on a page we either designed for that moment or did not.</p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-bound reveal">
+          <p class="bw-bound__k">The arrival</p>
+          <p class="bw-bound__t">The person arriving typed something specific.</p>
+          <p class="bw-bound__d">They had a particular problem, they described it in their own words, and a search engine sent them to you. If the page they land on makes them hunt for the thing they just typed, then the position we are contracted to hold has bought you a bounce.</p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-bound reveal">
+          <p class="bw-bound__k">The buyer</p>
+          <p class="bw-bound__t">This is the buyer we are built for.</p>
+          <p class="bw-bound__d">An owner whose competitors are consistently ranking for the phrases that matter to their business. Taking the position is the first half. Being the one they call is the second, and it is the half this page is responsible for.</p>
+        </div>
+      </div>
+      <div class="col col--full">
+        <p class="bw-note readw reveal">The promise attached to all of it stays the same one, and it is set out as a term further down this page. The interface is not guaranteed, and no lift, rate or improvement is claimed anywhere on this page.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--paper" id="s3-design" aria-labelledby="s3h">
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">Scope</p>
+          <h2 class="d-md" id="s3h">What we design.</h2>
+        </div>
+        <p class="bw-tag bw-tag--quiet reveal">Representative service copy, pending confirmation</p>
+        <p class="bw-copy readw reveal">Representative service copy, pending confirmation. Everything below except the navigation inventory is swappable, and it is written to be replaced rather than defended.</p>
+      </div>
+    </div>
+
+    <div class="row row--3up row--tight">
+      <div class="col col--stretch col--fill">
+        <div class="bw-rank reveal">
+          <p class="bw-rank__n">01</p>
+          <div>
+            <p class="bw-rank__t">Journeys.</p>
+            <p class="bw-rank__d">The route from a search result to an enquiry, mapped per page template rather than assumed. A visitor landing on a vertical page has a different starting point from one landing on the home page, and pretending otherwise is how a journey gets designed for nobody.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-rank reveal">
+          <p class="bw-rank__n">02</p>
+          <div>
+            <p class="bw-rank__t">Navigation.</p>
+            <p class="bw-rank__d">Menu structure and behaviour, including custom dynamic menus and multi-level menus, and the top and bottom panel toolbars that keep the primary action reachable wherever a visitor has scrolled to.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-rank reveal">
+          <p class="bw-rank__n">03</p>
+          <div>
+            <p class="bw-rank__t">Page templates.</p>
+            <p class="bw-rank__d">What a service page, a vertical page, a location page and a contact page each have to do, and where the single primary action sits on each of them. One action per page, in a place the eye reaches without being told.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-rank reveal">
+          <p class="bw-rank__n">04</p>
+          <div>
+            <p class="bw-rank__t">Enquiry forms.</p>
+            <p class="bw-rank__d">Field order, length and error behaviour, designed so that the form is the same action as the phone call rather than a competing one. A form that argues with the phone number next to it costs you both.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-rank reveal">
+          <p class="bw-rank__n">05</p>
+          <div>
+            <p class="bw-rank__t">Mobile behaviour.</p>
+            <p class="bw-rank__d">Thumb reach, tap targets, sticky access to the call, and deciding what collapses rather than letting everything shrink.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-rank reveal">
+          <p class="bw-rank__n">06</p>
+          <div>
+            <p class="bw-rank__t">Client portal.</p>
+            <p class="bw-rank__d">How you see interface work in progress and request more of it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--full"><div class="bw-divider" aria-hidden="true"></div></div>
+    </div>
+
+    <div class="row row--split-rev row--center">
+      <div class="col col--media col--stretch">
+        <figure class="bw-shot reveal">
+          <div class="bw-shot__plate">
+            <img class="bw-shot__img"
+                 src="assets/split-ui-ux-craft.jpg"
+                 width="768" height="1024" loading="lazy"
+                 alt="A vertical column of blank white index cards pinned in sequence on a bright white board, one card outlined in gold, with deep purple pin heads and a thin purple cord tracing the path between them.">
+          </div>
+          <figcaption class="bw-shot__cap">A sequence, pinned and traced. The cards are blank because the route is the thing being designed.</figcaption>
+        </figure>
+      </div>
+      <div class="col col--copy">
+        <p class="bw-copy readw reveal">One action per page, in a place the eye reaches without being told, is the rule the six groups above are all in service of.</p>
+        <p class="bw-note readw reveal">The two genuine fragments this page inherits are the navigation and toolbar inventory and the client portal. Everything else on this band is written to be replaced by the owner's own service copy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--warm" data-surface="warm" id="s4-cadence" aria-labelledby="s4h">
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">Cadence</p>
+          <h2 class="d-md" id="s4h">How the work runs month to month.</h2>
+        </div>
+        <p class="bw-tag bw-tag--quiet reveal">Representative, pending confirmation</p>
+        <p class="bw-copy readw reveal">Representative, pending confirmation. The cadence below is how the work is intended to run.</p>
+      </div>
+    </div>
+
+    <div class="row row--split row--center">
+      <div class="col col--media col--stretch">
+        <figure class="bw-plate reveal">
+          <p class="bw-plate__k">One month of interface work</p>
+          <div class="bw-plate__row">
+            <span class="bw-plate__key" aria-hidden="true"></span>
+            <p class="bw-plate__t">A request goes in through the client portal.</p>
+          </div>
+          <div class="bw-plate__row">
+            <span class="bw-plate__key" aria-hidden="true"></span>
+            <p class="bw-plate__t">A design comes back.</p>
+          </div>
+          <div class="bw-plate__row">
+            <span class="bw-plate__key" aria-hidden="true"></span>
+            <p class="bw-plate__t">It ships.</p>
+          </div>
+          <div class="bw-plate__row">
+            <span class="bw-plate__key bw-plate__key--open" aria-hidden="true"></span>
+            <p class="bw-plate__t">The next month's review looks at what it changed.</p>
+          </div>
+          <figcaption class="bw-plate__cap">The loop, drawn as four rows. The open marker is the review, because it is the step that starts the next one.</figcaption>
+        </figure>
+      </div>
+      <div class="col col--copy col--stack">
+        <p class="bw-copy readw reveal">Two properties matter more than those four steps. The work is continuous rather than a project with an end date, so there is no point at which the interface is declared finished. And it does not stop in a month billing is paused, because the pause is on the invoice rather than on the work.</p>
+        <p class="bw-copy readw reveal">The communication standard is plain and we are not competing on scale with it: you get told what changed and why, every month.</p>
+        <p class="bw-copy readw reveal">The current site publishes 6- and 12-month windows, and the agreement itself is assessed month by month rather than as a single test at the end. The real contract window is unratified, so those windows are reported only as what the current site says and never as a term of the agreement.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--full"><div class="bw-divider" aria-hidden="true"></div></div>
+    </div>
+
+    
+    <div class="row row--3up row--tight">
+      <div class="col col--stretch col--fill">
+        <div class="bw-gap reveal">
+          <p class="bw-gap__k">Never published by this business</p>
+          <p class="bw-gap__t">Turnaround time</p>
+          <p class="bw-gap__d">Not published by this business, and not invented here.</p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-gap reveal">
+          <p class="bw-gap__k">Never published by this business</p>
+          <p class="bw-gap__t">Revision count</p>
+          <p class="bw-gap__d">Not published by this business, and not invented here.</p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-gap reveal">
+          <p class="bw-gap__k">Never published by this business</p>
+          <p class="bw-gap__t">Monthly request volume</p>
+          <p class="bw-gap__d">Not published by this business, and not invented here.</p>
+        </div>
+      </div>
+      <div class="col col--full">
+        <p class="bw-note readw reveal">Those three slots ship labelled and empty rather than filled with a number nobody has agreed to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--tint" id="s5-boundary" aria-labelledby="s5h">
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">The boundary</p>
+          <h2 class="d-md" id="s5h">Where UI/UX stops and CRO starts.</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row--4up row--tight">
+      <div class="col col--stretch col--fill">
+        <div class="bw-fact reveal">
+          <p class="bw-fact__n">This page</p>
+          <p class="bw-fact__t">Flows and interface: what the visitor can do, and how it is arranged.</p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-fact reveal">
+          <p class="bw-fact__n">Web design</p>
+          <p class="bw-fact__t">The site as a designed artefact: templates, brand application, the rebuild itself. <a href="web-design.html">Open web design</a></p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-fact reveal">
+          <p class="bw-fact__n">Web development</p>
+          <p class="bw-fact__t">The build layer: integrations, automations, speed and indexability. <a href="web-development.html">Open web development</a></p>
+        </div>
+      </div>
+      <div class="col col--stretch col--fill">
+        <div class="bw-fact reveal">
+          <p class="bw-fact__n">CRO services</p>
+          <p class="bw-fact__t">Measurement and testing: what a change actually produced. <a href="cro-services.html">Open CRO services</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--span-9">
+        <p class="bw-copy readw reveal">The split holds because all four sit inside the same contract and the same agreed fee, which makes the boundary an editorial one drawn for your benefit rather than four things to buy. The key phrases behind all of it are proposed by us from competitive research and named in the contract you sign.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--paper" id="s6-proof" aria-labelledby="s6h">
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight bw-head--center reveal">
+          <p class="bw-eyebrow">Evidence</p>
+          <h2 class="d-md" id="s6h">Two things, and this section is deliberately small.</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row--aside">
+      <div class="col col--stack">
+        <div class="bw-card bw-card--flat reveal">
+          <p class="bw-card__title">Rated 4.9 from 35 Google reviews.</p>
+          <p class="bw-card__body">Stated with the count, every time.</p>
+        </div>
+        <p class="bw-copy reveal">Published outcomes live on <a href="results.html">results</a>, where each one carries its date range, its method, the tool it was measured in, and written permission from the client.</p>
+        <p class="bw-copy reveal">The standard is the credibility move: we publish a result with its dates and its method, or we do not publish it. No percentage tiles, no press logos, no aggregate totals, and no conversion figures of any kind on this page.</p>
+      </div>
+      <div class="col">
+        <div class="bw-tex reveal">
+          <img class="bw-tex__img" src="assets/texture-gold-edge.jpg" width="1024" height="1024" loading="lazy"
+               alt="A macro study of a polished gold edge meeting a white matte plane, one sharp highlight along the edge.">
+        </div>
+        <p class="bw-micro reveal">An edge, and nothing behind it. The picture is a material study and is not a record of anything.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--dark surface-dark" data-surface="dark" id="s7-billed" aria-labelledby="s7h">
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">The mechanic</p>
+          <h2 class="d-md" id="s7h">How this is assessed and billed.</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row--split-rev row--center">
+      <div class="col col--media col--stretch">
+        <figure class="bw-shot reveal">
+          <div class="bw-shot__plate">
+            <img class="bw-shot__img"
+                 src="assets/split-monthly-assessment.jpg"
+                 width="768" height="1024" loading="lazy"
+                 alt="Twelve identical blank white cards standing in an evenly spaced row on a white studio surface, one card lifted forward and edged in gold, against a deep purple panel.">
+          </div>
+          <figcaption class="bw-shot__cap">Identical months, and one of them read differently. The cards are blank because no month here belongs to a client.</figcaption>
+        </figure>
+      </div>
+      <div class="col col--copy col--stack">
+        <ol class="bw-list bw-list--ledger reveal">
+          <li><span>A monthly retainer is agreed up front.</span></li>
+          <li><span>Each month is assessed against the ranking metrics named in the contract.</span></li>
+          <li><span>In a month we are off target, the design work continues and your billing stops.</span></li>
+          <li><span>Billing resumes when results are back on track.</span></li>
+        </ol>
+        <p class="bw-copy readw reveal">We keep working, you stop paying. The obligation is suspended for that month rather than erased.</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col--full"><div class="bw-divider" aria-hidden="true"></div></div>
+    </div>
+
+    <div class="row">
+      <div class="col col--span-9">
+        <p class="bw-copy readw reveal">There is a fair question underneath this, which is why a page about interface design is talking about billing at all. The answer is that the design work is not sold separately. It is carried by a fee that is conditioned on delivery, so the condition belongs on every page the fee covers. And the honest part of the sceptic's case stands: nobody controls how a search engine ranks anything. What is being described here is a term about when an invoice is owed, not a prediction, and the full terms are set out on <a href="guarantee.html">guarantee</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--paper" id="s8-outside" aria-labelledby="s8h">
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="bw-head bw-head--tight bw-head--center reveal">
+          <p class="bw-eyebrow">The limits</p>
+          <h2 class="d-md" id="s8h">What sits outside this page.</h2>
+        </div>
+        <p class="bw-copy readw readw--center reveal">Scope honesty rather than fine print. Here is what we do, here is what belongs to the pages next to this one, and here is the part that depends on your site and comes out on the call.</p>
+      </div>
+    </div>
+
+    <div class="row row--tight">
+      <div class="col col--stretch col--fill">
+        <article class="bw-card bw-card--pad reveal">
+          <h3 class="bw-card__title">What does it cost?</h3>
+          <p class="bw-card__body">The interface work is inside the one fee, quoted per business after a competitive review. No figure, no range and no band is published anywhere on this site.</p>
+        </article>
+      </div>
+      <div class="col col--stretch col--fill">
+        <article class="bw-card bw-card--pad reveal">
+          <h3 class="bw-card__title">Is the design guaranteed?</h3>
+          <p class="bw-card__body">No. There is exactly one guarantee, it is the one stated at the top of this page, and nothing here creates a second one.</p>
+        </article>
+      </div>
+      <div class="col col--stretch col--fill">
+        
+        <div class="bw-gap reveal">
+          <p class="bw-gap__k">Never stated by this business</p>
+          <p class="bw-gap__t">What is not included?</p>
+          <p class="bw-gap__d">The boundary of what the fee does not cover has never been stated by this business. No exclusion list is invented here, and no volume promise is made in its place.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--gold surface-gold" data-surface="accent" id="s9-cta" aria-labelledby="s9h">
+  <div class="container">
+    <div class="row row--tight">
+      <div class="col col--span-7">
+        <div class="bw-head bw-head--tight reveal">
+          <p class="bw-eyebrow">The next step</p>
+          <h2 class="d-md" id="s9h">Book the consultation.</h2>
+        </div>
+        <div class="bw-actions reveal">
+          <a class="bw-btn bw-btn--primary" href="contact-us.html">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2L21 14.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 5.2 2 2 0 0 1 6 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            CALL US
+          </a>
+        </div>
+        <p class="bw-copy readw reveal">First page on the key phrases named in your contract, or you don't pay: in any month we are not delivering them, we keep working and your billing stops.</p>
+      </div>
+      <div class="col col--span-5">
+        <div class="bw-route reveal">
+          <p class="bw-route__k">Where to go next</p>
+          <ul class="bw-route__l">
+            <li><a href="guarantee.html">The guarantee, in full</a></li>
+            <li><a href="full-suite.html">What the one fee covers</a></li>
+            <li><a href="videos.html">The video library</a></li>
+          </ul>
+          <span class="bw-route__n">The terms and the long form argument live on the first of these.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="ch-cta surface-dark" aria-labelledby="ctaH">
+  <span class="ch-cta__wash" aria-hidden="true"></span>
+  <span class="ch-cta__grain" aria-hidden="true"></span>
+  <div class="container">
+    <div class="row">
+      <div class="col col--span-12">
+        <span class="ch-cta__rule" aria-hidden="true"></span>
+        <p class="ch-cta__eyebrow">Talk to us</p>
+        <h2 class="ch-cta__h" id="ctaH">Ask what the guarantee would say for your market.</h2>
+        <p class="ch-cta__sub">One call, one number, one agreed fee. No form to fill in first.</p>
+        <a class="ch-cta__phone" href="tel:+17024207272">
+          <svg class="ch-cta__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3h3l1.5 4.5-2 1.5a12 12 0 0 0 6 6l1.5-2L21 14.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4 5.2 2 2 0 0 1 6 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          (702) 420-7272
+        </a>
+        <span class="ch-cta__risk">The terms are put in writing before anything starts.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="ch-ft">
+  <div class="container">
+    <div class="ch-ft__top">
+      <img class="ch-ft__mark"
+           src="assets/seoguarantee.com_wp-content_themes_theme-child_images_seog-logo.png"
+           width="403" height="85" alt="First Page SEO Guarantee">
+      <p class="ch-ft__tagline">Month by month. Paid, or paused.</p>
+    </div>
+
+    <div class="ch-mast">
+      <div class="row row--3up row--tight">
+        <div class="col">
+          <p class="ch-mast__k">Offices</p>
+          <address class="ch-mast__v">6905 W Charleston Blvd, Las Vegas, NV 89117, USA</address>
+          
+          <a class="ch-mast__dirs" href="https://maps.google.com/?q=6905+W+Charleston+Blvd+Las+Vegas+NV+89117" rel="noopener">Get directions <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="col">
+          <p class="ch-mast__k">Speak to us</p>
+          <p class="ch-mast__v">
+            <a href="tel:+17024207272">(702) 420-7272</a><br>
+            <a href="mailto:support@seoguarantee.com">support@seoguarantee.com</a>
+          </p>
+        </div>
+        <div class="col">
+          <p class="ch-mast__k">Published</p>
+          <p class="ch-mast__v">Monthly, for as long as the agreement runs.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-ft__links">
+      <div class="row row--4up row--tight">
+        <div class="col">
+          <p class="ch-ftcol__t">The Offer</p>
+          <ul class="ch-ftcol__l">
+            <li><a href="#main">The Guarantee</a></li>
+            <li><a href="#main">What is Included</a></li>
+            <li><a href="#main">Results</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <p class="ch-ftcol__t">Services</p>
+          <ul class="ch-ftcol__l">
+            <li><a href="#main">SEO Services</a></li>
+            <li><a href="#main">Web Design</a></li>
+            <li><a href="#main">UI/UX Design</a></li>
+            <li><a href="#main">Web Development</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <p class="ch-ftcol__t">Who We Work With</p>
+          <ul class="ch-ftcol__l">
+            <li><a href="#main">Dental</a></li>
+            <li><a href="#main">Law Firms</a></li>
+            <li><a href="#main">Medical Spas</a></li>
+            <li><a href="#main">HVAC</a></li>
+          </ul>
+        </div>
+        <div class="col">
+          <p class="ch-ftcol__t">Company</p>
+          <ul class="ch-ftcol__l">
+            <li><a href="#main">About</a></li>
+            <li><a href="#main">Our Locations</a></li>
+            <li><a href="#main">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-ft__legal">
+      <p>First Page SEO Guarantee, Las Vegas, Nevada.</p>
+      <a href="#main">Privacy policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================================
+   CHROME BEHAVIOUR. Identical contract to Direction A, because the contract is
+   not what varies between directions: hover intent three ways, keyboard, focus
+   trap, and one scroll boolean. What varies is what that boolean DOES, and here
+   it folds Row 2 away rather than repainting a single bar.
+   ========================================================================== */
+(function () {
+  var CLOSE_DELAY = 260;
+  var hdr = document.getElementById('chHdr');
+  var item = document.getElementById('megaItem');
+  var btn = document.getElementById('megaBtn');
+  var timer = null;
+
+  function openMega() {
+    if (timer) { clearTimeout(timer); timer = null; }
+    item.setAttribute('data-open', 'true');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+  function closeMega(now) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(function () {
+      item.setAttribute('data-open', 'false');
+      btn.setAttribute('aria-expanded', 'false');
+    }, now ? 0 : CLOSE_DELAY);
+  }
+
+  if (item) {
+    item.addEventListener('mouseenter', openMega);
+    item.addEventListener('mouseleave', function () { closeMega(false); });
+    item.addEventListener('focusin', openMega);
+    item.addEventListener('focusout', function (e) { if (!item.contains(e.relatedTarget)) closeMega(true); });
+    btn.addEventListener('click', function () {
+      if (item.getAttribute('data-open') === 'true') { closeMega(true); } else { openMega(); }
+    });
+  }
+
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('drawer');
+  var scrim = document.getElementById('scrim');
+  var drawerX = document.getElementById('drawerX');
+
+  function setDrawer(open) {
+    document.body.setAttribute('data-drawer', open ? 'open' : 'closed');
+    drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) { var f = drawer.querySelector('a, button'); if (f) f.focus(); }
+    else { burger.focus(); }
+  }
+  if (burger) burger.addEventListener('click', function () { setDrawer(true); });
+  if (drawerX) drawerX.addEventListener('click', function () { setDrawer(false); });
+  if (scrim) scrim.addEventListener('click', function () { setDrawer(false); });
+
+  var acc = document.getElementById('accServices');
+  if (acc) {
+    var accBtn = acc.querySelector('.ch-acc__btn');
+    accBtn.addEventListener('click', function () {
+      var open = acc.getAttribute('data-open') === 'true';
+      acc.setAttribute('data-open', open ? 'false' : 'true');
+      accBtn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (document.body.getAttribute('data-drawer') === 'open') { setDrawer(false); return; }
+    if (item && item.getAttribute('data-open') === 'true') { closeMega(true); btn.focus(); }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    if (document.body.getAttribute('data-drawer') !== 'open') return;
+    var f = drawer.querySelectorAll('a[href], button:not([disabled])');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  function onScroll() { hdr.setAttribute('data-scrolled', window.scrollY > 40 ? 'true' : 'false'); }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var q = new URLSearchParams(location.search);
+  if (q.get('open') === 'mega') { openMega(); }
+  if (q.get('open') === 'drawer') { setDrawer(true); }
+  if (q.get('open') === 'drawer-acc') {
+    setDrawer(true);
+    if (acc) { acc.setAttribute('data-open', 'true'); acc.querySelector('.ch-acc__btn').setAttribute('aria-expanded', 'true'); }
+  }
+  if (q.get('scrolled') === '1') { hdr.setAttribute('data-scrolled', 'true'); }
+})();
+</script>
+</body>
+</html>
