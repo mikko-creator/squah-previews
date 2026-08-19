@@ -361,6 +361,21 @@ img, video { height: auto; }
 .section--flush-bot { padding-block-end: 0; }
 .section--tall      { padding-block: calc(var(--ds-section-py) * 1.35); }
 
+/* THE OPENING BAND SITS CLOSER TO THE CHROME, on the owner's ruling that there was
+   too much blank space below the navigation. The gap he was looking at is not a
+   chrome measurement at all: the header ends at 146px and the first ink landed at
+   258px on 25 of 26 pages, so the whole 112px was this section's own leading pad.
+
+   Both edges are reduced, not just the top, and that is deliberate rather than
+   tidy-mindedness. verify-section-rhythm check (A) fails any section whose leading
+   and trailing differ by more than 8px, so trimming only the top would trade one
+   complaint for a blocked build. Check (B) is safe either way: it flags only a gap
+   that EXCEEDS the page median, and its own note records that a band slimmer than
+   the median is legitimate design because less space is never the complaint. So a
+   symmetric trim on the opening band is what the gate's doctrine actually permits,
+   and no hero carve-out had to be invented to get there. */
+#main > section:first-child { padding-block: calc(var(--ds-section-py) * .5); }
+
 
 /* ============================================================================
    4. SEP-6 THE MATERIAL LAYER
