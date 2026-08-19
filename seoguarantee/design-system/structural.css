@@ -452,18 +452,16 @@ p + p { margin-top: var(--ds-space-md); }
   color: var(--ds-accent-ink);
   margin: 0 0 var(--ds-space-sm);
 }
-.bw-eyebrow::after {
-  content: "";
-  flex: 0 0 44px;
-  height: 2px;
-  background: var(--ds-accent-deep);
-}
+/* THE INLINE RULE BESIDE A SECTION LABEL IS WITHDRAWN, on the owner's ruling.
+   A 44px solid bar sitting inline immediately after an eyebrow is visually an
+   em dash, and this client bans that mark outright. The ban was being enforced
+   against text bytes only, which is why three sweeps reported zero while 183
+   eyebrows, 15 rungs and 3 contents titles were each drawing one. A character
+   ban that only inspects characters cannot see a rule drawn in CSS.
+   The label keeps its colour, weight, tracking and case, so the hierarchy is
+   unchanged; only the mark goes. --ds-accent-deep is left defined and in use
+   elsewhere, so nothing else on the accent stratum moves. */
 .bw-eyebrow--quiet { color: var(--ds-ink-soft); }
-.bw-eyebrow--quiet::after { display: none; }
-/* On the gold stratum --ds-accent-deep is a dark gold on a gold ground, so the
-   rule is repainted with the flip's own accent (purple, 4.76:1 on gold) rather
-   than left to sit at a value it cannot hold. */
-.surface-gold .bw-eyebrow::after { background: var(--ds-accent); }
 
 /* the free-standing accent rule, three weights of the same idea */
 .bw-rule       { height: 3px; width: 64px; background: var(--ds-accent-deep); margin-bottom: var(--ds-space-md); border: 0; }
@@ -1191,15 +1189,8 @@ a:hover { color: var(--ds-primary-deep); text-decoration-thickness: 2px; }
   text-transform: uppercase;
   color: var(--ds-ink-soft);
 }
-.bw-rung::before {
-  content: "";
-  position: absolute;
-  left: -22px;
-  top: .5em;
-  width: 13px;
-  height: 3px;
-  background: var(--ds-accent-deep);
-}
+/* Withdrawn with the eyebrow rule above and for the same reason: a 13px solid
+   bar sitting immediately to the left of the label reads as an em dash. */
 .bw-rung__n {
   font-family: var(--ds-font-display);
   font-weight: 600;
@@ -1207,8 +1198,7 @@ a:hover { color: var(--ds-primary-deep); text-decoration-thickness: 2px; }
   letter-spacing: .1em;
   color: var(--ds-accent-ink);
 }
-.surface-dark .bw-rung::before,
-.surface-gold .bw-rung::before { background: var(--ds-accent); }
+
 
 /* --- L4 THE CONDITION PLATE. The hero visual slot, token built, no photograph.
    The two billing states drawn with the locked legend key: filled means the
@@ -2169,7 +2159,7 @@ p.bw-qa__a {
 }
 
 @media (max-width: 899px) {
-  .bw-rung::before { display: none; }
+
   .bw-shot { display: block; height: auto; min-height: 0; max-height: none; }
   .bw-shot__plate { flex: 0 0 auto; height: auto; min-height: 0; aspect-ratio: 3 / 4; max-height: 380px; }
   /* the demo labels, floored on a MEASURED line count exactly as 11e requires
@@ -2583,12 +2573,8 @@ p.bw-qa__a {
   color: var(--ds-accent-ink);
   margin: 0 0 var(--ds-space-md);
 }
-.bw-toc__title::before {
-  content: "";
-  flex: 0 0 var(--ds-space-md);
-  height: 2px;
-  background: var(--ds-accent-deep);
-}
+/* Withdrawn with the eyebrow and rung rules, same reason: an inline solid bar
+   beside a label reads as an em dash. */
 .bw-toc__list {
   list-style: none;
   margin: 0;
