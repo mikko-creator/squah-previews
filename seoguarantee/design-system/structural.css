@@ -1372,25 +1372,83 @@ a:hover { color: var(--ds-primary-deep); text-decoration-thickness: 2px; }
   color: var(--ds-ink-soft);
 }
 
-/* --- L6 THE SQUARE TEXTURE ACCENT. A small material study set BESIDE a quote or
-   a ranking, capped well under any column width so it can never be mistaken for
-   a split filler. R8: a square is never dropped into a portrait slot. -------- */
+/* --- L6 THE TEXTURE PLATE. A material study set beside a quote, a ranking or a
+   fact. It shipped as a 184px square that sat ABOVE its caption, and the caption
+   layer has since been taken out at the owner's request, which left 27 of the 29
+   authored blocks as a lone 184px square in a cell up to 557px wide. MEASURED at
+   1440 before this rule, cell content width against rendered box: index
+   s8-evidence, results s2-board, contact-us s4-details, our-locations s4-covers
+   and videos s3-index all 184x184 in a 423.3px cell; guarantee s12-proof and
+   seo-blog s5-call 184x184 in a 474.7px cell; industries-dental s6-proof
+   184x184 in a 516px cell; full-suite s6-shown 184x184 in a 557.3px cell. A
+   square that small alone in a cell that wide does not read as an accent. It
+   reads as an image that failed to load, which is what the owner reported.
+
+   THE RULE, and it is ONE rule rather than a table of sizes. The plate takes the
+   FULL width of the cell it was given and its HEIGHT is capped. aspect-ratio 1/1
+   together with a max-height makes both behaviours fall out of the same pair of
+   declarations: in a cell NARROWER than the cap the height never reaches it, so
+   the plate is a true square filling its cell; in a cell WIDER than the cap the
+   height holds and the plate widens into a material band. The width is definite
+   either way, so the cap clamps the height only and never pulls the width back
+   in. No breakpoint table, no modifier needed on any of the 36 rendered blocks,
+   and no cell is left carrying dead width beside the image.
+
+   WHY THE NARROW CELLS ARE SAFE, checked rather than assumed. The narrowest
+   cells that carry one are industries-contracting s4-method-as-proof and
+   industries-hvac s4-today at 145.3px, then industries-medical-spa s5-today at
+   238px and the row--aside cells at 232.2px. The 145.3px pair already rendered
+   at 145.3x145.3 because the old 184px cap was never reached there, so they
+   measure IDENTICALLY before and after. Nothing blows out: the plate can never
+   exceed the cell it sits in.
+
+   NO SIZE IS MINTED. 184px is the value this block already shipped with, moved
+   from max-width to max-height, and the 152px step under 900 below is likewise
+   the value that was already there.
+
+   R8 STILL HOLDS, a square is never dropped into a portrait slot. The plate is
+   square in a narrow cell and landscape in a wide one, and it can never be
+   portrait, because the capped height can only ever be equal to or less than the
+   width the cell hands it. --------------------------------------------------- */
 .bw-tex {
   position: relative;
   width: 100%;
-  max-width: 184px;
+  aspect-ratio: 1 / 1;
+  max-height: 184px;
   margin: 0 0 var(--ds-space-md);
   overflow: hidden;
+  object-fit: cover;              /* inert on a wrapper div or figure. It binds
+                                     on full-suite s6-shown, where the markup
+                                     puts .bw-tex on the <img> ITSELF with no
+                                     inner .bw-tex__img, so there the cap crops
+                                     the texture instead of squashing it. */
   border-radius: var(--ds-r-surface);
   box-shadow: var(--ds-shadow-card), inset 0 0 0 1px var(--ds-hairline);
 }
 .bw-tex__img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
+  height: 100%;                   /* the wrapper owns the shape now, so the
+                                     image fills it and object-fit takes the
+                                     crop from the CENTRE of the 1024 square
+                                     rather than from its top edge. */
   object-fit: cover;
 }
+
+/* THE ONE ESCAPE HATCH, for a cell that wants the plate to run its full height
+   instead of banding, for instance a media cell standing beside a tall column of
+   copy. It releases the cap and the plate returns to a square the full width of
+   its cell. It is authored as class="bw-tex bw-tex--plate". Nothing in the
+   markup carries it today, and no block needs it in order to render correctly.
+
+   ITS ONE LIMIT, measured rather than assumed, and deliberate. Under 900 the
+   step below is the same specificity and comes later in the sheet, so it wins
+   and the plate stays a 152px band there even with this class on. Measured:
+   index s8-evidence goes 423x184 to 423x423 at 1440 and stays 342x152 at 390.
+   That is the behaviour we want. The step under 900 exists to protect the phone
+   fold, and an escape hatch that could take a full column square through it
+   would be a way to lose the fold by accident. */
+.bw-tex--plate { max-height: none; }
 
 /* --- L7 THE FLAGGED GAP. An owner pending contract term. It is deliberately NOT
    a card: a dashed field reads as a hole in the document, which is the honest
@@ -2126,7 +2184,11 @@ p.bw-qa__a {
   /* the quad is one column here, so the two equal desktop rows are released:
      four stacked cards each take their own copy height. */
   .bw-quad { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; height: auto; }
-  .bw-tex { max-width: 152px; }
+  /* the plate's cap steps down with the rest of the page here. It is the same
+     152px the block already carried, moved from max-width to max-height along
+     with the desktop cap above: the plate still fills the width of whatever cell
+     it lands in once the grid has collapsed, and only its band height steps. */
+  .bw-tex { max-height: 152px; }
 }
 
 @media (max-width: 767px) {

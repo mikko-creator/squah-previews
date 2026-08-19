@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Hind:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="design-system/tokens.css?v=489bae2b">
   <link rel="stylesheet" href="design-system/chrome.css?v=9423a7c8">
-  <link rel="stylesheet" href="design-system/structural.css?v=0adc78f9">
+  <link rel="stylesheet" href="design-system/structural.css?v=24367338">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=8122240d">
 
 </head>
@@ -677,13 +677,13 @@
 <script>
 /* CSB-BROWSE-ENGINE v1 */
 /* =============================================================================
- * browse-engine.js — the BROWSE interactivity engine for client-site-build pages
+ * browse-engine.js: the BROWSE interactivity engine for client-site-build pages
  * (filterable index / archive pages: shop-PLP · portfolio grid · blog index).
  *
  * WHAT IT IS
  *   Vanilla JS, no libraries, no build step. One IIFE, idempotent, boots on
  *   DOMContentLoaded (or immediately if the DOM is already parsed). It drives the
- *   BROWSE half of a page — category/tag/search filtering, sort, pagination, the
+ *   BROWSE half of a page: category/tag/search filtering, sort, pagination, the
  *   mobile filters drawer, and a self-guarding add-to-cart counter. EVERY init is
  *   SELF-GUARDING: it bails with no error when its root hooks are absent, so the
  *   same file is a harmless no-op on a page that has none of these controls.
@@ -695,12 +695,12 @@
  *   the .shop-filters branch of the shared Esc handler + the shared helpers
  *   ($/$all/on/lockScroll/ensureScrim) + the string utils. The demo's nav-drawer
  *   engine (initNavDrawer, binding .nav-hamburger/#nav-drawer) is DELIBERATELY
- *   EXCLUDED — the built client page's own inline bespoke chrome owns mobile nav;
+ *   EXCLUDED. The built client page's own inline bespoke chrome owns mobile nav;
  *   this module must never bind a second, dead nav drawer. The source is
  *   brand/PII/path-clean (verified: no brand name, no hex literal, no absolute
- *   path in the JS — those live only in the demo HTML, not here).
+ *   path in the JS; those live only in the demo HTML, not here).
  *
- * REQUIRED MARKUP CONTRACT  (exact selectors / data-attrs this engine BINDS — the
+ * REQUIRED MARKUP CONTRACT  (exact selectors / data-attrs this engine BINDS: the
  * build gate + the render fixture both hold the page to this contract; JS, CSS,
  * and HTML all use these verbatim)
  *
@@ -724,11 +724,11 @@
  *       inferred from the option text ("low to high" / "high to low" / "newest" / "oldest").
  *
  *   SEARCH (initBrowse)     - <input class="search-input"> free-text over item textContent
- *   COUNT (initBrowse)      - .shop-count receives "Showing A–B of N"
+ *   COUNT (initBrowse)      - .shop-count receives "Showing A to B of N"
  *   ACTIVE FILTERS (initBrowse)
  *     - .active-filters is the chip row; the engine RENDERS  <span class="chip" data-chip="…">
  *       into it and binds click-to-remove SCOPED to '.active-filters .chip' only
- *       (a bare .chip elsewhere — e.g. a blog's decorative label — is never captured).
+ *       (a bare .chip elsewhere, e.g. a blog's decorative label, is never captured).
  *
  *   PAGINATION (initBrowse; bails if no .pagination)
  *     - .pagination a[data-page="N"]  (data-page="next" / data-page="prev" supported)
@@ -865,7 +865,7 @@
     };
 
     // ---- collect the controls (any subset may be missing) ----
-    var catLinks = $all("a[data-cat]").filter(function (a) { return !grid.contains(a); }); // category nav links ONLY — NOT grid items (which also carry data-cat as filter targets)
+    var catLinks = $all("a[data-cat]").filter(function (a) { return !grid.contains(a); }); // category nav links ONLY, NOT grid items (which also carry data-cat as filter targets)
     var catBoxes = $all("input[data-filter-cat]");
     var tagBoxes = $all("input[data-filter-tag]");
     var sortSel = $(".sort-select");
@@ -936,7 +936,7 @@
       chipRow.innerHTML = chips.map(function (label) {
         return '<span class="chip" data-chip="' + escAttr(label) + '">' + escHtml(label) + ' <b>&times;</b></span>';
       }).join("");
-      // clicking a chip's × removes that filter — SCOPED to '.active-filters .chip' (chipRow),
+      // clicking a chip's × removes that filter, SCOPED to '.active-filters .chip' (chipRow),
       // so a decorative .chip elsewhere on the page is never captured.
       $all(".chip", chipRow).forEach(function (chip) {
         on(chip, "click", function () { removeFilter(chip.getAttribute("data-chip")); });
@@ -1004,14 +1004,14 @@
         el.style.display = show ? "" : "none";
       });
 
-      // count text: "Showing A–B of N"
+      // count text: "Showing A to B of N"
       if (countEl) {
         if (visible.length === 0) {
           countEl.textContent = "No items match your filters";
         } else {
           var a = start + 1;
           var b = Math.min(end, visible.length);
-          countEl.textContent = "Showing " + a + "–" + b + " of " + visible.length;
+          countEl.textContent = "Showing " + a + " to " + b + " of " + visible.length;
         }
       }
 
@@ -1090,7 +1090,7 @@
   }
 
   /* =========================================================================
-   * 3) CART — add-to-cart counter + qty steppers
+   * 3) CART: add-to-cart counter + qty steppers
    * Self-guards: the counter block runs only when BOTH .add-to-cart AND
    * .cart-count are present, so it is a harmless no-op on a cart-free site.
    * ========================================================================= */
@@ -1133,7 +1133,7 @@
   }
 
   /* =========================================================================
-   * Shared Esc handler — closes the filters drawer if it is open
+   * Shared Esc handler: closes the filters drawer if it is open
    * (filters branch only; the nav-drawer branch stays with the page's own
    * inline chrome, which owns mobile nav)
    * ========================================================================= */
@@ -1156,7 +1156,7 @@
   }
 
   /* =========================================================================
-   * boot — idempotent on DOMContentLoaded (and immediately if already parsed).
+   * boot: idempotent on DOMContentLoaded (and immediately if already parsed).
    * Every init self-guards (bails when its root hooks are absent), so this file
    * is a safe no-op on any page that carries none of the browse markup.
    * ========================================================================= */
