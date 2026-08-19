@@ -2644,3 +2644,63 @@ p.bw-qa__a {
   .bw-legal h2 { margin-top: var(--ds-space-lg); }
   .bw-legal h3 { margin-top: var(--ds-space-md); }
 }
+
+/* ==========================================================================
+   BW-CUT . the founder cutouts
+   The James Sutton photography carried over from the live estate is a set of
+   alpha-channel PNG cutouts, so it must NOT be dropped into .bw-shot. That
+   frame paints a bordered white card with a box shadow, and a rectangle drawn
+   behind a cut-out figure reintroduces exactly the seam a cutout exists to
+   remove. This family stands the figure directly on the section ground and
+   grounds it with a drop-shadow, which follows the alpha silhouette instead of
+   the element box. No frame, no plate, no caption slot.
+   ========================================================================== */
+.bw-cut {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0;
+  min-width: 0;
+}
+.bw-cut__img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+  /* NO CSS SHADOW. The first version of this rule added a drop-shadow, and that was
+     wrong: these photographs already carry their own studio shadow baked into the
+     pixels, so a second one doubled up and, worse, hardened the bottom edge of the
+     baked shadow into a visible straight line across the figure's feet.
+     Verified by rendering the hero cutout at 2x and looking at it.
+
+     Several of these sources are also cropped through the subject's legs, so the
+     asset ends on a hard horizontal edge that reads as a box on a plain ground.
+     The mask below dissolves the last few percent of the figure into whatever it
+     stands on. A mask is used rather than a painted fade because it carries no
+     colour of its own, so the same rule works on the paper ground and the dark
+     ground without either sheet knowing what the other one paints. */
+  -webkit-mask-image: linear-gradient(to bottom, black 86%, transparent 99%);
+          mask-image: linear-gradient(to bottom, black 86%, transparent 99%);
+}
+.bw-cut--lg .bw-cut__img { max-height: 560px; }
+.bw-cut--sm .bw-cut__img { max-height: 300px; }
+
+/* The dark-ground shadow override that stood here is WITHDRAWN along with the
+   shadow it overrode. With no CSS shadow on either ground there is nothing to
+   swap, and the bottom mask does the separating work on both. */
+
+/* The figure is decoration around copy, never the thing that sets a row's
+   height, so it yields first when the track gets tight. */
+@media (max-width: 1023px) {
+  .bw-cut__img { max-height: 360px; }
+  .bw-cut--lg .bw-cut__img { max-height: 420px; }
+}
+@media (max-width: 767px) {
+  .bw-cut { justify-content: center; }
+  .bw-cut__img { max-height: 280px; }
+  .bw-cut--lg .bw-cut__img { max-height: 320px; }
+  .bw-cut--sm .bw-cut__img { max-height: 220px; }
+}

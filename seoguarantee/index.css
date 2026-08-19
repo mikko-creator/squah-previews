@@ -160,3 +160,267 @@
     opacity: 1;
   }
 }
+
+/* ============================================================================
+   7. S5 THE CADENCE. Appended to pages/index.css, the per page signature sheet
+   that build.mjs emits through SIGNATURE_LINKS and that no other page links.
+
+   WHY IDS AND NOT CLASSES, and this is mechanics rather than taste. G-ORPHAN
+   (verify-no-orphan-classes.mjs) resolves every class a fragment references
+   against _design/*.css ONLY. This sheet is not on that scan path, so a class
+   defined here alone would read to that gate as an orphan and the write would be
+   blocked. Ids are a first class CSS hook, they are unique on this page, and the
+   sheet that styles them is linked permanently. Same reasoning sections 1 to 6
+   above already record for #s1-card and #s1-field.
+
+   WHY THE WORDS ARE HTML AND THE DRAWING IS GEOMETRY. Text inside a viewBox
+   scales with the drawing, which is why the figure this replaces was illegible
+   on a phone: everything a visitor had to read shrank with the box. Here the two
+   track names, the pointer and the caption are ordinary HTML at a fixed pixel
+   size, identical at 375 and at 1440, and the drawings carry no text at all.
+   Nothing a reader must read can shrink.
+
+   COLOUR IS IN THE FRAGMENT, NOT HERE. Every fill and stroke is a presentation
+   attribute resolving a --ds-* token, which is the pattern the shipped hero
+   already uses. This block sets geometry, type and time only.
+   ============================================================================ */
+
+/* --- 7.1 THE DEAD SPACE ABOVE THE FIGURE -----------------------------------
+   .bw-head--tight pays 40px of margin-bottom (--ds-space-lg) and the .row it
+   sits in then pays its own gap on top: 40px above 1023 and 24px at 1023 and
+   below. So the lede stood 80px clear of the drawing on a desktop and 64px on a
+   phone, for one joint. Zeroing the head margin here leaves the row gap as the
+   single separator, which is the value the rest of the page uses between rows.
+   Scoped by section id so no other band rhythm moves. The section padding-block
+   is NOT touched: that is --ds-section-py, and G-CADENCE (verify-section-rhythm)
+   fails on more than 8px of in section asymmetry or more than 24px of drift from
+   the page median, so trimming the foot of this one band would break the page
+   wide cadence outright. */
+#s5-cadence .bw-head--tight { margin-bottom: 0; }
+
+/* --- 7.2 THE FRAME ---------------------------------------------------------
+   A label column and a track column. Both drawings live in the SAME grid column,
+   so they render at identical widths and every x in one lines up with the same x
+   in the other. row-gap is ZERO, which is what lets the marked column run
+   unbroken from the top of the billing track to the foot of the work track. */
+#s5-tracks {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  column-gap: var(--ds-space-sm);
+  row-gap: 0;
+  align-items: start;
+}
+#s5-mark { grid-column: 2; grid-row: 1; }
+#s5-ka   { grid-column: 1; grid-row: 2; align-self: center; }
+#s5-a    { grid-column: 2; grid-row: 2; }
+#s5-kb   { grid-column: 1; grid-row: 3; align-self: center; }
+#s5-b    { grid-column: 2; grid-row: 3; }
+/* The two drawings carry width and height ATTRIBUTES (960 by 100 and 960 by 52)
+   rather than a width declaration here. seoguarantee-structural.css line 82
+   already caps every svg to the width of its box, and the track column never
+   exceeds 890px at any viewport this site ships (the container caps at 1120,
+   the measure at 1072, less the 168px label column and the 14px gap), so the
+   cap is always the binding value and each drawing fills its column exactly.
+   height auto is what releases the height attribute so the aspect ratio drives
+   it. This also keeps a percentage the client bans out of the sheet. */
+#s5-a, #s5-b { height: auto; }
+
+/* --- 7.3 THE POINTER -------------------------------------------------------
+   The percentage resolves against the grid AREA, which is the track column,
+   which is the rendered width of the drawing. 326 of 960 is 33.9583 percent, so
+   this border rule lands on the same pixel as the marked column left rule at
+   every width, with no breakpoint arithmetic. The label, the rule and the column
+   read as one vertical object pointing at three named months. */
+#s5-mark {
+  margin: 0 0 6px;
+  margin-inline-start: 33.9583%;
+  padding-inline-start: 10px;
+  border-inline-start: 2px solid var(--ds-accent);
+  font-family: var(--ds-font-body);
+  font-size: 13px; font-weight: 600; line-height: 1.4;
+  color: var(--ds-accent-ink);
+}
+
+/* --- 7.4 THE TRACK NAMES ---------------------------------------------------
+   Two short lines each, both of which hold one line inside the 168px column at
+   every width from 768 up, so a label block can never grow taller than its own
+   track and push the second track down, which would break the marked column. */
+#s5-ka span, #s5-kb span { display: block; }
+#s5-ka span:first-child, #s5-kb span:first-child {
+  font-family: var(--ds-font-display);
+  font-size: 15px; font-weight: 700; letter-spacing: .04em; line-height: 1.2;
+  color: var(--ds-ink);
+}
+#s5-ka span + span, #s5-kb span + span {
+  margin-top: 3px;
+  font-family: var(--ds-font-body);
+  font-size: 13px; line-height: 1.35;
+  color: var(--ds-ink-soft);
+}
+
+/* --- 7.5 THE RESTING FRAME, declared, not inherited ------------------------
+   Every value a viewer sees when motion is off is ordinary CSS here, and every
+   keyframe list opens and closes on exactly these values. So the still is the
+   assessed year: nine months billed, three months empty inside a marked column,
+   one unbroken bar of work crossing that column. It is never a blank frame and
+   never a frame caught mid travel, and that holds for reduced motion, for the
+   narrow breakpoint, for a print, for a headless capture and for the case where
+   the keyframes never run at all.
+
+   The three drains carry ONE animated property, a vertical scale about their own
+   bottom edge, so the gold level falls out of the block and leaves the dashed
+   outline standing. transform-origin is written in explicit user units against
+   the default transform-box of view-box, and transform-box is restated so the
+   origin still resolves correctly in a context that changed it. */
+#s5-ring, #s5-head { opacity: 0; transform: translateX(0); }
+#s5-d1, #s5-d2, #s5-d3 { transform-box: view-box; transform: scaleY(0); }
+#s5-d1 { transform-origin: 366px 88px; }
+#s5-d2 { transform-origin: 442px 88px; }
+#s5-d3 { transform-origin: 518px 88px; }
+
+/* --- 7.6 THE ASSESSMENT, WHICH HOPS ----------------------------------------
+   Read the cycle in order. The resting frame is held for 1.98s. The three months
+   fill, which reads as a fresh twelve month run in which every month is
+   billable. The ring fades in around month one. From 24 to 84 percent it STEPS,
+   holding 0.6s on each of twelve months and jumping a round 76 units between
+   them. It lands on month twelve, holds, and fades out on the resting frame.
+
+   The stepping is set at the ANIMATION level rather than inside a keyframe, so
+   it cannot be lost by an engine that ignores a per keyframe timing function.
+   Every other interval of this list holds a constant transform, so stepping them
+   changes nothing a viewer can see except that the two opacity fades resolve in
+   eleven increments over 0.44s, which reads as an ordinary fade. */
+@keyframes s5-assess {
+  from, 18% { opacity: 0; transform: translateX(0); }
+  22%, 24%  { opacity: 1; transform: translateX(0); }
+  84%, 90%  { opacity: 1; transform: translateX(836px); }
+  93%       { opacity: 0; transform: translateX(836px); }
+  96%, to   { opacity: 0; transform: translateX(0); }
+}
+
+/* --- 7.7 THE WORK, ON A DIFFERENT TIMING ON PURPOSE ------------------------
+   The same distance, the same window, LINEAR instead of stepped. Billing is
+   judged in monthly hops and the work moves at a constant rate, and that
+   difference is the argument of the section said in the motion vocabulary rather
+   than in a caption. The two objects set off together, the lower one slides
+   ahead of the upper one inside every month and the upper one catches it at each
+   boundary, and they arrive together. Neither one changes speed at the marked
+   column: at the frame a month empties above, the work token below it is inside
+   that same column and has not reacted. */
+@keyframes s5-work {
+  from, 18% { opacity: 0; transform: translateX(0); }
+  22%, 24%  { opacity: 1; transform: translateX(0); }
+  84%, 90%  { opacity: 1; transform: translateX(836px); }
+  93%       { opacity: 0; transform: translateX(836px); }
+  96%, to   { opacity: 0; transform: translateX(0); }
+}
+
+/* --- 7.8 THE THREE THAT EMPTY ---------------------------------------------
+   Three lists rather than one list plus a delay, because a delay would also
+   shift the refill out of its window and put it on screen mid sweep. The only
+   difference between them is the pair of numbers that places each drain inside
+   the dwell of the ring on that month. The ring holds month five from 45.8 to
+   51.3 percent, month six to 56.7 and month seven to 62.2, so each drain starts
+   after the ring has landed and finishes well before it leaves, which also keeps
+   the work token underneath inside the marked column for all three. */
+@keyframes s5-drain-a {
+  from, 18% { transform: scaleY(0); }
+  21%, 46.5% { transform: scaleY(1); }
+  49.5%, to   { transform: scaleY(0); }
+}
+@keyframes s5-drain-b {
+  from, 18%  { transform: scaleY(0); }
+  21%, 52%  { transform: scaleY(1); }
+  55%, to   { transform: scaleY(0); }
+}
+@keyframes s5-drain-c {
+  from, 18% { transform: scaleY(0); }
+  21%, 57%  { transform: scaleY(1); }
+  59.5%, to { transform: scaleY(0); }
+}
+
+/* --- 7.9 BINDING -----------------------------------------------------------
+   Longhand, never the shorthand, matching the reason section 4 above already
+   gives: a reader can see exactly what moves. Only transform and opacity are
+   animated, so all five nodes stay on the compositor and no frame triggers
+   layout or paint. The 1.6s delay is free, because every list opens on the
+   resting frame and nothing moves when it expires.
+
+   THE ONE LAW THIS IS IN TENSION WITH, stated rather than buried. Section 7 of
+   seoguarantee-structural.css and lines 100 to 102 of the tokens sheet say no
+   loop and no autoplay. Section 4 above already records that breach for the
+   hero, and records that the structural sheet itself ships bw-pulse and
+   bw-demo-sweep as infinite loops. The reason a loop is used here rather than a
+   single run is mechanical and checked: the built index.html ships no reveal
+   observer at all, no js-reveal, no is-in and no IntersectionObserver anywhere
+   in the document or in its one inline script, so there is no scroll trigger to
+   hang a one shot on and a single run would be over long before a visitor
+   reached this band. If a one shot is later preferred, the exact switch is
+   animation-iteration-count 1 with animation-fill-mode both, and the deletion of
+   the 18 to 24 percent refill steps from all five lists, leaving one sweep that
+   settles on the resting frame. */
+#s5-ring, #s5-head, #s5-d1, #s5-d2, #s5-d3 {
+  animation-duration: 11s;
+  animation-delay: 1.6s;
+  animation-iteration-count: infinite;
+}
+#s5-ring { animation-name: s5-assess;  animation-timing-function: steps(11, end); }
+#s5-head { animation-name: s5-work;    animation-timing-function: linear; }
+#s5-d1   { animation-name: s5-drain-a; animation-timing-function: var(--ds-ease); }
+#s5-d2   { animation-name: s5-drain-b; animation-timing-function: var(--ds-ease); }
+#s5-d3   { animation-name: s5-drain-c; animation-timing-function: var(--ds-ease); }
+
+/* --- 7.10 REDUCED MOTION ---------------------------------------------------
+   The still, and the still is the meaningful state: three months empty inside a
+   marked column that is named, and the work bar whole across it. The values are
+   restated rather than left to revert, so this block reads on its own and cannot
+   be defeated by a later rule. Same shape as sections 5 and 6 of this sheet. */
+@media (prefers-reduced-motion: reduce) {
+  #s5-ring, #s5-head, #s5-d1, #s5-d2, #s5-d3 { animation-name: none; }
+  #s5-ring, #s5-head { opacity: 0; transform: translateX(0); }
+  #s5-d1, #s5-d2, #s5-d3 { transform: scaleY(0); }
+}
+
+/* --- 7.11 THE NARROW BREAKPOINT -------------------------------------------
+   767 and below ships the same drawing with the motion removed, on the same rule
+   shape as the hero, and stacks each name against its own track. The two
+   drawings stay adjacent and keep the identical 960 unit coordinate space, so
+   the marked column still runs unbroken across both and still sits at the same x
+   in each. The work is named UNDER its bar rather than over it, which is what
+   keeps the two tracks touching. Nothing that must be read drops below 12.5px,
+   which is above the size the site already ships its eyebrow at. */
+@media (max-width: 767px) {
+  #s5-ring, #s5-head, #s5-d1, #s5-d2, #s5-d3 { animation-name: none; }
+  #s5-ring, #s5-head { opacity: 0; transform: translateX(0); }
+  #s5-d1, #s5-d2, #s5-d3 { transform: scaleY(0); }
+
+  #s5-tracks { grid-template-columns: minmax(0, 1fr); }
+  #s5-ka   { grid-column: 1; grid-row: 1; }
+  #s5-mark { grid-column: 1; grid-row: 2; }
+  #s5-a    { grid-column: 1; grid-row: 3; }
+  #s5-b    { grid-column: 1; grid-row: 4; }
+  #s5-kb   { grid-column: 1; grid-row: 5; }
+
+  #s5-ka, #s5-kb { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 10px; }
+  #s5-ka span, #s5-kb span { display: inline; }
+  #s5-ka span + span, #s5-kb span + span { margin-top: 0; }
+  #s5-ka { margin-bottom: 6px; }
+  #s5-kb { margin-top: 8px; }
+  /* margin-block ONLY. The inline start inset is what binds this label to the
+     marked column, and it holds at every width, so the shorthand must not be
+     used here: it would reset the inset and the pointer would drift to the left
+     edge on a phone. */
+  #s5-mark { margin-block: 0 6px; }
+  #s5-ka span:first-child, #s5-kb span:first-child { font-size: 14px; }
+  #s5-ka span + span, #s5-kb span + span, #s5-mark { font-size: 12.5px; }
+
+  /* The three empty months are the load bearing mark on this drawing, and a
+     phone renders the viewBox at roughly 0.36 of its authored size, which takes
+     an 8 unit dash down to under 3px and lets the outline read as noise rather
+     than as a deliberate empty. The dash and the stroke are stepped up here so
+     the empties stay as emphatic on a phone as they are on a desktop. Stroke width
+     and dash pattern are ordinary CSS presentation properties on an SVG group,
+     and a browser that ignored them would simply keep the authored attribute
+     values and lose the emphasis rather than the drawing. */
+  #s5-open { stroke-width: 4; stroke-dasharray: 13 9; }
+}
