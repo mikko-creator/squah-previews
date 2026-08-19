@@ -191,6 +191,28 @@ img, video { height: auto; }
 .row--split-rev > .col,
 .row--aside > .col { grid-column: auto; }
 
+/* THE FULL WIDTH EXEMPTION. MEASURED, not assumed. The reset directly above is
+   (0,2,0) and .col--span-12 / .col--full below are (0,1,0), so a cell the markup
+   declares FULL WIDTH lost to the reset and was squeezed into a single track of
+   the equal division grid. Measured at 1440 across all 26 pages: 6 cells, every
+   one of them a full width element authored as such. full-suite s7-ways set its
+   section head in a 331px track with two route cards beside it, which pushed the
+   third route onto a second line; and five trailing notes, on graphic-design
+   s4-why, graphic-design s7-billed, seo-services s8-redflag, ui-ux-design
+   s2-worth and web-development s8-billed, rendered at 341px or 524px inside a
+   1072px row. That is the stray narrow paragraph under a card grid, and it is a
+   cascade defect rather than a copy one.
+
+   ONLY span-12 and full are exempted. .col--span-1 through .col--span-11 still
+   release inside an equal division row exactly as before, because a 12 track
+   span number is meaningless once the row has been redivided into 2, 3 or 4. */
+.row--2up > .col--span-12,       .row--2up > .col--full,
+.row--3up > .col--span-12,       .row--3up > .col--full,
+.row--4up > .col--span-12,       .row--4up > .col--full,
+.row--split > .col--span-12,     .row--split > .col--full,
+.row--split-rev > .col--span-12, .row--split-rev > .col--full,
+.row--aside > .col--span-12,     .row--aside > .col--full { grid-column: 1 / -1; }
+
 /* --- .col : the cell -------------------------------------------------------- */
 .col {
   grid-column: span 12;
@@ -1883,6 +1905,61 @@ p.bw-qa__a {
   border-bottom-color: var(--ds-accent);
 }
 
+/* --- L16b THE SEE MORE, COMPLETED. R2. The owner's instruction was that cards
+   and boxes in a row match, and that a card whose copy runs long may put the
+   overrun behind a see more so the rest of the row can align. L16 above already
+   ships the disclosure and its reasoning is unchanged and still binding: the
+   copy is split at a SENTENCE BOUNDARY, never truncated, and the full text is
+   in the DOM in both states. Three joints were missing for it to actually carry
+   a row, and they are added here rather than in a second competing component.
+
+   WHY NOT A LINE CLAMP. A -webkit-line-clamp would cut mid sentence, which on a
+   page whose whole subject is checkable claims can halve a load bearing
+   statement and leave an ellipsis where the condition was. L16 rejected that on
+   the record. The preview floor below buys the same equal collapsed height by
+   holding the preview to a LINE COUNT while every sentence in it stays whole.
+
+   KEYBOARD AND FOCUS are already correct and are not re-declared here: summary
+   is a native control, and section 1 line 89 lists summary in the one
+   :focus-visible ring this surface declares. Section L19 already stops the
+   caret transition under prefers-reduced-motion. ---------------------------- */
+
+/* the control's own hover. No new colour is minted: --ds-ink is the ink the body
+   copy already sets and the tokens sheet defines it in both polarities, so the
+   quiet label simply firms up under the pointer. */
+.bw-more > summary:hover { color: var(--ds-ink); }
+
+/* JOINT 1, THE LABEL SWAP. The control has to read "See more" closed and
+   something sensible open, with no script. Two spans do it: the open label sits
+   at display none until the details carries [open], then the two trade. Both
+   are CONTROL text rather than copy, so the thing being hidden is never a
+   sentence the reader is owed, and the body behind the disclosure is in the DOM
+   in both states. A bare <summary>See more</summary> keeps working exactly as it
+   does on the guarantee page today, because every rule above targets the summary
+   itself and never these spans. */
+.bw-more__off { display: none; }
+.bw-more[open] > summary .bw-more__on  { display: none; }
+.bw-more[open] > summary .bw-more__off { display: inline; }
+
+/* JOINT 2, THE PINNED CONTROL. This is L17's pinned foot applied to the
+   disclosure: inside a filled cell the element above the control absorbs the
+   slack, so a row of cards lands every "See more" on one baseline instead of
+   each one trailing its own body length. It is opt in, because the card that is
+   already the tallest in its row wants its control tight under the copy. */
+.bw-more--foot { margin-top: auto; }
+
+/* JOINT 3, THE PREVIEW FLOOR. What actually makes a row of see more cards align
+   is the COLLAPSED height matching, and that is set by the preview, not by the
+   hidden remainder. The floor is a LINE COUNT in lh, the same idiom L17 and L20
+   already use, so no spacing value is minted and nothing is truncated: the
+   preview keeps whole sentences and only the box under them is held to a common
+   number of lines. The base is 2lh because a one line preview is a teaser
+   rather than a preview. The number in the modifier IS the line count. */
+.bw-more__peek    { min-height: 2lh; }
+.bw-more__peek--3 { min-height: 3lh; }
+.bw-more__peek--4 { min-height: 4lh; }
+.bw-more__peek--5 { min-height: 5lh; }
+
 /* --- L17 THE BENTO LAW. R2. The card grids were reading as ragged because the
    objects inside the cells were sized by their own copy: S6 spread 243.20
    across three cells, S11 263.46, S13 163.69, S4 29.27, S2 21.69. A grid cell
@@ -1903,14 +1980,97 @@ p.bw-qa__a {
 
    S8 is deliberately absent: it measured 0.00 spread already, because
    .bw-opposed carries height 100% and its cells already carry .col--stretch.
-   It is left exactly as it is. ---------------------------------------------- */
+   It is left exactly as it is.
+
+   WHAT CHANGED, AND WHY, R2. The list below shipped naming FOUR block types,
+   and every grid still measuring ragged used a block that was not one of them.
+   Audited at 1440 across all 26 pages: 97 declared peer grids, 21 ragged by more
+   than 8px, and the object in every one of them was a .bw-card, .bw-rank,
+   .bw-answer, .bw-list, .bw-copy, .bw-note, .bw-quote or a heading. So the cell
+   stretched, the object did not fill it, and the row read unaligned even though
+   the tracks were equal, which is the exact failure this comment describes. The
+   list is extended to every block type that is a whole OBJECT sitting alone in a
+   peer cell. The original four are untouched.
+
+   WHERE IT IS VISIBLE, stated plainly rather than sold. On .bw-card the whole
+   box grows, on .bw-opposed the panel does, and on .bw-bound and .bw-quote the
+   left rule runs the full cell, which is the ragged rule the eye actually
+   catches. On the top ruled blocks, .bw-rank, .bw-answer, .bw-fact and .bw-list,
+   the rule is already at the top and the box has no bottom edge, so filling them
+   changes the measurement without changing the picture. They are still included:
+   it makes the row structurally equal, and it is what pins a foot or a see more
+   control to one baseline the moment one is added inside them.
+
+   WHAT IS DELIBERATELY EXCLUDED, and it is not an oversight. .bw-head, .bw-figure
+   and a bare h3.d-sm are NEVER the whole object: each is the FIRST of several
+   children in a heading stack or a hero cell. Filling one would stretch the
+   heading and push the copy under it down the cell, which is the opposite of
+   alignment. Measured: industries-law-firm s1-condition, results s1-hero and
+   full-suite s7-ways carry .bw-head and all three are heading stacks, not peer
+   cards, so they are read by the audit as ragged and are not. full-suite s7-ways
+   is fixed by the full width exemption in section 2 instead, which is where its
+   defect actually was.
+
+   THE TWO GUARDS ON THE NEW TYPES, and both were added because rendering the
+   unguarded rule and LOOKING at it showed the rule was too broad.
+
+   GUARD 1, a peer to match. :has(> .col--fill ~ .col--fill) means the row holds
+   at least two filled cells. A LONE filled cell has nothing to align to, so
+   filling it only inflates it. Rendered proof: results s1-hero is a hero, a
+   headline stack in a bare cell beside one dark card in a filled cell. Unguarded,
+   that card went from 323px to 595px and opened roughly 270px of empty dark
+   panel under four lines of type. Sixteen lone filled cells exist across the 26
+   pages and every one of them is a hero card, a shot or a figure of that kind.
+
+   GUARD 2, :only-child. The object has to BE the cell's content. Four filled
+   cells hold more than one child, and industries-contracting s5-questions holds
+   five stacked .bw-answer blocks in one 1083px cell: unguarded, all five took
+   the slack and drifted apart. This guard also holds for the markup pass that
+   comes next, which will add .col--fill to cells like seo-services s6-assessed,
+   where the cell holds two paragraphs that must stay together.
+
+   THE ORIGINAL FOUR ARE NOT REGUARDED. .bw-gap, .bw-bound, .bw-fact and
+   .bw-route keep the exact rule they shipped with, unconditional, because six of
+   them currently sit in lone filled cells and already fill them. Narrowing that
+   would be changing working code to buy consistency, which is not a trade this
+   pass is entitled to make. ------------------------------------------------- */
 #main .col--fill > .bw-gap,
 #main .col--fill > .bw-bound,
 #main .col--fill > .bw-fact,
 #main .col--fill > .bw-route { flex: 1 1 auto; }
 
+#main .row:has(> .col--fill ~ .col--fill) > .col--fill >
+  :is(.bw-card, .bw-rank, .bw-answer, .bw-opposed,
+      .bw-list, .bw-copy, .bw-note, .bw-quote, .bw-qa):only-child { flex: 1 1 auto; }
+
 #main .bw-quad .bw-card__title                    { min-height: 3lh; }
 #main #s6-measured .row--2up.row--tight .bw-gap__t { min-height: 2lh; }
+
+/* JOINT 3 EXTENDED, the wrapping title. Same idiom as the two floors above and
+   the same discipline: a LINE COUNT in lh, never a pixel, and only where the
+   count was MEASURED to differ between siblings at BOTH 1440 and 768. Each floor
+   below costs at most one added line, and it buys every body in the row starting
+   on one baseline. The section id is the scope, and each pairing was checked
+   against every page that carries that id, so a floor never reaches a grid whose
+   titles already agree.
+
+   Six floors were considered and REJECTED on cost, which is recorded here so the
+   next pass does not re-derive them. guarantee s10-objections measures [2,2,1,1,
+   1,1,1,1] lines, so a 2lh floor would open a blank line under six of eight
+   titles: that is dead space, not alignment. cro-services s1-hero measures
+   [1,2,3] and branding s2-one-fee, graphic-design s5-boundary, ui-ux-design
+   s5-boundary and web-design s5-safeguards all differ by two or three lines,
+   which a floor can only pay for with two or three blank lines. seo-services and
+   web-development both carry an s1-hero with .bw-fact__t at [1,1,1] and [2,2,3],
+   so an id scoped floor there would reach a grid that already agrees. Those are
+   copy length problems and they belong to a copy pass or to the see more control
+   in L16b, not to a floor. */
+#main #s3-why        .bw-rank__t    { min-height: 2lh; }
+#main #s4-why        .bw-rank__t    { min-height: 2lh; }
+#main #s8-redflag    .bw-answer__t  { min-height: 2lh; }
+#main #s2-worth      .bw-bound__t   { min-height: 2lh; }
+#main #s1-hero       .bw-opposed__k { min-height: 2lh; }
+#main #s3-part-of-it .bw-opposed__k { min-height: 2lh; }
 
 /* the pinned feet. .bw-route is made a column so its link list can absorb the
    slack, which puts all four wayfinding notes on one baseline instead of
