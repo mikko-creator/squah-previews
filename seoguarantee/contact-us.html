@@ -163,7 +163,7 @@
           <p class="bw-eyebrow">Contact us</p>
           <h1 class="d-md" id="s1h">CALL US.</h1>
         </div>
-        <p class="d-xl reveal"><a class="bw-link-plain" href="tel:+17024207272">(702) 420-7272</a></p>
+        <p class="d-xl reveal"><a class="bw-link-plain" id="callRoute" href="tel:+17024207272">(702) 420-7272</a></p>
         <p class="bw-lede readw reveal">It is a short conversation about the phrases your competitors are holding in your market, and whether they are ones we can commit to.</p>
       </div>
     </div>
@@ -276,6 +276,9 @@
             <button class="bw-btn bw-btn--primary" type="submit">Book a consultation</button>
             <p class="bw-note readw">A consultant will be in contact with you in 1 business day.</p>
           </div>
+          <div role="status" aria-live="polite">
+            <p class="bw-note readw" id="bookConsultationUnwired" hidden>Nothing was sent. No lead inbox has been connected to this form yet, so the live route is <a class="bw-link-plain" href="#callRoute">the phone number at the top of this page</a>.</p>
+          </div>
           <p class="bw-note readw reveal">What happens to what you send is set out in the <a href="privacy-policy.html">privacy policy</a>.</p>
         </form>
       </div>
@@ -283,6 +286,29 @@
     </div>
   </div>
 </section>
+
+<script>
+/* SUBMIT GUARD for #bookConsultation. This is wiring, NOT a lead handler: the form
+   stays unwired exactly as its data-form-waiver records, and nothing here transmits,
+   stores or forwards a single field. What it removes is a PRIVACY defect. With no
+   action and no method on the form tag, the browser default for the submit button is
+   a GET to the current URL, which reloads contact-us.html with name, email and phone
+   serialised into the query string, writing the visitor's own details into the address
+   bar, into the history entry and into any referrer the next hop receives. So the
+   default is blocked before it can serialise anything, and the click answers with the
+   route the waiver already names, the phone number in the hero, linked rather than
+   restated. The three required attributes are untouched, so native validation still
+   runs first and this listener is only reached once the fields are actually filled. */
+(function () {
+  var form = document.getElementById('bookConsultation');
+  var note = document.getElementById('bookConsultationUnwired');
+  if (!form || !note) return;
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    note.hidden = false;
+  });
+})();
+</script>
 
 
 
@@ -428,8 +454,9 @@
     </div>
 
     <div class="ch-ft__links">
-      <div class="row row--4up row--tight">
-        <div class="col">
+      
+      <div class="row row--tight">
+        <div class="col col--span-2">
           <p class="ch-ftcol__t">The Offer</p>
           <ul class="ch-ftcol__l">
             <li><a href="guarantee.html">The Guarantee</a></li>
@@ -437,7 +464,7 @@
             <li><a href="results.html">Results</a></li>
           </ul>
         </div>
-        <div class="col">
+        <div class="col col--span-3">
           <p class="ch-ftcol__t">Services</p>
           <ul class="ch-ftcol__l">
             <li><a href="seo-services.html">SEO Services</a></li>
@@ -446,20 +473,29 @@
             <li><a href="web-development.html">Web Development</a></li>
           </ul>
         </div>
-        <div class="col">
+        <div class="col col--span-3">
           <p class="ch-ftcol__t">Who We Work With</p>
           <ul class="ch-ftcol__l">
             <li><a href="industries-dental.html">Dental</a></li>
             <li><a href="industries-law-firm.html">Law Firms</a></li>
             <li><a href="industries-medical-spa.html">Medical Spas</a></li>
             <li><a href="industries-hvac.html">HVAC</a></li>
+            <li><a href="industries-contracting.html">Contracting</a></li>
           </ul>
         </div>
-        <div class="col">
+        <div class="col col--span-2">
+          <p class="ch-ftcol__t">Where We Work</p>
+          <ul class="ch-ftcol__l">
+            <li><a href="las-vegas-seo.html">Las Vegas SEO</a></li>
+            <li><a href="our-locations.html">Metros We Serve</a></li>
+          </ul>
+        </div>
+        <div class="col col--span-2">
           <p class="ch-ftcol__t">Company</p>
           <ul class="ch-ftcol__l">
             <li><a href="about.html">About</a></li>
-            <li><a href="our-locations.html">Our Locations</a></li>
+            <li><a href="seo-blog.html">SEO Blog</a></li>
+            <li><a href="videos.html">Videos</a></li>
             <li><a href="contact-us.html">Contact Us</a></li>
           </ul>
         </div>
