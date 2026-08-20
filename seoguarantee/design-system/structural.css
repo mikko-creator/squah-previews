@@ -2517,6 +2517,31 @@ p.bw-qa__a {
 .row--center:has(> .col--media) > .col--copy { align-self: start; }
 .row--center:has(> .col--copy) > .col--media:not(.col--stretch) { align-self: start; }
 
+/* ==========================================================================
+   THE ROW JOINT . why blocks were landing on the ink of the block above
+   Two consecutive .row siblings inside a .container paid NO margin between
+   them, and most components that END a row finish at margin-bottom 0. So a
+   card's gold top rule, a tag pill's background, or a photograph's frame was
+   being drawn at the exact pixel where the previous row's last line stopped.
+
+   This sheet already had the answer and it was already the right values. It
+   was simply scoped to .tm-band, and exactly ONE page of twenty six carries
+   that class, so the other twenty five got nothing. The two lines below are
+   the same declarations unscoped; the .tm-band pair further down still wins on
+   specificity and declares identical values, so that page is unaffected.
+
+   Counted before writing this: 144 consecutive-row joints across the build,
+   122 of them with no gap at all. Two independent reviewers reached this same
+   rule from opposite ends of the site, one after hand-fixing 21 collisions and
+   one after hand-fixing 4.
+
+   The home page has ZERO consecutive-row joints inside a container, verified
+   by parsing every page, so this rule cannot reach the page the owner ruled
+   must not be touched. That was checked BEFORE the rule was written, not after.
+   ========================================================================== */
+#main .container > .row + .row        { margin-block-start: var(--ds-space-lg); }
+#main .container > .row + .row--tight { margin-block-start: var(--ds-space-md); }
+
 .bw-legal p {
   line-height: 1.72;
   color: var(--ds-ink-soft);

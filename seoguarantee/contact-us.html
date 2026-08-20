@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Hind:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="design-system/tokens.css?v=489bae2b">
   <link rel="stylesheet" href="design-system/chrome.css?v=9423a7c8">
-  <link rel="stylesheet" href="design-system/structural.css?v=8c4a44df">
+  <link rel="stylesheet" href="design-system/structural.css?v=355bbe0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=8122240d">
 
 </head>
@@ -180,87 +180,98 @@
         <div class="bw-head bw-head--tight reveal">
           <p class="bw-eyebrow">The written version</p>
           <h2 class="d-lg" id="s2h">Or book the same call in writing.</h2>
+        
+          <p class="bw-copy readw reveal">This is the same action as the phone number above, in written form. It is not a different offer and there is nothing behind it that calling does not get you.</p>
+          <p class="bw-copy readw reveal">Six fields, and they are the questions the business already asks.</p>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col col--span-7">
+      <div class="col col--full">
         <form id="bookConsultation" data-form-waiver="No lead endpoint has been issued for this site yet, so this form ships deliberately unwired: the action and the submit handler are set at assembly on the day the owner supplies the destination, and until then the phone number at the top of this page is the live route.">
-          <div class="bw-rank reveal">
-            <p class="bw-rank__n">01</p>
-            <div class="bw-field">
+          <div class="row row--tight">
+            <div class="col col--span-6">
+              <div class="bw-rank reveal">
+              <p class="bw-rank__n">01</p>
+              <div class="bw-field">
               <label class="bw-rank__t" for="q1">What is your name?</label>
               <div class="bw-rank__d">
-                <input class="bw-input" id="q1" name="name" type="text" autocomplete="name" required>
+              <input class="bw-input" id="q1" name="name" type="text" autocomplete="name" required>
+              </div>
+              </div>
               </div>
             </div>
-          </div>
-
-          <div class="bw-rank reveal">
-            <p class="bw-rank__n">02</p>
-            <div class="bw-field">
+            <div class="col col--span-6">
+              <div class="bw-rank reveal">
+              <p class="bw-rank__n">02</p>
+              <div class="bw-field">
               <label class="bw-rank__t" for="q2">What is your email address?</label>
               <div class="bw-rank__d">
-                <input class="bw-input" id="q2" name="email" type="email" autocomplete="email" required>
+              <input class="bw-input" id="q2" name="email" type="email" autocomplete="email" required>
+              </div>
+              </div>
               </div>
             </div>
-          </div>
-
-          <div class="bw-rank reveal">
-            <p class="bw-rank__n">03</p>
-            <div class="bw-field">
+            <div class="col col--span-6">
+              <div class="bw-rank reveal">
+              <p class="bw-rank__n">03</p>
+              <div class="bw-field">
               <label class="bw-rank__t" for="q3">What is your phone number?</label>
               <div class="bw-rank__d">
-                <input class="bw-input" id="q3" name="phone" type="tel" autocomplete="tel" required>
+              <input class="bw-input" id="q3" name="phone" type="tel" autocomplete="tel" required>
+              </div>
+              </div>
               </div>
             </div>
-          </div>
-
-          <div class="bw-rank reveal">
-            <p class="bw-rank__n">04</p>
-            <div class="bw-field">
+            <div class="col col--span-6">
+              <div class="bw-rank reveal">
+              <p class="bw-rank__n">04</p>
+              <div class="bw-field">
               <label class="bw-rank__t" for="q4">Do you currently have a website?</label>
               <div class="bw-rank__d">
-                <select class="bw-select" id="q4" name="has_website">
-                  <option value="">Choose one</option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
+              <select class="bw-select" id="q4" name="has_website">
+              <option value="">Choose one</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              </select>
+              </div>
+              </div>
               </div>
             </div>
-          </div>
-
-          <div class="bw-rank reveal">
-            <p class="bw-rank__n">05</p>
-            <div class="bw-field">
+            <div class="col col--span-6">
+              <div class="bw-rank reveal">
+              <p class="bw-rank__n">05</p>
+              <div class="bw-field">
               <label class="bw-rank__t" for="q5">What is your website address?</label>
               <div class="bw-rank__d">
-                <input class="bw-input" id="q5" name="website" type="url" autocomplete="url" aria-describedby="q5h">
-                <span class="bw-help" id="q5h">Only if the answer above is yes. Leave it empty if it is no.</span>
+              <input class="bw-input" id="q5" name="website" type="url" autocomplete="url" aria-describedby="q5h">
+              <span class="bw-help" id="q5h">Only if the answer above is yes. Leave it empty if it is no.</span>
+              </div>
+              </div>
               </div>
             </div>
-          </div>
-
-          <div class="bw-rank reveal">
-            <p class="bw-rank__n">06</p>
-            <div class="bw-field">
+            <div class="col col--span-6">
+              <div class="bw-rank reveal">
+              <p class="bw-rank__n">06</p>
+              <div class="bw-field">
               <label class="bw-rank__t" for="q6">What are you interested in?</label>
               <div class="bw-rank__d">
-                <select class="bw-select" id="q6" name="interest">
-                  <option value="">Choose one</option>
-                  <option value="seo-services">SEO Services</option>
-                  <option value="web-design">Web Design</option>
-                  <option value="ui-ux-design">UI/UX Design</option>
-                  <option value="web-development">Web Development</option>
-                  <option value="cro-services">CRO Services</option>
-                  <option value="graphic-design">Graphic Design</option>
-                  <option value="branding">Branding</option>
-                </select>
+              <select class="bw-select" id="q6" name="interest">
+              <option value="">Choose one</option>
+              <option value="seo-services">SEO Services</option>
+              <option value="web-design">Web Design</option>
+              <option value="ui-ux-design">UI/UX Design</option>
+              <option value="web-development">Web Development</option>
+              <option value="cro-services">CRO Services</option>
+              <option value="graphic-design">Graphic Design</option>
+              <option value="branding">Branding</option>
+              </select>
+              </div>
+              </div>
               </div>
             </div>
           </div>
-
           <div class="bw-actions reveal">
             <button class="bw-btn bw-btn--primary" type="submit">Book a consultation</button>
             <p class="bw-note">A consultant will be in contact with you in 1 business day.</p>
@@ -269,10 +280,6 @@
         </form>
       </div>
 
-      <div class="col col--span-5 col--stretch">
-        <p class="bw-copy readw reveal">This is the same action as the phone number above, in written form. It is not a different offer and there is nothing behind it that calling does not get you.</p>
-        <p class="bw-copy readw reveal">Six fields, and they are the questions the business already asks.</p>
-      </div>
     </div>
   </div>
 </section>
