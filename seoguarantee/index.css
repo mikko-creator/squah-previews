@@ -450,3 +450,22 @@
 #main .col > .bw-list:first-child,
 #main .col > .bw-quote:first-child  { margin-block-start: var(--ds-space-md); }
 #main .col > .bw-rule--hair:first-child { margin-block-start: var(--ds-space-lg); }
+
+/* ==========================================================================
+   9 . HOMEPAGE HELD AT THE PREVIOUS SECTION RHYTHM
+   The shared token --ds-section-py was tightened from clamp(64px, 8vw, 112px)
+   to clamp(48px, 6vw, 88px), because 20% of every section's height was padding
+   and that, not word count, is why the inner pages still read long after three
+   text cuts.
+
+   That token reaches every page including this one, and the owner ruled the
+   home page is not to be touched. There is no per-page class to scope a shared
+   rule with, so the previous value is re-declared HERE, on the one sheet only
+   this page loads. Redeclaring the CUSTOM PROPERTY rather than the padding is
+   deliberate: .section reads padding-block from it, and so does the opening
+   band's calc(var(--ds-section-py) * .5), so both inherit the old rhythm from a
+   single line and neither can drift from the other.
+
+   Delete this block whenever the owner wants the home page tightened too.
+   ========================================================================== */
+#main { --ds-section-py: clamp(64px, 8vw, 112px); }

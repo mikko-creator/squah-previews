@@ -94,7 +94,15 @@
   --ds-space-lg:  40px;
   --ds-space-xl:  64px;
   --ds-space-2xl: 96px;
-  --ds-section-py:    clamp(64px, 8vw, 112px);
+  /* SECTION RHYTHM, tightened. Three passes cut copy and the owner still reported the
+     pages as cluttered, and the reason was measured rather than guessed: 20% of section
+     height was padding, reaching 23% on web-design. Cutting words out of a box that keeps
+     a fifth of its height as air does not make the page read shorter. At 1440 this moves
+     each edge 112px to 86px, so a fourteen band page like guarantee loses about 728px and
+     a nine band page about 468px, without touching a single word.
+     Was: clamp(64px, 8vw, 112px). The home page is held at the old value in pages/index.css,
+     because the owner ruled that page is not to be touched. */
+  --ds-section-py:    clamp(48px, 6vw, 88px);
   --ds-container-max: 1120px;
 
   /* MOTION · 2 required + the extension set. ONE easing curve for the whole
