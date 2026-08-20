@@ -424,3 +424,29 @@
      values and lose the emphasis rather than the drawing. */
   #s5-open { stroke-width: 4; stroke-dasharray: 13 9; }
 }
+
+/* ==========================================================================
+   8 . HOMEPAGE HELD AT ITS APPROVED SPACING
+   The shared sheet now zeroes the leading margin on the first block inside any
+   column, which is the root-cause fix for 26 rows across the inner pages whose
+   two cells did not start on the same line. The homepage carries the SAME
+   defect in s6-included and s9-trades, so that fix moved it too: 827 to 803 and
+   1169 to 1155 at 1440, with everything below shifting up 38px.
+
+   The owner ruled "don't touch the homepage anymore". There is no per-page
+   class or body id to scope the shared rule with (every page renders the same
+   <body> and <main id="main">), so the rule is re-declared HERE instead, in the
+   page sheet only this page loads. That reverses the shared change for the home
+   page exactly and leaves every inner page fixed.
+
+   This deliberately PRESERVES a small misalignment on the home page rather than
+   silently improving a page the owner told me to leave alone. It is one line to
+   undo whenever he wants it fixed: delete this block.
+   ========================================================================== */
+#main .col > .bw-copy:first-child,
+#main .col > .bw-body:first-child,
+#main .col > .bw-note:first-child   { margin-block-start: var(--ds-space-sm); }
+#main .col > .bw-lede:first-child,
+#main .col > .bw-list:first-child,
+#main .col > .bw-quote:first-child  { margin-block-start: var(--ds-space-md); }
+#main .col > .bw-rule--hair:first-child { margin-block-start: var(--ds-space-lg); }

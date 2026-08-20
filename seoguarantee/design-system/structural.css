@@ -2472,6 +2472,51 @@ p.bw-qa__a {
 .bw-legal > :first-child { margin-top: 0; }
 .bw-legal > :last-child  { margin-bottom: 0; }
 
+/* ==========================================================================
+   THE COLUMN TOP RESET . why sibling cells were not starting on one line
+   Every copy block in this sheet carries its own LEADING margin so it spaces
+   itself from whatever precedes it: .bw-copy and .bw-note pay 14px, .bw-lede,
+   .bw-list and .bw-quote pay 24px, .bw-rule--hair pays 40px. That is correct
+   in the middle of a column and wrong at the TOP of one, because there is
+   nothing above it to space away from, so the margin simply pushes that cell's
+   content down while the sibling cell, whose first block happens to be a
+   .bw-head or a figure at margin 0, stays put.
+
+   Measured across the 25 inner pages: 26 rows where two cells disagreed on
+   where their content began, and EVERY ONE of them was this and nothing else.
+   The drift values are just the tokens themselves, which is the giveaway:
+   14px, 24px, 40px, and 10px wherever a 24 sat beside a 14.
+
+   This sheet already knew the answer and had scoped it to one component
+   (.bw-legal, immediately above). It belongs on every column. The same fix is
+   what verify-section-rhythm's own smoke page applies to prove a GOOD page.
+   ========================================================================== */
+#main .col > :first-child { margin-block-start: 0; }
+
+/* ==========================================================================
+   MEDIA AND COPY MEET AT THE TOP . why text floated beside its picture
+   .row--center sets align-items:center, which is right for two blocks of
+   similar height and wrong the moment one cell is a picture and the other is a
+   short paragraph: the paragraph gets centred against the full height of the
+   image and its first line lands well below the image's top edge. Measured on
+   the inner pages, that accounts for 12 of the 20 image-to-text misalignments,
+   and the worst of them float a single line of copy in the middle of an
+   otherwise empty half band (graphic-design s2-covers: a 260px media cell
+   beside a 56px copy cell, so the copy sat 87px low).
+
+   These two rules top-align the pair and leave every other centred row alone.
+   A media cell carrying .col--stretch already stretches to the row, so its top
+   IS the row top and only the copy needs moving; a media cell WITHOUT stretch
+   is moved as well, so the two still meet. The stretch case is excluded by name
+   rather than by specificity, so nothing here quietly outranks .col--stretch.
+
+   The home page cannot be reached by either rule: it uses .col--media and
+   .col--copy zero times, which was checked before these were written, because
+   the owner ruled that page is not to be touched.
+   ========================================================================== */
+.row--center:has(> .col--media) > .col--copy { align-self: start; }
+.row--center:has(> .col--copy) > .col--media:not(.col--stretch) { align-self: start; }
+
 .bw-legal p {
   line-height: 1.72;
   color: var(--ds-ink-soft);
