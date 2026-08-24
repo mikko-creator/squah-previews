@@ -1,0 +1,136 @@
+/* ============================================================================
+   elevatedental : CARD TIER SHEET, BESPOKE
+   The elevated treatment for the MARQUEE pages. Per client-rules.json
+   bespoke_pages that is index (the home router), dental-tourism and invisalign,
+   and nothing else.
+
+   HOW THIS SHEET LOADS (fixed convention, build.mjs): exactly ONE tier sheet is
+   linked per page, LAST, after the three core sheets (tokens, chrome,
+   structural), and only if the file exists. A bespoke slug gets this sheet; every
+   other page gets brand-card-standard.css. The two NEVER co-exist, so nothing
+   here has to undo the standard tier.
+
+   WHAT IT IS: a per-page CARD-TREATMENT override, NOT a theme. Same token API,
+   same DOM grammar, same three motion moves, same type ladder. It is a step up in
+   PRESENCE, never a different brand. It assumes elevatedental-structural.css has
+   already defined .kit-card, .kit-slot and their parts in full, so it restates
+   nothing: every rule below is a short additive adjustment.
+
+   IT MINTS NO TOKENS AND REDEFINES NONE. Zero brand hex, zero rgba.
+
+   WHY THESE THREE PAGES, and why premium is a lever rather than a default.
+   Premium is the COST lever. index is the analytical router the whole site funnels
+   through; dental-tourism and invisalign are the two pages carrying an unfamiliar
+   decision for a reader who is comparing across countries or across aligner
+   brands. Those are the three surfaces where PRESENCE is doing commercial work.
+   Everywhere else the standard floor holds, and it is the existence of that floor
+   that makes this tier read as a step up at all.
+
+   WHAT THE STEP UP ACTUALLY BUYS, and why each item is the honest choice:
+     1. THE INDEX MARK BECOMES A RAIL. The bronze mark that opens every card runs
+        the full card width on hover. It is the same motif at the same 2px weight;
+        only its travel changes. No new mark is invented for this tier.
+     2. DEEPER REST ELEVATION. The card shadow at rest rather than on hover, so a
+        marquee card is unambiguously ABOVE its band before anyone touches it.
+     3. A LONGER LIFT, and the hairline warms to the bronze, so the card answers
+        the pointer with the brand's own colour and not only with distance.
+     4. MORE AIR (the large padding step) and ONE step up the LOCKED type ladder
+        for the title. No new size is minted for this tier.
+     5. A TALLER MINI-VISUAL, because on a marquee page the circle-masked
+        photograph is the thing worth spending room on, and 594 real assets exist
+        to fill it.
+     6. A FULL-STRENGTH SECTION OPENER: the unrolled index rule runs at its
+        specimen weight, so the signature motif is loudest exactly where the page
+        is most looked at.
+
+   Provenance: CARD-VARIATIONS.md #2 light card with an embedded mini-visual,
+   SURFACE-PATTERNS.md #10 soft-shadow-lift, MOTION-PATTERNS.md #10 lift,
+   _MODERN-WOW-SPEC depth and elevation, intentional asymmetry, blueprint
+   composition-medical-health.
+   ============================================================================ */
+
+/* 2. REST. The card shadow plus the inset top highlight, and more air inside. The
+   card is already clipped in the structural sheet, so the top rail below follows
+   the surface radius exactly instead of squaring off its corners. */
+.kit-card {
+  padding: var(--ds-space-lg);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+}
+
+/* 1. THE INDEX RAIL. The same 2px bronze mark, given its full travel. */
+.kit-card::before { width: 48px; }
+.kit-card:hover::before { width: 100%; }
+
+/* 3. HOVER. A longer lift than the standard tier (5px against 2px), the full lift
+   shadow, and the hairline warms to the bronze. */
+.kit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--ds-shadow-lift), var(--ds-inset-hi);
+  border-color: var(--ds-accent);
+}
+/* the flat variant is the one card that stays unrailed and unlifted, so a marquee
+   page still has a quiet card available when it needs one */
+.kit-card--flat { padding: var(--ds-space-md); }
+.kit-card--flat:hover {
+  transform: none;
+  border-color: var(--ds-hairline);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+}
+
+/* 4. TYPE. One step UP the LOCKED ladder for the card title, so a marquee card row
+   and a section subhead read at the same pitch. No new size is minted. The foot
+   keeps the full line here rather than the faint hairline, because at this padding
+   the card can carry the stronger rule. */
+.kit-card__title {
+  font-size: 24px;
+  line-height: 1.18;
+  letter-spacing: -.012em;
+  margin-bottom: var(--ds-space-xs);
+}
+.kit-card__body { font-size: 15px; }
+.kit-card__foot { padding-top: var(--ds-space-md); border-top-color: var(--ds-line); }
+.kit-card__hours { padding-top: var(--ds-space-md); border-top-color: var(--ds-line); }
+
+/* 5. THE EMBEDDED MINI-VISUAL, taller, and it keeps clear of the new padding so
+   the circle never runs into the rail. */
+.kit-card__media { width: 120px; margin-bottom: var(--ds-space-lg); }
+
+/* THE TINT VARIANT gets the cool plane plus a full line, so a featured card in a
+   row of paper cards separates by MATERIAL and edge rather than by a size change
+   that would break the row's rhythm. */
+.kit-card--tint { border-color: var(--ds-line); }
+
+/* 6. THE SECTION OPENER at full strength: the graduations at their specimen
+   opacity and the index mark a step taller, so the motif is unmistakable on the
+   three pages that carry the most weight. */
+.kit-open__rule::after { opacity: .42; }
+.kit-open__idx { width: 3px; }
+
+/* THE IMAGERY SLOT. The deepest elevation the identity owns, because on a marquee
+   page proving that the photograph sits on its own layer is the whole point of the
+   masked frame. */
+.kit-slot__mask {
+  box-shadow: var(--ds-shadow-lift), var(--ds-inset-hi);
+}
+
+/* MOTION GATE. This sheet introduces one transform and one colour transition, so
+   this sheet zeroes both. */
+@media (prefers-reduced-motion: reduce) {
+  .kit-card { transition: none; }
+  .kit-card:hover { transform: none; }
+}
+
+/* THE REFLOW. The bespoke padding is a desktop luxury; below the tablet line it
+   would eat the reading width, so it steps back down the LOCKED space scale. The
+   mini-visual steps down with it. */
+@media (max-width: 899px) {
+  .kit-card { padding: var(--ds-space-md); }
+  .kit-card__media { width: 104px; margin-bottom: var(--ds-space-md); }
+  .kit-card__title { font-size: 21px; }
+}
+
+@media (max-width: 767px) {
+  .kit-card { padding: var(--ds-space-sm); }
+  .kit-card__media { width: 88px; }
+  .kit-card__title { font-size: 20px; }
+}

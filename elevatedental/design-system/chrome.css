@@ -1,0 +1,629 @@
+/* ==========================================================================
+   ELEVATE DENTAL : THE LOCKED CHROME SHEET
+   Stage (2) CHROME. Concept B "THE CALM SHELF", the owner pick of 2026-08-14.
+
+   WHAT THIS SHEET IS. The paint for the five site-wide chrome parts carried by
+   _design/_chrome-block.html: the two-tier header, the mega panel, the mobile
+   drawer, the ONE closing .precta band, and the footer. It is extracted from the
+   winner preview (_design/_tournament/chrome-b/preview.html) without re-shaping
+   the rules, because the chrome is a LOCKED BLOCK and verify-chrome-parity
+   RENDERS the built chrome against that preview.
+
+   TOKEN PURE. No colour literal below this line: every colour, radius, shadow,
+   duration and easing resolves through a var(--ds-*) from the locked token sheet
+   (elevatedental-tokens.css). Raw px survives only as a structural literal (a
+   hairline, a control height, a media anchor), never as a colour.
+
+   WHAT IT DELIBERATELY DOES NOT DUPLICATE. Everything the structural sheet
+   already owns: the box-sizing reset, the body ground and type, the grain veil,
+   .container / .row / .col, .section, the kit- component set, .kit-seam, and the
+   two local layout values --ed-flow and --ed-gutter, which are declared in
+   elevatedental-structural.css :root and are only CONSUMED here. The preview's
+   own body{background} line is dropped for that reason: structural declares the
+   identical value.
+
+   THE ONE RULE THIS SHEET OWNS THAT LOOKS LIKE A BODY RULE: main{padding-top}.
+   The fixed header is cleared ONCE, here, because only the chrome knows its own
+   height. The structural sheet states that contract at its hero section and does
+   not re-reserve it.
+
+   ORDER INDEPENDENCE, and why three selectors are scoped one level deeper than
+   the preview wrote them. In the preview the chrome rules lived in an inline
+   <style> that came AFTER the structural link, so a chrome rule and a structural
+   rule of EQUAL specificity resolved in the chrome's favour by source order
+   alone. A sheet cannot rely on that: verify-chrome-parity styles the carrier by
+   linking tokens, then chrome, then structural, and it caught the consequence at
+   once (hamburger 53px past the header edge at 375). The three real ties were
+     .kit-btn{width:100%} at max-width 767   vs  .ed-cta-m{width:auto}
+     .kit-btn{display:inline-flex}           vs  .ed-cta-m{display:none}
+     .kit-seam{height:var(--ed-seam-h)}      vs  .ed-arc{height:var(--ed-arc-h)}
+   so .ed-cta-m and .ed-burger are scoped under .ed-shelf__in, and .ed-arc under
+   .site-header. Not one declared value changes: the scoping only lifts these
+   three off a source-order coin toss so the chrome paints identically whichever
+   order a consumer links the sheets in.
+
+   COLLAPSE ANCHOR: 1100. The desktop bar folds to the hamburger wherever it
+   cannot fit. A previous build collapsed only at 768 and overflowed 264px at 834.
+   Everything from 1100 down runs the single compressed bar. Verified zero
+   horizontal overflow at 375 / 768 / 834 / 1024 / 1200 / 1440.
+   ========================================================================== */
+
+/* --- the chrome's own layout values, all derived from the locked scale ----- */
+:root{
+  --ed-chrome-max: 1320px;   /* the shelf runs a step wider than the reading measure */
+  --ed-util-h: 56px;         /* tier 1, the utility strip */
+  --ed-shelf-h: 70px;        /* tier 2, the shelf */
+  --ed-arc-h: 18px;          /* the seam where the header meets the page */
+  --ed-header-h: calc(var(--ed-util-h) + var(--ed-shelf-h) + var(--ed-arc-h));
+}
+/* THE COLLAPSE. The desktop bar folds to the hamburger wherever it cannot fit.
+   1100 is the anchor: a previous build collapsed only at 768 and overflowed 264px
+   at 834. Everything from 1100 down runs the single compressed bar. */
+@media (max-width: 1100px){
+  :root{ --ed-util-h: 0px; --ed-shelf-h: 62px; --ed-arc-h: 14px; }
+}
+
+[hidden]{ display: none !important; }
+main{ padding-top: var(--ed-header-h); }
+main > .kit-hero:first-child{ border-top: 0; }
+
+/* THE KEYBOARD FOCUS RING, carried by the chrome sheet itself (WCAG 2.4.7).
+   The structural sheet declares the same ring, but through :where(...), which is
+   zero-specificity and invisible to a static role scan; the chrome frame is the
+   surface a keyboard user lands on FIRST (skip link, utility numbers, eleven nav
+   items, the mega, the drawer, the footer sitemap), so the ring is stated here
+   too, in the plain role form. Same tokens, same offset, same radius as
+   structural: identical paint, never a competing look. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible{
+  outline: 2px solid var(--ds-accent-deep);
+  outline-offset: 3px;
+  border-radius: var(--ds-r-control);
+}
+/* on the one dark band the bronze goes to the gold that was built to hold there */
+.surface-dark a:focus-visible,
+.surface-dark button:focus-visible,
+.surface-dark summary:focus-visible,
+.surface-dark [tabindex]:focus-visible{
+  outline-color: var(--ds-accent-light);
+}
+
+/* ==========================================================================
+   PART 1 : THE HEADER
+   ========================================================================== */
+.site-header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: var(--ds-z-sticky);
+  background: var(--ds-bg-surface-2);          /* the shelf tint, and the arc's ground */
+  transition: box-shadow var(--ds-dur-fast) var(--ds-ease-out);
+}
+.site-header.is-stuck{ box-shadow: var(--ds-shadow-card); }
+
+.ed-wrap{
+  width: 100%;
+  max-width: var(--ed-chrome-max);
+  margin-inline: auto;
+  padding-inline: var(--ed-gutter);
+  min-width: 0;
+}
+
+/* --- tier 1 : THE UTILITY STRIP ------------------------------------------- */
+.ed-util{
+  height: var(--ed-util-h);
+  overflow: hidden;
+  background: var(--ds-primary-soft);
+  border-bottom: 1px solid var(--ds-hairline);
+  transition: height var(--ds-dur-fast) var(--ds-ease-out);
+}
+/* NAV-PATTERNS #8's sticky behaviour: the utility row retires on scroll and the
+   nav shelf is what stays pinned. main's padding is fixed, so nothing jumps. */
+.site-header.is-stuck .ed-util{ height: 0; border-bottom-color: transparent; }
+.ed-util__in{
+  height: var(--ed-util-h);
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-md);
+  min-width: 0;
+}
+
+.ed-tels{ display: flex; align-items: stretch; margin: 0; padding: 0; list-style: none; min-width: 0; }
+.ed-tels li + li{ border-left: 1px solid var(--ds-hairline); }
+.ed-tel{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 16px;
+  min-height: 44px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ed-tels li:first-child .ed-tel{ padding-left: 0; }
+.ed-tel__c{
+  font-size: 9.5px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ds-ink-soft);
+  transition: color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-tel__n{
+  font-family: var(--ds-font-mono); font-size: 11.5px; line-height: 1.2;
+  color: var(--ds-ink-heading); font-variant-numeric: tabular-nums;
+  transition: color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-tel:hover .ed-tel__n{ color: var(--ds-accent-deep); }
+.ed-tel:hover .ed-tel__c{ color: var(--ds-accent-deep); }
+
+.ed-util__end{ display: flex; align-items: center; gap: var(--ds-space-sm); margin-left: auto; min-width: 0; }
+.ed-hours{
+  margin: 0;
+  font-size: 11px; line-height: 1.3; letter-spacing: .02em;
+  color: var(--ds-ink-soft); white-space: nowrap;
+}
+.ed-hours b{ display: block; font-size: 9.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ds-accent-deep); }
+/* the pinned appointment control, compacted for the strip. Never a third weight:
+   it is the same .kit-btn--primary the whole system uses. */
+.ed-util .kit-btn{
+  width: auto;
+  min-height: 40px;
+  padding: 10px 18px;
+  font-size: 11.5px;
+  white-space: nowrap;
+}
+
+/* --- tier 2 : THE SHELF ---------------------------------------------------- */
+.ed-shelf{
+  position: relative;
+  height: var(--ed-shelf-h);
+  /* the soft tint wash. Two radial washes over the cool ground, the same material
+     move .kit-atmos makes in the body, so the shelf reads as a surface and not a bar */
+  background-image:
+    radial-gradient(64% 180% at 88% 0%, var(--ds-primary-soft) 0%, transparent 62%),
+    radial-gradient(46% 150% at 6% 100%, var(--ds-bg-warm) 0%, transparent 68%);
+}
+/* THE UNROLLED INDEX RULE along the shelf's top edge: minor graduations on a
+   hairline, the brand's signature motif doing a structural job as the joint
+   between the two tiers. */
+.ed-shelf::before{
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0; height: 6px;
+  background-image: repeating-linear-gradient(90deg, var(--ds-primary) 0 1px, transparent 1px calc(100% / 48));
+  opacity: .22;
+  pointer-events: none;
+}
+.ed-shelf__in{
+  height: var(--ed-shelf-h);
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-md);
+  min-width: 0;
+}
+
+/* the logo lockup: the index ring beside the wordmark. No tagline here: the
+   tagline is spent once, in the .precta, where it has room to be read. */
+.ed-logo{
+  display: flex; align-items: center; gap: 10px;
+  flex: 0 0 auto; min-width: 0;
+  text-decoration: none;
+}
+.ed-logo__mark{ flex: 0 0 auto; }
+.ed-logo__word{
+  font-family: var(--ds-font-display); font-weight: 500;
+  font-size: 22px; line-height: 1; letter-spacing: -.012em;
+  color: var(--ds-ink-heading); white-space: nowrap;
+}
+.ed-logo:hover .ed-logo__word{ color: var(--ds-primary-deep); }
+
+/* THE NAV. Eleven items, one row, distributing their own slack. `gap` is the
+   MINIMUM spacing and space-between spends whatever is left, so the bar tightens
+   itself from 1440 down to 1101 rather than overflowing at some fixed width. */
+.ed-nav{ flex: 1 1 auto; min-width: 0; margin-left: clamp(18px, 2.2vw, 40px); }
+.ed-nav__list{
+  display: flex; flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0; padding: 0; list-style: none; min-width: 0;
+}
+.ed-nav__item{ min-width: 0; }
+.ed-nav__link{
+  position: relative;
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 7px 0;
+  font-family: var(--ds-font-body);
+  font-size: clamp(11px, .88vw, 13px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: .005em;
+  color: var(--ds-ink-heading);
+  background: none; border: 0;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: color var(--ds-dur-fast) var(--ds-ease-out);
+}
+/* the hover mark is the card's bronze index bar at nav scale: it extends from the
+   left rather than fading in, which is the one gesture this system uses for "open" */
+.ed-nav__link::before{
+  content: "";
+  position: absolute; left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--ds-accent);
+  transition: width var(--ds-dur-slow) var(--ds-ease-out);
+}
+.ed-nav__link:hover, .ed-nav__link[aria-expanded="true"]{ color: var(--ds-accent-deep); }
+.ed-nav__link:hover::before, .ed-nav__link[aria-expanded="true"]::before{ width: 100%; }
+.ed-nav__link.is-current{ color: var(--ds-primary-deep); }
+.ed-nav__link.is-current::before{ width: 100%; background: var(--ds-primary); }
+/* the mega caret, drawn not typed, so the accessible label stays exactly "Treatments" */
+.ed-caret{
+  display: block; width: 6px; height: 6px; flex: 0 0 auto;
+  border-right: 1px solid var(--ds-accent-deep);
+  border-bottom: 1px solid var(--ds-accent-deep);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-nav__link[aria-expanded="true"] .ed-caret{ transform: translateY(1px) rotate(-135deg); }
+
+/* the arc seam where the header meets the page. The page ground RISES into the
+   shelf, one bronze hairline riding the curve. This is the page's ONE arc.
+   SCOPED under .site-header so the chrome's own arc height wins over the generic
+   .kit-seam height regardless of which sheet a consumer links last. */
+.site-header .ed-arc{ height: var(--ed-arc-h); margin-bottom: 0; }
+
+/* the compressed-bar controls, off above 1100. SCOPED under .ed-shelf__in so
+   display:none wins over .kit-btn{display:inline-flex} in either link order. */
+.ed-shelf__in .ed-cta-m, .ed-shelf__in .ed-burger{ display: none; }
+
+/* ==========================================================================
+   PART 2 : THE MEGA PANEL
+   ========================================================================== */
+.ed-scrim{
+  position: fixed; inset: 0; top: var(--ed-header-h);
+  background: var(--ds-primary-deep);
+  opacity: var(--ds-opacity-scrim);
+  border: 0;
+}
+.ed-mega{
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--ds-bg-surface);            /* the arc's fill flows straight into it */
+  border-bottom: 1px solid var(--ds-hairline);
+  box-shadow: var(--ds-shadow-lift);
+  max-height: calc(100vh - var(--ed-header-h));
+  overflow-y: auto;
+}
+.ed-mega__in{ padding-block: var(--ds-space-lg) var(--ds-space-md); }
+.ed-mega__grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1.15fr);
+  gap: var(--ds-space-lg);
+}
+.ed-mega__col{ min-width: 0; }
+.ed-mlist{ list-style: none; margin: var(--ds-space-sm) 0 0; padding: 0; }
+.ed-mlist li{ margin-top: 2px; }
+.ed-mlink{
+  display: block;
+  padding: 7px 0;
+  font-size: 13.5px; line-height: 1.4;
+  color: var(--ds-ink); text-decoration: none;
+  transition: color var(--ds-dur-fast) var(--ds-ease-out), padding-left var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-mlink:hover{ color: var(--ds-accent-deep); padding-left: 6px; }
+.ed-mclinic{
+  display: block; padding: 9px 0; text-decoration: none;
+  border-bottom: 1px solid var(--ds-hairline);
+}
+.ed-mclinic:last-child{ border-bottom: 0; }
+.ed-mclinic b{ display: block; font-family: var(--ds-font-display); font-weight: 500; font-size: 15px; line-height: 1.25; color: var(--ds-ink-heading); }
+.ed-mclinic span{ display: block; margin-top: 3px; font-size: 11.5px; color: var(--ds-ink-soft); font-variant-numeric: tabular-nums; }
+.ed-mclinic:hover b{ color: var(--ds-accent-deep); }
+.ed-mega__foot{
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--ds-space-sm) var(--ds-space-md);
+  margin-top: var(--ds-space-md);
+  padding-top: var(--ds-space-md);
+  border-top: 1px solid var(--ds-hairline);
+}
+.ed-mega .kit-card{ height: 100%; }
+.ed-mega .kit-btn{ width: auto; }
+
+/* ==========================================================================
+   PART 3 : THE MOBILE DRAWER
+   ========================================================================== */
+.ed-drawer{ position: fixed; inset: 0; z-index: var(--ds-z-drawer); }
+.ed-drawer__scrim{
+  position: absolute; inset: 0;
+  background: var(--ds-primary-deep);
+  opacity: var(--ds-opacity-scrim);
+  border: 0;
+}
+/* THE DRAWER IS A FLEX COLUMN, and that is the whole anti-trap mechanic:
+   head (fixed) / scroll region (flex:1 1 auto, min-height:0, overflow-y:auto) /
+   foot (flex:0 0 auto). The foot is a SIBLING of the scroll region, never an
+   overlay on top of it, so no nav row can be stranded underneath it. */
+.ed-drawer__panel{
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(92vw, 384px);
+  display: flex;
+  flex-direction: column;
+  background: var(--ds-bg-surface);
+  border-left: 1px solid var(--ds-hairline);
+  box-shadow: var(--ds-shadow-lift);
+}
+.ed-drawer__head{
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--ds-space-sm);
+  padding: 12px var(--ds-space-md);
+  min-height: 62px;
+  background: var(--ds-bg-surface-2);
+  border-bottom: 1px solid var(--ds-hairline);
+}
+.ed-close{
+  position: relative;
+  width: 44px; height: 44px; flex: 0 0 auto;
+  background: none; border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-control);
+  cursor: pointer;
+}
+.ed-close::before, .ed-close::after{
+  content: ""; position: absolute; left: 12px; top: 21px;
+  width: 18px; height: 1px; background: var(--ds-primary);
+}
+.ed-close::before{ transform: rotate(45deg); }
+.ed-close::after{ transform: rotate(-45deg); }
+.ed-close:hover{ border-color: var(--ds-accent); }
+
+.ed-drawer__scroll{
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--ds-space-md) var(--ds-space-md) var(--ds-space-lg);
+}
+
+/* the drawer LEADS WITH CLINIC CHOICE: a Manila patient picks a branch first */
+.ed-pick{ margin: 0 0 var(--ds-space-md); padding-bottom: var(--ds-space-sm); border-bottom: 2px solid var(--ds-primary); }
+.ed-pick__list{ list-style: none; margin: var(--ds-space-sm) 0 0; padding: 0; }
+.ed-pick__row{
+  display: flex; align-items: center; gap: var(--ds-space-sm);
+  border-bottom: 1px solid var(--ds-hairline);
+}
+.ed-pick__row:last-child{ border-bottom: 0; }
+/* the row's whole height IS the link's padding, so the tap target is the row */
+.ed-pick__name{ flex: 1 1 auto; min-width: 0; text-decoration: none; padding: 14px 0; }
+.ed-pick__name b{ display: block; font-family: var(--ds-font-display); font-weight: 500; font-size: 15px; line-height: 1.25; color: var(--ds-ink-heading); }
+.ed-pick__name span{ display: block; margin-top: 2px; font-size: 11px; color: var(--ds-ink-soft); font-variant-numeric: tabular-nums; }
+.ed-pick__tel{
+  flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 44px; min-height: 44px; padding: 0 12px;
+  font-family: var(--ds-font-mono); font-size: 10.5px; letter-spacing: .04em;
+  color: var(--ds-primary);
+  border: 1px solid var(--ds-hairline); border-radius: var(--ds-r-control);
+  background: var(--ds-bg-surface-2);
+  text-decoration: none; white-space: nowrap;
+}
+.ed-pick__tel:hover{ border-color: var(--ds-accent); color: var(--ds-accent-deep); }
+
+/* the drawer nav: the SAME eleven labels, the SAME order as the shelf */
+.ed-dnav{ list-style: none; margin: 0; padding: 0; }
+.ed-dnav > li{ border-bottom: 1px solid var(--ds-hairline); }
+.ed-dnav__link, .ed-dnav__sum{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--ds-space-sm);
+  width: 100%;
+  padding: 14px 0;
+  min-height: 52px;
+  font-family: var(--ds-font-body); font-size: 15px; font-weight: 500;
+  color: var(--ds-ink-heading);
+  text-decoration: none;
+  background: none; border: 0; text-align: left;
+  list-style: none; cursor: pointer;
+}
+.ed-dnav__sum::-webkit-details-marker{ display: none; }
+.ed-dnav__link:hover, .ed-dnav__sum:hover{ color: var(--ds-accent-deep); }
+.ed-dcaret{
+  display: block; width: 8px; height: 8px; flex: 0 0 auto;
+  border-right: 1px solid var(--ds-accent-deep);
+  border-bottom: 1px solid var(--ds-accent-deep);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--ds-dur-fast) var(--ds-ease-out);
+}
+details[open] > .ed-dnav__sum .ed-dcaret{ transform: translateY(1px) rotate(-135deg); }
+.ed-dlist{ list-style: none; margin: 0 0 var(--ds-space-sm); padding: 0 0 0 var(--ds-space-md); border-left: 2px solid var(--ds-accent); }
+.ed-dlist a{
+  display: block; padding: 9px 0; min-height: 40px;
+  font-size: 13.5px; line-height: 1.4; color: var(--ds-ink-soft); text-decoration: none;
+}
+.ed-dlist a:hover{ color: var(--ds-accent-deep); }
+
+/* the foot. flex:0 0 auto, a real sibling, so it never sits over the list. */
+.ed-drawer__foot{
+  flex: 0 0 auto;
+  padding: var(--ds-space-md);
+  background: var(--ds-bg-surface-2);
+  border-top: 1px solid var(--ds-hairline);
+}
+.ed-drawer__foot .kit-btn{ width: 100%; }
+.ed-nap{ display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px var(--ds-space-sm); margin-top: 12px; }
+.ed-nap a{ font-size: 12px; color: var(--ds-primary); text-decoration: none; }
+.ed-nap a:hover{ color: var(--ds-accent-deep); text-decoration: underline; }
+.ed-nap span{ font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ds-ink-soft); }
+
+/* ==========================================================================
+   PART 4 : THE CLOSING CTA BAND  (.precta, the ONE band on any page)
+   This is also the page's ONE dark punctuation. It carries .section--dark PAIRED
+   with .surface-dark, which is the authoring form the structural sheet requires:
+   the flip repoints the tokens for the whole subtree, so every object inside
+   re-skins itself instead of only the band. The joint into it is a flat ground
+   step, because the sheet turns the light-to-light hairline and contact ramp OFF
+   into and out of the dark band, and the page's one arc is already spent above.
+   ========================================================================== */
+.precta .kit-actions{ margin-top: var(--ds-space-md); }
+.precta__aside{
+  padding: var(--ds-space-md);
+  background: var(--ds-bg-surface-2);
+  border: 1px solid var(--ds-line);
+  border-radius: var(--ds-r-surface);
+  box-shadow: var(--ds-shadow-card);
+}
+.precta__ring{ display: flex; justify-content: flex-end; margin-bottom: var(--ds-space-sm); }
+
+/* ==========================================================================
+   PART 5 : THE FOOTER
+   ========================================================================== */
+.site-footer{
+  background: var(--ds-bg-warm);
+  padding-block: var(--ed-flow) var(--ds-space-lg);
+}
+.ed-fbrand{
+  display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--ds-space-lg);
+  padding-bottom: var(--ds-space-lg);
+  border-bottom: 2px solid var(--ds-primary);
+}
+.ed-fbrand__id{ display: flex; align-items: center; gap: var(--ds-space-sm); min-width: 0; }
+.ed-fbrand__word{ font-family: var(--ds-font-display); font-weight: 500; font-size: 26px; line-height: 1.1; letter-spacing: -.014em; color: var(--ds-ink-heading); }
+.ed-fbrand__say{ flex: 1 1 320px; min-width: 0; }
+.ed-fcols{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.55fr);
+  gap: var(--ds-space-lg);
+  padding-block: var(--ds-space-lg);
+}
+.ed-fcol{ min-width: 0; }
+.ed-flist{ list-style: none; margin: var(--ds-space-sm) 0 0; padding: 0; }
+.ed-flist li{ margin-top: 4px; }
+.ed-flist a{
+  display: block; padding: 5px 0;
+  font-size: 13px; line-height: 1.45; color: var(--ds-ink);
+  text-decoration: none;
+  transition: color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-flist a:hover{ color: var(--ds-accent-deep); text-decoration: underline; }
+.ed-flist--tel a{ min-height: 40px; display: flex; align-items: center; }
+.ed-fsoc{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: var(--ds-space-sm); }
+.ed-fsoc a{
+  display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em;
+  color: var(--ds-primary); text-decoration: none;
+  border: 1px solid var(--ds-hairline); border-radius: var(--ds-r-control);
+  background: var(--ds-bg-surface);
+}
+.ed-fsoc a:hover{ border-color: var(--ds-accent); color: var(--ds-accent-deep); }
+.ed-fbar{
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--ds-space-sm) var(--ds-space-md);
+  padding-top: var(--ds-space-md);
+  border-top: 1px solid var(--ds-hairline);
+}
+.ed-fbar p{ font-size: 12px; color: var(--ds-ink-soft); }
+.ed-fbar__links{ display: flex; flex-wrap: wrap; gap: var(--ds-space-md); list-style: none; margin: 0; padding: 0; }
+.ed-fbar__links a{ font-size: 12px; color: var(--ds-ink-soft); text-decoration: none; }
+.ed-fbar__links a:hover{ color: var(--ds-accent-deep); text-decoration: underline; }
+
+/* ==========================================================================
+   THE REFLOW LADDER FOR THE CHROME. Same four authored tiers as the body sheet.
+   No tier introduces a fixed width or an unclamped child, so no tier can open a
+   horizontal scrollbar at 375 / 768 / 834 / 1024 / 1200 / 1440.
+   ========================================================================== */
+
+/* the 1101 to 1199 band: the shelf is at its tightest, so the lockup and the
+   strip give back what the nav needs rather than the nav shrinking its labels */
+@media (max-width: 1199px){
+  .ed-logo__word{ font-size: 19px; }
+  .ed-logo__mark{ width: 26px; height: 26px; }
+  .ed-nav{ margin-left: 16px; }
+  .ed-nav__list{ gap: 8px; }
+  .ed-tel{ padding-inline: 12px; }
+  .ed-util__in{ gap: var(--ds-space-sm); }
+  .ed-mega__grid{ gap: var(--ds-space-md); }
+}
+
+/* THE COLLAPSE at 1100. Everything above folds into one compressed bar:
+   logo left, the pinned control, then the hamburger LAST and flush right.
+   Every .ed-cta-m / .ed-burger rule here carries the same .ed-shelf__in scope as
+   the display:none default above, so the whole compressed bar resolves as one
+   block instead of half of it losing a source-order tie with .kit-btn. */
+@media (max-width: 1100px){
+  .ed-util{ display: none; }
+  .ed-nav{ display: none; }
+  .ed-mega{ display: none; }
+  .ed-shelf::before{ display: none; }
+  .ed-shelf__in{ gap: 10px; }
+  .ed-logo__word{ font-size: 19px; }
+
+  .ed-shelf__in .ed-cta-m{
+    display: inline-flex;
+    width: auto;
+    margin-left: auto;
+    min-height: 44px;
+    padding-inline: clamp(10px, 2.6vw, 20px);
+    font-size: clamp(10px, 2.4vw, 12px);
+    letter-spacing: .04em;
+    white-space: nowrap;
+  }
+  .ed-shelf__in .ed-cta-m::after{ display: none; }   /* the bronze tick is a hover gesture, not a phone one */
+
+  .ed-shelf__in .ed-burger{
+    display: inline-flex; align-items: center; justify-content: center;
+    position: relative;
+    flex: 0 0 auto;
+    width: 44px; height: 44px;
+    margin-right: 0;                         /* FLUSH RIGHT: nothing sits to its right */
+    padding: 0;
+    background: none;
+    border: 1px solid var(--ds-hairline);
+    border-radius: var(--ds-r-control);
+    cursor: pointer;
+  }
+  .ed-shelf__in .ed-burger:hover{ border-color: var(--ds-accent); }
+  .ed-shelf__in .ed-burger i,
+  .ed-shelf__in .ed-burger::before,
+  .ed-shelf__in .ed-burger::after{
+    content: ""; position: absolute; left: 12px;
+    width: 18px; height: 1px; background: var(--ds-primary);
+  }
+  .ed-shelf__in .ed-burger::before{ top: 15px; }
+  .ed-shelf__in .ed-burger i{ top: 21px; width: 13px; background: var(--ds-accent); }
+  .ed-shelf__in .ed-burger::after{ top: 27px; }
+}
+
+/* tier 1 of the body ladder */
+@media (max-width: 1023px){
+  .ed-fcols{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ds-space-md); }
+}
+
+/* tier 2 */
+@media (max-width: 899px){
+  .ed-fbrand{ gap: var(--ds-space-md); }
+  .precta__aside{ margin-top: var(--ds-space-md); }
+}
+
+/* tier 3 : mobile */
+@media (max-width: 767px){
+  .ed-fcols{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ed-fbar{ flex-direction: column; align-items: flex-start; }
+  .precta .kit-btn{ width: 100%; }
+  .precta .kit-btn--ghost{ width: auto; }
+  .site-footer .kit-btn{ width: 100%; }
+}
+
+/* tier 4 : the small-phone floor */
+@media (max-width: 480px){
+  .ed-fcols{ grid-template-columns: minmax(0, 1fr); gap: var(--ds-space-md); }
+}
+@media (max-width: 380px){
+  .ed-logo__word{ font-size: 17px; }
+  .ed-logo__mark{ width: 24px; height: 24px; }
+  .ed-shelf__in{ gap: 8px; }
+}
+
+/* MOTION. Every transition above reads a --ds-dur-* token, so the reduced-motion
+   block in the structural sheet already neutralises them at the token. These two
+   are the chrome's own transform gestures and are pinned here as well. */
+@media (prefers-reduced-motion: reduce){
+  .ed-caret, .ed-dcaret{ transition: none; }
+  .ed-mlink:hover{ padding-left: 0; }
+}

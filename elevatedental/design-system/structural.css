@@ -1,0 +1,2087 @@
+/* ============================================================================
+   elevatedental : STRUCTURAL SHEET   (SYSTEM stage, stage (1) BRAND-CARD +
+   FEEL both stamped)
+
+   THE BODY SHEET. Loads AFTER elevatedental-tokens.css and the chrome sheet, and
+   BEFORE the per-page tier sheet (brand-card-standard.css | brand-card-bespoke.css).
+
+   TOKEN-PURE BY LAW. ZERO brand hex below this line, and zero rgba: every colour,
+   radius, shadow, duration and easing resolves through a var(--ds-*) declared in
+   elevatedental-tokens.css. This sheet MINTS NO COLOUR TOKEN. It spends the locked
+   API of Concept A "Clinical Precision" and adds nothing to it. Raw px survives
+   only as a STRUCTURAL literal (a 1px hairline, a type size, a grid track, a media
+   anchor, a mask geometry), never as a colour and never as a spacing step.
+
+   THE THREE LOCAL CUSTOM PROPERTIES it does define are LAYOUT ONLY and are all
+   derived from the locked --ds-space-* scale: --ed-flow (the ONE section rhythm),
+   --ed-gutter (the reading gutter) and --ed-seam-h (the arc amplitude). They carry
+   no colour and no identity; they exist so the rhythm is driven from ONE value
+   instead of a per-section literal, which is exactly what G-CADENCE requires.
+
+   WHAT THIS SHEET IS. It GENERALISES the owner-confirmed feel specimen
+   (_design/feel-specimen.html, stamped FEEL 2026-08-14) into a reusable body
+   vocabulary. Every device below was proved on that specimen first: the unrolled
+   index-ring section opener, the A2 circle-up arc seam, the circle and arch
+   imagery masks, the countable-proof stack, the two-column named-systems matrix,
+   the light card raised off cool paper, the inline CTA rail, and the three-move
+   motion budget. Where this sheet differs from the specimen it differs ONLY by
+   generalising a fragment into a rule. It contradicts the specimen nowhere.
+
+   THE ARGUMENT THE FEEL MADE, restated as the law of this sheet. The brand's tone
+   was MEASURED, not chosen: surface_dominance light, dark_ratio 0, energy
+   restrained. Light is the ground. .surface-dark is PUNCTUATION, spent at most
+   once per page, on the one band a page is asked to be believed on measurement
+   rather than description. It is never an immersive hero. Separation on the light
+   ground is therefore carried by a HAIRLINE plus a graded CONTACT SHADOW plus a
+   change of MATERIAL, never by a value ladder, because paper, cool paper and warm
+   paper are optically the same plane.
+
+   THE SIGNATURE MOTIF is the INDEX RING and its unrolled graduated rule. Every
+   section opens with it. It is drawn from tokens alone, so it re-inks itself on
+   the dark surface with no override.
+
+   DESIGN-SYSTEM PROVENANCE (derived from the v4 unified system, never invented):
+     library   _MODERN-WOW-SPEC                the technique ceiling
+     library   _MODERN-DESIGN-PATTERN-LIBRARY  arc seam, shape-masked media, card bloom, grain veil
+     library   _COMPOSITION-LAWS               L1 stacked split reading order, L9 selection rationale
+     library   _RESPONSIVE-PATTERN-LIBRARY     the four-tier reflow ladder
+     blueprint composition-medical-health      the SECTOR spine (see _SECTOR-BLUEPRINT-RECONCILIATION.md)
+     menus     HERO-COMPOSITIONS.md #20, DIVIDER-PATTERNS.md #2, SECTION-COMPONENTS.md #11,
+               CARD-VARIATIONS.md #2, TRUST-STATS-SECTIONS.md #4, TYPOGRAPHY-PAIRINGS.md
+               (Playfair Display over Montserrat), SURFACE-PATTERNS.md #12 solid-fill-block,
+               MOTION-PATTERNS.md #21 fade-up, MOTION-PATTERNS.md #10 lift,
+               FORM-LAYOUTS.md #2 stacked label over control
+
+   THE SECTOR RECONCILIATION is binding on this sheet:
+     Collision A. The appointment CTA is the spine, but the BODY authors ZERO
+       closing CTA bands. A mid-page CTA exists ONLY as .kit-inline, a ruled rail
+       folded inside a content-bearing section. There is no standalone
+       heading-plus-button band object in this sheet, deliberately.
+     Collision B. Warm IMAGERY, calm VOICE. The masks, the arc and the tint washes
+       are here; the blueprint's first-person warmth is not a CSS concern and is
+       refused at COPY.
+
+   THE FORCED DOM-STRUCTURE GRAMMAR (skill law, gated by verify-dom-structure R1-R5):
+
+       section  ->  div.container  ->  div.row  ->  div.col  ->  OBJECT
+
+   .container  the max-width wrapper (--ds-container-max). ONE per section.
+               .container--full for a full-bleed band.
+   .row        a horizontal group. Gap comes from --ds-space-*.
+   .col        a cell. .col--span-1 through .col--span-12, plus .col--full and the
+               reading column .col--measure.
+   OBJECT      the leaf. The component SKIN lives HERE, never on a structure layer.
+
+   THE SKIN NAMESPACE IS `kit-`. verify-dom-structure.mjs:189 HARD-CODES
+   /^(?:bw|kit)-/ as THE skin prefixes, so `kit-` is load-bearing: a custom prefix
+   would SILENTLY BLIND the R5 structure-carries-skin check. Nothing below paints a
+   background, a border, a shadow or a radius onto .container / .row / .col.
+   Structure is layout only.
+   ============================================================================ */
+
+
+/* ============================================================================
+   1. RESET AND BASE
+   ============================================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ds-bg-surface);
+  color: var(--ds-ink);
+  font-family: var(--ds-font-body);
+  font-size: 16px;
+  line-height: 1.72;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  /* the page can never scroll sideways. The reflow ladder in section 11 is what
+     keeps this honest; this line is only the backstop. */
+  overflow-x: hidden;
+}
+
+img, svg, video, canvas { display: block; max-width: 100%; }
+img, video { height: auto; }
+p { margin: 0; }
+p + p { margin-top: var(--ds-space-md); }
+button { font: inherit; }
+
+/* THE GRAIN VEIL. Promoted verbatim from the specimen: the ultra-subtle texture
+   that stops a light-dominant surface reading flat. Fixed, inert, below
+   everything, and it costs no layout. _MODERN-WOW-SPEC, texture. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--ds-z-below);
+  background-image: var(--ds-grain);
+  opacity: var(--ds-opacity-texture);
+  mix-blend-mode: multiply;
+}
+
+/* ONE visible focus ring for the whole surface. --ds-accent-deep is the bronze
+   doing a structural job on light; on the dark punctuation band the token flip
+   repaints the ring to the gold that was built to hold on that navy. Never
+   removed, never replaced by outline:none. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ds-accent-deep);
+  outline-offset: 3px;
+  border-radius: var(--ds-r-control);
+}
+.surface-dark :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline-color: var(--ds-accent-light);
+}
+
+::selection {
+  background: var(--ds-primary-soft);
+  color: var(--ds-ink);
+}
+
+.kit-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.kit-skip-link {
+  position: absolute;
+  left: var(--ds-space-md);
+  top: calc(var(--ds-space-md) * -4);
+  z-index: var(--ds-z-toast);
+  padding: var(--ds-space-sm) var(--ds-space-md);
+  border-radius: var(--ds-r-control);
+  background: var(--ds-primary);
+  color: var(--ds-ink-on-dark);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top var(--ds-dur-fast) var(--ds-ease-out);
+}
+.kit-skip-link:focus-visible { top: var(--ds-space-md); }
+
+
+/* ============================================================================
+   2. THE STRUCTURE LAYERS. LAYOUT ONLY.
+   No background, no border, no shadow, no radius and no colour is set on
+   .container / .row / .col anywhere in this sheet or in either tier sheet. That
+   is what keeps the skin cleanly separable (verify-dom-structure R5).
+
+   THE TWO LOCAL LAYOUT VALUES are declared here, at the root, so the whole page
+   reads ONE rhythm and ONE gutter. Both are derived from the locked --ds-space-*
+   scale; neither carries colour or identity.
+   ============================================================================ */
+:root {
+  /* THE ONE SECTION RHYTHM. Every body section pays exactly this, top and bottom.
+     Floor --ds-space-lg (40px, the phone interval the feel specimen proved),
+     ceiling --ds-space-2xl (96px, the desktop interval). No section anywhere in
+     this system is allowed a bespoke padding value. */
+  --ed-flow: clamp(var(--ds-space-lg), 6.6vw, var(--ds-space-2xl));
+  /* THE READING GUTTER, paid by .container and re-paid by .col--measure inside a
+     full-bleed band. Floor --ds-space-md, ceiling --ds-space-lg. */
+  --ed-gutter: clamp(var(--ds-space-md), 4vw, var(--ds-space-lg));
+  /* THE ARC SEAM AMPLITUDE. Machined to 34px so the curve reads as a calibrated
+     radius rather than a friendly wave (DIVIDER-PATTERNS #2, the specimen's own
+     cap, carried verbatim). */
+  --ed-seam-h: 34px;
+}
+
+/* --- .container : the max-width wrapper, one per section ------------------- */
+.container {
+  position: relative;
+  z-index: var(--ds-z-raised);
+  max-width: var(--ds-container-max);
+  margin-inline: auto;
+  padding-inline: var(--ed-gutter);
+}
+/* the full-bleed band. The wrapper releases its measure and its gutter; whatever
+   sits inside supplies its own inset (normally a .col--measure). */
+.container--full {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: 0;
+}
+/* a full-bleed band that still wants the reading gutter back */
+.container--full.container--gutter { padding-inline: var(--ed-gutter); }
+/* the wide measure the specimen's hero and clinic row used (a deliberate step
+   past the reading container, never past the viewport) */
+.container--wide { max-width: 1320px; }
+
+/* --- .row : the horizontal group -------------------------------------------
+   A 12-track grid, because span arithmetic stays exact under a gap where a
+   flex-basis percentage does not. Every track is minmax(0, 1fr) so a long word,
+   a wide table or an unshrunk image can never push the row past the viewport.
+   An unmodified .col spans the full 12, so a row with no modifier STACKS. That
+   default is deliberate: the failure mode of a forgotten modifier is a stacked
+   row, never a crushed one. --------------------------------------------------- */
+.row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--ds-space-lg);
+  align-items: start;
+}
+.row--tight    { gap: var(--ds-space-md); }
+.row--loose    { gap: var(--ds-space-xl); }
+.row--center   { align-items: center; }
+.row--end      { align-items: end; }
+.row--baseline { align-items: baseline; }
+.row--stretch  { align-items: stretch; }
+
+/* the equal-division modifiers. Each releases .col from its span-12 default. */
+.row--2up, .row--split, .row--split-rev, .row--aside {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.row--3up { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.row--4up { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* the measure beside a media column that absorbs the remainder. The ratios are
+   the specimen's own, kept verbatim (HERO-COMPOSITIONS #20 three-column hero
+   reduced to its two-column form, SECTION-COMPONENTS #11 media plus cards). */
+.row--split     { grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr); }
+.row--split-rev { grid-template-columns: minmax(0, .72fr) minmax(0, 1.42fr); }
+.row--aside     { grid-template-columns: minmax(0, 1.55fr) minmax(0, .45fr); }
+/* the specimen's THREE-column hero: claim | countable proof | imagery slot */
+.row--claim     { grid-template-columns: minmax(0, 1.42fr) minmax(0, .74fr) minmax(0, 1fr); }
+
+.row--2up > .col,
+.row--3up > .col,
+.row--4up > .col,
+.row--split > .col,
+.row--split-rev > .col,
+.row--aside > .col,
+.row--claim > .col { grid-column: auto; }
+
+/* --- .col : the cell -------------------------------------------------------- */
+.col {
+  grid-column: span 12;
+  min-width: 0;                   /* the no-overflow guarantee, per cell */
+}
+.col--span-1  { grid-column: span 1; }
+.col--span-2  { grid-column: span 2; }
+.col--span-3  { grid-column: span 3; }
+.col--span-4  { grid-column: span 4; }
+.col--span-5  { grid-column: span 5; }
+.col--span-6  { grid-column: span 6; }
+.col--span-7  { grid-column: span 7; }
+.col--span-8  { grid-column: span 8; }
+.col--span-9  { grid-column: span 9; }
+.col--span-10 { grid-column: span 10; }
+.col--span-11 { grid-column: span 11; }
+.col--span-12,
+.col--full    { grid-column: 1 / -1; }
+
+/* THE READING COLUMN. Reproduces the page measure INSIDE a full-bleed band, so a
+   .container--full section still has one reading axis. This is also the column
+   the G-CADENCE render gate measures a section's leading and trailing space
+   against, so it is never given a background, a border or a bespoke padding. */
+.col--measure {
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: var(--ds-container-max);
+  margin-inline: auto;
+  padding-inline: var(--ed-gutter);
+  min-width: 0;
+}
+.col--measure.col--measure-wide { max-width: 1320px; }
+
+/* vertical behaviour inside a cell */
+.col--stretch { align-self: stretch; }
+.col--center  { align-self: center; }
+.col--end     { align-self: end; }
+.col--stack   { display: flex; flex-direction: column; gap: var(--ds-space-md); }
+.col--fill    { display: flex; flex-direction: column; height: 100%; min-width: 0; }
+.col--push    { margin-left: auto; }
+
+/* ROLE modifiers on a split. They carry NO paint, only the reading order the
+   stack law needs (section 11). Always author them as class="col col--copy". */
+.col--copy  { min-width: 0; }
+.col--media { min-width: 0; }
+
+
+/* ============================================================================
+   3. THE SECTION RHYTHM  (G-CADENCE, the hard gate)
+   ----------------------------------------------------------------------------
+   THE LAW. Every <main> section's LEADING space (section padding-box top to the
+   first object in its measure column) EQUALS its TRAILING space, and that space
+   is the SAME on every section down the page. verify-section-rhythm.mjs measures
+   exactly that at 1440 / 768 / 375 and fails closed at a drift over 8px.
+
+   HOW THIS SHEET GUARANTEES IT, in four moves:
+
+   (a) ONE TOKEN. Every section pays padding-block: var(--ed-flow) and nothing
+       else. There is no per-section padding literal anywhere in this sheet and
+       none is permitted in a template.
+
+   (b) NO SIBLING COLLAPSE. The usual "same ground, drop the incoming top
+       padding" trick is DELIBERATELY NOT SHIPPED here. It is a cadence hazard by
+       construction: a collapsed section renders topGap 0 against a full
+       bottomGap, which is precisely detector (A). Elevate pays one uniform
+       interval at every joint. Where two same-ground bands need to fuse, the
+       fusion is carried by the index-ring opener and the flat colour step, not
+       by deleting an interval.
+
+   (c) EDGE-MARGIN ZEROING. The first flow child's top margin and the last flow
+       child's bottom margin are zeroed inside every section's measure column, so
+       the ONLY space at a section's two edges is the symmetric section padding.
+       :first-child / :last-child are layout-position selectors, so this holds for
+       any object a template drops in, including ones this sheet never saw.
+
+   (d) THE display:contents NEUTRALIZER. The mobile reading-order interleave puts
+       a copy wrapper at display:contents so its leaves join the section grid and
+       can be ordered against the media cell. A display:contents wrapper BREAKS
+       margin-collapse through itself, so a reordered LAST leaf's bottom margin
+       stacks ON TOP of the section padding and inflates only the trailing edge.
+       Pinning block margins to 0 on the wrapper AND on its grid-item children at
+       1024 and below kills that leak. The [class*="__copy"] match is the
+       slug-neutral hook: it fires on .kit-split__copy and on any future
+       interleave wrapper without re-authoring this rule.
+   ============================================================================ */
+.section {
+  position: relative;
+  padding-block: var(--ed-flow);        /* (a) the ONE rhythm value, top and bottom */
+  background: var(--ds-bg-surface);
+  color: var(--ds-ink);
+  overflow: hidden;                     /* clips the atmosphere layers in section 4 */
+}
+
+/* THE GROUND CONTRACT. Every <section> carries .section plus EXACTLY ONE ground
+   modifier. The modifier is what the seam rules key on, so a section that omits
+   it simply keeps paper: the degradation is a plain band, never a broken one.
+   SURFACE-PATTERNS #12 solid-fill-block: a band's power is edge-to-edge
+   solidity, so a band carries no shadow of its own. Elevation is spent on cards. */
+.section--paper { background: var(--ds-bg-surface); color: var(--ds-ink); }
+.section--cool  { background: var(--ds-bg-surface-2); color: var(--ds-ink); }
+.section--warm  { background: var(--ds-bg-warm); color: var(--ds-ink); }
+
+/* THE DARK PUNCTUATION BAND paints from --ds-bg-surface too, because the PAIRED
+   flip class .surface-dark has already repointed that token for the whole
+   subtree. Pairing them is what re-skins every descendant instead of only the
+   band, which is the dark-on-dark trap C7 names as recurring.
+   BUDGET: at most ONE .section--dark per page. Measured tone is dark_ratio 0. */
+.section--dark { background: var(--ds-bg-surface); color: var(--ds-ink); }
+
+/* FAIL-SAFE. A --dark band shipped WITHOUT its flip class would paint paper on
+   paper and vanish. This re-lights it from the locked tokens so an unpaired band
+   is never invisible. A safety net, not the authoring form: always ship the pair. */
+.section--dark:not(.surface-dark) { background: var(--ds-primary-deep); color: var(--ds-ink-on-dark); }
+.section--dark:not(.surface-dark) h1,
+.section--dark:not(.surface-dark) h2,
+.section--dark:not(.surface-dark) h3,
+.section--dark:not(.surface-dark) h4 { color: var(--ds-ink-on-dark); }
+
+/* THE LIGHT-TO-LIGHT SEAM. Paper, cool paper and warm paper are optically the
+   same plane, so the boundary is carried by a hue-bearing hairline plus a short
+   graded contact ramp that gives the joint a DIRECTION. Both devices are OFF into
+   and out of the dark band, where the ground step already does the work and a
+   hairline would either vanish or compete. DIVIDER-PATTERNS, shadow drop band. */
+.section--paper + .section--cool,
+.section--paper + .section--warm,
+.section--cool  + .section--paper,
+.section--cool  + .section--warm,
+.section--warm  + .section--paper,
+.section--warm  + .section--cool { border-top: 1px solid var(--ds-hairline); }
+
+.section--paper + .section--cool::before,
+.section--paper + .section--warm::before,
+.section--cool  + .section--paper::before,
+.section--cool  + .section--warm::before,
+.section--warm  + .section--paper::before,
+.section--warm  + .section--cool::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 18px;
+  background-image: linear-gradient(180deg, var(--ds-hairline), transparent);
+  pointer-events: none;
+  z-index: var(--ds-z-base);
+}
+
+/* (c) EDGE-MARGIN ZEROING inside every section's measure column and every leaf
+   cell of the grammar. Position selectors only, so no template can escape it. */
+.section > .container > .row > .col > :first-child,
+.section > .container--full > .row > .col > :first-child,
+.section .col > :first-child,
+.col--measure > :first-child { margin-block-start: 0; }
+
+.section > .container > .row > .col > :last-child,
+.section > .container--full > .row > .col > :last-child,
+.section .col > :last-child,
+.col--measure > :last-child { margin-block-end: 0; }
+
+/* (d) THE display:contents NEUTRALIZER. Pinned on the wrapper itself at every
+   width, and on its grid-item children once the interleave collapses to one
+   column, so NO reordered leaf can leak space at either edge. The grid GAP owns
+   inter-item spacing; the section padding owns the EDGES. */
+[class*="__copy"] { margin-block: 0; }
+@media (max-width: 1024px) {
+  [class*="__copy"] > * { margin-block: 0; }
+}
+
+
+/* ============================================================================
+   4. THE MATERIAL LAYER. The calming tint wash the sector blueprint asks for,
+   applied SPARINGLY per move 8 of the reconciliation: two planes at the same
+   VALUE but a different MATERIAL still separate; two planes at the same value
+   and the same material do not. These are absolutely positioned, contribute no
+   height, and sit below the .container.
+   ============================================================================ */
+.kit-atmos, .kit-mesh, .kit-grain {
+  position: absolute;
+  inset: 0;
+  z-index: var(--ds-z-below);
+  pointer-events: none;
+}
+/* the calming tint wash, promoted from the specimen's hero and systems bands */
+.kit-atmos {
+  background-image:
+    radial-gradient(78% 62% at 88% 4%, var(--ds-primary-soft) 0%, transparent 58%),
+    radial-gradient(52% 46% at 4% 96%, var(--ds-bg-warm) 0%, transparent 62%);
+}
+.kit-atmos--top   { background-image: radial-gradient(66% 54% at 82% 0%, var(--ds-primary-soft) 0%, transparent 62%); }
+.kit-atmos--left  { background-image: radial-gradient(60% 50% at 12% 0%, var(--ds-bg-warm) 0%, transparent 66%); }
+.kit-mesh  { background-image: var(--ds-grid); background-size: var(--ds-grid-size); opacity: var(--ds-opacity-faint); }
+.kit-grain { background-image: var(--ds-grain); opacity: var(--ds-opacity-texture); mix-blend-mode: multiply; }
+
+
+/* ============================================================================
+   5. TYPE. Playfair Display over Montserrat, applied at the sizes stage (1)
+   specified and the feel specimen proved at real sizes.
+   The posture is light-at-large: display weight stays at 500 and the size does
+   the shouting, which reads clinical rather than loud. Sentence case throughout.
+   ============================================================================ */
+h1, h2, h3, h4,
+.kit-d1, .kit-d2, .kit-d3, .kit-d4 {
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  color: var(--ds-ink-heading);
+  margin: 0;
+  text-wrap: balance;
+}
+h1, .kit-d1 { font-size: clamp(38px, 5.4vw, 64px); line-height: 1.04; letter-spacing: -.021em; }
+h2, .kit-d2 { font-size: clamp(28px, 3.6vw, 40px); line-height: 1.12; letter-spacing: -.016em; }
+h3, .kit-d3 { font-size: clamp(19px, 2.2vw, 26px); line-height: 1.2;  letter-spacing: -.01em; }
+h4, .kit-d4 { font-size: 17px; line-height: 1.3; letter-spacing: -.005em; font-weight: 600; }
+
+/* the italic accent line. The ONE place this system runs italic, and it runs in
+   bronze, so a qualifying phrase reads as a change of register rather than a
+   change of size. */
+.kit-accentline {
+  font-family: var(--ds-font-display);
+  font-style: italic;
+  font-size: clamp(21px, 2.4vw, 28px);
+  line-height: 1.24;
+  letter-spacing: -.008em;
+  color: var(--ds-accent-deep);
+  margin: 0;
+}
+.surface-dark .kit-accentline { color: var(--ds-accent-light); }
+
+.kit-lede { font-size: clamp(17px, 1.8vw, 19px); line-height: 1.62; color: var(--ds-ink); margin: var(--ds-space-md) 0 0; }
+.kit-body { font-size: 16px; line-height: 1.72; color: var(--ds-ink); margin: var(--ds-space-sm) 0 0; }
+.kit-meta { font-size: 13px; line-height: 1.55; color: var(--ds-ink-soft); margin: var(--ds-space-sm) 0 0; }
+.kit-note { font-size: 13.5px; line-height: 1.6; color: var(--ds-ink-soft); margin: var(--ds-space-sm) 0 0; }
+.kit-micro {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ds-accent-deep);
+  margin: 0;
+}
+.surface-dark .kit-micro { color: var(--ds-accent-light); }
+.kit-strong { font-weight: 600; color: var(--ds-ink); }
+/* tabular numerals. Put this on any element carrying a figure, a schedule, a
+   phone number or a price, so digits never jitter between rows. */
+.kit-tab { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+.kit-mono { font-family: var(--ds-font-mono); }
+
+/* THE MEASURE. One reading column, pinned to one left axis across every band. It
+   does not widen for a wider section and it does not re-centre. Put .readw on the
+   TEXT element, never on a wrapper: a ch unit resolves against the element's OWN
+   font, so on a body-font wrapper governing display text it computes two to three
+   times too wide. Compose it, e.g. class="kit-lede readw--tight". */
+.readw        { max-width: 64ch; }
+.readw--wide  { max-width: 78ch; }
+.readw--tight { max-width: 56ch; }
+.readw--center { margin-inline: auto; }
+
+/* THE EYEBROW. The small structural label above a heading. It is a TEXT element
+   in flow and it never floats over anything. */
+.kit-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ds-accent-deep);
+  margin: 0;
+}
+.surface-dark .kit-eyebrow { color: var(--ds-accent-light); }
+.kit-eyebrow--quiet { color: var(--ds-ink-soft); }
+
+/* the section head block, two treatments so the rhythm is composed, not stamped */
+.kit-head        { margin-bottom: clamp(24px, 3vw, 36px); }
+.kit-head--tight { margin-bottom: var(--ds-space-md); }
+
+/* LINKS. --ds-primary is the navy doing ink work and reads clearly on every light
+   ground; on the dark band it is repainted, because navy on navy is not a link. */
+a { color: var(--ds-primary); text-decoration: underline; text-underline-offset: .18em; text-decoration-thickness: 1px; transition: color var(--ds-dur-fast) var(--ds-ease-out); }
+a:hover { color: var(--ds-primary-deep); text-decoration-thickness: 2px; }
+.surface-dark a { color: var(--ds-accent-light); }
+.surface-dark a:hover { color: var(--ds-accent); }
+.kit-link-plain { text-decoration: none; }
+.kit-link-plain:hover { text-decoration: underline; }
+
+/* TEXT-OVERLAP LAW. A badge or flag that sits INSIDE a content body is IN-FLOW
+   and stacks above the heading with spacing; it is NEVER absolutely positioned
+   over flowing text. The ONE valid absolute case is a badge painted over a photo
+   frame, where no flowing text sits beneath it. Enforced at render by
+   verify-no-text-overlap.mjs (bounding-box intersection at 375 AND desktop). */
+.kit-flag, [class*="__flag"] {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  max-width: 100%;
+  margin: 0 0 var(--ds-space-sm);
+}
+[class*="__mask"] > .kit-flag,
+[class*="__mask"] > [class*="__flag"] {
+  position: absolute;
+  left: var(--ds-space-sm);
+  top: var(--ds-space-sm);
+  margin: 0;
+  z-index: var(--ds-z-raised);
+}
+
+
+/* ============================================================================
+   6. THE SIGNATURE MOTIF: THE INDEX RING, AND ITS UNROLLED RULE.
+   ----------------------------------------------------------------------------
+   Stage (1) locked the index ring as the brand's mark of position: a graduated
+   track with a single bronze index marking the thing being introduced. Unrolled,
+   it becomes the rule that OPENS EVERY SECTION: eleven minor graduations across a
+   hairline, a bronze index at the start, then the section number and the eyebrow.
+
+   It is built from tokens alone, so it re-inks itself on the dark surface with no
+   override. It is also the boundary device that carries every flat colour step in
+   this system, which is why the seam budget is one arc and one step: the arc is
+   spent once, and every other joint is opened by this rule instead.
+   ============================================================================ */
+.kit-open { margin-bottom: clamp(20px, 3vw, 30px); }
+
+/* the unrolled graduated rule */
+.kit-open__rule {
+  position: relative;
+  height: 14px;
+  margin-bottom: var(--ds-space-sm);
+}
+.kit-open__rule::before {              /* the base hairline, full width */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--ds-primary);
+  opacity: .30;
+}
+.kit-open__rule::after {               /* the eleven minor graduations */
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 7px;
+  background-image: repeating-linear-gradient(90deg, var(--ds-primary) 0 1px, transparent 1px calc(100% / 12));
+  opacity: .42;
+}
+.kit-open__idx {                       /* the single bronze index at the start */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  height: 14px;
+  background: var(--ds-accent);
+}
+/* the head: the ordinal beside the eyebrow (and optionally a heading beneath it) */
+.kit-open__head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px var(--ds-space-md);
+  align-items: baseline;
+}
+.kit-open__no {
+  font-family: var(--ds-font-mono);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--ds-accent-deep);
+}
+.surface-dark .kit-open__no { color: var(--ds-accent-light); }
+.kit-open__head h2,
+.kit-open__head h3,
+.kit-open__head .kit-d2 { margin-top: var(--ds-space-xs); }
+
+/* THE RING ITSELF, drawn as inline SVG so it flips with the surface. Author it
+   as <svg class="kit-ring" viewBox="0 0 100 100" aria-hidden="true"> with a
+   .kit-ring__track circle, optional .kit-ring__tick lines and one
+   .kit-ring__index line. The tick count is a scale decision: eleven at hero size,
+   three at column size, none at card size. */
+.kit-ring { display: block; flex: 0 0 auto; }
+.kit-ring__track { fill: none; stroke: var(--ds-primary); opacity: .38; }
+.kit-ring__tick  { fill: none; stroke: var(--ds-primary); opacity: .5; }
+.kit-ring__index { stroke: var(--ds-accent); }
+
+
+/* ============================================================================
+   7. THE A2 CIRCLE-UP ARC SEAM  (DIVIDER-PATTERNS #2, the sector's defining seam)
+   ----------------------------------------------------------------------------
+   Filled in the DESTINATION ground so the band below RISES into the band above
+   instead of cutting it. Amplitude is capped at --ed-seam-h (34px), which is what
+   keeps it a machined radius rather than a friendly wave, and one bronze hairline
+   rides the curve so the boundary stays legible in a precision system.
+
+   BUDGET: one arc per page. Every other boundary is a flat step opened by the
+   index rule (section 6). The seam sits as the LAST child of the section it
+   leaves, with a -1px bottom margin so no sub-pixel gap can open under it.
+
+   Author it as:
+     <svg class="kit-seam" viewBox="0 0 1200 34" preserveAspectRatio="none" aria-hidden="true">
+       <path class="kit-seam__fill" d="M0,34 C320,-4 880,-4 1200,34 Z"/>
+       <path class="kit-seam__edge" d="M0,34 C320,-4 880,-4 1200,34"/>
+     </svg>
+   ============================================================================ */
+.kit-seam {
+  display: block;
+  width: 100%;
+  height: var(--ed-seam-h);
+  margin-bottom: -1px;
+}
+.kit-seam__fill { fill: var(--ds-primary-deep); }        /* the dark destination */
+.kit-seam__edge { fill: none; stroke: var(--ds-accent); stroke-opacity: .55; stroke-width: 1; }
+/* the variant that rises into a LIGHT destination (cool paper), for a dark band
+   returning to light where a flat step is not wanted */
+.kit-seam--light .kit-seam__fill { fill: var(--ds-bg-surface-2); }
+.kit-seam--paper .kit-seam__fill { fill: var(--ds-bg-surface); }
+/* flipped, for a seam that hangs from the TOP of the destination band */
+.kit-seam--flip { transform: scaleY(-1); margin-bottom: 0; margin-top: -1px; }
+
+
+/* ============================================================================
+   8. THE HERO. Vertical-rhythm standard, promoted with the specimen's own
+   three-column shape (HERO-COMPOSITIONS #20): the claim, the countable proof and
+   the circle-masked imagery slot each get their OWN column, so the lead lands
+   BESIDE its evidence rather than merely above it.
+
+   THE RULES (inherit these, do not re-author per page):
+     1. The fixed header is cleared ONCE by main{padding-top:<header>} in the
+        chrome. The hero's own top padding is INTERIOR rhythm only and must NOT
+        re-reserve header height, which would double-count into a dead zone.
+     2. Hero interior padding is --ed-flow, the SAME value every other section
+        pays. Never a bespoke clamp with a big px floor.
+     3. THIS HERO NEVER USES A TALL CENTRED BOX. It declares no min-height and no
+        vertical centring at all, so it is content-height and top-aligned at EVERY
+        width. That is the strongest form of the mobile rule rather than a
+        breakpoint carve-out: the dead zone between header and eyebrow cannot open
+        because there is no tall box for short content to float inside. It is also
+        the honest reading of the measured tone: a restrained, light-dominant
+        brand does not open on a viewport-filling stage.
+   The hero is HERO_EXEMPT in the G-CADENCE gate, but it pays the same interval
+   anyway, so the page reads one rhythm from the very top.
+   ============================================================================ */
+.kit-hero {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--ed-flow);
+  background-color: var(--ds-bg-surface);
+  background-image:
+    radial-gradient(78% 62% at 88% 4%, var(--ds-primary-soft) 0%, transparent 58%),
+    radial-gradient(52% 46% at 4% 96%, var(--ds-bg-warm) 0%, transparent 62%),
+    var(--ds-grid);
+  background-size: auto, auto, var(--ds-grid-size);
+  border-top: 1px solid var(--ds-hairline);
+}
+.kit-hero > * { position: relative; z-index: var(--ds-z-raised); }
+/* the hero imagery slot is held slightly low so it breaks the top line of the
+   grid. Intentional asymmetry, _MODERN-WOW-SPEC. */
+.kit-hero__media { margin-top: clamp(0px, 2.4vw, 34px); }
+/* the plainly-stated truth block. The self-pay statement, the consent note, any
+   fact the brand states early rather than burying. A bronze left rule on warm
+   paper, never a warning colour: it is a fact, not an alarm. */
+.kit-truth {
+  margin-top: var(--ds-space-lg);
+  padding: 14px 18px;
+  border-left: 2px solid var(--ds-accent);
+  background: var(--ds-bg-warm);
+  border-radius: 0 var(--ds-r-control) var(--ds-r-control) 0;
+  box-shadow: var(--ds-shadow-rest);
+}
+.kit-truth__k {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ds-accent-deep);
+  margin-bottom: 4px;
+}
+.kit-truth p { font-size: 13.5px; line-height: 1.6; color: var(--ds-ink); }
+.surface-dark .kit-truth__k { color: var(--ds-accent-light); }
+
+
+/* ============================================================================
+   9. OBJECT SKINS. Every class below is an OBJECT class and belongs INSIDE a
+   .col, never on one.
+   ============================================================================ */
+
+/* --- 9.1 BUTTONS. Carried verbatim from the locked action lockup. The primary is
+   a SOLID navy control with a bronze tick that extends on hover; the motion is one
+   short lift, never an arrow translate. Radius is --ds-r-control (2px), because
+   the pill role is rationed to the status marker alone.
+   No button in this system uses a gradient fill, so the anti-aliased-corner
+   backdrop-bleed class of defect cannot occur; each variant still declares a
+   solid background-color and a real border-color. --------------------------- */
+.kit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--ds-font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  line-height: 1;
+  min-height: 48px;                 /* tap-target floor, holds at 375 */
+  padding: 14px 26px;
+  border-radius: var(--ds-r-control);
+  border: 1px solid transparent;
+  background-color: transparent;
+  background-clip: padding-box;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--ds-dur-fast) var(--ds-ease-out),
+              color var(--ds-dur-fast) var(--ds-ease-out),
+              border-color var(--ds-dur-fast) var(--ds-ease-out),
+              box-shadow var(--ds-dur-fast) var(--ds-ease-out),
+              transform var(--ds-dur-fast) var(--ds-ease-out);
+}
+.kit-btn:hover { text-decoration: none; }
+
+.kit-btn--primary {
+  background-color: var(--ds-primary);
+  border-color: var(--ds-primary);
+  color: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-rest);
+}
+/* the bronze tick. It extends on hover: the one gesture that says "proceed"
+   without moving the label. */
+.kit-btn--primary::after {
+  content: "";
+  width: 14px;
+  height: 1px;
+  flex: 0 0 auto;
+  background: var(--ds-accent-light);
+  transition: width var(--ds-dur-slow) var(--ds-ease-out);
+}
+.kit-btn--primary:hover {
+  background-color: var(--ds-primary-deep);
+  border-color: var(--ds-primary-deep);
+  box-shadow: var(--ds-shadow-card);
+  transform: translateY(-1px);
+}
+.kit-btn--primary:hover::after { width: 22px; }
+/* On the dark band the navy fill would sit on navy, so the primary takes the
+   flip's gold, which carries the deep navy as ink. */
+/* INK TOKEN CORRECTED 2026-08-24. The rule above says the primary "carries the deep
+   navy as ink", and that was the intent, but --ds-primary-deep is one of the tokens the
+   .surface-dark block FLIPS: inside a dark surface it resolves to #FFFFFF, not to the
+   deep navy #16273A it names in the light scope. So the button rendered WHITE ink on the
+   flipped gold #C69E4C, measured at 2.5:1 against a 4.5 threshold — a real WCAG AA
+   failure on the site's primary call to action, on all 49 pages.
+   It went unseen until now for a mechanical reason worth recording: elevatedental-chrome.css
+   was never linked in the built pages, so the whole chrome, this button included, rendered
+   unstyled and the contrast gate had nothing to measure. Linking the sheet exposed it.
+   --ds-bg-surface is the token that IS the deep navy #16273A inside .surface-dark, so it
+   delivers the ink the comment always intended. Measured after the change: 6.07:1. */
+.surface-dark .kit-btn--primary {
+  background-color: var(--ds-accent);
+  border-color: var(--ds-accent);
+  color: var(--ds-bg-surface);
+}
+.surface-dark .kit-btn--primary::after { background: var(--ds-bg-surface); }
+.surface-dark .kit-btn--primary:hover {
+  background-color: var(--ds-accent-light);
+  border-color: var(--ds-accent-light);
+}
+
+.kit-btn--secondary {
+  background-color: transparent;
+  border-color: var(--ds-hairline);
+  color: var(--ds-primary);
+}
+.kit-btn--secondary:hover {
+  background-color: var(--ds-primary-soft);
+  border-color: var(--ds-primary);
+  color: var(--ds-primary);
+}
+.surface-dark .kit-btn--secondary { color: var(--ds-ink); border-color: var(--ds-line); }
+.surface-dark .kit-btn--secondary:hover { background-color: var(--ds-bg-surface-2); border-color: var(--ds-accent); color: var(--ds-accent-light); }
+
+/* the ghost, for a secondary route inside a content-bearing rail. It is a ruled
+   text link with a real tap target, never a third button weight. */
+.kit-btn--ghost {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--ds-accent-deep);
+  padding-inline: 0;
+  min-height: 44px;
+}
+.kit-btn--ghost span { border-bottom: 1px solid var(--ds-accent); padding-bottom: 3px; transition: border-color var(--ds-dur-fast) var(--ds-ease-out); }
+.kit-btn--ghost:hover span { border-bottom-color: var(--ds-accent-deep); }
+.surface-dark .kit-btn--ghost { color: var(--ds-accent-light); }
+.surface-dark .kit-btn--ghost span { border-bottom-color: var(--ds-accent-light); }
+
+/* DISABLED. Opacity alone is never a state here, so the cursor and the pointer
+   events change with it. */
+.kit-btn:disabled,
+.kit-btn[aria-disabled="true"] {
+  opacity: var(--ds-opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+.kit-btn--wide { width: 100%; }
+
+.kit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: var(--ds-space-lg);
+}
+.kit-actions--tight { margin-top: var(--ds-space-md); }
+
+/* --- 9.2 TAGS, THE DISCIPLINE ROW, AND THE STATUS MARKER --------------------
+   The nine disciplines are NAMED rather than asserted, so the tag is a readable
+   label at 11.5px, not a decorative chip. The status marker is the ONE place the
+   pill radius is spent, which is what keeps it meaningful. ------------------ */
+.kit-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: var(--ds-space-sm); }
+.kit-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  line-height: 1.4;
+  padding: 7px 12px;
+  border-radius: var(--ds-r-control);
+  border: 1px solid var(--ds-hairline);
+  background: var(--ds-bg-surface);
+  color: var(--ds-primary);
+  text-decoration: none;
+  transition: border-color var(--ds-dur-fast) var(--ds-ease-out),
+              background-color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.kit-tag:hover { border-color: var(--ds-accent); background: var(--ds-bg-warm); color: var(--ds-primary); }
+.kit-tag--accent { color: var(--ds-accent-deep); background: var(--ds-bg-warm); }
+.surface-dark .kit-tag { background: var(--ds-bg-surface-2); color: var(--ds-ink); border-color: var(--ds-line); }
+
+/* the status marker. Signature green, pill radius, spent once per band. */
+.kit-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  margin-top: var(--ds-space-md);
+  padding: 6px 14px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--ds-signature);
+  border: 1px solid var(--ds-hairline);
+  background: var(--ds-bg-surface);
+  border-radius: var(--ds-r-pill);
+}
+.kit-status__dot { display: block; width: 7px; height: 7px; flex: 0 0 auto; border-radius: var(--ds-r-pill); background: var(--ds-signature); }
+.surface-dark .kit-status { background: var(--ds-bg-surface-2); border-color: var(--ds-line); }
+
+/* --- 9.3 THE CARD. CARD-VARIATIONS #2, a light card with an embedded
+   mini-visual, raised off cool paper by THREE stacked edge events (a hairline, a
+   one-pixel inset top highlight and a graded contact shadow) rather than by a
+   background value, because on a white-dominant page the light card is the only
+   variant that separates without inverting.
+
+   THE BRONZE INDEX bar across the card top is the index-ring motif at card scale.
+   It is drawn as a pseudo-element, so it costs no markup and no node in the
+   grammar.
+
+   THE TWO TIER SHEETS OVERRIDE THIS OBJECT AND NOTHING ELSE. Everything a tier
+   changes (rest elevation, hover travel, rail behaviour, padding, title step,
+   visual height) is declared here first, in full, so a tier is always a short
+   additive adjustment and never a restatement. ------------------------------ */
+.kit-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  padding: 20px 20px 18px;
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  background: var(--ds-bg-surface);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+  transition: transform var(--ds-dur-fast) var(--ds-ease-out),
+              box-shadow var(--ds-dur-fast) var(--ds-ease-out),
+              border-color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.kit-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 38px;
+  background: var(--ds-accent);
+  z-index: var(--ds-z-raised);
+  pointer-events: none;
+  transition: width var(--ds-dur-slow) var(--ds-ease-out);
+}
+.kit-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--ds-shadow-lift), var(--ds-inset-hi);
+  border-color: var(--ds-line);
+}
+.kit-card:hover::before { width: 100%; }
+/* the quiet variant. A marquee page still needs a card that says nothing. */
+.kit-card--flat { box-shadow: none; }
+.kit-card--flat::before { display: none; }
+.kit-card--flat:hover { transform: none; box-shadow: var(--ds-shadow-rest), var(--ds-inset-hi); }
+.kit-card--tint { background: var(--ds-bg-surface-2); }
+.kit-card--pad  { padding: var(--ds-space-lg); }
+/* a card that is a whole link. The lift is inherited; only the ink is re-pinned. */
+a.kit-card { text-decoration: none; color: var(--ds-ink); }
+
+.kit-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: var(--ds-space-md);
+}
+.kit-card__label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--ds-ink-soft); }
+/* the embedded mini-visual: the circle-masked clinic or clinician photograph, at
+   card scale. The width is a tier decision; the mask is not. */
+.kit-card__media { width: 96px; margin-bottom: var(--ds-space-md); }
+.kit-card__title { font-family: var(--ds-font-display); font-weight: 500; font-size: 21px; line-height: 1.2; letter-spacing: -.01em; color: var(--ds-ink-heading); margin: 0 0 var(--ds-space-xs); }
+.kit-card__body  { font-size: 14px; line-height: 1.6; color: var(--ds-ink-soft); margin: 0; }
+.kit-card__addr  { font-size: 12.5px; line-height: 1.6; color: var(--ds-ink-soft); margin: 0 0 14px; }
+
+/* the ruled schedule block. Four clinics keep four genuinely different weeks, and
+   that belongs on the face of the card rather than behind a toggle. margin-top
+   auto pins it to the bottom, so a row of cards keeps one baseline for its rails
+   whatever the body length. */
+.kit-card__hours {
+  margin: auto 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--ds-hairline);
+  display: grid;
+  gap: 5px;
+  font-variant-numeric: tabular-nums;
+}
+.kit-card__hours > div { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; line-height: 1.5; }
+.kit-card__hours dt { color: var(--ds-ink-soft); }
+.kit-card__hours dd { margin: 0; color: var(--ds-ink-heading); font-weight: 600; }
+.kit-card__hours .is-closed dd { color: var(--ds-accent-deep); }
+
+.kit-card__foot {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ds-hairline);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.kit-card__tel  { font-family: var(--ds-font-mono); font-size: 11.5px; color: var(--ds-ink-heading); font-variant-numeric: tabular-nums; }
+.kit-card__unit { font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--ds-accent-deep); }
+.surface-dark .kit-card__unit { color: var(--ds-accent-light); }
+
+/* --- 9.4 THE IMAGERY SLOT. The sector blueprint requires circle-masked and
+   large-radius media (moves 4 and the CWB-068 imagery floor). The brand's radius
+   roles are CONSTRAINED to 2px, 4px and pill, and pill is rationed to the status
+   marker, so the round geometry is delivered as a clip MASK and an arch MASK
+   rather than by inventing a radius token. What is locked here is the mask, the
+   frame, the caption rail and the hover drift.
+
+   G-MEDIA-TRACK, THE MANDATORY WIDTH ANCHOR. A media frame that is a CELL of a
+   2-column grid and STRETCHES to its track (align-self:stretch or height:100%)
+   WHILE declaring an aspect-ratio or a non-zero min-height will otherwise have
+   its width COMPUTED FROM ITS HEIGHT, and the media balloons wider than its
+   track. Every frame below therefore declares BOTH width:100% AND min-width:0,
+   at every breakpoint, including inside the reflow ladder. This defect recurred
+   three times on a previous build; the anchors below are not optional and must
+   not be removed from any rule that keeps a ratio or a min-height.
+   ------------------------------------------------------------------------- */
+.kit-slot {
+  margin: 0;
+  position: relative;
+  width: 100%;                 /* ANCHOR */
+  min-width: 0;                /* ANCHOR */
+}
+.kit-slot__mask {
+  position: relative;
+  overflow: hidden;
+  width: 100%;                 /* ANCHOR */
+  min-width: 0;                /* ANCHOR */
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+}
+/* the circle mask at 1:1. Used in the hero, on every clinic card and on every
+   clinician portrait. ANCHOR retained beside the ratio. */
+.kit-slot__mask--circle {
+  aspect-ratio: 1 / 1;
+  clip-path: circle(50% at 50% 50%);
+  width: 100%;                 /* ANCHOR beside aspect-ratio */
+  min-width: 0;                /* ANCHOR beside aspect-ratio */
+}
+/* the arch mask at column height. This is the circle-up geometry applied to
+   media, so the round language comes from a mask and not from a new radius
+   token. It is the exact G-MEDIA-TRACK risk pattern (stretch plus min-height),
+   so it carries both anchors. */
+.kit-slot__mask--arch {
+  height: 100%;
+  min-height: 240px;
+  width: 100%;                 /* ANCHOR beside height:100% + min-height */
+  min-width: 0;                /* ANCHOR beside height:100% + min-height */
+  border-radius: 50% 50% var(--ds-r-surface) var(--ds-r-surface);
+}
+/* a plain framed well, for media that wants no round geometry at all */
+.kit-slot__mask--frame {
+  aspect-ratio: 4 / 3;
+  width: 100%;                 /* ANCHOR */
+  min-width: 0;                /* ANCHOR */
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+}
+
+/* the real photograph. Absolute inside the mask so the mask geometry owns the
+   box and the file never dictates it. */
+.kit-slot__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;                 /* ANCHOR */
+  min-width: 0;                /* ANCHOR */
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--ds-dur-slow) var(--ds-ease-out);
+}
+.kit-slot:hover .kit-slot__img { transform: scale(1.04); }
+
+/* THE TOKEN-BUILT SURFACE, for a slot whose photograph has not landed yet, and
+   for the diagram plates that carry no photograph by design. It is a real
+   material (tint wash over the token grid over a directional ground), never a
+   grey box: the sector reconciliation forbids grey boxes anywhere a photo
+   belongs, and this is what a slot renders as until its file arrives. */
+.kit-slot__art {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ds-bg-surface-2);
+  background-image:
+    radial-gradient(115% 92% at 32% 16%, var(--ds-primary-soft) 0%, transparent 64%),
+    var(--ds-grid),
+    linear-gradient(158deg, var(--ds-bg-surface) 0%, var(--ds-primary-soft) 100%);
+  background-size: auto, var(--ds-grid-size), auto;
+  transition: transform var(--ds-dur-slow) var(--ds-ease-out);
+}
+.kit-slot:hover .kit-slot__art { transform: scale(1.04); }
+.surface-dark .kit-slot__art {
+  background-color: var(--ds-bg-surface-2);
+  background-image:
+    radial-gradient(115% 92% at 32% 16%, var(--ds-primary-soft) 0%, transparent 64%),
+    var(--ds-grid),
+    linear-gradient(158deg, var(--ds-bg-warm) 0%, var(--ds-primary-soft) 100%);
+}
+
+/* the caption rail. It names what the frame holds, in the brand's mono, and it
+   sits UNDER the mask so no type is ever set on imagery (banned by C7). */
+.kit-slot__cap {
+  margin-top: 10px;
+  display: flex;
+  gap: var(--ds-space-xs);
+  align-items: baseline;
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px;
+  line-height: 1.55;
+  letter-spacing: .02em;
+  color: var(--ds-ink-soft);
+}
+.kit-slot__cap b { color: var(--ds-accent-deep); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; }
+.surface-dark .kit-slot__cap b { color: var(--ds-accent-light); }
+
+/* --- 9.5 THE CLINICIAN PORTRAIT. Move 3 of the reconciliation: the named team
+   with faces is the lead wedge, and 60 portrait files exist. It is the circle
+   mask at person scale with a ruled name block underneath. ------------------ */
+.kit-person { display: flex; flex-direction: column; min-width: 0; }
+.kit-person__media { width: 100%; max-width: 168px; min-width: 0; margin-bottom: var(--ds-space-sm); }
+.kit-person__name  { font-family: var(--ds-font-display); font-weight: 500; font-size: 18px; line-height: 1.25; color: var(--ds-ink-heading); margin: 0; }
+.kit-person__role  { font-size: 12px; font-weight: 600; letter-spacing: .06em; color: var(--ds-accent-deep); margin: 4px 0 0; }
+.kit-person__disc  { font-size: 13px; line-height: 1.55; color: var(--ds-ink-soft); margin: var(--ds-space-xs) 0 0; }
+.kit-person__where { display: inline-flex; align-items: center; gap: var(--ds-space-xs); margin-top: var(--ds-space-xs); font-size: 11px; color: var(--ds-ink-soft); }
+.surface-dark .kit-person__role { color: var(--ds-accent-light); }
+
+/* --- 9.6 THE NAMED-SYSTEMS MATRIX. SECTION-COMPONENTS #11 applied to equipment:
+   a hairline-gapped grid of named units where the gap IS the rule, so eight names
+   read as one instrument panel rather than eight boxes. Each unit carries the
+   index mark that extends on hover. ---------------------------------------- */
+.kit-sys {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--ds-hairline);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  overflow: hidden;
+  box-shadow: var(--ds-shadow-card);
+}
+.kit-sys--3up { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.kit-sys__unit {
+  position: relative;
+  min-width: 0;
+  background: var(--ds-bg-surface-2);
+  padding: 18px 20px 20px;
+  transition: background-color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.kit-sys__unit:hover { background: var(--ds-bg-warm); }
+.kit-sys__unit::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  width: 14px;
+  height: 2px;
+  background: var(--ds-accent);
+  transition: width var(--ds-dur-slow) var(--ds-ease-out);
+}
+.kit-sys__unit:hover::before { width: calc(100% - 40px); }
+.kit-sys__no    { display: block; font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .1em; color: var(--ds-accent-deep); margin-bottom: 6px; }
+.kit-sys__name  { font-family: var(--ds-font-display); font-weight: 500; font-size: 19px; line-height: 1.2; letter-spacing: -.008em; color: var(--ds-ink-heading); margin: 0 0 6px; }
+.kit-sys__note  { font-size: 13px; line-height: 1.6; color: var(--ds-ink-soft); margin: 0; }
+.kit-sys__where {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-xs);
+  margin-top: 10px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  color: var(--ds-ink-heading);
+  border: 1px solid var(--ds-hairline);
+  background: var(--ds-primary-soft);
+  border-radius: var(--ds-r-control);
+}
+.kit-sys__where i { display: block; width: 6px; height: 6px; flex: 0 0 auto; border-radius: var(--ds-r-pill); background: var(--ds-signature); }
+.surface-dark .kit-sys__no { color: var(--ds-accent-light); }
+.surface-dark .kit-sys__where { color: var(--ds-ink-on-dark); }
+
+/* --- 9.7 THE MEDIA SPLIT. The band shape the specimen proved: a media column
+   that STRETCHES against a real grid of content, so the two columns end level and
+   no dead column of space opens beside a short capped image.
+
+   G-MEDIA-TRACK applies in full here. The media cell stretches to the track AND
+   its arch mask carries a min-height, which is exactly the pattern that computes
+   width from height. Both anchors are declared on the cell and re-declared in
+   every responsive override below. -------------------------------------------- */
+.kit-split {
+  display: grid;
+  grid-template-columns: minmax(0, .72fr) minmax(0, 1.42fr);
+  gap: clamp(28px, 4vw, 52px);
+  align-items: stretch;
+}
+.kit-split--rev { grid-template-columns: minmax(0, 1.42fr) minmax(0, .72fr); }
+.kit-split--even { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kit-split__media {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  width: 100%;                 /* ANCHOR: fits the track, never computed from height */
+  min-width: 0;                /* ANCHOR */
+  min-height: 0;
+}
+.kit-split__media .kit-slot { display: flex; flex-direction: column; height: 100%; width: 100%; min-width: 0; }
+.kit-split__copy { min-width: 0; }
+
+/* --- 9.8 THE MEDIA-AND-CARDS BAND. The compact variant of the split: a stretched
+   media column beside a 2x2 card grid rather than a 1xN vertical stack, so a
+   short capped image is never paired against a tall column. Same anchors. ---- */
+.kit-mediagrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 44px);
+  align-items: stretch;
+}
+.kit-mediagrid__media {
+  position: relative;
+  margin: 0;
+  align-self: stretch;
+  width: 100%;                 /* ANCHOR */
+  min-width: 0;                /* ANCHOR */
+  height: 100%;
+  min-height: 0;
+}
+.kit-mediagrid__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+  align-content: stretch;
+}
+/* the cards fill their cell so the 2x2 reads as one tidy block. min-width:0 is the
+   per-cell no-overflow guarantee: a grid item's default min-width is auto, so a
+   long unbroken word or a wide child would otherwise push the track wider than
+   its share. These are cards, not ratio'd media frames, so they take the
+   min-width anchor without the width one. */
+.kit-mediagrid__cards > * { height: 100%; min-width: 0; }
+
+/* --- 9.9 THE COUNTABLE PROOF AND THE STAT BAND  (G-STAT, the hard gate)
+   ----------------------------------------------------------------------------
+   TRUST-STATS-SECTIONS #4 and the specimen's countable-proof column. The figures
+   sit in OPEN SPACE separated by HAIRLINES; nothing here is boxed, because a box
+   drawn around a fact is a tile, and a tile is what a credibility vertical is
+   banned from shipping.
+
+   THE SPEC: oversized DISPLAY numerals, weight 300 (light-at-large), tight
+   tracking, tabular-nums so digits never jitter between rows, a generous gap, and
+   an accent affix at about .42em.
+
+   THE FAILURE THIS STOPS: a stat row built of small figures that SHRINK and WRAP
+   to tiny text on a phone. verify-stat-treatment.mjs renders at 375 and FAILS a
+   numeral computing under 34px or wrapping to two lines. Every numeral rule below
+   therefore floors at 40px or higher and stays on ONE line at every width; the
+   band re-flows by STACKING, never by shrinking the figure.
+   The class names are deliberate: the gate detects a numeral by the
+   (stat|metric|kpi|scale|band)...__n signature and a container by `statband`, so
+   .kit-statband / .kit-stat__n are what make these figures VISIBLE to the gate
+   rather than silently unchecked. ------------------------------------------- */
+.kit-statband {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0;
+  margin: 0;
+}
+.kit-stat { display: flex; flex-direction: column; flex: 1 1 0; min-width: 0; }
+/* HAIRLINE DIVIDERS between figures, the only chrome the band gets */
+.kit-stat + .kit-stat {
+  border-left: 1px solid var(--ds-hairline);
+  padding-left: clamp(18px, 2.4vw, 36px);
+  margin-left: clamp(18px, 2.4vw, 36px);
+}
+.kit-stat__n {
+  font-family: var(--ds-font-display);
+  font-weight: 300;                       /* light-at-large */
+  font-size: clamp(44px, 5vw, 72px);
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: var(--ds-ink-heading);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  /* the figure and its affix stay ONE big line. inline-block makes the box height
+     track line-height rather than the display font's tall content box, so the
+     gate's height-over-line-height ratio reads one line at 375; nowrap guards the
+     affix from breaking off. */
+  display: inline-block;
+  white-space: nowrap;
+  margin: 0;
+}
+.kit-stat__n small,
+.kit-stat__n .pre,
+.kit-stat__n .suf {
+  font-size: .42em;
+  color: var(--ds-accent-deep);
+  letter-spacing: 0;
+  font-weight: 400;
+  margin-left: .06em;
+}
+.kit-stat__n .pre { margin: 0 .06em 0 0; }
+.kit-stat__l {
+  display: block;
+  margin-top: 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+}
+.kit-stat__sub { margin-top: 4px; font-size: 13px; line-height: 1.4; color: var(--ds-ink-soft); }
+.surface-dark .kit-stat__n small,
+.surface-dark .kit-stat__n .pre,
+.surface-dark .kit-stat__n .suf { color: var(--ds-accent-light); }
+
+/* THE COUNTABLE-PROOF STACK. The specimen's hero column: the same figures run
+   VERTICALLY under a 2px navy rule, each row bearing a short bronze tick, so the
+   claim lands beside its evidence. It is the same stat atom, so it inherits the
+   same mobile floor and the same gate visibility. */
+.kit-statband--stack {
+  display: block;
+  border-top: 2px solid var(--ds-primary);
+  padding-top: var(--ds-space-sm);
+}
+.kit-statband--stack .kit-stat {
+  position: relative;
+  display: block;
+  padding: 14px 0 14px 16px;
+  border-bottom: 1px solid var(--ds-hairline);
+}
+.kit-statband--stack .kit-stat:last-child { border-bottom: 0; }
+.kit-statband--stack .kit-stat + .kit-stat { border-left: 0; padding-left: 16px; margin-left: 0; }
+.kit-statband--stack .kit-stat::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 22px;
+  width: 6px;
+  height: 1px;
+  background: var(--ds-accent);
+}
+.kit-statband--stack .kit-stat__n { font-size: clamp(40px, 4.4vw, 52px); }
+.kit-statband--stack .kit-stat__l { margin-top: 6px; }
+/* the dedicated anchor band goes bigger: there the figures ARE the message */
+.kit-statband--big .kit-stat__n { font-size: clamp(46px, 5.6vw, 84px); }
+
+/* --- 9.10 THE INLINE CTA RAIL  (Collision A, binding)
+   The body authors ZERO closing CTA bands. The single closing band on any page is
+   the chrome's, inherited. A mid-page appointment CTA exists ONLY as this: a
+   ruled rail folded INSIDE a content-bearing section, carrying a sentence of real
+   context beside its actions. It is never a standalone heading-plus-button band,
+   which is what G-CTA1 counts. ---------------------------------------------- */
+.kit-inline {
+  margin-top: var(--ds-space-lg);
+  padding-top: var(--ds-space-md);
+  border-top: 1px solid var(--ds-hairline);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px var(--ds-space-md);
+  align-items: center;
+  justify-content: space-between;
+}
+.kit-inline p { font-size: 13.5px; line-height: 1.6; color: var(--ds-ink-soft); max-width: 52ch; }
+.kit-inline__acts { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+
+/* --- 9.11 THE RULED FOOT. The band-closing rail the specimen used to name the
+   nine disciplines: a 2px navy rule, a micro label, then the content. It is the
+   flat-step counterpart to the arc seam. ------------------------------------ */
+.kit-foot {
+  margin-top: clamp(32px, 4vw, 52px);
+  border-top: 2px solid var(--ds-primary);
+  padding-top: var(--ds-space-md);
+}
+.surface-dark .kit-foot { border-top-color: var(--ds-accent); }
+
+/* --- 9.12 LISTS ------------------------------------------------------------- */
+.kit-list { list-style: none; margin: var(--ds-space-md) 0 0; padding: 0; }
+.kit-list li { position: relative; padding-left: var(--ds-space-md); margin-top: var(--ds-space-sm); color: var(--ds-ink); }
+.kit-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .68em;
+  width: 8px;
+  height: 1px;
+  background: var(--ds-accent);
+}
+/* the numbered ledger: a procedure, a stage sequence, an aftercare order */
+.kit-list--ledger { counter-reset: kitn; }
+.kit-list--ledger li {
+  counter-increment: kitn;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: var(--ds-space-md);
+  margin-top: 0;
+  padding: var(--ds-space-md) 0;
+  border-top: 1px solid var(--ds-hairline);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ds-ink-soft);
+}
+.kit-list--ledger li::before {
+  content: counter(kitn, decimal-leading-zero);
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+  font-family: var(--ds-font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  color: var(--ds-accent-deep);
+}
+.kit-list--ledger b { color: var(--ds-ink); font-weight: 600; }
+.kit-list--inline { display: flex; flex-wrap: wrap; gap: var(--ds-space-sm) var(--ds-space-md); }
+.kit-list--inline li { margin-top: 0; padding-left: 0; }
+.kit-list--inline li::before { display: none; }
+.surface-dark .kit-list--ledger li::before { color: var(--ds-accent-light); }
+
+/* --- 9.13 THE QUOTE. The pause device: a bronze left rule and softer ink, so a
+   patient's sentence reads as a change of register rather than a change of size.
+   74 testimonials are published; none of them is dressed as a graphic. ------- */
+.kit-quote {
+  margin: var(--ds-space-md) 0 0;
+  padding-left: var(--ds-space-md);
+  border-left: 2px solid var(--ds-accent);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ds-ink-soft);
+}
+.kit-quote--display {
+  font-family: var(--ds-font-display);
+  font-size: clamp(21px, 2.2vw, 28px);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -.012em;
+  color: var(--ds-ink-heading);
+}
+.kit-quote__cite {
+  display: block;
+  margin-top: var(--ds-space-sm);
+  font-family: var(--ds-font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  font-style: normal;
+}
+
+/* --- 9.14 THE TABLE. The price list (I6) and the system-by-clinic matrix. A real
+   semantic table that reflows to a card stack at the mobile line, which is the
+   right mechanic for structured content. The scroll wrapper is the belt: a wide
+   table can never widen the page.
+
+   PRICE PRESENTATION IS A SWAPPABLE PATTERN by constraint: every figure is a
+   representative placeholder until the client supplies real numbers, so the price
+   cell is right-aligned tabular text with no fixed width and no baked-in digit
+   count. Changing 4 digits to 6 must never break the row. ------------------- */
+.kit-table__scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.kit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  text-align: left;
+}
+.kit-table caption {
+  caption-side: top;
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  padding-bottom: var(--ds-space-sm);
+}
+.kit-table th {
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ds-accent-deep);
+  padding: var(--ds-space-sm) var(--ds-space-md) var(--ds-space-sm) 0;
+  border-bottom: 2px solid var(--ds-primary);
+  vertical-align: bottom;
+}
+.kit-table td {
+  padding: var(--ds-space-md) var(--ds-space-md) var(--ds-space-md) 0;
+  border-bottom: 1px solid var(--ds-hairline);
+  color: var(--ds-ink);
+  vertical-align: top;
+}
+.kit-table tbody tr:last-child td { border-bottom: 0; }
+.kit-table th:last-child, .kit-table td:last-child { padding-right: 0; }
+.kit-table__num { text-align: right; font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; white-space: nowrap; }
+.kit-table__from { font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--ds-ink-soft); display: block; }
+.surface-dark .kit-table th { color: var(--ds-accent-light); border-bottom-color: var(--ds-accent); }
+
+/* --- 9.15 THE FAQ. Native details and summary, so it works with no JavaScript
+   and stays in the accessibility tree. Paired with the price table on every
+   treatment page, per move 7 of the reconciliation. ------------------------- */
+.kit-faq { border-top: 1px solid var(--ds-hairline); margin-top: var(--ds-space-md); }
+.kit-faq__item { border-bottom: 1px solid var(--ds-hairline); }
+.kit-faq__q {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-space-md);
+  list-style: none;
+  cursor: pointer;
+  padding: var(--ds-space-md) 0;
+  min-height: 48px;
+  font-family: var(--ds-font-display);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--ds-ink-heading);
+}
+.kit-faq__q::-webkit-details-marker { display: none; }
+.kit-faq__q::after {
+  content: "";
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  margin-top: 6px;
+  border-right: 1px solid var(--ds-accent);
+  border-bottom: 1px solid var(--ds-accent);
+  transform: rotate(45deg);
+  transition: transform var(--ds-dur-fast) var(--ds-ease-out);
+}
+.kit-faq__item[open] .kit-faq__q::after { transform: rotate(-135deg); margin-top: 10px; }
+.kit-faq__a { padding: 0 0 var(--ds-space-md); font-size: 15px; line-height: 1.68; color: var(--ds-ink-soft); }
+
+/* --- 9.16 FORMS. Stacked label over control (FORM-LAYOUTS #2). The focus state
+   is a real ring plus a border change, never a colour-only hint. ------------ */
+.kit-field { display: block; margin-bottom: var(--ds-space-md); }
+.kit-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ds-ink-soft);
+  margin-bottom: var(--ds-space-2xs);
+}
+.kit-input, .kit-select, .kit-textarea {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  font-family: var(--ds-font-body);
+  font-size: 16px;                 /* the 16px floor stops the iOS zoom on focus */
+  line-height: 1.5;
+  color: var(--ds-ink);
+  padding: 12px var(--ds-space-sm);
+  background: var(--ds-bg-surface);
+  border: 1px solid var(--ds-line);
+  border-radius: var(--ds-r-control);
+  transition: border-color var(--ds-dur-fast) var(--ds-ease-out),
+              box-shadow var(--ds-dur-fast) var(--ds-ease-out);
+}
+.kit-textarea { min-height: 128px; resize: vertical; }
+.kit-input::placeholder, .kit-textarea::placeholder { color: var(--ds-ink-soft); opacity: var(--ds-opacity-muted); }
+.kit-input:hover, .kit-select:hover, .kit-textarea:hover { border-color: var(--ds-ink-soft); }
+.kit-input:focus-visible, .kit-select:focus-visible, .kit-textarea:focus-visible {
+  border-color: var(--ds-primary);
+  box-shadow: inset 0 0 0 1px var(--ds-primary);
+}
+.kit-input:disabled, .kit-select:disabled, .kit-textarea:disabled {
+  opacity: var(--ds-opacity-disabled);
+  cursor: not-allowed;
+  background: var(--ds-bg-surface-2);
+}
+.kit-input[aria-invalid="true"], .kit-textarea[aria-invalid="true"] { border-color: var(--ds-accent-deep); }
+.kit-help { font-size: 13px; line-height: 1.5; color: var(--ds-ink-soft); margin-top: var(--ds-space-2xs); }
+
+/* --- 9.17 SMALL COMPOSITES ------------------------------------------------- */
+.kit-hr { height: 1px; border: 0; background: var(--ds-hairline); margin-block: var(--ds-space-xl); }
+.kit-rule { height: 2px; width: 64px; border: 0; background: var(--ds-accent); margin: 0 0 var(--ds-space-md); }
+.kit-figure { margin: 0; }
+.kit-figure figcaption { font-size: 13px; line-height: 1.5; color: var(--ds-ink-soft); margin-top: var(--ds-space-sm); }
+/* a compact key-and-value rail, for hours, addresses, provenance and spec rows */
+.kit-defs { display: grid; gap: 5px; margin: var(--ds-space-sm) 0 0; font-variant-numeric: tabular-nums; }
+.kit-defs > div { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; line-height: 1.55; }
+.kit-defs dt { color: var(--ds-ink-soft); margin: 0; }
+.kit-defs dd { margin: 0; color: var(--ds-ink-heading); font-weight: 600; }
+
+
+/* ============================================================================
+   10. MOTION. THREE MOVES, NO MORE, exactly as the feel locked them:
+     1. a staggered RISE on band entry
+     2. a LIFT with a shadow bloom on a card
+     3. a slow DRIFT on masked media
+   No bounce, no overshoot, no rotation, no loop, no autoplay, no count-up.
+
+   REDUCED MOTION IS HONOURED AT THE TOKEN, not with a blanket override keyword:
+   every transition in this sheet reads a --ds-dur-* token, so collapsing the
+   durations neutralises the lift, the shadow bloom, the index extension and the
+   media drift in ONE place. The scroll reveal is gated separately on .js-rise, a
+   class the head latch adds ONLY when scripting and IntersectionObserver are
+   available AND reduced motion is not requested, so with no JS or under reduced
+   motion nothing is ever hidden and a static capture can never come back blank.
+   ============================================================================ */
+.js-rise [data-rise] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--ds-dur-slow) var(--ds-ease-out),
+              transform var(--ds-dur-slow) var(--ds-ease-out);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js-rise [data-rise].is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --ds-dur-fast: .01ms; --ds-dur-slow: .01ms; --ds-dur-data: .01ms; }
+  html { scroll-behavior: auto; }
+  .js-rise [data-rise] { opacity: 1; transform: none; transition: none; transition-delay: 0ms; }
+  .kit-card:hover, .kit-btn:hover, .kit-btn--primary:hover { transform: none; }
+  .kit-slot:hover .kit-slot__img, .kit-slot:hover .kit-slot__art { transform: none; }
+}
+
+
+/* ============================================================================
+   11. GROUND RELIGHTS the token flip cannot reach on its own, plus the
+   LOCAL-GROUND INK RE-ASSERT.
+
+   Almost everything re-skins for free, because .surface-dark repoints the tokens
+   the objects already read. These are the few places where a ROLE changes rather
+   than a value, and the two escape hatches for the recurring contrast trap: a
+   light panel dropped inside the dark band keeping the flipped (pale) ink and
+   rendering pale-on-white, or a dark panel in a light band rendering dark-on-dark.
+   ============================================================================ */
+.surface-dark .kit-card { border-color: var(--ds-line); background: var(--ds-bg-surface-2); }
+.surface-dark .kit-sys  { background: var(--ds-line); border-color: var(--ds-line); }
+.surface-dark .kit-sys__unit { background: var(--ds-bg-surface-2); }
+.surface-dark .kit-sys__unit:hover { background: var(--ds-bg-warm); }
+.surface-dark .kit-slot__mask { box-shadow: var(--ds-shadow-card); }
+.surface-dark .kit-truth { background: var(--ds-bg-surface-2); border-left-color: var(--ds-accent); }
+.surface-dark .kit-table td { border-bottom-color: var(--ds-line); }
+.surface-dark .kit-faq, .surface-dark .kit-faq__item { border-color: var(--ds-line); }
+
+/* re-pin ink to the LOCAL ground, so a panel is legible whatever band it sits in */
+.surface-dark .kit-panel-light {
+  background: var(--ds-bg-surface);
+  color: var(--ds-ink);
+  --ds-ink: var(--ds-ink);
+  --ds-ink-soft: var(--ds-ink-soft);
+}
+.kit-panel-dark { color: var(--ds-ink-on-dark); }
+.kit-panel-dark h1, .kit-panel-dark h2, .kit-panel-dark h3, .kit-panel-dark h4 { color: var(--ds-ink-on-dark); }
+
+
+/* ============================================================================
+   12. THE REFLOW LADDER. Four authored tiers per _RESPONSIVE-PATTERN-LIBRARY:
+   laptop and tablet landscape (1023), tablet portrait (899), mobile (767) and the
+   small-phone floor (380). No tier introduces a fixed width, a negative inline
+   margin or an unclamped image, so no tier can produce a horizontal scrollbar.
+
+   TWO LAWS HOLD ACROSS THE WHOLE LADDER:
+     G-MEDIA-TRACK. Every media rule that keeps a ratio or a min-height at a
+       narrower width RE-DECLARES width:100% and min-width:0. An anchor dropped in
+       a media query is the same defect as an anchor never written.
+     THE STACK LAW (_COMPOSITION-LAWS L1). A stacked text-and-media split reads
+       HEADING, then MEDIA, then BODY, then CTA. Never media above its own
+       heading. The mechanism is display:contents on the copy cell, which lifts
+       its leaf children into the single-column grid so they can be ordered
+       against the media cell. Section 3 (d) has already pinned those leaves'
+       block margins to 0, so the interleave cannot leak cadence.
+   ============================================================================ */
+
+/* --- tier 1: laptop and tablet landscape ----------------------------------- */
+@media (max-width: 1023px) {
+  .row { gap: var(--ds-space-md); }
+  .row--loose { gap: var(--ds-space-lg); }
+  .row--4up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .col--span-1, .col--span-2, .col--span-3, .col--span-4, .col--span-5 { grid-column: span 6; }
+
+  /* the three-column hero folds to claim beside proof, with the media below */
+  .row--claim { grid-template-columns: minmax(0, 1.3fr) minmax(0, .8fr); }
+  .row--claim > .col--media { grid-column: 1 / -1; max-width: 420px; margin-top: var(--ds-space-md); }
+
+  .kit-mediagrid { gap: clamp(18px, 2.6vw, 32px); }
+  .kit-card__media { width: 88px; }
+}
+
+/* --- tier 2: tablet portrait and below -------------------------------------- */
+@media (max-width: 899px) {
+  .row--3up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .row--split, .row--split-rev, .row--aside { grid-template-columns: minmax(0, 1fr); }
+
+  /* THE STACK LAW. The copy cell vanishes so its leaves join the single-column
+     grid; the heading block is pulled above the media, the body and the actions
+     fall below it. No column-reverse, no order on the media itself. */
+  .row--split > .col--copy,
+  .row--split-rev > .col--copy,
+  .row--aside > .col--copy { display: contents; }
+  .row--split > .col--copy > *,
+  .row--split-rev > .col--copy > *,
+  .row--aside > .col--copy > * { order: 1; }
+  .row--split > .col--copy > .kit-head,
+  .row--split > .col--copy > .kit-open,
+  .row--split > .col--copy > .kit-eyebrow,
+  .row--split > .col--copy > h1,
+  .row--split > .col--copy > h2,
+  .row--split > .col--copy > h3,
+  .row--split-rev > .col--copy > .kit-head,
+  .row--split-rev > .col--copy > .kit-open,
+  .row--split-rev > .col--copy > .kit-eyebrow,
+  .row--split-rev > .col--copy > h1,
+  .row--split-rev > .col--copy > h2,
+  .row--split-rev > .col--copy > h3,
+  .row--aside > .col--copy > .kit-head,
+  .row--aside > .col--copy > .kit-open,
+  .row--aside > .col--copy > .kit-eyebrow,
+  .row--aside > .col--copy > h1,
+  .row--aside > .col--copy > h2,
+  .row--aside > .col--copy > h3 { order: -1; }
+  .row--split > .col--media,
+  .row--split-rev > .col--media,
+  .row--aside > .col--media { order: 0; }
+  .row--split > .col--copy > .kit-actions,
+  .row--split-rev > .col--copy > .kit-actions,
+  .row--aside > .col--copy > .kit-actions { order: 2; }
+
+  /* the media split stacks. Heading sits in the head block above the split and
+     the media is FIRST in source order inside it, so a single-column grid reads
+     heading, media, body with no order override. */
+  .kit-split, .kit-split--rev, .kit-split--even { grid-template-columns: minmax(0, 1fr); }
+  .kit-split__media { width: 100%; min-width: 0; }                 /* ANCHOR retained */
+  .kit-split__media .kit-slot { max-width: 360px; width: 100%; min-width: 0; }
+  .kit-slot__mask--arch { min-height: 200px; width: 100%; min-width: 0; }   /* ANCHOR retained beside min-height */
+
+  .kit-mediagrid { grid-template-columns: minmax(0, 1fr); }
+  .kit-mediagrid__media { width: 100%; min-width: 0; height: auto; aspect-ratio: 16 / 9; }  /* ANCHOR retained beside the ratio */
+
+  .kit-sys--3up { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kit-head { margin-bottom: var(--ds-space-md); }
+  .kit-person__media { max-width: 140px; }
+}
+
+/* --- tier 3: mobile ---------------------------------------------------------
+   THE STAT FLOOR (G-STAT). The band STACKS one-up with a hairline between each
+   figure. The numeral is NEVER shrunk to fit: the in-section floor is 40px and
+   the anchor floor is 44px, both comfortably above the 34px gate floor, and both
+   stay on one line. -------------------------------------------------------- */
+@media (max-width: 767px) {
+  .row, .row--2up, .row--3up, .row--4up, .row--claim { grid-template-columns: minmax(0, 1fr); }
+  .col--span-1, .col--span-2, .col--span-3, .col--span-4, .col--span-5,
+  .col--span-6, .col--span-7, .col--span-8, .col--span-9, .col--span-10,
+  .col--span-11 { grid-column: 1 / -1; }
+  .row--claim > .col--media { max-width: none; }
+
+  .kit-lede { font-size: 17px; }
+  .kit-actions { gap: 12px; }
+  .kit-btn { width: 100%; }
+  .kit-btn--ghost { width: auto; }
+  .kit-card { padding: var(--ds-space-sm); }
+  .kit-card--pad { padding: var(--ds-space-md); }
+  .kit-sys, .kit-sys--3up { grid-template-columns: minmax(0, 1fr); }
+  .kit-inline { flex-direction: column; align-items: flex-start; }
+  .kit-inline__acts { width: 100%; }
+  .kit-slot__mask--arch { min-height: 200px; width: 100%; min-width: 0; }   /* ANCHOR retained */
+  .kit-person__media { max-width: none; }
+
+  /* THE STAT BAND at phone width: vertical divider becomes horizontal, the
+     figures stack, and the numerals stay LARGE. */
+  .kit-statband { flex-direction: column; flex-wrap: wrap; gap: 0; }
+  .kit-stat { flex: 1 1 auto; }
+  .kit-stat + .kit-stat {
+    border-left: 0;
+    padding-left: 0;
+    margin-left: 0;
+    border-top: 1px solid var(--ds-hairline);
+    padding-top: clamp(16px, 4vw, 22px);
+    margin-top: clamp(16px, 4vw, 22px);
+  }
+  .kit-stat__n { font-size: clamp(40px, 12vw, 60px); }
+  .kit-statband--big .kit-stat__n { font-size: clamp(44px, 13vw, 68px); }
+  /* the stack variant already runs vertically; it only re-pins its own divider */
+  .kit-statband--stack .kit-stat + .kit-stat { border-top: 0; padding-top: 14px; margin-top: 0; }
+  .kit-statband--stack .kit-stat__n { font-size: clamp(40px, 11.5vw, 52px); }
+
+  /* THE TABLE becomes a card stack, and each cell re-presents its own header as
+     VISIBLE text through a data-label attribute, so no information is lost in the
+     reflow. The header row is REMOVED rather than visually hidden: a hidden thead
+     still gives its cells real geometry, and those cells measure far wider than a
+     375 viewport, which is exactly what an overflow scan reports.
+     THE PAGE AUTHOR OWNS ONE THING HERE: every td MUST carry a data-label, because
+     a cell without one loses its header outright at this width. */
+  .kit-table, .kit-table tbody, .kit-table tr, .kit-table td { display: block; width: 100%; }
+  .kit-table thead { display: none; }
+  .kit-table tr {
+    margin-bottom: var(--ds-space-md);
+    padding: var(--ds-space-md);
+    border: 1px solid var(--ds-hairline);
+    border-radius: var(--ds-r-surface);
+    background: var(--ds-bg-surface);
+    box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+  }
+  .kit-table td { padding: var(--ds-space-xs) 0; border-bottom: 0; }
+  .kit-table td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ds-accent-deep);
+    margin-bottom: 2px;
+  }
+  .kit-table__num { text-align: left; }
+}
+
+/* --- tier 4: the small-phone floor (380 and under) -------------------------- */
+@media (max-width: 380px) {
+  :root { --ed-gutter: var(--ds-space-sm); }
+  .kit-btn { padding-inline: var(--ds-space-md); }
+  .kit-list--ledger li { grid-template-columns: 32px minmax(0, 1fr); gap: var(--ds-space-sm); }
+  .kit-card__media { width: 80px; }
+  .kit-slot__mask--arch { min-height: 180px; width: 100%; min-width: 0; }   /* ANCHOR retained */
+}
+
+/* ============================================================================
+   PROMOTED FROM THE T-MARQUEE FLAGSHIP (owner-approved 2026-08-14)
+   ----------------------------------------------------------------------------
+   These two objects were authored page-local in the flagship concept's <style>
+   block. Promotion STRIPS a concept style block, so left there they would have
+   assembled UNSTYLED on every inheriting page (caught by verify-no-orphan-classes:
+   ".kit-bna is defined in NO linked sheet"). They are migrated here so every
+   template that inherits the flagship gets them.
+
+   LAYOUT AND TOKENS ONLY. Zero hex, zero colour, zero radius, zero font, zero
+   duration. Neither paints anything on .container, .row or .col, so the R5 skin
+   check and the G-DOM grammar are untouched.
+   ========================================================================== */
+
+/* The before/after pair. It does NOT collapse: this applies
+   _RESPONSIVE-PATTERN-LIBRARY rule 2 (the hard single-column stack at 767) as a
+   DOCUMENTED EXCEPTION, because a before and after that stacks is no longer a
+   before and after. The whole evidence is the ADJACENCY, which is also what
+   SECTION-COMPONENTS #29 records as the pair's own responsive behaviour: "the A/B
+   halves stay side-by-side at every width". Both halves carry the no-overflow
+   anchors (width:100% + min-width:0). */
+.kit-bna {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ds-space-xs);
+  align-items: start;
+}
+.kit-bna > .kit-slot { width: 100%; min-width: 0; }
+
+/* .row--stretch stretches the .col, but a .kit-card is a normal block child and
+   still sizes to its content, so a 4-up card row lands with ragged bottoms and the
+   sheet's own margin-top:auto hours rail has nothing to pin against. This is the
+   same one line the LOCKED chrome sheet already spends for the mega panel card
+   (.ed-mega .kit-card{height:100%}), applied through the structure hook rather
+   than as a class on it. */
+.row--stretch > .col > .kit-card { height: 100%; }
+
+
+/* ============================================================================
+   PROMOTED CONCEPT CSS: T-HUB/c
+   ----------------------------------------------------------------------------
+   Migrated verbatim from that concept's page-local <style> block at promote time.
+   promote-concept.mjs carries only the <main> body, so anything left in the
+   concept <style> is dropped and the built page silently reverts to base styles.
+   0 class(es) here existed in NO linked sheet; 9 override a linked rule.
+   ========================================================================== */
+/* ==========================================================================
+   PAGE-LOCAL CSS. FOUR rules, all LAYOUT ONLY, all expressed through existing
+   class tokens and the locked chrome's own height token. ZERO new class tokens are
+   minted and ZERO colour, radius, font or duration is authored, so this template
+   promotes to
+   pages/cosmetic-dentistry.content.html with NOTHING that verify-no-orphan-classes
+   could find undefined in a linked sheet: every class on this page is already
+   declared in elevatedental-structural.css or elevatedental-chrome.css. (Measured:
+   the only classes on this file that resolve in no linked sheet are the six the
+   LOCKED chrome carrier itself uses as JS and parity hooks, byte-identical here,
+   in _design/_chrome-block.html and in the locked flagship. This concept adds
+   none of its own.)
+
+   RULE 1, and why it is not optional. .row--stretch stretches the .col, but a
+   .kit-card is a normal block child and still sizes to its own content, so a 4-up
+   card row lands with RAGGED bottoms and the sheet's own margin-top:auto spec rail
+   (.kit-card__hours) has nothing to pin against. On a COMPARISON page that is not
+   cosmetic: the whole affordance of bands 03, 05 and 06 is that the rails sit on
+   ONE baseline, so the eye reads DOWN a column instead of re-reading each card.
+   This is the same single line the LOCKED chrome sheet already spends for the mega
+   panel card (.ed-mega .kit-card{height:100%}), applied through the structure hook
+   rather than as a class on it, exactly as the locked flagship records it.
+   MEASURED at 1440 after the rule: the four band-03 cards render 543px each and
+   their four spec rails start within 1px of each other.
+
+   RULE 2 was FOUND BY RENDERING, not by reading, and it is the second half of the
+   same defect. .kit-card is a flex column and .kit-card__foot carries margin-top:12px,
+   NOT margin-top:auto. So in a card that has no .kit-card__hours rail to absorb the
+   slack, height:100% makes the box taller while the foot stays glued under the body
+   and the leftover space falls BELOW it. Measured on band 06 before this rule: four
+   cards all 358px tall with their four ghost route links starting at 6782, 6804,
+   6805 and 6827, a 45px spread of the one affordance the band exists to offer.
+   The selector is POSITIONAL rather than a new modifier class: it fires only where
+   the foot directly follows the body, which is true in bands 01 and 06 and false in
+   band 03, where .kit-meta sits between them. That matters, because band 03 already
+   pins its slack with the locked .kit-card__hours auto margin, and a second auto
+   margin in the same flex column would SPLIT the free space between the two and
+   un-align the very rails rule 1 exists to align.
+
+   WHY BOTH RULES CARRY A SECOND SELECTOR ON .col--stretch, also found by rendering.
+   Putting row--stretch on a row that ALSO holds a media column stretches the media
+   column to the row height, and a .kit-slot is content-height, so the surplus opens
+   as a VOID INSIDE the column. Measured on band 01 before the change: the copy
+   column ran 874px, the media column was stretched to 874px, and its content ended
+   at 536px, leaving a 338px hole under the photograph. The fix is to stop stretching
+   the ROW and to stretch only the CELLS that need it, through the locked .col--stretch
+   modifier the structural sheet already ships (align-self:stretch). Bands 01 and 05
+   therefore run a plain 12-track row where only the card cells carry .col--stretch,
+   which equalises the peers without inflating the media cell. Bands 03 and 06 keep
+   row--stretch because every cell in their card rows IS a card.
+
+   _RESPONSIVE-PATTERN-LIBRARY G7 is what makes both rules safe rather than hazards:
+   an equal-height rule must relax the instant the cards stack, or a short stacked
+   card stretches to a tall one and wastes a screen. CSS Grid gives that free,
+   because align-items:stretch equalises WITHIN a track and relaxes to content-height
+   in a single column, so no mobile reset is needed and none is written here.
+   Measured at 375: the band-03 cards render 376, 420, 376 and 398px, which is
+   content-height, exactly as G7 requires.
+   ========================================================================== */
+.row--stretch > .col > .kit-card,
+.col--stretch > .kit-card { height: 100%; }
+
+.row--stretch > .col > .kit-card > .kit-card__body + .kit-card__foot,
+.col--stretch > .kit-card > .kit-card__body + .kit-card__foot { margin-top: auto; }
+
+/* RULE 3, also found by rendering. The chrome's header is position:fixed and the
+   chrome sheet clears it exactly ONCE, with main{padding-top:var(--ed-header-h)}.
+   That is correct for a page loaded at the top and wrong for an in-document ANCHOR
+   jump, which scrolls the target to viewport 0 and puts it UNDER the fixed bar.
+   Measured on this page before the rule, following the hero's own "Compare the four
+   routes" control to #s04 at 375: the header's bottom edge sat at 76px and band 04's
+   index-ring opener at 41px, so 35px of the opener was occluded. The fix reads the
+   chrome's own height token rather than a literal, so it tracks the 1100 collapse
+   (144px above it, 76px below) with no second source of truth. Scoped to main's own
+   bands: the chrome's .precta is a LOCKED BLOCK and is not restyled from here. */
+/* FALLBACK ADDED 2026-08-24, and it is a GATE fix rather than a rendering fix: the
+   runtime behaviour is unchanged. --ed-header-h is defined in elevatedental-chrome.css
+   (line 57) and both sheets always load together, so the fallback below never actually
+   applies in a browser. G8 (verify-design-foundation) resolves vars WITHIN a sheet, so
+   read in isolation this file referenced an undefined token, which blocked every edit
+   to it. 122px is the chrome's own composed height (66 util + 44 shelf + 12 arc) and is
+   here only so the reference resolves standalone; the live value still comes from the
+   chrome token, keeping the single source of truth the rule below relies on. */
+main > .section { scroll-margin-top: var(--ed-header-h, 122px); }
+
+/* RULE 4, found by rendering the ONE band no page in this build had exercised
+   before: a .kit-table that carries a real <caption>. At 767 the locked sheet turns
+   the table into a card stack with .kit-table{display:block}, and a caption whose
+   own display stays table-caption then shrink-to-fits inside the anonymous table box
+   instead of running the measure. Measured at 375: the caption, which is where this
+   page states that every figure below is a placeholder, rendered as an eight-line
+   ribbon about 90px wide. Promoting it to a block at the same breakpoint gives it the
+   full column back. The caption is kept rather than replaced by a paragraph because
+   it is the accessible name of the table, which a screen reader announces before the
+   first cell, and that is exactly where the placeholder disclosure belongs. */
+@media (max-width: 767px) {
+  .kit-table caption { display: block; }
+}
+
+/* ============================================================================
+   T-LEGAL DOCUMENT SKIN — .bw-legal / .bw-toc
+   ----------------------------------------------------------------------------
+   ADDED 2026-08-24 for the two platform pages the owner asked for (privacy-policy
+   and terms). PURELY ADDITIVE: every selector below is a NEW class name that no
+   existing page uses, so nothing already built can change. Verified before writing:
+   zero `bw-` matches existed anywhere in this build's five _design/*.css files.
+
+   WHY IT HAD TO BE ADDED RATHER THAN SUBSTITUTED. verify-legal-is-document
+   (G-LEGAL-DOC) fails a T-LEGAL page closed unless its <main> carries a real
+   .bw-legal prose measure. That gate exists because three legal pages once shipped
+   as marketing compositions. Writing these pages in the kit-* feature vocabulary
+   was tried first and was correctly blocked twice: G-CTA1 for a second closing CTA
+   band, then G-LEGAL-DOC for the missing document measure.
+
+   SOURCE: copied from the skill's own brand-agnostic build template at
+   .claude/skills/client-site-build/_design-templates/__client__-structural.css,
+   which is the sanctioned route ("a new slug COPIES the structure and supplies its
+   OWN policy copy; it inherits the WORKING rhythm + anchored-heading geometry").
+   Nothing here is invented styling.
+
+   SIX TOKEN SUBSTITUTIONS, because the template names tokens this brand does not
+   define. Pasting it verbatim would have silently dropped every border and every
+   letter-spacing, since an undefined var() makes the whole declaration invalid.
+   Checked one by one against elevatedental-tokens.css:
+       --ds-accent-strong  -> --ds-accent-deep     (#6F5828, the deeper gold)
+       --ds-accent-soft    -> --ds-primary-soft    (#E7EDF3, the pale ink wash)
+       --ds-divider        -> --ds-line            (#DDE3EA, this brand's hairline)
+       --ds-ease           -> --ds-ease-out
+       --ds-tracking-disp  -> .06em                (this sheet's display tracking)
+       --ds-tracking-label -> .14em                (this sheet's label tracking)
+   Everything else resolves through this brand's own tokens, so the document
+   inherits the light/dark theme blocks like every other surface here.
+   ============================================================================ */
+.bw-legal{ max-width:760px; }
+.bw-legal > :first-child{ margin-top:0; }
+.bw-legal > :last-child{ margin-bottom:0; }
+.bw-legal p{
+  font-family:var(--ds-font-body); font-size:16px; line-height:1.72; color:var(--ds-ink-soft);
+  margin:0 0 var(--ds-space-lg); max-width:663px;
+}
+.bw-legal h2{
+  font-family:var(--ds-font-display); font-weight:600; text-transform:uppercase;
+  letter-spacing:.06em; line-height:1.12; font-size:clamp(22px,2.6vw,30px);
+  color:var(--ds-ink-heading); margin:clamp(40px,5vw,64px) 0 var(--ds-space-md);
+  scroll-margin-top:clamp(90px,12vh,120px);            /* anchored TOC jumps clear the fixed header */
+}
+.bw-legal h3{
+  font-family:var(--ds-font-display); font-weight:600; text-transform:uppercase;
+  letter-spacing:.01em; line-height:1.16; font-size:clamp(17px,1.8vw,21px);
+  color:var(--ds-ink-heading); margin:clamp(28px,3.4vw,40px) 0 var(--ds-space-sm);
+  scroll-margin-top:clamp(90px,12vh,120px);
+}
+.bw-legal ul, .bw-legal ol{ margin:0 0 var(--ds-space-lg); padding-left:1.5em; color:var(--ds-ink-soft); }
+.bw-legal li{ font-family:var(--ds-font-body); font-size:16px; line-height:1.72; margin:0 0 var(--ds-space-sm); max-width:663px; }
+.bw-legal li::marker{ color:var(--ds-accent); }
+.bw-legal a{
+  color:var(--ds-accent); text-decoration:underline; text-underline-offset:2px; text-decoration-thickness:1px;
+  transition:color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.bw-legal a:hover{ color:var(--ds-accent-deep); }
+.bw-legal strong, .bw-legal b{ color:var(--ds-ink); font-weight:600; }
+.bw-legal em, .bw-legal i{ color:var(--ds-ink-soft); }
+.bw-legal hr{ border:0; height:1px; background:var(--ds-line); margin:clamp(32px,4vw,48px) 0; }
+/* the title + effective-date line at the top of the document */
+.bw-legal__effective{ font-family:var(--ds-font-mono); font-size:12px; letter-spacing:.04em; color:var(--ds-ink-soft); margin:0 0 clamp(28px,3.4vw,44px); }
+/* the REPRESENTATIVE / not-binding callout (the honesty fence — it never asserts
+   binding legal text). A left-accented note that reads clearly above the prose. */
+.bw-legal__callout{
+  border:1px solid var(--ds-line); border-left:3px solid var(--ds-accent);
+  border-radius:var(--ds-r-control); background:var(--ds-primary-soft);
+  padding:clamp(14px,2vw,20px) clamp(16px,2.2vw,24px); margin:0 0 clamp(28px,3.4vw,44px);
+  font-family:var(--ds-font-body); font-size:14px; line-height:1.62; color:var(--ds-ink);
+}
+.bw-legal__callout strong{ color:var(--ds-ink); }
+
+/* the anchored TABLE-OF-CONTENTS — a compact bordered card of jump links. The
+   sticky side-rail variant (.bw-toc--rail) is deliberately NOT copied: both of
+   these documents are short and take pick #2 (inline index), so a rail would be
+   dead CSS. Add it here if a long policy ever needs pick #3. */
+.bw-toc{
+  border:1px solid var(--ds-line); border-radius:var(--ds-r-surface);
+  background:linear-gradient(180deg, var(--ds-bg-surface-2) 0%, var(--ds-bg-surface) 100%);
+  box-shadow:var(--ds-shadow-card);
+  padding:clamp(18px,2vw,26px);
+}
+.bw-toc__title{
+  font-family:var(--ds-font-mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ds-accent); margin:0 0 var(--ds-space-md);
+  display:inline-flex; align-items:center; gap:10px;
+}
+.bw-toc__title::before{ content:""; width:22px; height:1px; background:var(--ds-line); }
+.bw-toc__list{ list-style:none; margin:0; padding:0; display:grid; gap:2px; }
+.bw-toc__item{ margin:0; min-width:0; }
+.bw-toc__link{
+  display:block; padding:7px 0; font-family:var(--ds-font-body); font-size:15px; line-height:1.5;
+  color:var(--ds-ink-soft); text-decoration:none;
+  transition:color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.bw-toc__link:hover{ color:var(--ds-accent); }

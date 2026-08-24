@@ -1,0 +1,95 @@
+/* ============================================================================
+   elevatedental : CARD TIER SHEET, STANDARD
+   The restrained default treatment every ORDINARY page gets.
+
+   HOW THIS SHEET LOADS (fixed convention, build.mjs): exactly ONE tier sheet is
+   linked per page, LAST, after the three core sheets (tokens, chrome,
+   structural), and only if the file exists. A slug listed in client-rules.json
+   bespoke_pages (index, dental-tourism, invisalign) gets brand-card-bespoke.css;
+   EVERY OTHER page gets this one. The two tier sheets therefore NEVER co-exist on
+   a page, and neither has to undo the other.
+
+   WHAT IT IS: a per-page CARD-TREATMENT override, NOT a theme. It assumes
+   elevatedental-structural.css has already loaded and already defined .kit-card,
+   .kit-slot and their parts in full. It therefore restates NOTHING: every rule
+   below is a short, additive adjustment to a declaration that already exists.
+
+   IT MINTS NO TOKENS AND REDEFINES NONE. Zero brand hex, zero rgba. Every value
+   is a var(--ds-*) from elevatedental-tokens.css or a structural literal.
+
+   THE TREATMENT, in one sentence: on an ordinary page the BAND does the talking
+   and the card recedes, so the card keeps all three of its edge events (the
+   hairline, the inset top highlight and the contact shadow) but pays each of them
+   one step quieter, its bronze index mark stays a MARK rather than becoming a
+   rail, and its lift on hover is two thirds the distance.
+
+   WHY A QUIET DEFAULT IS THE RIGHT FLOOR HERE, not a compromise. The measured
+   tone is light dominant, dark_ratio 0, energy restrained. A page of loud cards
+   would contradict the brand at the level the brand was actually measured at. The
+   premium tier is the COST LEVER: it is spent on three pages, and it only reads
+   as a step up because this floor exists and holds.
+
+   Provenance: CARD-VARIATIONS.md #2 light card with an embedded mini-visual,
+   SURFACE-PATTERNS.md #10 soft-shadow-lift, MOTION-PATTERNS.md #10 lift,
+   _MODERN-WOW-SPEC depth and elevation, blueprint composition-medical-health.
+   ============================================================================ */
+
+/* REST. The two-stop contact shadow drops to the single-stop rest shadow. The
+   hairline and the inset top highlight both STAY, because they are what give a
+   light card an edge against a light ground: paper, cool paper and warm paper are
+   optically the same plane, so an unbordered card here simply has no boundary. */
+.kit-card {
+  box-shadow: var(--ds-shadow-rest), var(--ds-inset-hi);
+}
+
+/* HOVER. Two thirds the travel of the structural default (2px, not 3px) and one
+   shadow step up rather than two. Same gesture, spoken quietly. */
+.kit-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ds-shadow-card), var(--ds-inset-hi);
+  border-color: var(--ds-hairline);
+}
+
+/* THE BRONZE INDEX stays a MARK. On an ordinary page it does not run the full
+   width of the card on hover: it extends by a measured step, which is the index
+   ring doing its actual job (marking a position) rather than drawing a rail. The
+   full-width extension is the bespoke tier's signal, and spending it here would
+   erase it. */
+.kit-card::before { width: 32px; }
+.kit-card:hover::before { width: 64px; }
+
+/* the flat variant keeps its contract: no rest elevation, materialise on hover */
+.kit-card--flat:hover {
+  transform: none;
+  box-shadow: var(--ds-shadow-rest), var(--ds-inset-hi);
+}
+
+/* THE EMBEDDED MINI-VISUAL. Smaller on an ordinary page, so a card row reads as a
+   line of statements rather than a gallery. The circle mask is untouched: the
+   mask is identity, the size is tier. */
+.kit-card__media { width: 80px; }
+.kit-card__media .kit-slot__cap { margin-top: 8px; font-size: 9.5px; }
+
+/* TYPE. Unchanged from the structural ladder. The standard tier does not step the
+   title up: the size difference between the tiers IS the bespoke signal. Only the
+   internal rules soften, so a card's own divisions never compete with its outer
+   edge. */
+.kit-card__foot,
+.kit-card__hours { border-top-color: var(--ds-hairline); }
+
+/* THE SECTION OPENER. On an ordinary page the unrolled index rule is a quieter
+   instrument: the graduations recede a step so the band's heading carries the
+   entrance, while the single bronze index stays at full strength, because the
+   mark is the motif and the graduations are only its scale. */
+.kit-open__rule::after { opacity: .30; }
+
+/* THE IMAGERY SLOT. One step less elevation, matching the card it usually sits
+   in, so a slot and a card on the same ordinary page read as one material. */
+.kit-slot__mask {
+  box-shadow: var(--ds-shadow-rest), var(--ds-inset-hi);
+}
+
+/* MOTION GATE. This sheet introduces one transform, so this sheet zeroes it. */
+@media (prefers-reduced-motion: reduce) {
+  .kit-card:hover { transform: none; }
+}
