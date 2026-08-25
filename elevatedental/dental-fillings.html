@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -265,50 +268,28 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
 
-      <div class="col col--span-7">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Tooth-coloured composite restorations</span></div>
-          </div>
-        </div>
-        <h1 id="h-start">Dental Fillings Philippines. From ₱3,500 per tooth, a representative market figure rather than an Elevate quote.</h1>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Market range, not an Elevate price</span>
-        </div>
-        <p class="kit-lede readw">A dental filling is tooth-coloured composite that rebuilds a decayed tooth in a single visit. The decay is removed, the cavity is sealed, and the tooth is returned to its own shape and bite.</p>
-        <p class="kit-body readw">Your first consultation is free, and your exact fee is quoted before treatment begins.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before this page is published.</p>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_dental-fillings-featured-1.jpg" alt="A single molar isolated behind a blue rubber sheet and held by a metal matrix ring, its biting surface rebuilt in a tooth-coloured material." width="675" height="585" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Isolated, then rebuilt</b><span>A dry field is what makes the bond hold.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is laid out</p>
-          <p class="kit-body readw--wide">Six stages, in the order the appointment happens, each numbered so you always know where you are, and each closing by naming the one that follows. The map is the next band. Read straight through, or jump to the stage you came for and follow the hand-offs from there.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the six stages</span></a>
-            <a class="kit-btn kit-btn--ghost" href="#stage-05"><span>Skip to what it costs</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-cure-wand.jpg" alt="A cordless curing light wand resting on a warm bone worktop in front of deep navy cabinetry with brushed brass handles." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Dental Fillings Philippines</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Tooth-coloured composite restorations</p>
+            <p class="foh-hero__lede">A dental filling is tooth-coloured composite that rebuilds a decayed tooth in a single visit.</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱3,500 per tooth. Market range, not an Elevate price</span>
+            </div>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
+            </div>
           </div>
         </div>
       </div>
@@ -323,6 +304,7 @@
   <div class="container">
     <div class="row">
 
+      
       <div class="col col--span-4">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
@@ -336,6 +318,26 @@
         </div>
         <p class="kit-lede readw">Six stages, and the second one exists to tell you when a filling is the wrong repair.</p>
         <p class="kit-body readw">Read them in order for the whole appointment in sequence. Jump into the middle and each band names its own position and the one after it, so the order is never lost.</p>
+      </div>
+
+      <div class="col col--span-7">
+        <div class="kit-foot">
+          <p class="kit-micro">How this page is laid out</p>
+          <p class="kit-body readw--wide">Six stages, in the order the appointment happens, each numbered so you always know where you are, and each closing by naming the one that follows. The map is the next band. Read straight through, or jump to the stage you came for and follow the hand-offs from there.</p>
+          <div class="kit-actions kit-actions--tight">
+            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the six stages</span></a>
+            <a class="kit-btn kit-btn--ghost" href="#stage-05"><span>Skip to what it costs</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col col--span-5">
+        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
+          <div class="kit-slot__mask kit-slot__mask--frame">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_dental-fillings-featured-1.jpg" alt="A single molar isolated behind a blue rubber sheet and held by a metal matrix ring, its biting surface rebuilt in a tooth-coloured material." width="675" height="585" loading="eager" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>Isolated, then rebuilt</b><span>A dry field is what makes the bond hold.</span></figcaption>
+        </figure>
       </div>
 
       <div class="col col--span-8">
@@ -618,10 +620,6 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. Pull the General Dentistry specialists from the published roster with discipline and credentials, and link each to their profile. Which specialists sit at which branch is recorded as blocked in client-rules.json, so do not tie a named clinician to a named clinic on this page.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 05, the starting figure, the five things that move it, and how long a restoration is expected to serve before it is repaired or replaced.</p>
@@ -680,17 +678,19 @@
           <p class="kit-body readw--wide">A well-placed composite restoration matches the surrounding enamel closely enough that most people cannot identify which tooth was treated, returns full chewing function, and seals the tooth against further decay at that site. These are typically expected to serve for several years and are then repaired or replaced as the margin wears. How long yours lasts depends on the size of the cavity, where it sits in the arch, your bite forces and your home care.</p>
           <p class="kit-body readw--wide">A restoration is a repair, not a replacement for the original tooth. Decay can start again at a new site, which is why the six-month recall matters more afterwards, not less.</p>
         </div>
+      </div>
+
+      <div class="col col--span-6">
         <div class="kit-truth">
           <span class="kit-truth__k">Pricing, indicative</span>
           <p>The real figure. Elevate has not published a price for this treatment, so every peso amount here is an indicative market figure taken from published Philippine ranges, not a fee this practice has quoted. The exact cost of your own filling is quoted to you before treatment begins.</p>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">Patient consent, not documented</span>
-          <p>Signed patient consent. Before and after imagery and named testimonial content for this treatment are held back, because no signed patient release covers any clinical image. This stage is written as prose until documented consent exists, and no stock image stands in for a treatment result.</p>
+          <p>No before-and-after imagery appears on this page, and no stock image stands in for a treatment result.</p>
         </div>
       </div>
 
-      <div class="col col--full">
+      <div class="col col--span-6">
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 06, the last one: the questions people actually ask, what the day after the anesthetic involves, and exactly what the consultation gives you.</p>
@@ -731,7 +731,7 @@
         </figure>
         <p class="kit-body readw">A first appointment produces three things: the tooth imaged and assessed, a plain answer about which restoration it needs, and a fee in writing. None of them commits you to treatment on the day.</p>
         <div class="kit-inline">
-          <p>Book a free initial consultation, have the tooth imaged and assessed, and get your fee in writing before any treatment starts.</p>
+          <p>Book a free initial consultation, have the tooth imaged and assessed, and get your fee in writing before any treatment starts. Confirm current consultation terms with the clinic before you book.</p>
           <div class="kit-inline__acts">
             <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
             <a class="kit-btn kit-btn--ghost" href="general-dentistry.html"><span>General Dentistry</span></a>
@@ -779,9 +779,7 @@
             <p class="kit-faq__a">Wait for numbness to pass before eating. For the first 24 hours, chew on the other side if the restoration is large, and avoid biting directly into very hard food such as ice or bone with that tooth. Brush and floss it normally from the same day: the margin between material and tooth is where new decay starts, so it needs cleaning, not protecting.</p>
           </details>
         </div>
-      </div>
 
-      <div class="col col--full">
         <div class="kit-foot">
           <p class="kit-micro">Outcome</p>
           <ul class="kit-list">

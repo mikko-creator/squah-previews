@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,36 +266,28 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-first" aria-labelledby="h-first" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s-first" aria-labelledby="h-first" data-surface="dark" data-rise>
   <div class="container">
-    <div class="row row--split">
-
-      <div class="col col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">New patients</span>
-            <div><span class="kit-eyebrow">Before you book</span></div>
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-waiting-detail.jpg" alt="A quiet waiting corner with two pale armchairs, a low table and a potted palm against a navy dado." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-first">New Patient Guide</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Before you book</p>
+            <p class="foh-hero__lede">Everything you need before a first visit, in the order you need it.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="locations.html">Choose a clinic</a>
+            </div>
           </div>
         </div>
-        <h1 id="h-first">New Patient Guide</h1>
-        <p class="kit-lede readw">Everything you need before a first visit, in the order you need it.</p>
-        <p class="kit-body readw">Your first appointment is a consultation. Our specialists examine, image if imaging is needed, and then set out your options and what each one involves. This page carries the whole sequence in advance: what to bring, what happens on the day, what you can pay with, and what we do not accept. Read it before you book and nothing at the desk will be a surprise.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="locations.html">Choose a clinic</a>
-        </div>
       </div>
-
-      <div class="col col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2023_04_model-tooth-dentist-doctor-shows-patient-tooth-reception-dentist-s-office.jpg" alt="A gloved hand holding a large cutaway model of a molar, showing the crown, the root and the pulp chamber, while a second gloved hand points a dental probe at the decayed section, with a patient reclined out of focus behind it." width="1200" height="800" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>The consultation</b><span>What is happening, explained before it is treated.</span></figcaption>
-        </figure>
-      </div>
-
     </div>
   </div>
 </section>
@@ -390,14 +385,12 @@
 
       <div class="col col--span-6">
         <div class="kit-truth">
-          <span class="kit-truth__k">The third form title, held</span>
-          <p>The current site labels the privacy document with the name of United States health-privacy legislation, which does not govern a Philippine clinic. A clinic here falls under the Data Privacy Act. Confirm the correct instrument and the correct form title before a label is published. Nothing has been substituted in the meantime, which is why the card above names the document by what it does rather than by a statute.</p>
+          <p>A clinic in the Philippines falls under the Data Privacy Act, not United States health-privacy legislation. The card above therefore names the privacy document by what it does rather than by a statute.</p>
         </div>
       </div>
       <div class="col col--span-6">
         <div class="kit-truth">
-          <span class="kit-truth__k">The what-to-bring list, held</span>
-          <p>The current site publishes the three forms but no list of what to bring with you. This block is built to hold four to six lines covering identification, a current medication list, previous imaging or records, and anything specific to a pediatric or a surgical appointment. No list is invented in the meantime. Ask when you book and bring what the clinic names.</p>
+          <p>No list of what to bring to your appointment is published here. Ask when you book, and bring what the clinic names.</p>
         </div>
       </div>
 
@@ -457,9 +450,8 @@
           <p class="kit-micro">How a plan is quoted</p>
           <p class="kit-body">Treatment is quoted per treatment, after clinical assessment. You are told the cost of your plan before it starts, not after it finishes.</p>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Real price figures, held</span>
-          <p>Every figure currently on the price list is a representative market figure anchored to published Philippine ranges rather than a quoted Elevate fee. No Elevate price has been supplied yet, which is why this page describes what the list covers and quotes no number from it.</p>
+        <div class="kit-truth">
+          <p>Every figure currently on the price list is a representative market figure anchored to published Philippine ranges rather than a quoted Elevate fee, which is why this page describes what the list covers and quotes no number from it.</p>
         </div>
       </div>
 
@@ -496,9 +488,8 @@
           <p class="kit-card__title">The shape of such an arrangement</p>
           <p class="kit-card__body">0% over 12 months on a minimum spend of ₱20,000, an indicative market figure and not an Elevate quote or a live offer. The numbers above illustrate the SHAPE of an arrangement of this kind and are not terms you can hold us to.</p>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Partner banks, held</span>
-          <p>Every bank partnership named on the current site carries a 2024 end date. No bank is named here, and no term, threshold or interest rate is published as live, until the client confirms in writing which partnerships are active in 2026. Until then this section ships as the paragraphs beside it, with no partner names and no figure presented as current.</p>
+        <div class="kit-truth">
+          <p>The bank partnerships named on the current site all carry a 2024 end date. No bank, term, threshold or interest rate is presented here as current.</p>
         </div>
       </div>
 
@@ -565,13 +556,11 @@
           </div>
           <figcaption class="kit-slot__cap"><b>The explanation</b><span>Questions answered in the room, too.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Emergency care, held. This is an open owner decision.</span>
-          <p>Neither an emergency service nor the absence of one is evidenced anywhere in the current published material. No answer is published here until the client states the position, because asserting either way would be an invention and this is the question a patient in pain asks first. The question stays on the list so the gap is visible rather than quietly missing.</p>
+        <div class="kit-truth">
+          <p>Whether this practice offers an emergency service is not stated here, in either direction. If you need urgent care, call the clinic and ask rather than infer an answer from this page.</p>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The consultation offer, held</span>
-          <p>A complimentary first consultation has appeared repeatedly inside dated promotions and never as a standing offer, so no claim of that kind is published on this page, in the ask below, or in the page description. Confirm whether it is permanent or promotion-only before it is stated anywhere.</p>
+        <div class="kit-truth">
+          <p>A complimentary first consultation has appeared repeatedly inside dated promotions and never as a standing offer.</p>
         </div>
       </div>
 

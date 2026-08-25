@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,54 +266,31 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-7">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Dental implants, titanium fixtures</span></div>
-          </div>
-        </div>
-        <h1 id="h-start">Dental Implants in the Philippines. From ₱90,000 per implant, a representative market figure rather than an Elevate quote.</h1>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Market range, not an Elevate price</span>
-        </div>
-        <p class="kit-lede readw">A dental implant is a titanium root placed into your jaw to replace a missing tooth, fixed in bone rather than resting on the teeth around it.</p>
-        <p class="kit-body readw">The first consultation is free, and it includes reading your own 3D CBCT scan with the surgeon who would place it.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. This page additionally states that the consultation INCLUDES reading the scan. If that is not the case, both the opening and the closing stage must be corrected before publication, not softened.</p>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2022_03_How-to-Care-for-Your-Dental-Implants.jpg" alt="A clinician holding a sectioned implant model up for a seated patient and pointing at it with a pen." width="1200" height="800" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Read before it is placed</b><span>The model, the scan and the plan, at the first appointment.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is laid out</p>
-          <p class="kit-body readw--wide">This page runs as a route. Eight stages, in the order the treatment actually happens, each numbered so you always know where you are, and each closing by naming the stage that follows it. The map is the next band. Read straight through, or jump to the stage you came for and follow the hand-offs from there.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the eight stages</span></a>
-            <a class="kit-btn kit-btn--ghost" href="#stage-03"><span>Skip to the alternatives</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-implant-parts.jpg" alt="Precision titanium dental implant components laid on brushed brass, machined threads catching a single hard light against a near-black navy background." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Dental Implants in the Philippines.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Dental implants, titanium fixtures</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱90,000 per implant. Market range, not an Elevate price.</span>
+            </div>
+            <p class="foh-hero__lede">A dental implant is a titanium root placed into your jaw to replace a missing tooth.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -663,10 +643,6 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. The copy leaves both the oral surgery specialist and the prosthodontist unnamed, because per-discipline names were not supplied to the copy stage. Pull them from the published roster with discipline and credentials and link each to their profile. Which specialists work at which clinic is recorded as blocked in client-rules.json, so do not tie a named clinician to a named branch on this page.</p>
-        </div>
         <div class="kit-actions kit-actions--tight">
           <a class="kit-btn kit-btn--ghost" href="specialists.html"><span>Our Specialists</span></a>
           <a class="kit-btn kit-btn--ghost" href="oral-surgery.html"><span>Oral Surgery</span></a>
@@ -787,8 +763,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">Owner receipt, pending</span>
-          <p>The real figure. No Elevate treatment price has been supplied, so every peso amount on this page is representative and anchored to published market ranges. Elevate quotes your own figure per treatment, after a clinical assessment.</p>
+          <p>Every peso amount on this page is representative and anchored to published market ranges, not a price quoted by this practice. Elevate quotes your own figure per treatment, after a clinical assessment.</p>
         </div>
       </div>
 
@@ -846,8 +821,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">How long these last, stated straight</span>
-          <p>Published long-term studies of osseointegrated implants report high survival at ten years and beyond, and yours depends heavily on gum health, smoking and whether you keep your recalls. What can be said honestly is this: these can and do fail, more often through bone loss around them than through anything breaking, and that failure is usually preventable. Nobody can promise you a fixed term, and you should be careful with anyone who offers one. This paragraph is not inside a collapsed panel, because the sentence a seller would most like hidden is the one that should be open.</p>
+          <p>Published long-term studies of osseointegrated implants report high survival at ten years and beyond, and yours depends heavily on gum health, smoking and whether you keep your recalls. What can be said honestly is this: these can and do fail, more often through bone loss around them than through anything breaking, and that failure is usually preventable. Nobody can promise you a fixed term, and you should be careful with anyone who offers one.</p>
         </div>
       </div>
 
@@ -903,22 +877,11 @@
           <figcaption class="kit-slot__cap"><b>The last appointment</b><span>Matching the crown is the end of a process that began with a scan.</span></figcaption>
         </figure>
         <div class="kit-inline">
-          <p>The first consultation is free. It includes a proper examination and, where your case calls for it, reading your own scan with the surgeon who would do the work. You will be told what your bone can support, what the alternatives are, and what the whole case costs in writing before you commit to any part of it.</p>
+          <p>The first consultation is free. It includes a proper examination and, where your case calls for it, reading your own scan with the surgeon who would do the work. You will be told what your bone can support, what the alternatives are, and what the whole case costs in writing before you commit to any part of it. Confirm current consultation terms with the clinic before you book.</p>
           <div class="kit-inline__acts">
             <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
             <a class="kit-btn kit-btn--ghost" href="prosthodontics.html"><span>Prosthodontics</span></a>
           </div>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consent, not in hand. Designed and not deployed.</span>
-          <p>Signed patient consent. Cases here are documented from the planning scan through to the fitted crown and reviewed with follow-up imaging, and none of it is published on this page. Publishing an identifiable patient's imaging or clinical photographs requires documented written consent, which is not in hand: pre-launch blocker B-2. When it exists, this stage can carry real cases.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Build note</span>
-          <p>The word free above is subject to the entry-offer confirmation flagged at the start of this route, and so is the claim that the consultation includes reading the scan. Confirm both, or correct both.</p>
         </div>
       </div>
 

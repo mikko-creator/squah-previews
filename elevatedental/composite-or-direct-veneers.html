@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -265,54 +268,32 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+
+
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-7">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Direct veneers, composite, one visit</span></div>
-          </div>
-        </div>
-        <h1 id="h-start">Direct Veneers Philippines. From ₱12,000 per tooth, which is a market figure, not an Elevate price.</h1>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Market-derived, not an Elevate fee</span>
-        </div>
-        <p class="kit-lede readw">Direct veneers are composite shells sculpted onto the front of the tooth by hand, in a single appointment. There is no laboratory stage, no temporary set, and in many cases little or no enamel is removed.</p>
-        <p class="kit-body readw">Your first consultation is free, and your exact fee is quoted per tooth before treatment begins.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before this page is published.</p>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2021_05_Why-Do-You-Need-Dental-Veneers.jpg" alt="A masked clinician in a white coat holding a mouth mirror inside the open mouth of a man reclined in a treatment chair under a blue bib." width="1200" height="800" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Assessed before it is shaped</b><span>The examination decides whether composite is the right material.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is laid out</p>
-          <p class="kit-body readw--wide">Eight stages, in the order a case actually runs, each numbered so you always know where you are, and each closing by naming the one that follows. The map is the next band. Read straight through, or jump to the stage you came for and follow the hand-offs from there.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the eight stages</span></a>
-            <a class="kit-btn kit-btn--ghost" href="#stage-06"><span>Skip to what it costs</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-veneer-shells.jpg" alt="Five wafer thin ceramic veneer shells standing upright on a slim brushed brass rail against deep navy panelling." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Direct Veneers Philippines.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Direct veneers, composite, one visit</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱12,000 per tooth. A market figure, not an Elevate price.</span>
+            </div>
+            <p class="foh-hero__lede">Direct veneers are composite shells sculpted onto the front of the tooth by hand.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -643,10 +624,6 @@
               </div>
 
       <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. Pull the Cosmetic Dentistry specialists from the published roster with discipline and credentials, and link each to their profile. Which specialists sit at which branch is recorded as blocked in client-rules.json, so do not tie a named clinician to a named clinic on this page.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 05, the machines a case is planned on, and the only one of them whose scope is confirmed at every clinic.</p>
@@ -765,8 +742,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The real figure. No Elevate treatment price has been supplied, so every peso amount on this page is representative and anchored to published market ranges. Your own fee is quoted per tooth after a clinical assessment.</p>
+          <p>Every peso amount on this page is representative and anchored to published market ranges, not a price quoted by this practice. Your own fee is quoted per tooth after a clinical assessment.</p>
         </div>
       </div>
 
@@ -833,13 +809,8 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Held, awaiting the client</span>
-          <p>Signed patient consent. Before and after imagery and named testimonial content for this treatment are held back, because no signed patient release has been supplied for any clinical image, which is pre-launch blocker B-2. This stage ships as prose until documented consent exists. Do not substitute stock photography for a clinical result.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Pending owner confirmation</span>
-          <p>Shade, edge position and how much can be changed on your specific case are decided at the assessment. No warranty, replacement or remake terms have been supplied for this treatment, so none are stated here and none may be implied by omission either.</p>
+        <div class="kit-truth">
+          <p>Shade, edge position and how much can be changed on your specific case are decided at the assessment. No warranty, replacement or remake terms are stated for this treatment.</p>
         </div>
       </div>
 
@@ -883,13 +854,6 @@
           <li>If you grind at night, wear the guard every night rather than on the nights you remember.</li>
           <li>Come back at your recall so the surfaces can be repolished before discolouration sets into the margin.</li>
         </ul>
-        <div class="kit-inline">
-          <p>Book a free initial consultation, have your smile assessed against your own facial proportions, and get a written per-tooth quote before any treatment starts.</p>
-          <div class="kit-inline__acts">
-            <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-            <a class="kit-btn kit-btn--ghost" href="contact.html"><span>Ask about this treatment</span></a>
-          </div>
-        </div>
       </div>
 
       <div class="col col--span-7">
@@ -929,7 +893,17 @@
         </div>
       </div>
 
-      <div class="col col--full">
+      <div class="col col--span-5">
+        <div class="kit-inline">
+          <p>Book a free initial consultation, have your smile assessed against your own facial proportions, and get a written per-tooth quote before any treatment starts. Confirm current consultation terms with the clinic before you book.</p>
+          <div class="kit-inline__acts">
+            <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+            <a class="kit-btn kit-btn--ghost" href="contact.html"><span>Ask about this treatment</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col col--span-7">
         <div class="kit-foot">
           <p class="kit-micro">Outcome</p>
           <ul class="kit-list">

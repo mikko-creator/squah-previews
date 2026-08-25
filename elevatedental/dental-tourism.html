@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-bespoke.css?v=72c550bc">
 
 </head>
@@ -263,14 +266,40 @@
 
 
 
-<section class="section section--paper kit-hero" id="j01" aria-labelledby="h01" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="j01" aria-labelledby="h01" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-skyline.jpg" alt="The view out through floor-to-ceiling clinic glass at golden hour, the Manila skyline and bay beyond, a navy sill and a single orchid in the foreground." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Dental Tourism Philippines</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Treatment and travel, one journey</p>
+            <p class="foh-hero__lede">Treatment and travel planned as one journey, with a dedicated officer.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#j14">Start your Smile Journey</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="j01b" data-rise>
   <div class="container">
     <div class="row row--split-rev row--center">
 
       <div class="col col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
+        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
           <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_tourism-04.jpg" alt="A patient standing between two clinicians in white coats at the clinic's monogram wall." width="417" height="555" loading="eager" decoding="async">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_tourism-04.jpg" alt="A patient standing between two clinicians in white coats at the clinic's monogram wall." width="417" height="555" loading="lazy" decoding="async">
           </div>
           <figcaption class="kit-slot__cap"><b>At the clinic</b><span>One patient, two clinicians.</span></figcaption>
         </figure>
@@ -281,17 +310,10 @@
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Treatment and travel, one journey</span></div>
           </div>
         </div>
-        <h1 id="h01">Dental Tourism Philippines</h1>
-        <p class="kit-lede readw"><b class="kit-strong">Treatment and travel planned as one journey, with a dedicated officer.</b></p>
         <p class="kit-body readw">Your treatment plan is agreed before you fly. Your dates are built around the clinical schedule, not the other way around. One named officer holds the whole journey in one place, from the first remote consultation to the recall after you are home.</p>
         <p class="kit-body readw">The assessment that shapes your plan happens in the same building as the treatment. 3D CBCT imaging is available at all four of our Metro Manila clinics, so the diagnostics, the planning and the work are not spread across three addresses and two waiting lists.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#j14">Start your Smile Journey</a>
-        </div>
         <p class="kit-status"><span class="kit-status__dot" aria-hidden="true"></span>Four clinics, Metro Manila</p>
       </div>
 
@@ -549,13 +571,6 @@
         </div>
       </div>
 
-      <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Imagery, deliberately absent</span>
-          <p>No photograph stands in this band. The mapped pool for this page holds no first-party image of either named system, and the imagery spec forbids substituting a lookalike machine for equipment that has not been photographed here. Both marks are used as plain nouns for equipment the practice verifiably operates, which is the clearance client-rules.json records for them, and neither appears as a logo or a badge.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -579,10 +594,6 @@
         <p class="kit-accentline">Clinical dates are fixed first.</p>
         <p class="kit-body readw">Laboratory turnaround and healing periods do not move to suit a flight, so everything else is arranged around them. A flight booked for the wrong day is not a saving, it is a second trip.</p>
         <p class="kit-body readw">The Dental Tourism Officer is one named point of contact for the journey. You are not forwarded between a booking desk, a clinic reception and a treatment coordinator, and you are not repeating your case to a new person each time.</p>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Travel package, not evidenced</span>
-          <p>The live site describes package options covering airfare only, accommodation only, or both. Which options are currently offered, who books them, and what the officer coordinates rather than purchases is unconfirmed. client-rules.json records travel logistics as not evidenced, so no travel service is asserted here. Supply the confirmed scope and this section ships as a plain list of what is included and what is not.</p>
-        </div>
 
       </div>
     </div>
@@ -720,8 +731,7 @@
 
       <div class="col col--span-4">
         <div class="kit-truth">
-          <span class="kit-truth__k">Aftercare terms, unconfirmed</span>
-          <p>Whether remediation of work completed here is covered, for how long, and on what conditions has not been supplied (client-rules.json productModel.unverified_capabilities: treatment-warranty). No period and no remedy is stated until the owner confirms the terms in writing.</p>
+          <p>Whether remediation of work completed here is covered, for how long, and on what conditions is not established. No period and no remedy is stated on this page.</p>
         </div>
       </div>
 
@@ -761,13 +771,8 @@
       </div>
 
       <div class="col col--media">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Specialist and clinic, not paired</span>
-          <p>Each specialist is published on their own profile, with their discipline and their credentials, and that is where to read about the clinician who would treat you. What no record we hold establishes is which specialist sits at which clinic, so this page names the discipline and never pairs a clinician with a branch.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Imagery, deliberately absent</span>
-          <p>No portrait stands in this band. The photographs elsewhere on this page show unnamed members of the clinical team standing with patients, and placing one of them beside a discipline would assert an assignment no receipt supports. When the roster lands, this band takes named profiles, not borrowed faces.</p>
+        <div class="kit-truth">
+          <p>Which specialist sits at which clinic is not published, so this page names the discipline rather than pairing a clinician with a branch.</p>
         </div>
       </div>
 
@@ -853,14 +858,6 @@
         <p class="kit-quote kit-quote--display readw">Healing time is not dead time.</p>
         <p class="kit-body readw">Your schedule will have gaps in it, and the gaps are deliberate. The country you are recovering in is worth seeing, and island days, cultural sites and the food are the reasons most patients extend a stay rather than fly home the morning after the last appointment.</p>
         <p class="kit-body readw">Where an experience is arranged around your treatment, it is scheduled on a day your clinical plan can carry it, and never on a day you should be resting.</p>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Experience list, unconfirmed</span>
-          <p>The live site describes island, cultural and culinary experiences alongside the treatment programme. Which are currently offered, and whether they are arranged for you or only suggested, is unconfirmed. Publish only what the owner confirms is operating.</p>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Asset flag, held</span>
-          <p>The experience imagery on the live site reads as stock and its licensing is unconfirmed, so it is not published here. Three files in this page's mapped pool are refused for that reason: the island landscape, and the two crops of the same beach photograph that the live page runs as its banner. None of them is a first-party record of this practice, and none may ship until usage rights are documented.</p>
-        </div>
 
       </div>
     </div>
@@ -925,12 +922,7 @@
 
       <div class="col col--full">
         <div class="kit-truth">
-          <span class="kit-truth__k">Consent for the words, outstanding</span>
-          <p>Republishing a patient's words requires that patient's documented consent. The number of published testimonials is verified; permission to reproduce what those patients wrote is a separate matter, and it has not been given. Until it is, this page quotes nobody. We will not paraphrase a patient, and we will not compose an example of what one might have said.</p>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">What these photographs are, and are not</span>
-          <p>Four first-party photographs carried from the practice's own published library. No individual is identified, no nationality is stated and no treatment or outcome is attached to any face, because none of those is evidenced. A fifth matched file is refused outright: it shows a child holding a certificate that carries a legible personal name. Photographic permission for identifiable patients is a separate receipt from the testimonial consent above, and neither has been supplied.</p>
+          <p>These photographs come from the practice's own library. No individual in them is identified, no nationality is stated, and no treatment or outcome is attached to any face.</p>
         </div>
         <div class="kit-actions kit-actions--tight">
           <a class="kit-btn kit-btn--ghost" href="results.html"><span>All Results</span></a>
@@ -1024,21 +1016,6 @@
         </div>
       </div>
 
-      <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Airport context, none given</span>
-          <p>Journey times from Ninoy Aquino International Airport, and the recommended accommodation districts for each clinic, have not been supplied. No distance and no duration is asserted here. Supply both and this becomes the most useful block on the page for an overseas reader.</p>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Languages, only English stated</span>
-          <p>Which additional languages are spoken at each clinic has not been supplied, so only English is stated above.</p>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">International payment, unresolved</span>
-          <p>Which of the accepted methods are practical for an overseas patient, whether internationally issued cards are accepted, and whether a deposit is required to hold a treatment schedule, has not been supplied. Confirm before this block publishes anything more specific than the list above.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1082,10 +1059,6 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Where it ends up</b><span>Two visitors and a clinician.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Registry defect, held. Not a patient claim.</span>
-          <p>Fact D-OFFER-021 routes the token 390 to this page as required copy. That number is the site-wide URL count recorded in decisions-ledger row F3, an internal planning figure covering the templated specialist bios, branch pages and discipline hubs alongside the 47 individually briefed pages. It is a build fact, not a claim to a patient, so it is carried here in the ledger rather than written into the copy above. The fix is at the fact-registry generator, which emitted a word-count and a URL count as conveyable claims.</p>
-        </div>
       </div>
 
       <div class="col col--full">

@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,33 +266,37 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
 
-      <div class="col col--span-6 col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Endodontics</span></div>
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-endo-files.jpg" alt="A fan of fine tapered endodontic files laid in a close row on woven bone linen." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Endodontics Philippines: Root Canal Treatment</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Endodontics</p>
+            <p class="foh-hero__lede">Endodontics treats the living tissue inside a tooth.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s04">See the two paths compared</a>
+            </div>
           </div>
         </div>
-        <h1 id="h01">Endodontics Philippines: Root Canal Treatment</h1>
-        <p class="kit-lede readw">Endodontics treats the living tissue inside a tooth.</p>
-        <p class="kit-body readw">When the pulp is inflamed or infected there are two paths: treat the inside of the tooth, or take the tooth out.</p>
-        <p class="kit-body readw">Endodontic treatment takes the first path. The infection is cleared, the canal system is sealed, and your own tooth stays in your jaw.</p>
-        <p class="kit-accentline">Which path a tooth is on is decided by what the imaging shows, not by how much it hurts.</p>
       </div>
 
-      <div class="col col--span-6 col--media">
-        <figure class="kit-slot" data-rise>
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_endodontics-main.jpg" alt="A clinician in a white coat and a blue glove holding a sectioned tooth model up beside a seated patient, both looking at it." width="675" height="585" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Shown, then decided</b><span>The inside of a tooth is explained on a model before it is opened.</span></figcaption>
-        </figure>
-      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s01b" data-rise>
+  <div class="container">
+    <div class="row">
 
       <div class="col col--span-6 col--stretch">
         <div class="kit-card kit-card--pad" data-rise>
@@ -319,16 +326,19 @@
         </div>
       </div>
 
-      <div class="col col--full">
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s04">See the two paths compared</a>
-        </div>
+      <div class="col col--span-6 col--media">
+        <figure class="kit-slot" data-rise>
+          <div class="kit-slot__mask kit-slot__mask--circle">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_endodontics-main.jpg" alt="A clinician in a white coat and a blue glove holding a sectioned tooth model up beside a seated patient, both looking at it." width="675" height="585" loading="eager" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>Shown, then decided</b><span>The inside of a tooth is explained on a model before it is opened.</span></figcaption>
+        </figure>
       </div>
 
     </div>
   </div>
 </section>
+
 
 
 <section class="section section--cool" id="s02" aria-labelledby="h02" data-rise>
@@ -575,10 +585,6 @@
           <a class="kit-btn kit-btn--ghost" href="prosthodontics.html"><span>Prosthodontics, for the crown after</span></a>
           <a class="kit-btn kit-btn--ghost" href="treatments.html"><span>All Treatments</span></a>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">No clinician named here</span>
-          <p>The supplied handoff sources no endodontist by name, so this band names nobody rather than borrowing a face or a credential from another field. Pull the endodontists from the published roster before launch. Do not state a per-field count, and do not tie a clinician to a branch: per-clinic assignment is blocked (client-rules.json proof_rules.per-clinic-roster).</p>
-        </div>
       </div>
 
       <div class="col col--media">
@@ -626,11 +632,6 @@
         <div class="kit-truth" data-rise>
           <span class="kit-truth__k">Where this figure comes from</span>
           <p>Elevate Dental has not set its own price for this treatment, so the peso figure on this page is drawn from published Philippine market ranges rather than from a clinic price list. It is there to give you a sense of scale before you come in, and it is not a quotation from us.</p>
-        </div>
-
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Two terms, unconfirmed</span>
-          <p>The consultation fee, which the copy for this page records as agent-derived rather than owner-confirmed, so nothing here calls the first visit free. And urgency: whether the clinics hold same-day or urgent slots is an open owner decision, so no page in this build promises one. Confirm both before launch.</p>
         </div>
 
         <div class="kit-inline">

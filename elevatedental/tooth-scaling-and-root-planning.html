@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -265,54 +268,32 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-7">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Scaling and root planing, periodontics</span></div>
-          </div>
-        </div>
-        <h1 id="h-start">Scaling and Root Planing. Gum disease treatment, from ₱8,000, an indicative market figure and not an Elevate quote.</h1>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">A market anchor, not a fee this practice has issued</span>
-        </div>
-        <p class="kit-lede readw">This is deep cleaning below the gumline, and it halts gum disease. It removes hardened deposit and bacterial film from root surfaces well below the gum, where a toothbrush and a routine clean cannot reach.</p>
-        <p class="kit-body readw">Your first consultation is free. It includes the full periodontal charting, which is the measurement everything afterwards is judged against, plus a plan and a quotation you can take away.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_periodontics-main.jpg" alt="A clinician in a white coat holding a tablet showing a four stage diagram of gum disease, turned towards a seated patient who is looking at the screen." width="675" height="585" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Shown, then measured</b><span>The stages explained on screen before anything is touched.</span></figcaption>
-        </figure>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free first appointment and the quotation that comes with it are recorded in the fact registry as agent derived, D-OFFER-009, not as a term the practice has confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before publication.</p>
-        </div>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is laid out</p>
-          <p class="kit-body readw--wide">Ten stages, numbered in the order they happen, each closing by naming the one after it. It is the longest route on this site because this treatment has the most that has to be said plainly, including one thing no clinic enjoys writing down: what it cannot undo.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the whole route</span></a>
-            <a class="kit-btn kit-btn--ghost" href="#stage-09"><span>What it cannot undo</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-scaler-probe.jpg" alt="The fine curved tip of a periodontal instrument in macro, raking light running across a brushed brass surface." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Scaling and Root Planing. Gum disease treatment.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Scaling and root planing, periodontics</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱8,000, an indicative market figure and not an Elevate quote</span>
+              <span class="kit-tag kit-tag--accent kit-tab">A market anchor, not a fee this practice has issued</span>
+            </div>
+            <p class="foh-hero__lede">This is deep cleaning below the gumline, and it halts gum disease.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -320,8 +301,9 @@
 
 <section class="section section--cool" id="s-route" aria-labelledby="h-route" data-rise>
   <div class="container">
-    <div class="row">
 
+    
+    <div class="row">
       <div class="col col--span-4">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
@@ -336,6 +318,18 @@
         <p class="kit-lede readw">Ten stages, and three of them exist because a shorter page would have hidden them.</p>
         <p class="kit-body readw">Stage 02 separates this from the routine clean it is often confused with. Stage 05 is about two things in your own life that affect the result more than anything done at the chair. Stage 09 is where the honest limit sits: what heals, and what is gone for good.</p>
         <p class="kit-body readw">The index is plain text and plain in-document links. It prints, it works with scripting switched off, and nothing below it is behind a form.</p>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col col--span-5">
+        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
+          <div class="kit-slot__mask kit-slot__mask--frame">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_periodontics-main.jpg" alt="A clinician in a white coat holding a tablet showing a four stage diagram of gum disease, turned towards a seated patient who is looking at the screen." width="675" height="585" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>Shown, then measured</b><span>The stages explained on screen before anything is touched.</span></figcaption>
+        </figure>
       </div>
 
       <div class="col col--span-8">
@@ -397,8 +391,7 @@
           <figcaption class="kit-slot__cap"><b>An illustration, not a mouth</b><span>A rendered diagram of the scaler at the deposit. No patient is shown.</span></figcaption>
         </figure>
         <div class="kit-truth">
-          <span class="kit-truth__k">The honest part</span>
-          <p>The bone that has already gone is not restored by this treatment. What it does is stop the loss and let the tissue reattach against a clean root. That distinction is the whole reason stage 09 exists, and it is stated here at the beginning rather than saved for the end.</p>
+          <p>The bone that has already gone is not restored by this treatment. What it does is stop the loss and let the tissue reattach against a clean root.</p>
         </div>
       </div>
 
@@ -655,9 +648,8 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Stated, not implied</span>
-          <p>Nothing on this page claims a success rate, a percentage of pockets closed, or a period of stability. No such figures have been supplied by the practice and none is invented here. What is promised is a measurement at stage 09 and an honest reading of it, which is a process commitment rather than an outcome commitment.</p>
+        <div class="kit-truth">
+          <p>No success rate, percentage of pockets closed, or period of stability is claimed for this treatment. What is promised is a measurement and an honest reading of it - a commitment to the process, not to an outcome.</p>
         </div>
         <p class="kit-body readw">If you are working on stopping, say that too. It changes the sequencing conversation, because tissue that is about to start responding better is worth measuring again at a different interval.</p>
       </div>
@@ -842,10 +834,6 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. Per discipline and per clinic specialist rosters were not supplied, decisions ledger section F, so nobody is named on this band and nobody is tied to a named branch. When the roster lands, pull the periodontics specialists with discipline and credentials and link each to a published profile.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 08, why nobody here can quote you before the charting, and the one way this practice is paid.</p>
@@ -902,8 +890,7 @@
           <li><b class="kit-strong">What follows.</b> Surgery, grafting or extractions identified at the re-evaluation are separate treatments with separate quotes, and none of them is folded into this one.</li>
         </ul>
         <div class="kit-truth">
-          <span class="kit-truth__k">Pricing, provisional</span>
-          <p>No Elevate treatment price has been supplied, so every peso amount on this page is representative and anchored to published market ranges. Your own figure is quoted per treatment after a clinical assessment.</p>
+          <p>Every peso amount on this page is representative and anchored to published market ranges - it is not a price quoted by Elevate Dental. Your own figure is quoted per treatment after a clinical assessment.</p>
         </div>
         <div class="kit-inline">
           <p>The charting is what determines the work, so the appointment that measures it is the appointment that produces your figure.</p>
@@ -966,10 +953,6 @@
           <div><dt>Pocket depths</dt><dd>Re-measured at 6 to 8 weeks</dd></div>
           <div><dt>Bone already lost</dt><dd>Does not return</dd></div>
         </dl>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consent, not supplied</span>
-          <p><span class="kit-status"><span class="kit-status__dot"></span>Held under blocker B-2</span> The honest evidence for this band is a pair of real charts and clinical photographs belonging to a patient. No signed release has been supplied for any clinical image or for republishing any patient's words, so the band ships as prose and no stock photograph stands in for a treated mouth.</p>
-        </div>
       </div>
 
       <div class="col col--full">
@@ -1068,7 +1051,7 @@
             <li><b class="kit-strong">Do.</b> Book the free consultation and take the baseline chart and the quotation away with you.</li>
             <li><b class="kit-strong">Means.</b> You know the cost and the clinician before you commit.</li>
           </ul>
-          <p class="kit-body readw--wide">The route ends here on purpose. Ten stages, all of them read: the pocket, the comparison, the checklist and the charting, the limits, the two outside factors, the appointment sequence, the specialty and the four systems, the money, the judgement, and the daily part that belongs to you.</p>
+          <p class="kit-body readw--wide">The route ends here on purpose. Ten stages, all of them read: the pocket, the comparison, the checklist and the charting, the limits, the two outside factors, the appointment sequence, the specialty and the four systems, the money, the judgement, and the daily part that belongs to you. Confirm current consultation terms with the clinic before you book.</p>
           <div class="kit-actions kit-actions--tight">
             <a class="kit-btn kit-btn--ghost" href="#s-route"><span>Return to the contents</span></a>
             <a class="kit-btn kit-btn--ghost" href="#s-start"><span>Back to the start</span></a>

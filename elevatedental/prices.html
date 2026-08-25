@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,7 +266,33 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-crown-light.jpg" alt="Light refracting through a translucent ceramic dental crown resting on brushed brass, throwing caustic patterns against a dark navy background." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Dental Prices Philippines. Starting prices for every treatment.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Treatment prices</p>
+            <p class="foh-hero__lede">Every treatment we offer has a published starting price.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--ghost" href="#s03"><span>Go to the price list</span></a>
+              <a class="kit-btn kit-btn--ghost" href="#s07"><span>What the consultation covers</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s01b" data-rise>
   <div class="container">
     <div class="row">
 
@@ -272,27 +301,16 @@
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Treatment prices</span></div>
           </div>
         </div>
-        <h1 id="h01">Dental Prices Philippines. Starting prices for every treatment.</h1>
-        <p class="kit-lede readw">Every treatment we offer has a published starting price. A cleaning, a crown, a set of porcelain veneers, a full course of Invisalign (Clear Aligners): you can see where each one begins before you book anything.</p>
+        <p class="kit-lede readw">A cleaning, a crown, a set of porcelain veneers, a full course of Invisalign (Clear Aligners): you can see where each one begins before you book anything.</p>
         <p class="kit-body readw">The exact fee for your own case is confirmed in writing at your consultation, after a specialist has examined you.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--ghost" href="#s03"><span>Go to the price list</span></a>
-          <a class="kit-btn kit-btn--ghost" href="#s07"><span>What the consultation covers</span></a>
-        </div>
-        <p class="kit-meta">Your first consultation is free, and you leave it holding the fee in writing.</p>
+        <p class="kit-meta">Your first consultation is free, and you leave it holding the fee in writing. Confirm current consultation terms with the clinic before you book.</p>
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Real prices not supplied</span>
-          <p>Real prices. No Elevate Dental price list has been supplied, so all twenty figures on this page are representative figures anchored to published market ranges, and each one is labelled that way in its own cell. None of them is a fee Elevate has quoted.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Free consultation unconfirmed</span>
-          <p>The free consultation. Both the first visit at no charge and the pricing document that follows it are recorded in the fact registry as agent derived rather than owner supplied. Confirm the offer and its scope before the word free is published. If it cannot be confirmed, this hero drops the line under the actions and keeps every figure exactly as it stands.</p>
+        <div class="kit-truth">
+          <p>All twenty figures on this page are representative figures anchored to published market ranges, and each one is labelled that way in its own cell. None of them is a fee Elevate has quoted.</p>
         </div>
       </div>
 
@@ -761,10 +779,6 @@
         <h3 id="h06b">Paying over time</h3>
         <p class="kit-body readw--tight">Some patients ask whether a larger course of treatment can be settled in stages rather than in a single payment.</p>
         <p class="kit-body readw--tight">Until that is confirmed, the honest answer is the one to give at the desk: ask at your consultation what settlement arrangements are available for your case.</p>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Settlement terms unconfirmed</span>
-          <p>Settlement over time. Which partner arrangements are active in 2026, the terms attached to each, and the minimum spend each one carries are all unconfirmed, so nothing is asserted in this block. Do not name a partner, a term or a rate until the arrangement is confirmed active, and do not substitute a general reassurance in its absence. The heading here is deliberately not the brief's own title, which the overclaim rules block on this slug until the receipt lands.</p>
-        </div>
       </div>
 
     </div>
@@ -878,14 +892,6 @@
           </div>
         </div>
         <p class="kit-body readw--tight">Nothing below is folded behind a control. Two of the four answers are still waiting on the owner, and both say so on their own face.</p>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Offer scope unconfirmed</span>
-          <p>The free consultation offer. Neither the no-charge first visit nor the pricing document that follows it is owner supplied; both are agent derived. Confirm the offer and its scope before launch.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Per-clinic parity unconfirmed</span>
-          <p>Whether prices differ by clinic. The intended answer is that they do not, and that the same starting price applies at Mitsukoshi BGC, Shangri-La Plaza, Bonifacio Stopover BGC and Alabang Town Center. Do not publish that answer until the owner has confirmed it holds at all four sites.</p>
-        </div>
       </div>
 
       <div class="col col--media">

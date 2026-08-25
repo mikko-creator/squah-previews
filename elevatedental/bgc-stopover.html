@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,43 +266,27 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-open" aria-labelledby="h-open" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s-open" aria-labelledby="h-open" data-surface="dark" data-rise>
   <div class="container">
-    <div class="row row--split">
-
-      <div class="col col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Bonifacio Global City</span>
-            <div><span class="kit-eyebrow">Taguig City</span></div>
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_Bonifacio-Stopover-Treatment-Room.jpg" alt="A treatment room at the Bonifacio Stopover clinic: a cream and grey dental chair with its delivery unit and operator stool on a black and white striped marble floor, a green fluted wall on one side, a ceiling-mounted screen, and a full-height window looking onto the street below." width="1498" height="998" loading="eager" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-open">Dentist Bonifacio Stopover BGC - Dental Clinic</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Taguig City</p>
+            <p class="foh-hero__lede">Our second BGC clinic is at Unit R303, third floor, Bonifacio Stopover Pavilion.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary kit-tab" href="tel:+639178294551">Call Us</a>
+            </div>
           </div>
         </div>
-        <h1 id="h-open">Dentist Bonifacio Stopover BGC - Dental Clinic</h1>
-        <p class="kit-lede readw">Our second BGC clinic is at Unit R303, third floor, Bonifacio Stopover Pavilion, Bonifacio Global City, Taguig City.</p>
-        <p class="kit-body readw">It opens at 09:00 on weekdays, which is earlier than any of our other clinics. If you would rather have a scan and a cleaning done before the working day starts than give up an evening, this is the clinic to book.</p>
-        <p class="kit-body readw">It is also the one clinic that closes on Sundays. That is stated here rather than buried, so you do not arrive to a locked door.</p>
-        <p class="kit-body readw">3D CBCT imaging is installed here, and complex work is planned inside the group rather than sent elsewhere.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary kit-tab" href="tel:+639178294551">Call Us</a>
-        </div>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Weekdays from 09:00</span>
-          <span class="kit-tag kit-tab">Saturdays too</span>
-          <span class="kit-tag kit-tab">No Sunday service</span>
-        </div>
       </div>
-
-      <div class="col col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_Bonifacio-Stopover-Hallway.jpg" alt="The corridor inside the Bonifacio Stopover clinic: teal panelled walls with arched rattan insets and slim gold wall lights, a black and white striped marble floor, and mirrored panels running down one side to a lit arch at the far end." width="1486" height="990" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Corridor</b><span>Inside the clinic on level three.</span></figcaption>
-        </figure>
-      </div>
-
     </div>
   </div>
 </section>
@@ -367,8 +354,7 @@
           <p class="kit-body">The last appointment of the day is set by treatment length, so a longer procedure needs an earlier slot. With an 18:00 close, a long case is best placed in the morning.</p>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">Holiday hours, held</span>
-          <p>Public holiday hours can differ from the table beside this note and the holiday list has not been supplied. Publish it, or publish a line telling patients to call and check, rather than letting the standard week imply that it always holds.</p>
+          <p>Public holiday hours can differ from the hours shown. Please call the clinic to check before visiting on a public holiday.</p>
         </div>
       </div>
 
@@ -422,22 +408,12 @@
             <span class="kit-card__unit">Taguig</span>
           </div>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The street and the entrance, held</span>
-          <p>The street the pavilion fronts, the entrance to use and the lift location are not in the supplied source. Confirm them before publication. No street name is published for this address on inference, because a wrong street on the one page a patient navigates by is a wayfinding error rather than a rounding.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The transit stop, held</span>
-          <p>The nearest public-transport stop and the walking route from it are not in the supplied source, and none is published until the owner confirms it.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The map cell, held</span>
-          <p>The copy specifies a pin that lands on the pavilion itself rather than on the surrounding district. No map provider or map asset is cleared for this build, so the ordered steps beside this note carry the arrival instead, and the map ships when the pin can resolve to the building.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The shopfront photograph, held</span>
-          <p>The one exterior file in this branch library has opening times and a service list printed onto the glass, and those printed times do not match the schedule published above. No exterior photograph is placed on this page until the signage and the published week agree, because the page whose job is to stop you arriving at a locked door must not carry a second, contradicting timetable in a picture.</p>
-        </div>
+        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
+          <div class="kit-slot__mask kit-slot__mask--circle">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_Bonifacio-Stopover-Hallway.jpg" alt="The corridor inside the Bonifacio Stopover clinic: teal panelled walls with arched rattan insets and slim gold wall lights, a black and white striped marble floor, and mirrored panels running down one side to a lit arch at the far end." width="1486" height="990" loading="lazy" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>Corridor</b><span>Inside the clinic on level three.</span></figcaption>
+        </figure>
       </div>
 
     </div>
@@ -488,9 +464,8 @@
             <a class="kit-btn kit-btn--ghost" href="locations.html"><span>Where we practise</span></a>
           </div>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Who is based here, held</span>
-          <p>Which specialists practise at this address, and on which days, has not been confirmed. Per-clinic rosters must come from the owner. Do not assume every specialist works at every clinic, and do not name one on this page until that assignment is confirmed in writing.</p>
+        <div class="kit-truth">
+          <p>This page does not name which specialists practise at this address, or on which days.</p>
         </div>
       </div>
 
@@ -526,9 +501,8 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Treatment room</b><span>Where a scan is read at this branch.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Per site equipment, held</span>
-          <p>Only CBCT is verified across all four clinics. Which of the other seven units stand in these rooms is not recorded per site, so the panel names them as systems the group works with and claims nothing further. Confirm the equipment list before any of them is named as available at this address.</p>
+        <div class="kit-truth">
+          <p>These are systems the group works with; this page does not state which of them are installed at this address.</p>
         </div>
       </div>
 
@@ -685,8 +659,7 @@
 
       <div class="col col--full">
         <div class="kit-truth">
-          <span class="kit-truth__k">The delivery schedule, held</span>
-          <p>Which of the practices above run at this address, and on which days, follows the specialist schedule, and that schedule is not recorded per clinic. Until it is, this band routes each entry to its own hub rather than stating that all of them are delivered here.</p>
+          <p>Which of the treatments above run at this address, and on which days, follows the specialist schedule, and that schedule is not confirmed for this clinic.</p>
         </div>
         <hr class="kit-hr">
       </div>
@@ -705,14 +678,6 @@
         <div class="kit-foot">
           <p class="kit-micro">Patients treated here</p>
           <p class="kit-body readw--wide">Patients have published written accounts of their treatment with us, and some of those accounts name the clinic they were treated at. None appears on this page, and the reason is set out below rather than left as a gap.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Signed patient consent, held. Designed and not deployed.</span>
-          <p>Consent for republication has not been confirmed, so no testimonial text, patient name, or before-and-after clinical image appears here. Republishing a patient's words or clinical photographs without a signed release is a legal exposure, not a content gap. This block stays as it is until the release file exists.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The consultation fee, held</span>
-          <p>The brief carries a complimentary first consultation, sourced to an agent-derived entry rather than a client-supplied one, so it is not published here. Confirm whether a fee applies to a first visit and, if so, what it is. An offer of that kind must not ship on inference.</p>
         </div>
       </div>
 

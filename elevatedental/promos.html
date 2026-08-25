@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,53 +266,31 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-7 col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Offers</span></div>
-          </div>
-        </div>
-        <h1 id="h01">Current Offers</h1>
-        <p class="kit-status kit-tab"><span class="kit-status__dot" aria-hidden="true"></span>One offer running as this page was built. Confirm before launch</p>
-        <p class="kit-lede readw">Only offers that are running right now. Each one carries the date it ends.</p>
-        <p class="kit-body readw">An offer that has passed its end date is archived automatically and stops appearing here. If it is on this page, it is live today. If a date has passed, it is gone, not grayed out and not quietly left up.</p>
-        <p class="kit-accentline">A discount changes what a treatment costs. It does not change whether that treatment is right for your case.</p>
-        <p class="kit-body readw">Every offer is subject to clinical assessment, and our specialists will tell you if the treatment you came in for is not the one your case needs.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="#s02">See the offer that is running</a>
-          <a class="kit-btn kit-btn--secondary" href="prices.html">Prices without an offer</a>
-        </div>
-      </div>
-
-      <div class="col col--span-5 col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_promo-cdc.jpg" alt="A clinician in a disposable gown and gloves stands in a treatment room while colleagues work at a chair behind him, under a wall mounted panoramic dental x-ray." width="500" height="500" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>The clinic, not the poster</b><span>The offer changes. Who carries out the treatment does not.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is filtered, and what it says when nothing matches</p>
-          <p class="kit-body readw--wide">Every card carries five values so the toolbar acts on real content rather than shipping inert: its category, its tags, the treatment it applies to, the clinic or clinics it runs at, and the date it ends. The list is sorted by that end date, soonest first, so what expires first sits first.</p>
-          <div class="kit-tags">
-            <a class="kit-tag" href="cosmetic-dentistry.html">Cosmetic</a>
-            <a class="kit-tag" href="orthodontics.html">Orthodontics</a>
-            <a class="kit-tag" href="general-dentistry.html">General dentistry</a>
-            <a class="kit-tag" href="laser-teeth-whitening.html">Whitening</a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-brass-card.jpg" alt="A plain brushed brass card lying on woven bone linen under dappled afternoon shadow." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Current Offers</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Offers</p>
+            <p class="kit-status kit-tab"><span class="kit-status__dot" aria-hidden="true"></span>One offer running as this page was built. Confirm before launch</p>
+            <p class="foh-hero__lede">Only offers that are running right now, each carrying the date it ends.</p>
+            <p class="kit-accentline">A discount changes what a treatment costs. It does not change whether that treatment is right for your case.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="#s02">See the offer that is running</a>
+              <a class="kit-btn kit-btn--secondary" href="prices.html">Prices without an offer</a>
+            </div>
           </div>
-          <p class="kit-quote kit-quote--display readw">No current offer matches those filters. Clear one filter to widen the list, or see all current offers. If nothing is running for the treatment you want, the price list carries a starting figure for every treatment.</p>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -334,6 +315,29 @@
         <p class="kit-lede readw--wide">A small pinned set sits above the list, chosen for what the offers are worth rather than for what was posted most recently. Today that set holds one.</p>
       </div>
 
+      <div class="col col--span-7">
+        <div class="kit-foot">
+          <p class="kit-micro">How this page is filtered, and what it says when nothing matches</p>
+          <p class="kit-body readw--wide">Every card carries five values so the toolbar acts on real content rather than shipping inert: its category, its tags, the treatment it applies to, the clinic or clinics it runs at, and the date it ends. The list is sorted by that end date, soonest first, so what expires first sits first.</p>
+          <div class="kit-tags">
+            <a class="kit-tag" href="cosmetic-dentistry.html">Cosmetic</a>
+            <a class="kit-tag" href="orthodontics.html">Orthodontics</a>
+            <a class="kit-tag" href="general-dentistry.html">General dentistry</a>
+            <a class="kit-tag" href="laser-teeth-whitening.html">Whitening</a>
+          </div>
+          <p class="kit-quote kit-quote--display readw">No current offer matches those filters. Clear one filter to widen the list, or see all current offers. If nothing is running for the treatment you want, the price list carries a starting figure for every treatment.</p>
+        </div>
+      </div>
+
+      <div class="col col--span-5 col--media">
+        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
+          <div class="kit-slot__mask kit-slot__mask--circle">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_promo-cdc.jpg" alt="A clinician in a disposable gown and gloves stands in a treatment room while colleagues work at a chair behind him, under a wall mounted panoramic dental x-ray." width="500" height="500" loading="eager" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>The clinic, not the poster</b><span>The offer changes. Who carries out the treatment does not.</span></figcaption>
+        </figure>
+      </div>
+
       <div class="col col--full">
         <div class="kit-card kit-card--tint kit-card--pad" data-rise>
           <div class="kit-card__top">
@@ -355,15 +359,7 @@
 
       <div class="col col--span-6">
         <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, confirm before publishing</span>
-          <p>The offer above is transcribed from the practice's current listing, where it is dated 1 to 31 August 2026 and is therefore live as at the build date. Confirm it is still running, and confirm the three discount ceilings, before this page ships. An offer transcribed from a site that was not maintained is not the same thing as an offer the clinics will honor at the desk.</p>
-        </div>
-      </div>
-
-      <div class="col col--span-6">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Campaign artwork, held</span>
-          <p>The key visual for this campaign exists in the asset set and is deliberately not shown. Its artwork states a different treatment list and a different ceiling from the terms written above, and it carries a superlative about the sale that the claim rules do not allow on any surface, pixels included. Supply artwork whose stated terms match the confirmed terms, or this band ships as it is: the offer in words, which is the part a patient reads anyway.</p>
+          <p>The offer above is transcribed from the practice's current listing, where it is dated 1 to 31 August 2026, and it has not been reconfirmed with the clinics. Confirm with the practice that it is still running, and that the discounts hold, before you rely on it.</p>
         </div>
       </div>
 
@@ -424,12 +420,7 @@
           <figcaption class="kit-slot__cap"><b>The expiry rule</b><span>Offers are removed on the day after they end. Nothing here has expired.</span></figcaption>
         </figure>
         <div class="kit-truth">
-          <span class="kit-truth__k">Partner and bank offers, unconfirmed</span>
-          <p>Card partner and instalment offers on the practice's current site carry end dates from two years ago. No bank, no card issuer, no term, no minimum spend threshold and no interest rate is published here until the client confirms in writing which partnerships are active this year. Any figure attached to one of those offers before that confirmation is representative rather than real, and it may not ship on this page in any form.</p>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Two claim families, stripped</span>
-          <p>Two claims attached to past offers are withheld. An aligner provider tier description, which resets annually and is unconfirmed for the current year, and a multi year treatment warranty whose terms have never been published. Neither returns to an offer card without its receipt, and the tier claim must carry its year on the day it does.</p>
+          <p>No bank, card issuer, term, minimum spend threshold or interest rate is published here: card partner and instalment offers carried on the practice's current site have end dates from two years ago and are not confirmed as active this year.</p>
         </div>
       </div>
 

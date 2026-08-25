@@ -1,0 +1,2883 @@
+/* ============================================================================
+   ELEVATE DENTAL - "FRONT OF HOUSE" CSS FOUNDATION
+   ONE MERGED SHEET. Parts: 1 TOKENS -> 2 COMPONENTS -> 3 TYPE / TEXTURE / MOTION
+   ----------------------------------------------------------------------------
+   THESIS. The site is the reception room, not the case file. Its job is to make
+   a nervous self-payer feel looked after before they have committed a peso.
+
+   This file is the integration of three slices that were authored in PARALLEL,
+   without sight of each other. Everything below is either one of those slices,
+   verbatim, or a documented resolution of a place where two of them disagreed.
+   Every resolution is marked [SEAM-n] at its site AND listed in the ledger
+   below, so any edit made during the merge can be found by grepping "[SEAM-".
+
+   ----------------------------------------------------------------------------
+   LOAD ORDER IS LOAD-BEARING. THIS IS NOT A STYLE PREFERENCE.
+   ----------------------------------------------------------------------------
+       elevatedental-tokens.css
+       elevatedental-structural.css
+       elevatedental-chrome.css
+       THIS FILE                       <- must be LAST
+   Several rules here win purely on SOURCE ORDER at equal specificity, because
+   the house rule is "additive where possible" and an additive override of a
+   single-class rule is itself a single-class rule. If this file is ever
+   concatenated BEFORE the base sheets, those rules do not error and do not warn
+   -- they silently do nothing. The ones that depend on it:
+     body{background-color}      (0,0,1) ties the base body rule -> the page
+                                 ground stays cool white while everything else
+                                 goes warm
+     .section--paper             ties the base ground modifier
+     .kit-btn / .kit-btn--*      tie the base button skins -> buttons stay navy
+                                 with 2px corners
+     .kit-slot__mask--*          tie the base mask geometry -> the arch keeps its
+                                 height:100% and the 4.5x ratio spread returns
+     .kit-hero:not(.foh-hero)    (0,2,0) - safe on specificity, listed for
+                                 completeness
+     the motion budget           ties structural's .js-rise [data-rise] rule ->
+                                 the mod-6 stagger comes back
+   Within this file the three parts must also stay in the stated order, and the
+   reduced-motion block at the very end must remain the LAST motion rule.
+
+   ----------------------------------------------------------------------------
+   THE SEAM LEDGER - every disagreement found between the three slices, and how
+   it was resolved. Nothing here is cosmetic; each item is either a live defect,
+   a dead declaration, or an architecture violation.
+   ----------------------------------------------------------------------------
+
+   [SEAM-1]  ARCHITECTURE. --ds-grid: none was declared by the TYPE part, in
+             :root and again in .surface-dark. The house rule is that brand
+             tokens live in the tokens slice and every other slice references
+             them by var(). RESOLVED: relocated verbatim into Part 1, both
+             scopes, with its reasoning. BEHAVIOURALLY INERT - verified by
+             enumerating every custom-property declaration in the merged sheet
+             and confirming nothing between Part 1 and EOF re-declares --ds-grid.
+             The base sheets load earlier, so the override still lands.
+             STATUS: resolved, zero rendered change.
+
+   [SEAM-2]  A LIVE CONTRAST FAILURE, and the sharpest thing this merge found.
+             The components part painted the hero band's fallback ground with
+             background-color: var(--ds-primary-deep). The tokens part had
+             warned, in writing, that --ds-primary-deep resolves to #FFFFFF
+             inside .surface-dark and must never be substituted for a literal
+             navy -- and then the components part reached for that very token
+             from the other direction, as a GROUND rather than as an ink.
+             The band's headline is var(--ds-scrim-ink) = #FFFFFF.
+             MEASURED: light scope #FFFFFF on #16273A = 15.16:1 PASS.
+                       dark  scope #FFFFFF on #FFFFFF =  1.00:1 FAIL.
+             White text on a white ground, for the whole time before the
+             photograph paints and permanently if it 404s. This is the same
+             mechanism as the 2026-08-24 white-on-gold bug: not a colour that
+             flips wrongly, but a GROUND that flips out from under a fixed ink.
+             RESOLVED: new token --ds-photo-ground, pinned to #16273A and
+             RESTATED IDENTICALLY in both scopes, because a photograph is not a
+             surface and its fallback must not re-tint when the band is marked
+             dark. 15.16:1 in both scopes.
+             STATUS: resolved, defect removed.
+
+   [SEAM-3]  A LIVE GEOMETRY REGRESSION neither slice could see alone, because
+             each changed a DIFFERENT property of the same box.
+               components part:  .kit-btn padding 18px, min-height 54px, 14px
+               type part:        .kit-btn joins the 15px body-sm rung, whose
+                                 line-height is 1.62
+             .kit-btn is inline-flex with block padding and a MIN-height, so
+             line-height is a box dimension, not reading comfort.
+             RENDERED HEADLESS, all three states (see EVIDENCE below):
+                                  pill       ghost
+               base sheets only  48.00px    47.00px
+               UNRESOLVED        62.30px    58.30px  <- a naive merge
+               RESOLVED          56.75px    52.75px
+             +11.30px on EVERY ruled text link on the site was the real cost.
+             The components part had already caught this exact class of defect by
+             rendering, and warned that 8px on every ghost "would have shifted
+             the rhythm of the rails site-wide". The leading change walked back
+             into it through a different property.
+             RESOLVED: .kit-btn pulled out of the body-sm group and given ONE
+             owner in Part 3 carrying size AND leading; new --foh-lh-control
+             (1.25); the components part's dead font-size:14px removed. The 15px
+             rung is honoured - the 13px original is below the 14px floor this
+             direction sets, and the floor is not negotiable.
+             RESIDUAL, STATED: the ghost still grows ~5.75px against the base
+             sheet. That half is FONT-SIZE driven (it is the 14px floor being
+             applied) and no choice of leading removes it.
+             CONTRAST UNCHANGED: 15px/600 is still NORMAL text, bar still 4.5,
+             bronze pill still 4.97:1 light / 6.06:1 dark.
+             STATUS: resolved, with a named residual.
+
+   [SEAM-4]  DEAD DECLARATION. Both the components part and the type part
+             coloured .foh-hero__eyebrow. The type part's micro-label group set
+             it to --ds-ink-soft and its promoted-label rule then restored
+             --ds-accent-text; all three are (0,1,0), so the components part's
+             copy could never win. RESOLVED: the dead declaration removed, its
+             reasoning preserved as a comment. Final computed colour is
+             --ds-accent-text either way, so the render is byte-identical - but
+             the colour now has ONE owner instead of two that silently agreed.
+             STATUS: resolved, zero rendered change.
+
+   [SEAM-5]  DOCUMENTED INTENT DID NOT MATCH THE SELECTOR. The type part's grain
+             section states at length that .foh-hero is deliberately grained. Its
+             selector list did not contain .foh-hero. The grain reached a
+             migrated hero only because every hero in the built pages ALSO
+             carries .section--paper, which IS in the list. Correct outcome,
+             accidental mechanism, and it would have failed silently on any
+             .foh-hero that was not also .section--paper.
+             RESOLVED: .foh-hero named explicitly. Zero change for current
+             markup. It re-adds the GRAIN LAYER ONLY - the two cool radial washes
+             are confined to .kit-hero:not(.foh-hero) and the 44px grid cannot
+             return because --ds-grid is none.
+             STATUS: resolved, zero rendered change.
+
+   [SEAM-6]  A LATENT SPECIFICITY COLLISION, guarded rather than left to luck.
+             The type part sets h1, .kit-d1 { font-size: var(--foh-t-d1) } - a
+             clamp topping out at 92px - plus max-width 16ch. .kit-d1 is (0,1,0),
+             the same weight as the components part's .foh-hero__title, and the
+             type part concatenates LATER. A hero <h1> carrying both classes
+             would take the display rung on source order, blow the headline to
+             92px and push it out of the bottom 34% band where the 5.29:1 scrim
+             floor was computed - voiding the contrast contract silently.
+             NOT LIVE TODAY: .kit-d1 is used ZERO times across pages/*.html
+             (grepped this turn) and the migrated markup emits
+             <h1 class="foh-hero__title" id="..."> with no display class. The
+             bare h1 selector (0,0,1) already loses.
+             RESOLVED: the two values promoted to tokens (--foh-t-hero,
+             --foh-hero-measure) so there is one source, and a (0,1,1) guard
+             h1.foh-hero__title restates them so the display rung can never take
+             them away. Deliberate consequence: a hero headline cannot opt into
+             .kit-d1--long, and does not need to - --foh-t-hero already tops out
+             at 58px, which IS the --foh-t-d1-long ceiling.
+             STATUS: guarded, zero rendered change today.
+
+   ----------------------------------------------------------------------------
+   CHECKED AND FOUND CLEAN - the failure modes the brief named, tested for
+   explicitly with a brace-aware parser over all six sheets, not by eye.
+   ----------------------------------------------------------------------------
+   - UNDECLARED var(). ZERO. All 88 distinct var() references across the three
+     parts resolve against a declaration in this file or in the three base
+     sheets. This was the specific failure that cost this build every border and
+     letter-spacing in one block earlier this week, so it was machine-checked
+     rather than reasoned about. --ed-gutter (used twice by the hero) resolves to
+     structural.css:193, with its 375px override at 1835.
+   - TWO SLICES DECLARING THE SAME TOKEN WITH DIFFERENT VALUES. ZERO. The three
+     parts declare 95 custom properties between them and the name sets are
+     disjoint: Part 1 owns --ds-*, Part 2 owns --foh-r/ar/outdent/hero/lift/t-hero,
+     Part 3 owns --foh-t/lh/track/read/head/rise. No name is declared twice in the
+     same scope anywhere in the merged file.
+   - BRAND HEX OUTSIDE THE TOKENS PART. ZERO. With comments stripped, Parts 2 and
+     3 contain no hex literal and no rgb()/rgba() literal of any kind. Every
+     colour in them arrives through var(--ds-*). All 31 hex values and all 7 rgba
+     values in the file are inside Part 1.
+   - A COLOUR PAIRED WITH A GROUND FROM THE OTHER SCOPE. One found ([SEAM-2]),
+     fixed. Every other colour token these parts consume was checked for dark
+     coverage: each has a declaration in BOTH :root and .surface-dark, either
+     from the base tokens sheet or from Part 1. Verified specifically that the
+     base sheet re-declares --ds-ink (#F4F6F8) and --ds-ink-soft (#A9B4C2) inside
+     .surface-dark, so Part 1's warm :root re-points do NOT leak onto navy. Had
+     it not, --ds-ink-soft would have rendered #665C51 on #16273A at 2.32:1.
+   - A RULE TOUCHING SECTION PADDING. One padding-block declaration exists in the
+     whole file: .foh-hero { padding-block: 0 }. It is legal, and this was
+     verified against the gate rather than taken on trust -
+     .claude/skills/client-site-build/scripts/verify-section-rhythm.mjs sets
+     HERO_EXEMPT: true (line 74), computes isHero = /hero/.test(cls) (line 168)
+     and excludes heroes from the cadence set (line 188). No other section's
+     padding is touched, --ed-flow is never redeclared, and the 409 sections that
+     compute 95.04px at 1440 and 40px at 375 are untouched. Every other padding
+     declaration in the file is on a component or a hero-local element.
+
+   ----------------------------------------------------------------------------
+   CONTRAST - independently recomputed at merge time, WCAG 2.x relative
+   luminance. Body bar 4.5:1, large-text and non-text bar 3.0:1. Every figure the
+   three parts depend on was recomputed here from the hex rather than copied, and
+   all of them reproduced.
+   ----------------------------------------------------------------------------
+   LIGHT              white    paper    sand     warm       bar
+     --ds-ink         16.33    15.00    13.32    12.03      4.5   PASS
+     --ds-ink-soft     6.53     6.00     5.33     4.81      4.5   PASS
+     --ds-ink-heading 11.65    10.70     9.50     8.58      4.5   PASS
+     --ds-accent-text  6.77     6.22     5.52     4.99      4.5   PASS
+     --ds-action fill  4.97     4.57     4.05     3.66      3.0   PASS
+     --ds-line-strong  4.16     3.82     3.39     3.06      3.0   PASS
+   BUTTONS  light  #FFFFFF on #876C33 4.97 | hover on #6F5828 6.77   PASS 4.5
+            dark   #16273A on #C69E4C 6.06 | hover on #DCBB74 8.23   PASS 4.5
+   DARK     --ds-ink #F4F6F8 on #16273A 13.99 | --ds-ink-soft #A9B4C2 7.21  PASS
+            --ds-line-strong #6E819A on navy 3.80 / navy-2 3.35      PASS 3.0
+   HERO BAND, guaranteed floor over a blown-white photograph, both scrims
+   composed:  0% 11.87 | 20% 9.02 | 34% 5.29 (the contract line, needs only 3.0)
+              40% 3.59 (large only) | 50% 1.87 | 68% 1.00 (unveiled photograph)
+   GRAIN, worst-case noise pixel, --ds-ink-soft:
+              page 5.44 | wash 5.06 | sand 4.84  PASS -- all grained
+              warm 4.37  FAIL      -- which is exactly why .section--warm,
+              .kit-truth and .site-footer are left SMOOTH. Confirmed at merge.
+   [SEAM-2]   --ds-scrim-ink #FFFFFF on --ds-photo-ground #16273A = 15.16:1 in
+              BOTH scopes (was 1.00:1 in dark scope before the fix).
+   PROHIBITED PAIRS, measured and designed around, never written:
+              #FFFFFF on #C69E4C .......... 2.50  the 2026-08-24 bug
+              #C69E4C as light-scope text .. 2.50 / 2.30 / 2.04
+              #876C33 as text on sand ...... 4.05  (why --ds-accent-text exists)
+
+   ----------------------------------------------------------------------------
+   HOUSE RULES
+   ----------------------------------------------------------------------------
+   HEALTHCARE. Nothing in this file states or implies a clinical claim, outcome
+   or guarantee. It sets colour, geometry, size, texture and timing only, and
+   writes no copy. The single copy-adjacent change, text-transform:none on the
+   micro-labels, renders source text that is ALREADY sentence case as written.
+   PRICES. No rule makes a price larger, heavier, more colourful or more
+   prominent. The one price rule, .kit-table__from, rises to the 14px legibility
+   floor while SIMULTANEOUSLY dropping from weight 700 to 500 and losing its
+   uppercase stamp, so the "from" qualifier reads as a qualifier. Published
+   figures are representative market figures, not this practice's fees, and
+   [SEAM-3] does not put the new bronze pill anywhere near them.
+   TOKEN PURITY. Parts 2 and 3 contain no colour literal of any kind. The two
+   tokens added at merge time are declared in Part 1 with both scopes stated.
+
+   ----------------------------------------------------------------------------
+   WHAT IS NOT VERIFIED, AND WHAT IS STILL OPEN. Read this before calling it done.
+   ----------------------------------------------------------------------------
+   (a) RENDER STATUS. This merged sheet HAS been rendered, but only against a
+       SYNTHETIC harness in a scratch directory -- never against the real pages,
+       because a build is running on the site tree and this pass was scoped to
+       author only. What was actually observed, headless in
+       chrome-headless-shell 1228 at 1440x900, with all four sheets inlined in
+       cascade order:
+         - all 4 sheets PARSE: 576 top-level rules readable, 0 unreadable
+         - ordinary sections compute padding 95.04px top AND bottom -- the
+           brief's own measured value, so section rhythm is provably untouched;
+           the hero computes 0/0, which is the rhythm-exempt case
+         - [SEAM-2] the hero band ground computes rgb(22,39,58) in BOTH the light
+           and the .surface-dark document, with a white headline over it. Before
+           the fix the dark case computed rgb(255,255,255)
+         - [SEAM-3] pill 56.75px / ghost 52.75px against 62.30 / 58.30 unresolved
+         - [SEAM-5] .foh-hero background-image resolves to the grain data URI,
+           and --ds-grid computes "none" in both scopes
+         - [SEAM-6] hero title 58px at max-width 711.97px (20ch), held
+         - frame and arch plates render BYTE-IDENTICAL boxes (1190.00 x 892.50);
+           circle keeps 1/1 with clip-path none; arch min-height computes 0px
+         - the full-width plate reaches 1320px at a 1440 viewport
+         - grounds: body/paper #F7F5F1, cool #EFE7DB, warm #E7DCC8, footer
+           #E7DCC8; .kit-truth computes background-image NONE, so the grain
+           exclusion that keeps ink-soft at 4.81:1 rather than 4.37:1 holds
+         - the smallest font rendered anywhere in <main> is 14px -- the floor
+         - no horizontal overflow (scrollWidth 1425 vs innerWidth 1440)
+       WHAT IS STILL UNSEEN: the real 49 pages, every breakpoint except 1440x900,
+       and every judgement that needs an eye rather than a number -- above all
+       item (b) below. The harness is synthetic and its grid is not the real
+       grid, so the plate WIDTHS above prove determinism, not layout.
+   (b) THE WARM GROUND MOVED UNDER THREE ATMOSPHERIC WASHES THAT WERE NEVER
+       RETARGETED. Part 1 re-points --ds-bg-warm from #F7F5F1 to #E7DCC8 and
+       shipped --ds-bg-wash (#F2EDE3) so the washes tuned against a near-white
+       value could be softened. Part 2 consumed it for .kit-slot__art; Part 3
+       declined on the grounds that it is a colour decision. Three consumers
+       remain on the deep value: structural.css:452 and :455 (.kit-atmos,
+       .kit-atmos--left) and chrome.css:186 (the header shelf). They will read
+       materially warmer/tanner. Not a contrast failure, not broken - a taste
+       call that needs an eyeball at 1440. The fix is one token swap per rule.
+   (c) THE FOOTER CHANGES COLOUR SUBSTANTIALLY. chrome.css:478 paints
+       .site-footer from --ds-bg-warm, so it moves from near-white #F7F5F1 to
+       deep sand #E7DCC8 on all 49 pages. This is a consequence of the ground
+       ladder rather than a decision anyone recorded. Contrast was checked and
+       passes (ink 12.03:1, ink-soft 4.81:1), and it is why the footer is one of
+       the surfaces left ungrained. Flagged because it is highly visible.
+   (d) A PRE-EXISTING DARK-SCOPE FAILURE THIS AUDIT SURFACED BUT DID NOT FIX.
+       structural.css:901 .kit-tag--accent sets color: var(--ds-accent-deep) on
+       background: var(--ds-bg-warm). In .surface-dark those resolve to #A98338
+       on #1B2A3D = 4.15:1, below the 4.5 bar. It is PRE-EXISTING - no slice
+       introduced it and no slice touches either value in the dark scope - and
+       fixing base-sheet bugs silently inside an integration pass is its own kind
+       of drift, so it is reported rather than patched. The one-line fix is
+       --ds-accent-text, which Part 1 already flips per scope (#C69E4C, 6.06:1).
+       In the LIGHT scope this pair degrades from 6.22:1 to 4.99:1 under the new
+       ground and still passes.
+   (e) C7's "sticky-mobile-action-bar" SIGNATURE MOVE IS NOT DELIVERED. Part 1
+       shipped --ds-bg-bar and --ds-bar-line for it; Part 2 then established, by
+       reading the source, that .section carries overflow:hidden which makes
+       position:sticky inert for every descendant, and deliberately wrote no
+       sticky rule. So those two tokens are declared and unused, as are
+       --ds-scrim-safe, --ds-focus-ring and --ds-focus-ring-contrast (Part 2
+       showed the base focus ring already lands on the ground at a positive
+       offset and needs no override). Harmless, but the signature move is
+       outstanding and needs a bar mounted outside .section.
+   (f) THE HERO NEEDS MARKUP THIS FILE CANNOT ADD, and the build is mid-migration:
+       .foh-hero__* markup is present in some page twins already. Un-migrated
+       .kit-hero bands are handled by .kit-hero:not(.foh-hero) and degrade
+       correctly; their first radial is still the cool --ds-primary-soft, which
+       is a real warm/cool seam left deliberately untouched.
+   (g) CIRCLE PORTRAITS BECOME ROUNDED SQUARES. 60 clinician portraits keep their
+       exact 1/1 crop but lose the circular clip. No re-crop, 26.6% more of each
+       photograph visible, but it is the most noticeable single change here and
+       the owner should see it.
+   (h) THE data-rise CENSUS IS UNRECONCILED: the brief quotes 1,277 reveals, the
+       type part measured 1,199 on the 49 rendered pages. No rule depends on the
+       figure. Recorded, not explained away.
+   ========================================================================= */
+
+
+
+/* ############################################################################
+   ##  PART 1 of 3 - TOKENS: THE PALETTE AND THE GROUND FLIP
+   ##  Owns every --ds-* declaration in this patch, both scopes. The only part
+   ##  that may contain a colour literal. Merge additions: --ds-photo-ground
+   ##  [SEAM-2] and the relocated --ds-grid:none [SEAM-1].
+   ############################################################################ */
+
+/* ============================================================================
+   FRONT OF HOUSE - SLICE 1 of 3: THE PALETTE AND GROUND FLIP
+   elevatedental. Concat order: [base sheets] -> foh-01-tokens -> foh-02-components
+   -> foh-03-type. This slice declares CUSTOM PROPERTIES and GROUND UTILITIES ONLY.
+   No component skins, no type scale. Section padding is not touched anywhere here.
+
+   THESIS: the site is the reception room, not the case file. The ground stops
+   being cool white/#F3F5F8 and becomes warm paper. Type moves into the same
+   temperature as the ground. Bronze stops being a hairline decoration and becomes
+   the thing you press.
+
+   ---------------------------------------------------------------------------
+   CORRECTION TO THE BRIEF (verified 2026-08-25)
+   ---------------------------------------------------------------------------
+   The brief states --ds-bg-warm is #FBF4E6, "a pale GOLD cream too yellow to be a
+   default page ground". That is STALE. Read from the live sheet
+   _design/elevatedental-tokens.css line 30, --ds-bg-warm is ALREADY #F7F5F1, and
+   `grep -rn FBF4E6` over the whole _design tree returns ZERO hits. #FBF4E6 does
+   not exist in this codebase.
+   So the question the brief poses -- "add a new neutral warm paper around #F7F5F1
+   or re-point the existing one" -- is already half-answered: the neutral warm
+   paper VALUE exists. What does not exist is the ROLE. #F7F5F1 is currently only
+   an occasional band tint (.section--warm), never the page ground. This slice
+   therefore does NOT invent a new paper colour. It promotes the value already
+   present into the page-ground role, and re-points the tokens that collide with it.
+
+   ---------------------------------------------------------------------------
+   THE GROUND LADDER (four warm steps, each visibly separated)
+   ---------------------------------------------------------------------------
+     white  #FFFFFF  --ds-bg-surface     cards / raised plane        UNCHANGED
+     paper  #F7F5F1  --ds-bg-page        the page ground             NEW TOKEN
+     sand   #EFE7DB  --ds-bg-surface-2   alternate + feature bands   RE-POINTED
+     warm   #E7DCC8  --ds-bg-warm        the deepest warm band       RE-POINTED
+   Measured per-channel separation, so no two steps read as the same colour:
+     white->paper 8/10/14   paper->sand 8/14/22   sand->warm 8/11/19
+   The reference look -- rounded WHITE cards floating on a WARM ground -- only
+   works if the card plane and the page plane are different colours. That is the
+   reason --ds-bg-surface stays #FFFFFF and the page ground is a NEW token rather
+   than a re-point of --ds-bg-surface.
+
+   ---------------------------------------------------------------------------
+   WHY --ds-bg-warm HAD TO MOVE (a collision the brief did not anticipate)
+   ---------------------------------------------------------------------------
+   --ds-bg-warm was #F7F5F1. If paper (#F7F5F1) becomes the page ground and
+   --ds-bg-warm keeps its value, then .section--warm (structural line 366) paints
+   the page ground onto the page ground and EVERY warm band on the site silently
+   vanishes -- 12 call sites, including the .kit-atmos radial washes. So
+   --ds-bg-warm is re-pointed DEEPER, to #E7DCC8, which keeps it a real band
+   against the new paper. #EDE4D2 was measured first and rejected: only 2/3/9
+   per-channel from sand, which reads as the same colour.
+
+   ---------------------------------------------------------------------------
+   WHY NOT RE-POINT --ds-bg-surface TO THE WARM PAPER
+   ---------------------------------------------------------------------------
+   --ds-bg-surface has a DUAL ROLE in this codebase. It is a ground, but it is
+   also the INK token of the primary button: structural line 786 is
+   `color: var(--ds-bg-surface)`. Inside .surface-dark that token resolves to the
+   deep navy #16273A, and that is precisely the fix applied on 2026-08-24 which
+   took the dark-band CTA from 2.5:1 (white on gold) to 6.06:1. Re-pointing
+   --ds-bg-surface to a warm paper would reach into that repaired rule and change
+   the button's ink out from under it. Left alone. This is the same class of trap
+   the brief warns about, arriving from the opposite direction.
+
+   ---------------------------------------------------------------------------
+   MEASURED CONTRAST -- every pair the other two slices are expected to use.
+   Computed with the WCAG 2.x relative-luminance formula, not eyeballed.
+   Button labels are 13px/600 = NORMAL text, so they are held to 4.5, not 3.0.
+   ---------------------------------------------------------------------------
+   LIGHT SCOPE                             white   paper   sand    warm
+     --ds-ink         #241F1A  body        16.33   15.00   13.32   12.03   PASS
+     --ds-ink-soft    #665C51  body         6.53    6.00    5.33    4.81   PASS
+     --ds-ink-heading #243A52  headings    11.65   10.70    9.50    8.58   PASS
+     --ds-accent-text #6F5828  eyebrows     6.77    6.22    5.52    4.99   PASS
+     --ds-action      #876C33  fill vs bg    4.97    4.57    4.05    3.66   PASS (3.0)
+     --ds-action-ink  #FFFFFF  on the fill ....... 4.97:1 ...........   PASS (4.5)
+     --ds-action-hover #6F5828 + white ink ...... 6.77:1 ...........   PASS (4.5)
+     --ds-line-strong #847B70  borders      4.16    3.82    3.39    ----   PASS (3.0)
+     --ds-focus-ring  #876C33  vs grounds   4.97    4.57    4.05    3.66   PASS (3.0)
+     --ds-focus-ring-contrast #241F1A on the bronze fill .... 3.28:1   PASS (3.0)
+
+   DARK SCOPE (.surface-dark, ground #16273A)
+     --ds-ink          #F4F6F8                    13.99:1              PASS
+     --ds-ink-soft     #A9B4C2                     7.21:1              PASS
+     --ds-action       #C69E4C  fill vs navy       6.06:1              PASS (3.0)
+     --ds-action-ink   #16273A  ON that gold       6.06:1              PASS (4.5)
+     --ds-action-hover #DCBB74  + #16273A ink      8.23:1              PASS (4.5)
+     --ds-accent-text  #C69E4C  on navy            6.06:1              PASS
+     --ds-focus-ring   #C69E4C  on navy / navy-2   6.06 / 5.33:1       PASS (3.0)
+
+   MEASURED FAILURES, recorded so slices 2 and 3 do not walk into them:
+     #FFFFFF on #C69E4C ....... 2.50:1  the 2026-08-24 bug. Never white ink on
+                                gold. --ds-action-ink exists to make it
+                                un-writable.
+     #C69E4C as TEXT in LIGHT .. 2.50 / 2.30 / 2.04:1 on white / paper / sand.
+                                --ds-accent-light is a FILL and a DARK-SCOPE ink
+                                only. Never light-scope text at any size -- it
+                                does not even clear the 3.0 large-text floor.
+     #876C33 as TEXT on sand ... 4.05:1 FAILS. Bronze is strong enough to be a
+                                FILL on every ground but NOT small TEXT on sand or
+                                warm. That is why --ds-accent-text (#6F5828) is a
+                                SEPARATE token from --ds-accent (#876C33). Eyebrow
+                                labels take --ds-accent-text. The amended C7 move
+                                "eyebrow-label-above-serif-h2" lands on sand bands
+                                and would fail there on --ds-accent.
+     #241F1A on #16273A ........ 1.08:1 proves the .surface-dark ink flip is
+                                mandatory, not cosmetic.
+
+   NOTE ON HAIRLINES: no 1px separator at any of these values reaches 3.0 against
+   its ground (--ds-line #DED7CB measures 1.43:1 on white). That is correct and
+   compliant -- WCAG 1.4.11 governs the boundaries of UI COMPONENTS and state
+   indicators, not decorative rules between sections. Anything load-bearing (input
+   borders, checked states, control outlines) must use --ds-line-strong, sized to
+   clear 3.0 on all three light grounds. The outgoing cool --ds-line #DDE3EA
+   measured 1.29:1, so the warm replacement is a small IMPROVEMENT, not a
+   regression.
+
+   HOUSE-RULE NOTE: this slice introduces no size, weight or prominence change to
+   any price, and makes no claim of any kind. It is colour and ground only.
+   ========================================================================= */
+
+
+/* ============================================================================
+   1. LIGHT SCOPE
+   ========================================================================= */
+:root {
+
+  /* -- NEW: the warm page ground ---------------------------------------- */
+  /* The paper the whole site now sits on. Same value #F7F5F1 that --ds-bg-warm
+     used to hold; this token gives that value a NAME for the ground role, so the
+     role is readable in the sheet instead of implied. */
+  --ds-bg-page: #F7F5F1;
+
+  /* Semantic alias for the alternate/feature band. --ds-bg-surface-2 keeps the
+     legacy name that 19 existing rules reference; --ds-bg-sand is the name slices
+     2 and 3 should write. Both resolve to the same colour, so a band can never
+     drift out of step with the seam fill that has to match it. */
+  --ds-bg-sand: #EFE7DB;
+
+  /* -- RE-POINTED: the cool secondary ground is retired ------------------ */
+  /* WAS #F3F5F8 (hue ~213, cool). This single re-point is what actually flips the
+     site warm: it reaches all 19 --ds-bg-surface-2 call sites at once, including
+     .section--cool, .kit-card--tint and the chrome shelf tint, without editing one
+     of those working rules. 6 of the 19 sit inside .surface-dark and are NOT
+     affected -- that scope declares its own #1E3049. */
+  --ds-bg-surface-2: var(--ds-bg-sand);
+
+  /* WAS #F7F5F1. Moved deeper so .section--warm survives the ground flip. */
+  --ds-bg-warm: #E7DCC8;
+
+  /* A softer wash for the .kit-atmos radial gradients. --ds-bg-warm is now deep
+     enough that, used as an atmospheric wash, it may read heavier than intended.
+     This token exists so slice 2 can swap those four gradient rules onto it
+     WITHOUT reopening the ground ladder. Unused until slice 2 decides. */
+  --ds-bg-wash: #F2EDE3;
+
+  /* -- RE-POINTED: ink moves into the ground's temperature --------------- */
+  /* WAS #1F2124, a neutral-to-cool near-black. #241F1A is a warm dark (R>G>B).
+     Warming it COSTS NOTHING in legibility -- it measures HIGHER than the ink it
+     replaces on the ground it will actually sit on: 15.00:1 on paper against
+     14.82:1 for #1F2124. On the darkest ground in the ladder it still holds
+     12.03:1. */
+  --ds-ink: #241F1A;
+
+  /* WAS #5B6470 (hue ~214, cool). #665C51 was chosen over three warmer-but-lighter
+     candidates on MARGIN, not taste: #6E645A measures 4.71:1 and #71675C measures
+     4.51:1 on sand -- both technically pass but sit within rounding distance of
+     the 4.5 floor. Slice 3 is enlarging small type and will push far more words
+     onto this token, so it needs headroom. #665C51 holds 5.33:1 on sand and
+     4.81:1 on the deepest warm band. */
+  --ds-ink-soft: #665C51;
+
+  /* --ds-ink-heading stays #243A52. Navy remains the brand ink: NOT re-pointed,
+     NOT made into a ground. Its deliberate absence here is the decision. */
+
+  /* -- NEW: the ACTION role. Bronze is promoted from decoration to fill. -- */
+  /* Bronze previously appeared only as a 1px tick and a border. It becomes the
+     primary button fill -- the role the reference gives its mauve.
+     These are a separate ROLE FAMILY rather than a re-point of --ds-accent, for
+     two reasons. (1) --ds-accent is one of the tokens .surface-dark FLIPS, so any
+     rule built directly on it inverts across scopes -- that is exactly the
+     mechanism behind the 2.5:1 bug. (2) --ds-accent is still needed at its own
+     value for the hairline/tick work it already does in 26 places.
+     --ds-action ships with a MATCHED INK token so fill and ink cannot be paired
+     wrongly: slice 2 writes `background: var(--ds-action); color:
+     var(--ds-action-ink)` and BOTH scopes are correct by construction. */
+  --ds-action: #876C33;
+  --ds-action-hover: #6F5828;   /* hover goes DEEPER, never lighter: lightening
+                                   bronze toward gold walks straight back into the
+                                   2.5:1 failure. Deeper takes white ink from
+                                   4.97:1 to 6.77:1. */
+  --ds-action-ink: #FFFFFF;     /* 4.97:1 on the fill */
+
+  /* Bronze as TEXT needs a deeper value than bronze as FILL -- #876C33 measures
+     4.05:1 as text on sand and fails. This is the eyebrow / label colour. */
+  --ds-accent-text: #6F5828;
+
+  /* A warm tint for tinted cards, giving slice 2 a warm alternative to the cool
+     navy tint --ds-primary-soft (#E7EDF3, left untouched -- it belongs to the navy
+     family, and navy is retained). Verified on this tint: navy 9.76:1, warm ink
+     13.68:1, ink-soft 5.47:1. */
+  --ds-accent-soft: #F3EADA;
+
+  /* -- RE-POINTED: line + hairline follow the ground's temperature ------- */
+  --ds-line: #DED7CB;                    /* WAS #DDE3EA (cool). Decorative. */
+  --ds-hairline: rgba(36,31,26,.16);     /* WAS rgba(36,58,82,.16), a navy base.
+                                            Re-based on the new warm ink at the
+                                            SAME .16 alpha, so weight is unchanged
+                                            and only temperature moves. */
+  --ds-line-strong: #847B70;             /* NEW. The only line token permitted on
+                                            a real component boundary. 3.39:1 on
+                                            sand, its worst ground. */
+
+  /* -- NEW: focus ring, stated as a token so it cannot drift ------------- */
+  --ds-focus-ring: #876C33;
+  --ds-focus-ring-contrast: #241F1A;  /* for a ring drawn ON the bronze fill,
+                                         where a bronze ring would be invisible.
+                                         3.28:1 against that fill. */
+
+  /* -- NEW: the photographic band scrim --------------------------------- */
+  /* The spec permits ONE full-bleed photo band per page, scrimmed on the LOWER
+     BAND ONLY, never across the subject. These are tokens so slice 2 references
+     them instead of writing gradient literals.
+
+     The stops are not chosen by eye. Contrast over a photograph is indeterminate
+     -- the photo is unknown -- so each stop is sized against the WORST CASE: a
+     blown-out WHITE pixel (#FFFFFF) beneath the scrim. Compositing
+     result = alpha*navy + (1-alpha)*photo yields a GUARANTEED FLOOR that holds for
+     any image that could ever be dropped in:
+       alpha .86 -> composite rgb(55,69,86)    white ink 9.78:1   body text OK
+       alpha .82 -> composite rgb(64,78,93)    white ink 8.52:1   body text OK
+       alpha .74 -> composite rgb(83,95,109)   white ink 6.51:1   body text OK
+       alpha .58 -> composite rgb(120,130,141) white ink 3.91:1   LARGE text only
+       alpha .42 -> composite rgb(157,164,172) white ink 2.52:1   decorative only
+       alpha .30 -> composite rgb(185,190,196) white ink 1.87:1   decorative only
+     Over a typical mid-grey photo the same stops measure far higher (alpha .82
+     over #808080 = 12.13:1), so these are a FLOOR, not an estimate.
+
+     THE CONTRACT FOR SLICE 2: body text may only sit in the bottom 20% of the
+     band (--ds-scrim-safe), where the floor is >= 6.51:1. Large display text may
+     reach 34%. Above 50%, decoration only. The gradient reaches full transparency
+     at 68%, so the subject's face is never veiled -- the imagery-system rule
+     expressed as a number. */
+  --ds-scrim-rgb: 22,39,58;
+  --ds-scrim-photo: linear-gradient(to top,
+      rgba(22,39,58,.86) 0%,
+      rgba(22,39,58,.82) 10%,
+      rgba(22,39,58,.74) 20%,
+      rgba(22,39,58,.58) 34%,
+      rgba(22,39,58,.30) 50%,
+      rgba(22,39,58,0)   68%);
+  --ds-scrim-ink: #FFFFFF;
+  --ds-scrim-safe: 20%;   /* body-text-safe zone, measured from the bottom */
+
+  /* -- NEW: the sticky mobile action bar ground -------------------------- */
+  /* A signature move in the amended C7. Declared here so the bar's ground joins
+     the ladder rather than being invented in the component slice. Verified on
+     this ground: warm ink 16.33:1, ink-soft 6.53:1, bronze fill 4.97:1. */
+  --ds-bg-bar: #FFFFFF;
+  --ds-bar-line: var(--ds-line);
+
+  /* ====================== INTEGRATION-ADDED TOKENS ======================
+     Both are declared HERE and restated in .surface-dark, because this is the
+     tokens part and every --ds-* declaration in this patch lives in exactly one
+     place. See the SEAM LEDGER in the file header.
+     -------------------------------------------------------------------- */
+
+  /* [SEAM-2] THE PHOTOGRAPHIC BAND'S OWN GROUND. A SCOPE-INVARIANT NAVY.
+     This token exists because of a measured, live failure found while merging.
+     The components part painted the hero band's fallback ground with
+     var(--ds-primary-deep). That token is #16273A in :root but #FFFFFF inside
+     .surface-dark (base tokens sheet, dark block). The band's headline is
+     var(--ds-scrim-ink) = #FFFFFF. So a hero band inside any .surface-dark
+     subtree rendered WHITE TEXT ON A WHITE GROUND -- measured 1.00:1 -- for the
+     whole time before the photograph paints, and permanently if it 404s.
+     That is the SAME mechanism as the 2026-08-24 white-on-gold bug, arriving
+     from the opposite direction: not a colour that flips wrongly, but a GROUND
+     that flips out from under a fixed ink.
+     A photograph is not a surface. Its fallback ground must not re-tint merely
+     because the band is marked dark, so this value is pinned identically in both
+     scopes and is the only correct token for that job.
+     MEASURED: --ds-scrim-ink #FFFFFF on #16273A = 15.16:1 in BOTH scopes. */
+  --ds-photo-ground: #16273A;
+
+  /* [SEAM-1] THE BLUEPRINT GRID, RETIRED AT THE TOKEN.
+     Relocated here from the type part, which had declared it in :root and
+     .surface-dark. Value, both scopes and behaviour are unchanged -- this is a
+     pure architecture move so that no --ds-* token is declared outside the
+     tokens part. Nothing between here and the end of this patch re-declares
+     --ds-grid, and the base sheets load BEFORE this file, so the override still
+     lands exactly as the type part intended.
+     WHY A TOKEN AND NOT A SELECTOR: 8 fragments per rendered site carry the grid
+     as an INLINE style="background-image:var(--ds-grid)". An inline declaration
+     out-ranks every normal rule a stylesheet can write, so emptying the TOKEN is
+     the only mechanism that can reach them. "none" is a valid <bg-image> and a
+     valid layer inside a comma list, so it neutralises every consumer at once --
+     inline or not, found or not -- without introducing a colour.
+     --ds-grid-size (44px) is deliberately left alone: a size on a layer that no
+     longer exists is inert. */
+  --ds-grid: none;
+}
+
+
+/* ============================================================================
+   2. DARK SCOPE (.surface-dark) -- the ONE dark band per page.
+   Navy is punctuation here and is never made a ground elsewhere: this slice adds
+   NO new navy ground and does not widen dark_ratio beyond that single band.
+
+   Every token this slice introduced is re-declared here, including those whose
+   value does NOT change. That is deliberate. The 2026-08-24 failure happened
+   because a rule inherited a token that silently flipped underneath it. A token
+   restated in both scopes cannot do that, and the restatement is the audit trail.
+   ========================================================================= */
+.surface-dark {
+
+  /* The base sheet already declares its own --ds-bg-surface (#16273A),
+     --ds-bg-surface-2 (#1E3049) and --ds-bg-warm (#1B2A3D) in this scope, so the
+     light-scope re-points above do NOT reach in here. Only the NEW tokens need
+     dark-scope values. */
+  --ds-bg-page: #16273A;
+  --ds-bg-sand: #1E3049;
+  --ds-bg-wash: #1B2A3D;
+
+  /* ACTION on navy: the fill becomes gold, the ink becomes the deep navy.
+     #16273A IS WRITTEN AS A LITERAL AND MUST STAY ONE. Do not "tidy" it into
+     var(--ds-primary-deep): that token resolves to #FFFFFF inside this scope, and
+     making exactly that substitution is what produced white-on-gold at 2.5:1
+     across all 49 pages. Measured as written: 6.06:1. */
+  --ds-action: #C69E4C;
+  --ds-action-hover: #DCBB74;
+  --ds-action-ink: #16273A;
+
+  /* Bronze #876C33 is NOT the dark-scope fill even though white-on-bronze would
+     pass at 4.97:1, because the FILL-vs-GROUND separation collapses: #876C33
+     against #16273A measures 3.05:1, a hair over the 3.0 floor, so the button
+     would barely detach from the band it sits on. Gold gives 6.06:1. */
+
+  --ds-accent-text: #C69E4C;   /* 6.06:1 on navy. Legal here; illegal in light. */
+  --ds-accent-soft: #24384F;
+
+  --ds-line-strong: #6E819A;            /* dark-scope component boundary */
+  --ds-focus-ring: #C69E4C;             /* 6.06:1 on navy, 5.33:1 on navy-2 */
+  --ds-focus-ring-contrast: #16273A;
+
+  /* The photo band is a PHOTOGRAPH, not a surface. Its scrim must not re-tint
+     merely because the band is marked dark -- restated identically so a nested
+     .surface-dark can never alter a hero's measured floor. */
+  --ds-scrim-rgb: 22,39,58;
+  --ds-scrim-photo: linear-gradient(to top,
+      rgba(22,39,58,.86) 0%,
+      rgba(22,39,58,.82) 10%,
+      rgba(22,39,58,.74) 20%,
+      rgba(22,39,58,.58) 34%,
+      rgba(22,39,58,.30) 50%,
+      rgba(22,39,58,0)   68%);
+  --ds-scrim-ink: #FFFFFF;
+  --ds-scrim-safe: 20%;
+
+  --ds-bg-bar: #16273A;
+  --ds-bar-line: var(--ds-line);
+
+  /* [SEAM-2] Restated IDENTICALLY, not flipped. The whole point of the token is
+     that the photographic band's ground does not move between scopes. If this
+     line is ever "tidied" into var(--ds-primary-deep) the white-on-white failure
+     returns immediately -- that substitution IS the bug. */
+  --ds-photo-ground: #16273A;
+
+  /* [SEAM-1] The grid must ALSO be retired inside the dark punctuation scope:
+     the base tokens sheet re-inks --ds-grid with a light-on-dark rule there, and
+     a custom property resolves from the NEAREST ancestor that sets it, so the
+     :root declaration above cannot reach an element inside .surface-dark. */
+  --ds-grid: none;
+}
+
+
+/* ============================================================================
+   3. GROUND UTILITIES (minimal -- the only rulesets in this slice)
+   Additive overrides of GROUND only. No padding, no layout, no type.
+   ========================================================================= */
+
+/* The page ground. Same specificity (0,0,1) as the base sheet's `body` rule, so
+   this wins on source order alone -- which REQUIRES the patch to be concatenated
+   AFTER elevatedental-structural.css. If it were ever loaded BEFORE, this is the
+   one rule in the file that would silently do nothing. */
+body {
+  background-color: var(--ds-bg-page);
+  color: var(--ds-ink);
+}
+
+/* .section--paper currently paints --ds-bg-surface, i.e. pure white. After the
+   flip that would leave a section literally named "paper" as the only cool-white
+   plane on a warm page, and would erase the card/ground separation the whole
+   direction rests on. Re-pointed to the actual paper. White is not lost: it is
+   still --ds-bg-surface and still the card plane. */
+.section--paper { background-color: var(--ds-bg-page); }
+
+/* NAMING NOTE, not a bug: .section--cool now paints warm sand. The class appears
+   throughout 49 pages of built markup and renaming it would mean touching the
+   DOM, which this patch must not do. The name is legacy; the role -- "the
+   alternate band" -- is unchanged and correct. Its value arrives via the
+   --ds-bg-surface-2 re-point above, so no rule is needed here. */
+
+/* Named grounds for slices 2 and 3, so a new band never hard-codes a colour. */
+.ground-white { background-color: var(--ds-bg-surface); color: var(--ds-ink); }
+.ground-paper { background-color: var(--ds-bg-page);    color: var(--ds-ink); }
+.ground-sand  { background-color: var(--ds-bg-sand);    color: var(--ds-ink); }
+.ground-warm  { background-color: var(--ds-bg-warm);    color: var(--ds-ink); }
+
+/* Optional paper tooth. --ds-grain is a real token in the sheet applied by ZERO
+   elements today; a warm paper ground is the first thing on this site with a
+   reason to use it. Opt-in only -- it changes no existing element. */
+.ground-grain { background-image: var(--ds-grain); background-repeat: repeat; }
+
+/* Accessibility hardening. Not required to pass -- --ds-ink-soft already clears
+   4.5:1 on every ground -- but the deepest warm band leaves it at 4.81:1, and a
+   user asking for more contrast should get real headroom. #4F473E measures
+   8.37:1 on paper, 7.43:1 on sand and 6.72:1 on the deepest warm band.
+   --ds-line-strong is 3.80:1 on navy and 3.35:1 on navy-2 in the dark scope. */
+@media (prefers-contrast: more) {
+  :root {
+    --ds-ink-soft: #4F473E;
+    --ds-line: var(--ds-line-strong);
+  }
+}
+
+/* ############################################################################
+   ##  PART 2 of 3 - COMPONENTS: THE BAND, THE PLATE, THE CEILING, THE VOIDS
+   ##  Owns component geometry. No colour literals. Merge edits: [SEAM-2] band
+   ##  ground, [SEAM-3] dead font-size removed, [SEAM-4] dead colour removed,
+   ##  [SEAM-6] hero-title tokens + guard.
+   ##  NOTE: comments inside this part were written before the merge. Where one
+   ##  states the button label is 14px, the effective rung is now 15px - see
+   ##  [SEAM-3]. The contrast conclusion it draws is unchanged (still normal
+   ##  text, still 4.5:1, still 4.97:1).
+   ############################################################################ */
+
+/* ============================================================================
+   FRONT OF HOUSE — SLICE 2 of 3: THE BAND, THE PLATE, THE CEILING, THE VOIDS
+   elevatedental. Concat order: [base sheets] -> foh-01-tokens -> foh-02-components
+   -> foh-03-type. This slice owns COMPONENT GEOMETRY. It declares no brand hex
+   (grep this file for '#' and you will find none), sets no type scale, and does
+   not touch .section padding.
+
+   THESIS: the reception room, not the case file. The site currently shows the
+   client 270 small photographs cropped by three different masks, and its widest
+   image renders 1058px on a 1920 screen. This slice makes the photography large,
+   makes its shape predictable, and gives the page one big warm opening image.
+
+   ---------------------------------------------------------------------------
+   WHAT WAS READ BEFORE ANYTHING WAS WRITTEN (verified 2026-08-25, not assumed)
+   ---------------------------------------------------------------------------
+   · --ds-container-max is 1140px (tokens line 72). Container content width at any
+     desktop size is therefore 1140 - 2*40 gutter = 1060px. That is the arithmetic
+     behind the brief's measured 1058px widest image. Confirmed, not re-measured.
+   · .section carries `overflow: hidden` (structural ~line 356). Two consequences
+     that shaped this slice: (a) it is a second backstop against sideways scroll,
+     on top of body{overflow-x:hidden} (structural ~line 104); (b) it makes
+     position:sticky inert for every descendant, so no fix below uses sticky.
+   · .row is a 12-track grid with align-items:start (structural 229-234).
+   · .row--split / --split-rev / --aside collapse to ONE column at max-width:899px
+     (structural 1708). Everything below that width is a single column, where a
+     side-by-side void cannot exist. Every void fix in this file is therefore
+     scoped to (min-width: 900px) and provably cannot affect phones.
+   · .col--media appears 209 times and .col--copy 207 times in the built pages, so
+     the role classes the fixes hang on are really there. .container--full appears
+     ZERO times — which is why the hero below does NOT require it.
+   · Every page already opens with <section class="section section--paper kit-hero">
+     (94 occurrences across the page tree). "kit-hero" already contains "hero".
+   · verify-section-rhythm.mjs sets HERO_EXEMPT: true and tests `/hero/` against the
+     section's class list, excluding it from the cadence set. That is what makes it
+     legal for the hero band to drop its own block padding. NO OTHER SECTION'S
+     PADDING IS TOUCHED ANYWHERE IN THIS FILE, and the --ed-flow token is not
+     redefined.
+   · The base focus ring is `2px solid var(--ds-accent-deep)` at outline-offset 3px
+     (structural 131-137). Because the offset is POSITIVE the ring lands on the page
+     ground, not on the button fill, so re-filling the primary button in bronze does
+     NOT hide its focus ring. Measured on the ground it actually sits on: 6.22:1 on
+     paper, 5.52:1 on sand, 6.06:1 on navy. No focus override is needed and none is
+     written.
+
+   ---------------------------------------------------------------------------
+   MEASURED CONTRAST — every pair this slice introduces, both scopes.
+   Computed with the WCAG 2.x relative-luminance formula in node, not eyeballed;
+   every slice-1 value this file leans on was recomputed independently and all
+   fifteen reproduced exactly.
+   ---------------------------------------------------------------------------
+   BUTTONS (label is 14px/600 = NORMAL text, so the bar is 4.5, not 3.0)
+     LIGHT  --ds-action-ink on --ds-action ............ 4.97:1  PASS (4.5)
+            hover: --ds-action-ink on --ds-action-hover  6.77:1  PASS (4.5)
+            the fill itself vs its grounds ... white 4.97 / paper 4.57 /
+            sand 4.05 / warm 3.66 ................................ PASS (3.0)
+     DARK   --ds-action-ink on --ds-action ............ 6.06:1  PASS (4.5)
+            hover: --ds-action-ink on --ds-action-hover  8.23:1  PASS (4.5)
+     SECONDARY  --ds-primary label on paper ........... 10.70:1 PASS
+            dark: --ds-ink label on navy .............. 13.99:1 PASS
+            border --ds-line-strong vs white/paper/sand  4.16 / 3.82 / 3.39:1
+            dark border --ds-line-strong vs navy/navy-2  3.80 / 3.35:1  PASS (3.0)
+     THE TICK, A REAL DEFECT THIS SLICE HAD TO FIX. .kit-btn--primary::after is
+            --ds-accent-light. Against the OLD navy fill it read fine; against the
+            NEW bronze fill it measures 1.99:1 and effectively disappears. It is
+            decoration, not a state indicator, so it is not a WCAG failure — but it
+            is a broken gesture. Re-pointed to --ds-action-ink: 4.97:1 light,
+            6.06:1 dark. See section 6.
+
+   THE HERO BAND — contrast over a photograph is INDETERMINATE, so every figure
+   below is a GUARANTEED FLOOR computed against the worst pixel that could ever
+   appear under the scrim: blown-out white #FFFFFF. Composite of the two scrims is
+   alpha_total = 1-(1-a_band)(1-a_lift), then c = alpha*navy + (1-alpha)*photo.
+     band %    total alpha   composite over white   white ink    verdict
+        0%        0.92         rgb(41,57,74)         11.87:1     body OK
+       10%        0.89         rgb(47,62,79)         10.85:1     body OK
+       20%        0.84         rgb(60,74,90)          9.02:1     body OK
+       34%        0.68         rgb(97,109,122)        5.29:1     body OK   <-- contract
+       40%        0.55         rgb(127,136,147)       3.59:1     large only
+       50%        0.30         rgb(185,190,196)       1.87:1     decorative
+       68%        0.00         rgb(255,255,255)       1.00:1     photograph
+   Against realistic photographs the same 34% line measures far higher — mid-grey
+   9.47:1, light skin 6.25:1, bright sky 5.49:1 — so these are a floor, not an
+   estimate.
+   THE CONTRACT, and it is enforced by design rather than by hope: the ONLY text
+   this slice ever places on the photograph is the H1, which is large text
+   (>=30px) and therefore held to 3.0. It sits in the bottom 34%, where the floor
+   is 5.29:1 — it clears the BODY bar with 18% of headroom while only needing the
+   large-text bar. Even a three-line headline overrunning to the 40% line still
+   measures 3.59:1 and passes. The eyebrow, the lede and the buttons are NOT put on
+   the photograph: they sit under the band on warm paper, where the floor is
+   15.00:1 and nothing depends on the image at all. That decision is what removes
+   small text from the photograph entirely and keeps this compatible with the
+   original C7 note (structural ~1124) that type on imagery is banned; the amended
+   spec permits the scrimmed lower band, and only the headline uses it.
+
+   ---------------------------------------------------------------------------
+   RENDERED AND MEASURED, not just reasoned about. This slice was concatenated
+   after the two base sheets and slice 1 and rendered headless against a harness
+   carrying a hero, a row--split with a media cell, all three mask variants, a
+   full-width plate, and both button scopes. All four sheets parsed with zero CSS
+   errors. Measured:
+     1440x900  no horizontal overflow (scrollWidth 1440 = innerWidth)
+               hero padding 0/0; container max-width computed `none`
+               band 1440x558; headline block top at 29.1% of the band from the
+               bottom -> inside the 34% contract
+               frame plate 551.48x413.61 and arch plate 551.48x413.61 — BYTE
+               IDENTICAL, which is the determinism claim actually demonstrated
+               circle 326.66x326.66, clip-path computed `none`
+               arch min-height computed 0px (all three base media-query
+               re-assertions successfully overridden by source order)
+               full-width plate 1320px, sitting 60px clear of each viewport edge
+               split media void: 96px, redistributed 48.03 above / 48.05 below
+     1440x700  band at its 460px floor — the worst case for the scrim contract.
+               Headline top at 33.42%, guaranteed floor 5.44:1. Still passes BODY
+               text (4.5) though it only needs the large-text bar (3.0).
+      375x760  no horizontal overflow; rightmost element edge exactly 375px
+               band is a flex column, image static at 1/1, headline BELOW the
+               photograph, both scrims computed display:none
+               ordinary sections still compute 40px padding-top — the brief's own
+               measured value, i.e. section padding is provably untouched
+               arch min-height 0px even at <=380, where the base asserts 180px
+   ONE DEFECT WAS FOUND BY RENDERING AND FIXED: the ghost link computed 56px tall
+   against the base sheet's 48px, because the `padding` shorthand in this file
+   replaced its block padding as well as its inline padding. See section 6.
+
+   ---------------------------------------------------------------------------
+   HOUSE RULES
+   ---------------------------------------------------------------------------
+   Healthcare: nothing here states or implies a clinical claim, outcome or
+   guarantee — this slice sets geometry and colour roles only.
+   Prices: no rule below changes the size, weight, colour or prominence of any
+   price. Price display is deliberately untouched.
+   Token purity: this file contains no hex. Every colour is var(--ds-*) from the
+   tokens slice. The --foh-* custom properties declared in section 1 carry LENGTHS
+   and RATIOS only, never colour, and are namespaced so they cannot be mistaken for
+   brand tokens. The one judgement call is --foh-r-plate: a radius is not a colour,
+   so the token-purity rule does not bind it, but if the owner wants the plate
+   radius in the brand record it should be promoted to --ds-r-plate in the tokens
+   slice and this line deleted. Flagged rather than assumed.
+   ========================================================================= */
+
+
+/* ============================================================================
+   1. LOCAL GEOMETRY PROPERTIES. Lengths and ratios only — no colour.
+   ========================================================================= */
+:root {
+
+  /* THE PLATE RADIUS. --ds-r-surface is 4px, which is the case-file edge. The
+     reference's rounded card needs a real radius. Fluid so it does not read heavy
+     on a 320px plate or mean on a 1400px one. */
+  --foh-r-plate: clamp(14px, 1.5vw, 24px);
+
+  /* THE PLATE RATIOS. Deterministic, and that is the entire point — see section 3. */
+  --foh-ar-plate: 4 / 3;      /* the one landscape plate: frame AND arch */
+  --foh-ar-face: 1 / 1;       /* reserved for faces: the old circle's own ratio */
+  --foh-ar-tall: 3 / 4;       /* opt-in portrait, .kit-slot__mask--tall */
+
+  /* THE OUTDENT — how far a media plate may escape the reading container.
+     Read this as: "half of whatever the viewport has spare beyond the text
+     container, minus a 40px safety, capped at 200px."
+       at 1140 and below ...  0px      (nothing spare, so nothing moves)
+       at 1440 ............. 130px     (full-width plate 1060 -> 1320px)
+       at 1920 ............. 200px     (capped; full-width plate -> 1460px)
+     WHY THE 40px SAFETY, and why this is scrollbar-safe. 100vw INCLUDES the
+     classic scrollbar (~15px) while the section it sits in does not, so a naive
+     (100vw - max)/2 would ask for ~7px more room than actually exists at the exact
+     moment the viewport passes 1140. Subtracting 40px before halving means the
+     outdent stays at 0 until there are a real 40 spare pixels, and thereafter
+     always stops 20px short of each viewport edge. The plate therefore never
+     reaches the page edge, never mind crosses it. clamp()'s lower bound of 0px
+     makes a negative result impossible. */
+  --foh-outdent-cap: 200px;
+  --foh-outdent: clamp(0px,
+                       calc((100vw - var(--ds-container-max) - 40px) / 2),
+                       var(--foh-outdent-cap));
+
+  /* THE HERO BAND. ~62vh as briefed, with a floor that keeps it a band rather than
+     a stripe on a laptop, and a ceiling that stops it eating a tall monitor. */
+  --foh-hero-h: clamp(460px, 62vh, 760px);
+  --foh-hero-pad-b: clamp(28px, 4.4vh, 56px);
+
+  /* THE LOCAL SCRIM LIFT. Strength of the second, text-fitted scrim (section 2.3).
+     Exposed as properties so the band can be tuned without rewriting a gradient
+     and without reopening slice 1's --ds-scrim-photo token. */
+  /* LIFT STRENGTHENED 2026-08-25, and re-tuned against the imagery that now ships.
+     These values were calibrated against the original photo library, which was darker and
+     busier. The site now opens on generated architectural photography that is deliberately
+     airy: bone-white cabinetry, pale leather, daylight. Measured per-tile behind the headline
+     on six pages at 1440, the old values left the worst patch at 2.14 to 3.05 against a 3.0
+     floor — white type over a bone-white dental chair, failing on five of six pages.
+     Raised until the worst LOCAL patch clears the floor with real margin on every page, rather
+     than clearing a row AVERAGE, which is what hid this in the first place.
+     The lift still covers only the lower band, so the subject of every photograph is untouched;
+     that is the condition imagery-system.md attaches to using a scrim at all. */
+  --foh-lift-h: 58%;
+  --foh-lift-a: .82;
+  --foh-lift-b: .62;
+
+  /* ART DIRECTION, per page, without new CSS. Set --foh-hero-focus on the section
+     to move the crop off centre when a subject sits high or low in the frame.
+     Default favours the upper-middle, which is where faces are. */
+  --foh-hero-focus: 50% 38%;
+  --foh-hero-ar-sm: 1 / 1;
+
+  /* [SEAM-6] THE HERO HEADLINE'S SIZE AND MEASURE, PROMOTED FROM LITERALS TO
+     TOKENS. These two values were written inline on .foh-hero__title. They are
+     named here because the scrim contrast contract DEPENDS on both of them --
+     the 5.29:1 floor at the 34% line is only true while the headline block stays
+     in the bottom third -- and because the integration guard below has to state
+     the same two values on a second selector. One source, two call sites, so
+     they cannot drift apart. */
+  --foh-t-hero: clamp(30px, 4.4vw, 58px);
+  --foh-hero-measure: 20ch;
+}
+
+
+/* ============================================================================
+   2. THE HERO BAND — the one full-bleed photographic band the page opens with.
+
+   THE MARKUP CONTRACT. The section already exists on all 49 pages; the build adds
+   ONE class to it and authors the stage inside the container it already has:
+
+     <section class="section section--paper kit-hero foh-hero">
+       <div class="container">                    <- released to full width below
+         <div class="row">
+           <div class="col col--full">
+             <div class="foh-hero__stage">
+               <figure class="foh-hero__band">
+                 <img class="foh-hero__img" src="..." alt="real alt text">
+                 <div class="foh-hero__inner">
+                   <h1 class="foh-hero__title">Short headline</h1>
+                 </div>
+               </figure>
+               <div class="foh-hero__lockup">
+                 <p class="foh-hero__eyebrow">...</p>
+                 <p class="foh-hero__lede">...</p>
+                 <div class="kit-actions"> ...buttons... </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </section>
+
+   The forced grammar is intact: section > div.container > div.row > div.col >
+   OBJECT, and .foh-hero__stage is the OBJECT. The skin is on the object, never on
+   a structure layer.
+
+   HOW THE FULL BLEED IS DONE, AND WHY IT IS SAFE WITH A SCROLLBAR PRESENT.
+   It uses no vw unit and no negative margin. .foh-hero > .container simply
+   RELEASES its own max-width and padding, so the container becomes width:auto
+   inside a section that is already the full width of the body. The band is then
+   100% of a box that is by definition exactly the visible page width — scrollbar
+   excluded automatically, because the scrollbar was never part of that box. A
+   100vw breakout, by contrast, overshoots by the scrollbar width on every desktop
+   browser that reserves one. There is nothing here that CAN overflow: the widest
+   element resolves to 100% of an ancestor, so body{overflow-x:hidden} and
+   .section{overflow:hidden} are never even called on to catch anything.
+   It also needs no new wrapper: it works with the .container the pages already
+   have, which matters because .container--full appears zero times in the tree.
+   ========================================================================= */
+
+/* 2.1 the section. Padding is dropped so the photograph meets the chrome above it
+   and the next band below it with no paper gap. Legal because the rhythm gate
+   sets HERO_EXEMPT and matches /hero/ on the class list — verified in
+   verify-section-rhythm.mjs, not assumed. No other section is affected and
+   --ed-flow is not redefined. */
+.foh-hero {
+  padding-block: 0;
+  /* .kit-hero paints the 44px blueprint grid and two cool radial washes, plus a
+     hairline top border. All three are case-file gestures and all three are now
+     underneath a photograph. Cleared so the band is the whole statement. */
+  background-image: none;
+  border-top: 0;
+}
+
+/* 2.2 the release. Scoped to the hero (0,0,2,0 beats .container's 0,0,1,0) so no
+   other container on the site loses its measure. */
+.foh-hero > .container {
+  max-width: none;
+  padding-inline: 0;
+}
+
+.foh-hero__stage { position: relative; }
+
+/* 2.3 the band itself. A definite height, so the scrim percentages below resolve
+   against a known box rather than against content — that is what makes the
+   contrast floors in the header comment true rather than approximate. */
+.foh-hero__band {
+  position: relative;
+  margin: 0;                       /* <figure> default margin */
+  width: 100%;
+  height: var(--foh-hero-h);
+  overflow: hidden;
+  isolation: isolate;              /* the scrim stack cannot escape the band */
+  /* [SEAM-2] WAS var(--ds-primary-deep). CHANGED DURING INTEGRATION -- a real,
+     measured defect, not a tidy-up. --ds-primary-deep is #16273A in :root but
+     #FFFFFF inside .surface-dark, while this band's headline is --ds-scrim-ink
+     (#FFFFFF). A hero inside any dark-scoped subtree therefore painted white ink
+     on a white ground at 1.00:1 until the photograph loaded, and forever if it
+     failed to. --ds-photo-ground is pinned to #16273A in BOTH scopes precisely
+     so this cannot happen: 15.16:1 either way. What shows for the instant before
+     the photograph paints is a deep brand navy, never a grey box and never a
+     white void. */
+  background-color: var(--ds-photo-ground);
+}
+
+/* the photograph. A real <img> with real alt text, NOT a background-image, so it
+   stays in the accessibility tree and in the document's image list. */
+.foh-hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--foh-hero-focus);
+}
+
+/* THE BAND SCRIM — slice 1's token, unmodified. Bottom-weighted: it is fully
+   transparent from 68% upward, so the subject is never veiled. */
+.foh-hero__band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ds-scrim-photo);
+  pointer-events: none;
+}
+
+/* THE LOCAL LIFT — the second scrim, and the reason the headline zone is
+   measurable rather than hopeful.
+   WHY IT EXISTS. Slice 1's token alone puts the 34% line at 3.91:1: enough for
+   large text, with no margin, and nothing left over if a headline runs to a third
+   line. The lift covers only the bottom 50% of the band and feathers to zero at
+   its own top, so the two gradients compose to 5.29:1 at the 34% line and still
+   3.59:1 at 40%.
+   WHY IT DOES NOT BREAK THE IMAGERY RULE. At and above the band's 50% mark the
+   lift contributes exactly zero, so total alpha there is identical to slice 1's
+   token on its own — 1.55:1 at 55%, 1.21:1 at 62%, both verified. The subject is
+   measurably untouched; all the added density is in the lower band, which is
+   precisely what imagery-system.md permits.
+   It sits ABOVE the band scrim and BELOW the headline. */
+.foh-hero__band::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--foh-lift-h);
+  background: linear-gradient(to top,
+      rgba(var(--ds-scrim-rgb), var(--foh-lift-a)) 0%,
+      rgba(var(--ds-scrim-rgb), var(--foh-lift-b)) 50%,
+      rgba(var(--ds-scrim-rgb), 0) 100%);
+  pointer-events: none;
+}
+
+/* 2.4 the headline block, in the lower third. It re-pays the reading gutter and
+   the page measure so the headline lines up with every other section's text axis
+   even though its band is full-bleed — the same job .col--measure does inside a
+   .container--full. */
+.foh-hero__inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--ds-z-raised);
+  width: 100%;
+  max-width: var(--ds-container-max);
+  margin-inline: auto;
+  padding-inline: var(--ed-gutter);
+  padding-bottom: var(--foh-hero-pad-b);
+  color: var(--ds-scrim-ink);
+}
+
+/* THE ONE PIECE OF TEXT ALLOWED ON THE PHOTOGRAPH.
+   Its size is what makes it large text (WCAG: >=24px regular), which is why the
+   3.0 bar applies and why it clears with room to spare. The max-width is not
+   decoration: at 20ch a headline wraps to two lines and the block stays inside
+   the bottom 34% where the floor is 5.29:1. AUTHORING CONTRACT: keep the hero
+   headline to about seven words. A longer one is not a contrast failure — three
+   lines still measures 3.59:1 — but it is a design failure, and --foh-hero-h is
+   the dial to raise if a page genuinely needs more.
+   Slice 3 owns the type SYSTEM; the family and tracking of this one element are
+   deliberately left to it. Only the size floor and the measure are set here,
+   because they are what the contrast contract depends on. */
+.foh-hero__title {
+  margin: 0;
+  max-width: var(--foh-hero-measure);
+  font-size: var(--foh-t-hero);
+  line-height: 1.06;
+  color: var(--ds-scrim-ink);
+  text-wrap: balance;
+}
+
+/* [SEAM-6] THE CONTRAST-CONTRACT GUARD. Added during integration; it changes
+   NOTHING today and exists to stop a latent collision becoming a live one.
+   THE COLLISION: the type part sets "h1, .kit-d1 { font-size: var(--foh-t-d1) }"
+   -- a clamp that tops out at 92px -- and max-width: var(--foh-head-measure)
+   (16ch). .kit-d1 is (0,1,0), exactly the same weight as .foh-hero__title, and
+   the type part concatenates LATER, so if a hero <h1> ever carried BOTH classes
+   the display rung would win on source order, take the headline to 92px at 16ch,
+   and push the block up out of the bottom 34% band where the 5.29:1 floor was
+   computed. The scrim contract would be silently void.
+   WHY IT IS ONLY LATENT: .kit-d1 is currently used ZERO times in the built pages
+   (grepped over pages/*.html this turn), and the migrated markup emits
+   <h1 class="foh-hero__title" id="..."> with no display class. The bare element
+   selector h1 (0,0,1) already loses to .foh-hero__title (0,1,0), so today
+   nothing is wrong.
+   THE GUARD: h1.foh-hero__title is (0,1,1) and out-ranks .kit-d1 (0,1,0)
+   whatever the source order, so the two properties the contrast contract rests
+   on can no longer be taken away from it. It restates the SAME two tokens, so
+   there is exactly one value for each. Deliberate consequence: a hero headline
+   cannot opt into .kit-d1--long either -- it does not need to, because
+   --foh-t-hero already tops out at 58px, which IS the --foh-t-d1-long ceiling. */
+h1.foh-hero__title {
+  max-width: var(--foh-hero-measure);
+  font-size: var(--foh-t-hero);
+}
+
+/* 2.5 the lockup UNDER the band, on warm paper. Everything that is not the
+   headline lives here: the eyebrow, the lede, the buttons. Nothing in this block
+   sits on a photograph, so nothing in it has an indeterminate background — ink on
+   paper measures 15.00:1 and ink-soft 6.00:1, both from slice 1's ladder. */
+.foh-hero__lockup {
+  width: 100%;
+  max-width: var(--ds-container-max);
+  margin-inline: auto;
+  padding-inline: var(--ed-gutter);
+  padding-block: clamp(var(--ds-space-md), 3vw, var(--ds-space-lg));
+}
+.foh-hero__lede {
+  max-width: 58ch;      /* the reading measure. Imagery got wider; prose did not. */
+  color: var(--ds-ink-soft);
+}
+/* [SEAM-4] .foh-hero__eyebrow's colour was declared here as
+   var(--ds-accent-text). REMOVED during integration as DEAD CODE, not as a
+   change of intent: the type part's micro-label group re-colours
+   .foh-hero__eyebrow to --ds-ink-soft and then its promoted-label rule restores
+   --ds-accent-text, both at (0,1,0) and both later in the concatenation. The
+   final computed colour is --ds-accent-text either way -- identical to what this
+   line asked for -- so removing it deletes a declaration that could never win
+   while leaving the rendered result byte-identical. The colour now has ONE owner
+   (the type part's promoted-label rule) instead of two that silently agreed.
+   MEASURED at that final value: #6F5828 on warm paper 6.22:1, and in
+   .surface-dark the token flips to #C69E4C on navy for 6.06:1. */
+
+/* 2.6 MOBILE. Below 768 the headline comes OFF the photograph entirely.
+   The <figure> stops being a stacking box and becomes a flex column, the image
+   returns to the normal flow, and .foh-hero__inner — which is a child of the
+   figure — simply falls BELOW the picture instead of being positioned over it.
+   Three things follow, all of them wins at 375:
+     (a) the subject is never cropped to a letterbox: the image keeps its own
+         square-ish ratio instead of being forced into a 2.6:1 desktop band;
+     (b) both scrims are switched off, so the photograph is completely unveiled —
+         nothing is darkened over a face on a phone;
+     (c) the headline is ink on paper at 15.00:1 instead of ink on an unknown
+         image, which is the strongest contrast position available.
+   1/1 is the default rather than a portrait ratio because it CROPS LESS: taking a
+   3:2 landscape source to 1/1 keeps 67% of its width, where 4/5 keeps only 53%.
+   --foh-hero-ar-sm and --foh-hero-focus are the two dials for a page whose source
+   image is framed differently. */
+@media (max-width: 767px) {
+  .foh-hero__band {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    background-color: transparent;
+  }
+  .foh-hero__img {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    aspect-ratio: var(--foh-hero-ar-sm);
+  }
+  .foh-hero__band::before,
+  .foh-hero__band::after { display: none; }
+  .foh-hero__inner {
+    position: static;
+    max-width: none;
+    padding-bottom: 0;
+    padding-top: var(--ds-space-md);
+    color: var(--ds-ink);
+  }
+  .foh-hero__title { color: var(--ds-ink-heading); }
+  .foh-hero__lockup { padding-top: var(--ds-space-sm); }
+}
+
+
+/* ============================================================================
+   3. THE PLATE — retiring the three masks.
+
+   THE DEFECT, precisely stated. .kit-slot__mask--arch declares height:100% plus
+   min-height:240px and NO ratio, so its shape is whatever the grid track it lands
+   in happens to be. One class, 47 uses, rendering from 0.646 to 2.889 — a 4.5x
+   spread — and cropping away a mean 32.8% of every photograph. The fault is not
+   the arched corner; it is that the class has no geometry of its own.
+
+   THE REPLACEMENT: one treatment, two fixed ratios, and nothing computed from
+   height ever again.
+     TREATMENT (all 270)  soft --foh-r-plate corners, no border, card shadow,
+                          overflow hidden. One edge language for every photograph.
+     .kit-slot__mask--frame  (147)  -> 4/3, EXACTLY AS TODAY. It already had
+                          aspect-ratio:4/3 and was already deterministic, so not
+                          one of its 147 photographs is re-cropped by this patch.
+                          It only loses its 1px hairline and gains the radius.
+     .kit-slot__mask--arch   (47)   -> 4/3, THE SAME SHAPE AS FRAME. This is the
+                          literal reading of "one plate, same shape everywhere",
+                          and it is also the only safe answer: a portrait default
+                          would have made an arch in a full-width column 1760px
+                          tall at a 1320px plate width. Nothing is re-cropped in
+                          the sense of a crop being lost, because the old class
+                          had no fixed crop to lose.
+     .kit-slot__mask--circle (76)   -> 1/1, ratio UNCHANGED, clip-path removed.
+                          THE ONE PLACE A SECOND RATIO IS KEPT, and the reason is
+                          faces: 60 clinician portraits are framed square, and
+                          forcing them to 4/3 would re-crop 60 real people's heads.
+                          Keeping 1/1 means every portrait's crop is byte-identical
+                          to today. Dropping the circle is a straight GAIN of
+                          visible photograph: a circle inscribed in a square shows
+                          pi/4 = 78.5% of it, a 24px-radius rounded square shows
+                          99.4%, so each portrait shows 26.6% more of itself.
+   THE ANCHORS. G-MEDIA-TRACK (structural 1030-1038) warns that a stretched frame
+   declaring a ratio or a min-height gets its WIDTH computed from its HEIGHT and
+   balloons past its track — a defect that recurred three times on a previous
+   build. Every rule below keeps width:100% and min-width:0 beside its ratio, and
+   the arch's height:100%/min-height (the exact trigger pattern) is REMOVED rather
+   than merely overridden.
+   SOURCE ORDER. The base sheet re-asserts .kit-slot__mask--arch{min-height:...}
+   inside three media queries (1750, 1781, 1839). A media query adds no
+   specificity, so these single-class rules, being later in the concatenation, win
+   at every width. min-height is zeroed explicitly rather than left to chance.
+   ========================================================================= */
+
+/* 3.1 the one treatment */
+.kit-slot__mask {
+  border-radius: var(--foh-r-plate);
+  border: 0;
+  /* base already sets position:relative, overflow:hidden, width/min-width anchors
+     and the card shadow. Left alone. */
+}
+
+/* 3.2 the landscape plate — frame and arch resolve to the identical shape */
+.kit-slot__mask--frame,
+.kit-slot__mask--arch {
+  aspect-ratio: var(--foh-ar-plate);
+  height: auto;          /* kills the arch's height:100% */
+  min-height: 0;         /* kills the arch's 240/200/180px min-heights */
+  width: 100%;           /* ANCHOR beside aspect-ratio */
+  min-width: 0;          /* ANCHOR beside aspect-ratio */
+  border: 0;             /* the frame's hairline; the plate has one edge language */
+  border-radius: var(--foh-r-plate);   /* overrides the arch's 50% 50% 4px 4px */
+}
+
+/* 3.3 the face plate. Ratio untouched; only the clip changes. */
+.kit-slot__mask--circle {
+  aspect-ratio: var(--foh-ar-face);
+  clip-path: none;
+  height: auto;
+  min-height: 0;
+  width: 100%;           /* ANCHOR */
+  min-width: 0;          /* ANCHOR */
+  border-radius: var(--foh-r-plate);
+}
+
+/* 3.4 OPT-IN portrait plate. Additive: no existing markup gets it, and it exists
+   so a genuinely vertical photograph is not forced into a landscape box. */
+.kit-slot__mask--tall {
+  aspect-ratio: var(--foh-ar-tall);
+  height: auto;
+  min-height: 0;
+  width: 100%;           /* ANCHOR */
+  min-width: 0;          /* ANCHOR */
+  border-radius: var(--foh-r-plate);
+}
+
+/* 3.5 the stretch that used to feed the arch. .kit-split__media .kit-slot is
+   height:100% (structural 1228), which was the arch's stretch source; with a
+   fixed ratio that surplus would now open as a void INSIDE the slot instead.
+   Released to content height. Same specificity as the base rule, later in source. */
+.kit-split__media .kit-slot,
+.col--media > .kit-slot { height: auto; }
+
+/* 3.6 the placeholder surface, warmed. .kit-slot__art is what a slot renders as
+   before its photograph lands. It is currently built from --ds-primary-soft and
+   the 44px blueprint grid, which is the case-file material. Re-pointed onto the
+   warm ladder and the paper tooth. Still a real material, never a grey box; it
+   carries no text, so no contrast pair is introduced. Both scopes are restated so
+   the dark band cannot inherit a light-scope wash. */
+.kit-slot__art {
+  background-color: var(--ds-bg-wash);
+  background-image:
+    radial-gradient(115% 92% at 32% 16%, var(--ds-accent-soft) 0%, transparent 64%),
+    var(--ds-grain),
+    linear-gradient(158deg, var(--ds-bg-surface) 0%, var(--ds-accent-soft) 100%);
+  background-size: auto, auto, auto;
+  background-repeat: no-repeat, repeat, no-repeat;
+}
+.surface-dark .kit-slot__art {
+  background-color: var(--ds-bg-wash);
+  background-image:
+    radial-gradient(115% 92% at 32% 16%, var(--ds-accent-soft) 0%, transparent 64%),
+    var(--ds-grain),
+    linear-gradient(158deg, var(--ds-bg-surface) 0%, var(--ds-accent-soft) 100%);
+  background-size: auto, auto, auto;
+  background-repeat: no-repeat, repeat, no-repeat;
+}
+
+
+/* ============================================================================
+   4. THE IMAGE CEILING — letting imagery, and ONLY imagery, out of the container.
+
+   THE PROBLEM. --ds-container-max is 1140px and the gutter is 40px, so every
+   photograph on the site is drawn inside 1060px no matter how big the screen is.
+   At 1920 that is 55% of the viewport, which is exactly why the page reads small
+   and busy, and why imagery is 4.08% of page area against a reference of 18-22%.
+
+   WHY THE CAP IS NOT SIMPLY RAISED. --ds-container-max also feeds .col--measure,
+   which is the reading column. Raising it would widen prose to ~1280px, which is
+   an unreadable measure and the opposite of the brief. Prose must not move.
+
+   THE MECHANISM. Media plates get a bounded positive outdent instead: they grow
+   by --foh-outdent and pull the same distance outward with a negative margin.
+   THE GUARANTEE THAT PROSE NEVER WIDENS is structural, not a matter of care —
+   every selector below ends in `> .kit-slot`. A .kit-slot is a media object by
+   definition; body copy is never one. There is no path by which these rules can
+   reach a paragraph, a heading, a list or a .col--measure.
+   WHY THE ANCHOR SURVIVES. width is set to calc(100% + N), which is still a
+   percentage-anchored width. G-MEDIA-TRACK's failure mode needs a width that is
+   COMPUTED FROM HEIGHT; an explicit width makes that impossible, so the balloon
+   defect cannot return through this door.
+   WHY min-width:900px. Below 900 the split rows are already single-column and
+   --foh-outdent has evaluated to 0px since 1140 anyway. The query is belt and
+   braces: two independent reasons the outdent cannot touch a phone.
+
+   RESULTING WIDTHS (container content is 1060px at every desktop size today):
+     full-width plate  1440 -> 1320px  (+25%)   1920 -> 1460px  (+38%)
+     split media plate  1440 -> 551px from 421  (+31%)
+   1320 is not an arbitrary number: it is the width the system already sanctions
+   as .container--wide (structural 220) and .col--measure-wide (297), so the wide
+   plate lands on a measure the design system already recognises.
+   ========================================================================= */
+@media (min-width: 900px) {
+
+  /* a media cell at the END of its row escapes toward the right page edge only */
+  .row > .col--media:last-child:not(:only-child) > .kit-slot {
+    width: calc(100% + var(--foh-outdent));
+    margin-inline-end: calc(var(--foh-outdent) * -1);
+  }
+
+  /* a media cell at the START of its row escapes toward the left page edge only.
+     :first/:last are DOM-order, and margin-inline-* is writing-mode-logical, so
+     the pair stays correct if the document is ever set RTL: the first child sits
+     on the inline-start side in both directions. */
+  .row > .col--media:first-child:not(:only-child) > .kit-slot {
+    width: calc(100% + var(--foh-outdent));
+    margin-inline-start: calc(var(--foh-outdent) * -1);
+  }
+
+  /* a media plate that owns its whole row escapes BOTH edges. :only-child is
+     listed explicitly so it does not collect the two single-sided rules above and
+     end up with two negative margins against one outdent of width. */
+  .row > .col--media:only-child > .kit-slot,
+  .row > .col--full > .kit-slot,
+  .row > .col--span-12 > .kit-slot,
+  .foh-bleed-media {
+    width: calc(100% + (var(--foh-outdent) * 2));
+    max-width: none;
+    margin-inline: calc(var(--foh-outdent) * -1);
+  }
+}
+
+
+/* ============================================================================
+   5. THE VOIDS.
+
+   THE MECHANISM. .row is align-items:start, so every cell is content-height and a
+   short cell's leftover space collects as one dead block UNDER it, at the bottom
+   of the grid row. Measured: 299 voids over 50px across 47 pages, 108 over 300px,
+   worst 1,674px.
+
+   WHY .row{align-items:center} IS NOT THE FIX, though it is the obvious one.
+   Centring every row would vertically centre the cards in the 3-up and 4-up card
+   grids, un-aligning their top edges — trading a void the eye reads as empty for a
+   raggedness the eye reads as broken. The voids are a phenomenon of ASYMMETRIC
+   rows: a media cell beside a tall copy cell. So the alignment change is applied
+   to the media cell only, and .row itself is left exactly as it is.
+
+   PROOF THAT THIS CANNOT MOVE A SECTION'S RHYTHM, which matters because
+   G-CADENCE fails closed at 8px of drift and section padding is already perfect.
+   A grid row's height is set by its TALLEST cell. align-self only redistributes
+   slack inside a cell that is NOT the tallest — a cell with no slack cannot be
+   moved by it. So: if the media cell is the short one, centring moves it within a
+   row whose height is fixed by the copy cell; if the media cell is the tall one,
+   it has no slack and nothing happens. In neither case does the row, the section,
+   or the leading/trailing space around .col--measure change by a single pixel.
+   .col--measure is excluded explicitly anyway, since that is the column the gate
+   actually measures.
+
+   HONEST LIMIT, stated rather than glossed. Centring halves a void; it does not
+   delete it. A 1,674px void is not a CSS defect, it is a page with a one-line cell
+   beside a full-screen cell, and no stylesheet can invent content to fill it.
+   What genuinely shrinks these numbers is section 4: the plate that used to be
+   421px wide is now 551px, so at 4/3 it is 413px tall instead of 316px, and 97px
+   of the void is absorbed by photograph rather than redistributed. The two
+   sections compound, and the imagery-area deficit is repaid by the same move.
+   For the remainder, the base sheet already ships .col--center (align-self:center)
+   and .col--stretch as per-cell opt-ins; a genuinely extreme row should use them.
+   Scoped to min-width:900px because below it every affected row is single-column,
+   where a side-by-side void cannot exist.
+   ========================================================================= */
+@media (min-width: 900px) {
+  .row > .col--media:not(.col--measure) { align-self: center; }
+}
+
+/* the second void, inside the cell rather than beside it. A .kit-slot in a
+   stretched cell is content-height, so the stretch opens a hole under the
+   photograph (the structural sheet measured 338px of it on band 01). With the
+   plate now carrying a fixed ratio this is the only place that surplus can go, so
+   the media cell is released from the stretch. Card cells keep theirs: this
+   selector cannot reach a .kit-card. */
+.row--stretch > .col--media,
+.col--media.col--stretch { align-self: center; }
+
+
+/* ============================================================================
+   6. BUTTONS — generously-padded pills on the bronze fill.
+
+   Radius moves from --ds-r-control (2px) to --ds-r-pill. The base sheet rations
+   the pill to the status marker "because the pill role is rationed"; the amended
+   C7 makes the pill the primary action shape, so that ration is what changed, and
+   this is the deliberate deviation.
+   Padding goes 14/26 -> 18/34 and the tap floor 48 -> 54px, comfortably past the
+   44px WCAG 2.5.5 target on every breakpoint.
+
+   THE FILL. .kit-btn--primary was a solid navy. It becomes --ds-action, the bronze
+   role slice 1 created specifically so that fill and ink travel as a matched pair.
+   Writing background:var(--ds-action) with color:var(--ds-action-ink) is correct
+   BY CONSTRUCTION in both scopes — 4.97:1 on bronze in light, 6.06:1 on gold in
+   dark — which is the whole point of the paired token: the 2026-08-24 white-on-gold
+   failure at 2.5:1 is not expressible in this form.
+   The dark-scope rule is restated even though the base sheet's repaired rule would
+   already win on specificity, so the pairing is visible in one place and cannot
+   drift apart later.
+
+   FOUR SOURCE-ORDER HAZARDS, found by reading the base sheet rather than by
+   rendering, each of which would otherwise be a silent regression:
+     (1) .kit-btn--ghost{padding-inline:0} is EARLIER than this file, and `padding`
+         here is a SHORTHAND, so it would re-apply 34px of side padding to every
+         ghost link and turn a text link into a floating button. Re-declared.
+     (2) .kit-btn--ghost{min-height:44px} would likewise be overridden to 54px.
+         Re-declared at 44 to keep the base sheet's intent for an inline rail.
+     (3) @media(max-width:380px){.kit-btn{padding-inline:var(--ds-space-md)}} is a
+         longhand in an earlier media query; a later shorthand beats it regardless
+         of the query. Re-declared at the same breakpoint.
+     (4) the bronze tick .kit-btn--primary::after is --ds-accent-light, which is
+         1.99:1 against the new bronze fill — the gesture would still exist and be
+         invisible. Re-pointed to --ds-action-ink (4.97:1 light / 6.06:1 dark).
+   ========================================================================= */
+.kit-btn {
+  border-radius: var(--ds-r-pill);
+  min-height: 54px;
+  padding: 18px 34px;
+  /* [SEAM-3] font-size was declared here as 14px. REMOVED during integration:
+     the type part raises .kit-btn to the 15px body-sm rung at the same (0,1,0)
+     weight and later in the concatenation, so this declaration could never win.
+     It is not deleted silently -- the whole control rung, size and leading
+     together, now has a single owner in Part 3, and the reason it has to be a
+     single owner is the box arithmetic recorded there.
+     The contrast conclusion is UNCHANGED by the move: 15px at weight 600 is
+     still NORMAL text (large text starts at 24px, or 18.66px bold), so the bar
+     is still 4.5 and the bronze pill still measures 4.97:1. */
+  letter-spacing: .04em; /* down from .06em. The site already carries 876 uppercase
+                           letterspaced micro-labels; the button should not read as
+                           the 877th. */
+}
+
+.kit-btn--primary {
+  background-color: var(--ds-action);
+  border-color: var(--ds-action);
+  color: var(--ds-action-ink);
+}
+.kit-btn--primary::after { background: var(--ds-action-ink); }
+.kit-btn--primary:hover {
+  background-color: var(--ds-action-hover);
+  border-color: var(--ds-action-hover);
+}
+.surface-dark .kit-btn--primary {
+  background-color: var(--ds-action);
+  border-color: var(--ds-action);
+  color: var(--ds-action-ink);
+}
+.surface-dark .kit-btn--primary::after { background: var(--ds-action-ink); }
+.surface-dark .kit-btn--primary:hover {
+  background-color: var(--ds-action-hover);
+  border-color: var(--ds-action-hover);
+}
+
+/* the outline button. Its border is a real UI-component boundary, so WCAG 1.4.11
+   applies at 3.0 — and --ds-hairline, at 1.43:1 on white, never met it. Moved to
+   --ds-line-strong, the token slice 1 created for exactly this: 4.16 on white,
+   3.82 on paper, 3.39 on sand, 3.80 on navy, 3.35 on navy-2. This is a fix, not a
+   restyle. */
+.kit-btn--secondary { border-color: var(--ds-line-strong); }
+.surface-dark .kit-btn--secondary { border-color: var(--ds-line-strong); }
+
+/* hazards (1) and (2): the ghost is a ruled text link and must not become a pill.
+   BLOCK padding is restored to the base sheet's 14px as well, not just the inline
+   padding. Caught by rendering, not by reading: with 18px of block padding the
+   ghost computed 56px tall against the base sheet's 48px, and a ghost link is an
+   inline affordance inside a content rail, so 8px on every one of them would have
+   shifted the rhythm of the rails site-wide. The pill gets the generous padding;
+   the text link keeps its own.
+   (At <=380 the base sheet's own .kit-btn{padding-inline} rule already reached the
+   ghost, because it is later in source than the ghost rule. That behaviour is
+   pre-existing and is reproduced here rather than "fixed", so the two sheets agree.) */
+.kit-btn--ghost {
+  padding: 14px 0;
+  min-height: 44px;
+  border-radius: 0;
+}
+
+/* hazard (3) */
+@media (max-width: 380px) {
+  .kit-btn { padding-inline: var(--ds-space-md); }
+}
+
+/* the action rail gets a little more air now that the controls are pills, so two
+   adjacent pills do not read as one lozenge. Additive: .kit-actions already exists
+   and only its gap is touched. */
+.kit-actions { gap: var(--ds-space-md); }
+
+
+/* ============================================================================
+   7. MOTION SAFETY. Slice 3 owns motion and the 1,277 [data-rise] reveals; this
+   is only the guarantee that the two components introduced here obey the same
+   reduced-motion contract the base sheet already honours at line 1633. Nothing
+   here animates by default, so this is a no-op today and a guard against a later
+   edit adding one.
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  .foh-hero__img,
+  .kit-slot__mask { transition: none; animation: none; }
+}
+
+/* ############################################################################
+   ##  PART 3 of 3 - TYPE, TEXTURE AND MOTION
+   ##  Owns the type ladder, the paper tooth and the motion budget. No colour
+   ##  literals. Merge edits: [SEAM-1] --ds-grid moved out, [SEAM-3] .kit-btn
+   ##  given its own rung + --foh-lh-control, [SEAM-5] .foh-hero named in the
+   ##  grain list.
+   ##  The prefers-reduced-motion block at the end of this part must remain the
+   ##  LAST motion rule in the concatenated sheet.
+   ############################################################################ */
+
+/* ============================================================================
+   FRONT OF HOUSE - SLICE 3 of 3: TYPE SCALE, TEXTURE AND MOTION BUDGET
+   elevatedental - concatenate LAST: tokens (foh-01) -> components (foh-02) -> THIS
+   ----------------------------------------------------------------------------
+   THESIS. The site is the reception room, not the case file. This slice makes
+   the reading comfortable, the labelling quiet, the paper warm, and the page
+   ARRIVE IN ONE PIECE instead of assembling itself around a nervous reader.
+
+   IT DOES NOT TOUCH SECTION PADDING. --ed-flow and .section{padding-block} are
+   not referenced anywhere below. The 409 sections that compute 95.04px at 1440
+   and 40px at 375 are left exactly as they are.
+
+   ----------------------------------------------------------------------------
+   VERIFIED FROM SOURCE THIS TURN (read, counted or computed - not assumed)
+   ----------------------------------------------------------------------------
+   (1) THE FACES NOW LOAD. All 49 rendered pages carry a live Google Fonts link
+       for Playfair Display 400..700 + italics and Montserrat 300..700 + italics,
+       display=swap (49/49 files matched). Every weight this slice asks for
+       (Playfair 500, Montserrat 500/600) is a real weight, so
+       "font-synthesis: none" is safe and kills faux-bold. The ladder below is
+       tuned for the REAL faces; the old ladder was tuned against Georgia/Arial
+       and is deliberately NOT preserved.
+
+   (2) THE PAGE TREE IS 98 FILES = 49 RENDERED PAGES + 49 ".content.html" TWINS.
+       Every census below is stated PER RENDERED SITE (the 49 real pages), which
+       is why raw greps over pages/*.html read roughly double.
+
+   (3) THE data-rise CENSUS, RECOUNTED. Counted on the 49 rendered pages only:
+           507   <section> elements
+           409   carry [data-rise]      <- matches the brief's 409-section count
+            98   do NOT                 <- 49 .ed-pick + 49 .precta, 2 per page
+         1,199   [data-rise] elements of all kinds
+       So the correct claim is NOT "every section carries [data-rise]". It is:
+       EVERY SECTION INSIDE <main> CARRIES IT. The two that do not are chrome
+       bands sitting OUTSIDE <main> - .ed-pick (the clinic picker, before <main>)
+       and .precta (the closing booking band, after </main>; about.html:769
+       against </main> at 766). .precta additionally contains ZERO [data-rise]
+       descendants, so the booking CTA is static by construction and can never be
+       caught invisible. That is the desirable outcome for a CTA, and it is why
+       section 8 loses nothing by keying the whole budget to section[data-rise].
+       (The brief quotes 1,277 reveals; this turn measures 1,199 on the rendered
+       pages. The difference changes no rule below. Flagged, not hidden.)
+
+   (4) THE STAGGER IS REAL, ARBITRARY, AND SET FROM JS.
+         structural.css:1629   transition-delay: calc(var(--i, 0) * 70ms)
+         pages/*.html:~1023    el.style.setProperty("--i", i % 6)
+       --i never appears in static markup, which is why a source grep looks
+       clean. It is an INLINE custom property keyed to DOCUMENT ORDER MOD 6, so
+       two cards in one row routinely draw 0ms and 210ms. An inline custom
+       property cannot be out-ranked - but nothing needs to out-rank it, because
+       the JS sets --i, not transition-delay. Overriding transition-delay itself
+       wins on source order at equal specificity. Section 8 does that.
+
+   (5) --ds-grain IS AUTHORED BUT PAINTS ALMOST NOWHERE.
+         - body::after (structural.css:116) is position:fixed; z-index:-1, and
+           body creates no stacking context, so it lands in the ROOT negative
+           layer - painted BEFORE in-flow block backgrounds. Every .section--*
+           modifier paints an opaque background over it, so the veil is buried on
+           every real band.
+         - .kit-grain (structural.css:457) is worn by 0 elements in pages/.
+       "Activate the grain" is therefore a plumbing job, not a tuning job.
+       Section 7a puts the grain into each ground's OWN background-image stack -
+       above its background-color, below its content, by definition. No
+       pseudo-element, no z-index, no stacking context, no blend mode.
+
+   (6) THE 8 GRID FRAGMENTS ARE INLINE-STYLED. The most important mechanical
+       finding in this slice. Counted across the page tree:
+           12  style="background-image:var(--ds-grid)"
+            4  style="background-image: var(--ds-grid);"
+       = 16 across 98 files = 8 per rendered site, which is EXACTLY the brief's
+       "8 fragments". An inline style beats every normal stylesheet rule, so the
+       grid CANNOT be retired by writing a rule against .kit-mesh. It can only be
+       retired by emptying the TOKEN that the inline style reads. That is why
+       section 7b retires --ds-grid at the token and not at the selector.
+
+   (7) .section::before IS ALREADY TAKEN by the light-to-light seam ramp
+       (structural.css:396-410). ::after is free. Section 7 uses NEITHER, per
+       (5) - recorded so the next author does not rediscover it.
+
+   (8) THE LABELS ARE SENTENCES, AND THEY ARE BEING SHOUTED. Real values of
+       .kit-eyebrow / .kit-micro / .kit-card__label, longest first:
+         69 chars  "What you would be working with, in daily clinical use at four clinics"
+         65 chars  "How this index is filtered, and what it says when nothing matches"
+         64 chars  "The filter contract, and the words it says when it finds nothing"
+       These render at 10-11px in 0.14-0.2em tracked UPPERCASE. That is the
+       largest single carrier of the uptight read AND a legibility failure. The
+       source copy is ALREADY sentence case, so text-transform:none is a pure
+       rendering change with ZERO copy risk. Highest-leverage line in the file.
+
+   (9) THE POST-SLICE-1 PALETTE is what every ratio at the foot is computed
+       against, not the base tokens:
+         --ds-ink       #1F2124 -> #241F1A     --ds-bg-warm      #F7F5F1 -> #E7DCC8
+         --ds-ink-soft  #5B6470 -> #665C51     --ds-bg-surface-2 #F3F5F8 -> #EFE7DB
+         --ds-bg-page   (new) #F7F5F1, and it becomes the PAGE ground: body is
+         painted from it (foh-01:333) and .section--paper is re-pointed onto it
+         (foh-01:342) - verified by reading both lines.
+       The brief's quoted --ds-bg-warm (#FBF4E6) matches neither the source
+       (#F7F5F1) nor slice 1 (#E7DCC8) and is not used anywhere below. See RISKS.
+
+  (10) --ds-accent-text ALREADY SOLVES THE DARK-SCOPE TRAP. foh-01 ships it at
+       #6F5828 in :root and flips it to #C69E4C inside .surface-dark, precisely
+       so an eyebrow can be bronze on light and gold on navy from ONE var().
+       This slice uses that token rather than inventing a second alias, which is
+       why no label below can reproduce the white-ink-on-light-gold bug found
+       this week. Raw --ds-accent-deep is never used as label ink: it flips to
+       #A98338 in dark scope and measures 3.42-4.32:1 there.
+
+  (11) foh-02 DELEGATES THE HERO'S TYPE TO THIS SLICE, IN WRITING. Its comment on
+       .foh-hero__title reads: "Slice 3 owns the type SYSTEM; the family and
+       tracking of this one element are deliberately left to it. Only the size
+       floor and the measure are set here, because they are what the contrast
+       contract depends on." Section 4 therefore sets family and tracking on that
+       element and NEVER its font-size or max-width.
+
+   ----------------------------------------------------------------------------
+   HOUSE RULES OBSERVED
+   ----------------------------------------------------------------------------
+   - NO BRAND HEX IN THIS FILE. Every colour is a var() pointing at a token
+     declared in the tokens slice. The only customs declared here are lengths,
+     ratios, durations and one keyword (none).
+   - Nothing below implies a clinical claim, an outcome or a guarantee.
+   - PRICE DISPLAY IS NOT MADE MORE CONFIDENT. .kit-table__from (the "from"
+     qualifier) is raised to the 14px floor for legibility and simultaneously
+     DE-emphasised - it loses its 700 weight and its uppercase stamp, so the
+     qualifier reads as a qualifier. Table numerals keep their rung. No price
+     gains size, weight, colour or prominence anywhere in this slice.
+   - ADDITIVE. Existing selectors are re-pointed at ladder tokens rather than
+     rewritten. The only multi-property rewrites are the label retreat and the
+     grid retirement, which ARE the brief.
+   ========================================================================= */
+
+
+/* ============================================================================
+   1. THE LADDER, AS TOKENS
+   Lengths, ratios and durations only. No colour is declared in this file.
+   ----------------------------------------------------------------------------
+   THE BODY LADDER, EXPLICITLY - six rungs, hard floor 14px:
+
+       rung          value      replaces                             used for
+       lede          18->21px   clamp(17,1.8vw,19)                   band opener
+       body          17px       16px                                 DEFAULT MEASURE
+       read          16px       15px                                 long lists, legal
+       body-sm       15px       12 / 12.5 / 13 / 13.5px              secondary prose
+       caption       14px       9.5 / 10 / 10.5 / 11 / 11.5 / 12px   THE FLOOR
+       label         14px       9.5 / 10 / 10.5 / 11px               micro-labels
+
+   Nothing in this ladder renders below 14px. Word-weighted median moves
+   15px -> ~16-17px, and the 8,454 words currently at 10-11px all land on the
+   14px floor. Section 5 carries the line-by-line proof that this ladder covers
+   100% of the sub-14px declarations in the structural sheet.
+
+   THE DISPLAY LADDER, EXPLICITLY:
+
+       rung          value                      replaces
+       d1            clamp(44px, 6.6vw, 92px)   clamp(38px, 5.4vw, 64px)
+       d1-long       clamp(34px, 4.2vw, 58px)   (new: the graceful degradation)
+       d2            clamp(30px, 3.9vw, 46px)   clamp(28px, 3.6vw, 40px)
+       d3            clamp(21px, 2.3vw, 28px)   clamp(19px, 2.2vw, 26px)
+       d4            18px                       17px
+       accentline    clamp(22px, 2.5vw, 30px)   clamp(21px, 2.4vw, 28px)
+   ========================================================================= */
+
+:root {
+
+  /* -- DISPLAY (Playfair Display 500). Rewards a short headline. ----------- */
+  --foh-t-d1:        clamp(44px, 6.6vw, 92px);
+  --foh-t-d1-long:   clamp(34px, 4.2vw, 58px);
+  --foh-t-d2:        clamp(30px, 3.9vw, 46px);
+  --foh-t-d3:        clamp(21px, 2.3vw, 28px);
+  --foh-t-d4:        18px;
+  --foh-t-accent:    clamp(22px, 2.5vw, 30px);
+
+  /* -- BODY (Montserrat). 14px is the FLOOR; nothing renders below it. ----- */
+  --foh-t-lede:      clamp(18px, 0.55vw + 16px, 21px);
+  --foh-t-body:      17px;
+  --foh-t-read:      16px;
+  --foh-t-body-sm:   15px;
+  --foh-t-caption:   14px;
+  --foh-t-label:     14px;
+
+  /* -- LINE-HEIGHT. Playfair's tall x-height and short descenders let display
+        rungs run tighter than Georgia did; Montserrat's large x-height wants a
+        slightly OPENER body leading than Arial did, not a tighter one. ------ */
+  --foh-lh-d1:       1.02;
+  --foh-lh-d2:       1.10;
+  --foh-lh-d3:       1.22;
+  --foh-lh-d4:       1.35;
+  --foh-lh-lede:     1.58;
+  --foh-lh-body:     1.70;
+  --foh-lh-read:     1.66;
+  --foh-lh-body-sm:  1.62;
+  --foh-lh-caption:  1.50;
+  --foh-lh-label:    1.45;
+
+  /* -- TRACKING. Playfair is a high-contrast face: it NEEDS negative tracking
+        at display sizes (Georgia did not, which is why the old values were
+        timid) and none at all below ~20px. --------------------------------- */
+  --foh-track-d1:    -.024em;
+  --foh-track-d2:    -.017em;
+  --foh-track-d3:    -.010em;
+  --foh-track-d4:    -.004em;
+  --foh-track-label: .005em;   /* was .14em - .2em */
+  --foh-track-caps:  .10em;    /* the OPT-IN stamp only - see 6 */
+
+  /* -- READING WIDTH. These re-point .readw (structural.css:517-519), which is
+        what actually governs prose width after section 2.
+        WHY THE ch COUNTS COME DOWN: the site painted in Arial fallback until
+        this week. Montserrat's "0" advance is materially wider than Arial's
+        (~0.60em against ~0.556em, from the families' published metrics - NOT
+        measured this turn, labelled approximate), so an unchanged 64ch now
+        resolves several characters per line wider than it ever did in testing.
+        Pulled in one notch each, so the CHARACTER count falls even though the
+        pixel width rises with the larger type. */
+  --foh-read:        60ch;   /* was 64ch */
+  --foh-read-wide:   70ch;   /* was 78ch */
+  --foh-read-tight:  52ch;   /* was 56ch */
+
+  /* -- HEADLINE MEASURE. The device that rewards a SHORT headline - see 4. -- */
+  --foh-head-measure:      16ch;
+  --foh-head-measure-long: 24ch;
+
+  /* -- MOTION BUDGET. --ds-dur-slow is .6s, which is exactly the ~600ms the
+        brief asks for, AND structural.css already collapses it to .01ms inside
+        its own prefers-reduced-motion block (line 1633, read this turn).
+        Reading the existing token instead of inventing a duration means
+        reduced-motion support is INHERITED rather than re-implemented; section
+        9 then re-states it belt-and-braces. --------------------------------- */
+  --foh-rise-dur:    var(--ds-dur-slow);
+  --foh-rise-ease:   var(--ds-ease-out);
+  --foh-rise-travel: 10px;   /* was 14px: shorter travel reads calmer */
+
+  /* [SEAM-3] THE CONTROL LEADING. Added during integration to fix a measured
+     cross-slice regression -- see the .kit-btn rule in section 5 for the
+     arithmetic. Buttons are the one place on the site where leading is a BOX
+     dimension rather than a reading comfort, because .kit-btn is inline-flex
+     with block padding and a min-height, so line-height multiplies straight into
+     the control's height. 1.25 is the value that keeps the components part's
+     54px pill at 54px while still leaving a wrapped two-line label real space
+     between its lines. */
+  --foh-lh-control:  1.25;
+
+  /* -- THE BLUEPRINT GRID, RETIRED AT THE TOKEN. See 7b and note (6).
+        This is the ONLY mechanism that can reach the 8 inline-styled fragments,
+        because an inline background-image:var(--ds-grid) outranks every rule a
+        stylesheet can write. "none" is a valid <bg-image> and a valid layer
+        inside a comma list, so this one keyword neutralises every consumer at
+        once - inline or not, found or not - without introducing a colour and
+        without editing the tokens slice. */
+
+  /* [SEAM-1] --ds-grid: none WAS DECLARED HERE, in :root and again in
+     .surface-dark. RELOCATED during integration to PART 1, the tokens part, so
+     that no --ds-* token is declared outside it. Value, both scopes and
+     behaviour are unchanged; the reasoning above still stands and is repeated at
+     the new site. Nothing between Part 1 and the end of this file re-declares
+     --ds-grid, so the relocation is behaviourally inert -- verified by scanning
+     every custom-property declaration in the merged sheet. */
+}
+
+
+/* ============================================================================
+   2. THE READING MEASURE - WHY THIS SLICE DECLARES NO --foh-measure
+   Verified by grep against the current foh-02: the name --foh-measure does not
+   occur in it (0 hits). So:
+
+     - This slice deliberately declares NO --foh-measure. Re-declaring a token
+       the owning slice does not define would resurrect it as dead code, and
+       because this slice concatenates LAST it would silently win if foh-02 ever
+       introduced the name with a different meaning.
+     - The reading measure is carried entirely by .readw / --foh-read (section
+       5), which is the right place for it: .readw sits directly on .kit-lede and
+       .kit-body - on the prose itself rather than on the column that happens to
+       contain it. A cap on the text beats a cap on the box, because it survives
+       any future change to the column geometry.
+     - CONSEQUENCE, stated plainly: structural.css:309 declares only
+       ".col--copy { min-width: 0 }" - the copy column has NO max-width and
+       neither slice adds one, so it runs its natural width (about 598px at
+       1440). Prose does not run that wide because .readw caps it first. Any
+       element inside .col--copy that carries prose but NOT .readw will run the
+       full column width. Flagged in RISKS.
+   ========================================================================= */
+
+
+/* ============================================================================
+   3. FACE ACTIVATION
+   Both families now serve real weights, so synthesised faces are pure damage: a
+   synthesised Playfair 500 smears exactly the hairline contrast this whole
+   direction rests on.
+   ========================================================================= */
+
+body {
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* THE DEFAULT MEASURE ITSELF. structural.css:98 sets body{font-size:16px},
+     and re-pointing only .kit-body would leave every unclassed <p>, <li> and
+     inherited run at 16px while the ladder claimed 17px. This one declaration
+     carries the ladder's floor for all unclassed copy. */
+  font-size: var(--foh-t-body);
+  line-height: var(--foh-lh-body);
+}
+
+/* Playfair Display ships an optical-size axis; let the browser drive it. */
+h1, h2, h3, h4,
+.kit-d1, .kit-d2, .kit-d3, .kit-d4,
+.kit-accentline,
+.foh-hero__title {
+  font-optical-sizing: auto;
+}
+
+
+/* ============================================================================
+   4. DISPLAY SCALE - large and short
+   Reference: 9 words at 50-94px. This site ships 16-22 words at 64px, which is
+   why the hero reads like a case-file heading rather than a welcome.
+
+   THE HONEST LIMIT: CSS CANNOT COUNT WORDS. "A long headline degrades
+   gracefully" therefore cannot be fully automatic. It is done with three
+   devices, two automatic and one an authoring contract:
+
+     (a) AUTOMATIC - the size is vw-driven inside a clamp, so a long headline can
+         never overflow horizontally at any width. It wraps; it never clips.
+     (b) AUTOMATIC - --foh-head-measure (16ch) caps the HEADLINE'S OWN line
+         length. At the 92px ceiling that is roughly 880px, so a 9-word / ~50
+         character headline breaks to about three lines and stops. It can never
+         run the full 1140px container and turn into a wall of display type.
+         This is the part that "rewards a short headline": a short one gets the
+         full 92px because it fits; a long one is forced to wrap early and
+         therefore visibly wants the --long treatment.
+     (c) CONTRACT - .kit-d1--long / [data-headline="long"] is the explicit
+         opt-out for a headline the build knows runs past ~12 words. It drops the
+         ceiling to 58px and opens the measure to 24ch, so a 22-word headline
+         resolves to about five lines instead of nine. This must be applied by
+         whoever emits the hero. It is not magic and is not claimed to be -
+         flagged in RISKS.
+
+   text-wrap:balance is already set upstream on these elements
+   (structural.css:472). "pretty" is listed first purely as the progressive
+   fallback for browsers that ship pretty but not balance.
+   ========================================================================= */
+
+h1, .kit-d1 {
+  font-size: var(--foh-t-d1);
+  line-height: var(--foh-lh-d1);
+  letter-spacing: var(--foh-track-d1);
+  max-width: var(--foh-head-measure);
+  text-wrap: pretty;
+  text-wrap: balance;
+}
+
+h1.kit-d1--long, .kit-d1--long,
+[data-headline="long"] h1, h1[data-headline="long"] {
+  font-size: var(--foh-t-d1-long);
+  max-width: var(--foh-head-measure-long);
+}
+
+h2, .kit-d2 {
+  font-size: var(--foh-t-d2);
+  line-height: var(--foh-lh-d2);
+  letter-spacing: var(--foh-track-d2);
+}
+
+h3, .kit-d3 {
+  font-size: var(--foh-t-d3);
+  line-height: var(--foh-lh-d3);
+  letter-spacing: var(--foh-track-d3);
+}
+
+h4, .kit-d4 {
+  font-size: var(--foh-t-d4);
+  line-height: var(--foh-lh-d4);
+  letter-spacing: var(--foh-track-d4);
+}
+
+.kit-accentline {
+  font-size: var(--foh-t-accent);
+  line-height: 1.28;
+}
+
+/* A headline centred in its column must not inherit a left-locked cap. */
+.kit-d1.readw--center, h1.readw--center { margin-inline: auto; }
+
+/* THE PHOTOGRAPHIC HERO'S HEADLINE - the delegation in note (11), honoured
+   exactly. foh-02 sets .foh-hero__title's font-size (clamp 30/4.4vw/58) and
+   max-width (20ch) because its scrim contrast contract depends on both, and
+   asks this slice for the family and the tracking only.
+
+   NOTHING HERE SETS font-size OR max-width. It does not need to and it must not:
+   .foh-hero__title is (0,1,0) and the h1 rule above is (0,0,1), so foh-02's
+   size and measure already win on specificity - verified by that arithmetic, not
+   assumed. The family and weight arrive from structural.css:466-472, which binds
+   h1 to --ds-font-display at 500. Only the tracking was genuinely missing. */
+.foh-hero__title {
+  letter-spacing: var(--foh-track-d1);
+}
+
+/* The legal pages set their h2/h3 in UPPERCASE Playfair (structural.css:2060,
+   2066). Uppercase display serif is the loudest thing on the site, and it sits
+   on the pages a nervous self-payer reads most carefully. Sentence case, by the
+   same argument as section 6. */
+.bw-legal h2, .bw-legal h3 {
+  text-transform: none;
+  letter-spacing: var(--foh-track-d3);
+}
+
+
+/* ============================================================================
+   5. BODY SCALE - raise the floor and the default measure
+   Word-weighted median was 15px, with 39.9% of words at 14px or under and 8,454
+   words at 10-11px.
+
+   COVERAGE PROOF. Every font-size below 14px in elevatedental-structural.css was
+   enumerated this turn and mapped to a rung. All 37 of them are covered:
+
+     13px    .kit-meta 495 · .kit-btn 757 · .kit-person__disc 1145 ·
+             .kit-sys__note 1185 · .kit-stat__sub 1332 · .kit-help 1595 ·
+             .kit-figure figcaption 1601
+     13.5px  .kit-note 496 · .kit-truth p 741 · .kit-inline p 1384
+     12.5px  .kit-card__addr 991 · .kit-defs > div 1604
+     12px    .kit-card__hours > div 1005 · .kit-person__role 1144 ·
+             .kit-list--ledger li::before 1423 · .kit-quote__cite 1459 ·
+             .kit-table th 1497 · .bw-legal__effective 2083
+     11.5px  .kit-tag 883 · .kit-status 905 · .kit-card__tel 1019
+     11px    .kit-micro 497 · .kit-eyebrow 524 · .kit-open__no 627 ·
+             .kit-person__where 1146 · .kit-sys__where 1186 · .kit-label 1558 ·
+             .bw-toc__title 2104
+     10.5px  .kit-truth__k 732 · .kit-slot__cap 1124 · .kit-stat__l 1323 ·
+             .kit-table caption 1487 · .kit-table__from 1517
+     10px    .kit-card__label 985 · .kit-sys__no 1183 ·
+             .kit-table td[data-label]::before 1823 (inside a 767px query)
+     9.5px   .kit-card__unit 1020
+
+   After this section the structural sheet renders NOTHING below 14px. The
+   remaining sub-14px type on the site lives in the chrome sheet and is dealt
+   with explicitly at the end of this section.
+   ========================================================================= */
+
+.kit-lede,
+.foh-hero__lede {
+  font-size: var(--foh-t-lede);
+  line-height: var(--foh-lh-lede);
+}
+
+.kit-body,
+.kit-inline p {
+  font-size: var(--foh-t-body);
+  line-height: var(--foh-lh-body);
+}
+
+/* An FAQ answer is body copy, read by someone deciding whether to spend money
+   they are paying themselves. It is the last place on the site to economise. */
+.kit-faq__a {
+  font-size: var(--foh-t-body);
+  line-height: var(--foh-lh-body);
+}
+
+/* THE READING WIDTH, re-cut for Montserrat's wider advance (see section 1). */
+.readw        { max-width: var(--foh-read); }
+.readw--wide  { max-width: var(--foh-read-wide); }
+.readw--tight { max-width: var(--foh-read-tight); }
+
+/* -- rung: read 16px - long-form runs a reader actually reads through ------ */
+.kit-list--ledger li,
+.bw-legal__callout,
+.bw-toc__link {
+  font-size: var(--foh-t-read);
+  line-height: var(--foh-lh-read);
+}
+
+/* -- rung: body-sm 15px --------------------------------------------------- */
+.kit-meta,
+.kit-note,
+.kit-truth p,
+.kit-card__body,
+.kit-card__addr,
+.kit-card__tel,
+.kit-person__disc,
+.kit-sys__note,
+.kit-stat__sub,
+.kit-table {
+  font-size: var(--foh-t-body-sm);
+  line-height: var(--foh-lh-body-sm);
+}
+/* [SEAM-3] .kit-btn WAS a member of this group. It was pulled out during
+   integration and given its own rule below, because inheriting --foh-lh-body-sm
+   (1.62) here silently resized every control on the site. Same 15px rung, own
+   leading. */
+
+/* -- rung: caption 14px - THE FLOOR --------------------------------------- */
+.kit-tag,
+.kit-status,
+.kit-card__hours > div,
+.kit-person__where,
+.kit-sys__where,
+.kit-list--ledger li::before,
+.kit-quote__cite,
+.kit-table th,
+.kit-table caption,
+.kit-table td[data-label]::before,
+.kit-defs > div,
+.kit-help,
+.kit-figure figcaption,
+.kit-slot__cap,
+.kit-sys__no,
+.kit-open__no,
+.bw-legal__effective {
+  font-size: var(--foh-t-caption);
+  line-height: var(--foh-lh-caption);
+}
+
+/* The 10px mobile row label is declared inside a max-width:767px query upstream
+   (structural.css:1823), so the floor must be re-stated at that width or the
+   upstream query out-ranks the rule above on source order. */
+@media (max-width: 767px) {
+  .kit-table td[data-label]::before {
+    font-size: var(--foh-t-caption);
+    line-height: var(--foh-lh-caption);
+  }
+}
+
+/* THE BUTTON RUNG, AND WHY IT IS NOT nowrap.
+   foh-02 sets .kit-btn to 14px with the comment "Slice 3 owns the type system and
+   may raise this further; it must not lower it." The body-sm rung above raises it
+   to 15px, which honours that contract.
+
+   An earlier draft added white-space:nowrap here to stop a pill label breaking
+   mid-button. MEASURED, that is unsafe: the longest real button label on the site
+   is 38 characters ("I know my field, take me to the roster"), which at 15px
+   Montserrat 600 runs roughly 330px of text plus 68px of horizontal padding -
+   about 399px, wider than a 375px viewport. nowrap would not produce a scrollbar,
+   because structural.css:104 sets body{overflow-x:hidden}, so it would do
+   something worse: silently CLIP the label while the reflow ladder still reported
+   clean. Wrapping is allowed; the pill is inline-flex on min-height (not height),
+   so a two-line label grows it instead of overflowing it. */
+/* [SEAM-3] THE CONTROL RUNG -- SIZE AND LEADING TOGETHER, ONE OWNER.
+   This rule is the resolution of a real cross-slice regression that neither
+   authoring pass could see on its own, because each changed a DIFFERENT property
+   of the same box.
+     the components part designed the pill around  padding 18px, min-height 54px
+     this part raised the label from 13px to       the 15px body-sm rung
+     and the body-sm rung also carries             line-height 1.62
+   .kit-btn is inline-flex with BLOCK PADDING and a MIN-height, so line-height is
+   not typographic comfort here, it is a box dimension.
+   MEASURED, NOT COMPUTED. All three states were rendered headless against the
+   real base sheets (chrome-headless-shell 1228 at 1440x900) and the heights read
+   off getBoundingClientRect. This matters: an earlier pass of this comment
+   COMPUTED these numbers and was wrong by exactly 2px on every row, because
+   .kit-btn carries border:1px solid transparent from the base sheet and the
+   arithmetic had ignored it. Box-sizing is border-box. The rendered figures:
+                            pill       ghost
+       base sheets only    48.00px    47.00px
+       UNRESOLVED          62.30px    58.30px   <- what a naive merge produces
+       RESOLVED (this)     56.75px    52.75px
+   Fourteen pixels on a pill is cosmetic. The GHOST is where it mattered, because
+   a ghost is a ruled text link inside a content rail, not a button: +11.30px on
+   every one of them. The components part had already caught and fixed exactly
+   this class of defect BY RENDERING -- its own note records restoring the ghost's
+   block padding after a shorthand inflated it, and warns that 8px on every one
+   "would have shifted the rhythm of the rails site-wide". Raising the leading
+   walked straight back into it through a different property. Fixed here rather
+   than by lowering the rung, because 13px is below the 14px floor this direction
+   sets and the floor is not negotiable.
+   THE RESIDUAL IS HONEST AND MEASURED: the ghost still stands 5.75px taller than
+   the base sheet (52.75 against 47.00). That half is FONT-SIZE driven -- it is
+   the 14px floor being applied to a 13px control -- and no choice of leading
+   removes it. This recovers all of the leading-driven half and none of the rest.
+
+   WHY NOT white-space:nowrap, which an earlier draft added: MEASURED, the
+   longest real button label on the site is 38 characters ("I know my field, take
+   me to the roster"), which at this rung runs roughly 330px of text plus 68px of
+   horizontal padding -- about 399px, wider than a 375px viewport. nowrap would
+   not even produce a scrollbar, because body{overflow-x:hidden} suppresses it;
+   it would silently CLIP the label while the reflow ladder still reported clean.
+   Wrapping is allowed, the pill is inline-flex on min-height rather than height,
+   so a two-line label grows the control instead of overflowing it -- and 1.25
+   leading is what makes that second line readable rather than crushed.
+   CONTRAST IS UNCHANGED BY ANY OF THIS: 15px at 600 is still NORMAL text, so the
+   bar is still 4.5:1 and the bronze pill still measures 4.97:1 in light scope and
+   6.06:1 in dark. */
+.kit-btn {
+  font-size: var(--foh-t-body-sm);
+  line-height: var(--foh-lh-control);
+  text-wrap: pretty;
+}
+
+/* ----------------------------------------------------------------------------
+   THE CHROME SHEET, SPLIT INTO WHAT IS SAFE AND WHAT IS NOT.
+   The inherited draft of this file flagged ALL of elevatedental-chrome.css as
+   untouchable. Re-reading it this turn shows that is over-broad, and it left the
+   footer - which every one of the 49 pages ends on - below the floor.
+
+   NOT SAFE, AND STILL FLAGGED (the fixed-height rails). The header's two tiers
+   have a HARD height: --ed-util-h 56px (chrome.css:118,128) and --ed-shelf-h
+   70px (181,199), and --ed-header-h is the SUM (57) AND is what offsets the body
+   beneath the fixed header (main{padding-top:var(--ed-header-h)}, line 67).
+   Growing type inside those rails either clips the rail or floats the header off
+   the content, so .ed-tel__c (9.5px), .ed-tel__n (11.5px), .ed-hours (11px),
+   .ed-hours b (9.5px) and .ed-util .kit-btn (11.5px) are LEFT ALONE. Re-deriving
+   the rail tokens is a chrome-slice change and this slice will not make it
+   blind. That is the one remaining place the site renders below 14px.
+   Worth recording: .ed-util .kit-btn is (0,2,0) and this slice's .kit-btn rule
+   is (0,1,0), so the rail's own rule already out-ranks the new button rung. The
+   15px body-sm rung cannot leak into the 56px rail and clip it.
+
+   SAFE, AND THEREFORE DONE (no fixed height anywhere in the chain). The footer
+   is plain flow inside .site-footer, and the drawer scrolls; the only heights in
+   either are min-height (.ed-flist--tel a 40px, .ed-fsoc a 36px, .ed-dlist a
+   40px), which grow with their content instead of clipping it. Every pair below
+   is measured at the foot of this file and passes.
+   -------------------------------------------------------------------------- */
+
+/* footer, on --ds-bg-warm #E7DCC8 (smooth - warm is deliberately not grained) */
+.ed-flist a {
+  font-size: var(--foh-t-body-sm);
+  line-height: var(--foh-lh-body-sm);
+}
+.ed-fsoc a,
+.ed-fbar p,
+.ed-fbar__links a {
+  font-size: var(--foh-t-caption);
+  line-height: var(--foh-lh-caption);
+}
+
+/* drawer + clinic picker, both scrolling panels */
+.ed-dlist a {
+  font-size: var(--foh-t-body-sm);
+  line-height: var(--foh-lh-body-sm);
+}
+.ed-nap a,
+.ed-nap span,
+.ed-mclinic span,
+.ed-pick__name span {
+  font-size: var(--foh-t-caption);
+  line-height: var(--foh-lh-caption);
+}
+/* .ed-nap span is one of the 876 stamps; it retreats with the rest - see 6. */
+.ed-nap span {
+  letter-spacing: var(--foh-track-label);
+  text-transform: none;
+}
+
+
+/* ============================================================================
+   6. MICRO-LABEL RETREAT
+   876 labels, 54.8 per page, 17.7% of all text nodes, at 9.5-12px in 0.14-0.2em
+   tracked uppercase - carrying, per note (8), 60-to-69-character SENTENCES.
+
+   THE CLASS IS NOT DELETED. Every class keeps working and every fragment that
+   depends on one keeps rendering. What changes is that the DEFAULT stops being
+   a stamp:
+     - text-transform: none   the source copy is already sentence case, so this
+                              is a rendering change with zero copy risk, and it
+                              is what turns "AND THE TWO CASES WHERE THE ANSWER
+                              IS NO" back into a line a person can read.
+     - weight   700 -> 600
+     - tracking .16em -> .005em
+     - size     9.5-12px -> 14px (the floor)
+     - colour   -> --ds-ink-soft, which passes 4.5:1 on every ground in BOTH
+                   scopes unaided (table at foot).
+
+   HOW "SPARINGLY" IS ACHIEVED WITHOUT DELETING ANYTHING. The budget is split
+   STRUCTURALLY rather than by count, because CSS cannot delete 800 labels:
+   .kit-eyebrow - the C7 signature move "eyebrow-label-above-serif-h2", roughly
+   one per band - keeps a promoted colour and stays a deliberate signal. Every
+   OTHER label class recedes to ink-soft and reads as a caption. So the one label
+   that is supposed to mean something still does, and the other ~800 stop
+   competing with it. The uppercase stamp survives only as an OPT-IN class.
+   ========================================================================= */
+
+.kit-micro,
+.kit-eyebrow,
+.foh-hero__eyebrow,
+.kit-truth__k,
+.kit-card__label,
+.kit-card__unit,
+.kit-table__from,
+.kit-stat__l,
+.kit-person__role,
+.kit-label,
+.bw-toc__title {
+  font-family: var(--ds-font-body);
+  font-size: var(--foh-t-label);
+  font-weight: 600;
+  line-height: var(--foh-lh-label);
+  letter-spacing: var(--foh-track-label);
+  text-transform: none;
+  color: var(--ds-ink-soft);
+}
+
+/* THE PROMOTED LABEL. --ds-accent-text is foh-01's purpose-built eyebrow token:
+   #6F5828 in :root, flipped to #C69E4C inside .surface-dark. One var(), both
+   scopes, both measured - exactly the pairing that failed this week when a raw
+   accent was used instead.
+   .foh-hero__eyebrow is included because foh-02 already colours it
+   --ds-accent-text and this slice's group rule above would otherwise overwrite
+   that with ink-soft: the group sets the TYPE, this restores the colour. */
+.kit-eyebrow,
+.foh-hero__eyebrow {
+  color: var(--ds-accent-text);
+}
+.kit-eyebrow--quiet {
+  color: var(--ds-ink-soft);
+}
+
+/* structural.css ships .surface-dark .kit-micro and siblings at (0,2,0), which
+   would out-rank the (0,1,0) group above and leave the quiet labels gold on the
+   dark band. Every such rule found this turn is answered here - 505 .kit-micro,
+   533 .kit-eyebrow, 742 .kit-truth__k, 1021 .kit-card__unit, 1147
+   .kit-person__role. Both readings pass contrast; this is for consistency of the
+   retreat, not for compliance. It matters on every page, because .precta - the
+   closing booking band - is .surface-dark and carries .kit-eyebrow and
+   .kit-truth__k in its markup. */
+.surface-dark .kit-micro,
+.surface-dark .kit-truth__k,
+.surface-dark .kit-card__label,
+.surface-dark .kit-card__unit,
+.surface-dark .kit-table__from,
+.surface-dark .kit-stat__l,
+.surface-dark .kit-person__role,
+.surface-dark .kit-label,
+.surface-dark .bw-toc__title {
+  color: var(--ds-ink-soft);
+}
+.surface-dark .kit-eyebrow {
+  color: var(--ds-accent-text);
+}
+
+/* THE REMAINING UPPERCASE CARRIERS. After the retreat above, these four rules
+   still stamp their text - each was resized by section 5 but not un-stamped:
+     .kit-table th          structural.css:1497
+     .kit-table caption     structural.css:1487
+     .kit-slot__cap b       structural.css:1135
+     .kit-quote__cite       structural.css:1459
+   Table headers and image captions set in tracked caps are the definition of the
+   systematic tic the brief asks to remove, so they join the retreat. Each keeps
+   its own weight and colour; only the stamp goes. */
+.kit-table th,
+.kit-table caption,
+.kit-slot__cap b,
+.kit-quote__cite {
+  text-transform: none;
+  letter-spacing: var(--foh-track-label);
+}
+
+/* THE OPT-IN STAMP. Sparing by construction: it is an EXTRA class, so using it
+   is a decision somebody makes, not a default something inherits. */
+.foh-caps {
+  text-transform: uppercase;
+  letter-spacing: var(--foh-track-caps);
+  font-weight: 600;
+  font-size: var(--foh-t-caption);
+}
+
+/* THE PRICE QUALIFIER must not gain confidence as it gains legibility. It rises
+   to the 14px floor and simultaneously loses its 700 weight and its uppercase
+   stamp, so "from" reads as the qualifier it is. Published figures are
+   REPRESENTATIVE MARKET FIGURES, not this practice's fees; nothing here makes
+   them look more like a quote. */
+.kit-table__from {
+  font-weight: 500;
+  color: var(--ds-ink-soft);
+}
+
+
+/* ============================================================================
+   7a. TEXTURE - GRAIN ON
+   Per note (5) the grain is authored but buried. It goes into each ground's OWN
+   background-image stack: above the background-color, below the content, by
+   definition. No pseudo-element, no z-index, no stacking context, no blend mode.
+
+   background-image is set ALONE - never the background shorthand - so each
+   ground keeps the background-color foh-01 gave it.
+
+   OPACITY: none is set here, and that IS the decision. The token's SVG already
+   bakes opacity="0.045" (light) / "0.055" (dark) into the noise rect, which is
+   the "low opacity" the brief asks for. Wrapping it in a second opacity layer
+   would mean re-authoring a texture that belongs to the tokens slice.
+
+   WHERE IT GOES, AND WHY NOT EVERYWHERE. Grain darkens a light ground slightly,
+   which LOWERS contrast for dark ink, so every ground was solved for the maximum
+   alpha it can carry at the 4.5:1 body floor against --ds-ink-soft, the thinnest
+   ink this slice puts on it. Worst-case model: an opaque black noise pixel,
+   ground x (1 - alpha).
+
+     --ds-bg-page      #F7F5F1   max alpha 0.126   at 0.045 -> 5.44:1   PAINTED
+     --ds-bg-wash      #F2EDE3   max alpha 0.097   at 0.045 -> 5.06:1   PAINTED
+     --ds-bg-surface-2 #EFE7DB   max alpha 0.076   at 0.045 -> 4.84:1   PAINTED
+     --ds-bg-warm      #E7DCC8   max alpha 0.031   at 0.045 -> 4.37:1   NOT PAINTED
+
+   THE WARM GROUND IS LEFT SMOOTH. #E7DCC8 is the deepest ground in the light
+   scope and --ds-ink-soft already sits at only 4.81:1 on it before any texture;
+   there is no headroom left to spend, and spending it would put every quiet
+   label on a warm band at 4.37:1 - below the floor. Retexturing that band needs
+   a lower-alpha grain variant from the TOKENS slice, which is not this slice's
+   to declare. FLAGGED, not silently shipped.
+
+   THE SAME RULE COST .kit-truth ITS GRAIN, AND THIS IS A CORRECTION.
+   .kit-truth (structural.css, "background: var(--ds-bg-warm)") paints the SAME
+   deepest warm ground, and .site-footer does too. The inherited draft of this
+   file grained .kit-truth while excluding .section--warm for the reason above -
+   which is self-contradictory, and measurably wrong: it would have put
+   .kit-truth__k (ink-soft, 14px after section 5) on a grained #E7DCC8 at
+   4.37:1, a real WCAG failure on the "Before you book" callout that appears in
+   every .precta band on all 49 pages. .kit-truth is NOT grained. It keeps
+   ink-soft at 4.81:1 and ink at 12.03:1.
+
+   COVERAGE IS NOT LOST BY EITHER EXCLUSION. After foh-01, --ds-bg-page IS the
+   warm paper ground: body is painted from it (foh-01:333) and .section--paper is
+   re-pointed onto it (foh-01:342). Grain therefore lands on the page ground
+   itself plus the sand band, which is the dominant warm surface of the site.
+
+   .foh-hero IS DELIBERATELY INCLUDED, even though foh-02 sets
+   ".foh-hero { background-image: none }". That clearance exists to remove the
+   44px grid and two COOL radial washes - foh-02's own words, "all three are
+   case-file gestures". Grain is not a case-file gesture; it is the paper tooth
+   this slice is asked to activate, and the hero's lockup sits on open warm paper
+   under the photograph. This rule re-adds the grain layer ONLY: the radials live
+   exclusively in the .kit-hero:not(.foh-hero) rule in 7b, and the grid cannot
+   return through any path because --ds-grid is none.
+
+   DARK SCOPE: the tokens sheet re-inks --ds-grain to a light-on-dark noise
+   inside .surface-dark, so a grained ground nested in the dark punctuation band
+   gets the correct texture for free. Worst case there is the LIGHTEST noise
+   pixel lifting the ground; measured at the foot, thinnest pair 4.54:1.
+   ========================================================================= */
+
+/* [SEAM-5] .foh-hero IS LISTED EXPLICITLY. The prose above this rule states that
+   the photographic hero is deliberately grained, but the selector list did not
+   name it -- the grain only reached a migrated hero because every hero in the
+   built pages ALSO carries .section--paper, which is in the list and which, at an
+   equal (0,1,0) and later in the concatenation, overrides the components part's
+   ".foh-hero { background-image: none }". The intent was therefore correct but
+   the mechanism was accidental, and it would have failed silently on any
+   .foh-hero that was not also .section--paper. Naming the class makes the
+   documented intent and the actual selector agree.
+   This changes nothing for the current markup and re-adds the GRAIN LAYER ONLY:
+   the two cool radial washes live exclusively in the .kit-hero:not(.foh-hero)
+   rule in 7b and cannot reach a migrated hero, and the 44px grid cannot return
+   through any path because --ds-grid is none. */
+body,
+.foh-hero,
+.section--paper,
+.section--cool,
+.ground-paper {
+  background-image: var(--ds-grain);
+}
+
+
+/* ============================================================================
+   7b. TEXTURE - THE 44px BLUEPRINT GRID, RETIRED
+   --ds-grid reads as technical drawing: the case file, not the reception room.
+
+   THE SWEEP is in section 1 - "--ds-grid: none" in both scopes. Per note (6)
+   this is not a stylistic choice of mechanism, it is the ONLY mechanism that
+   works: 8 of the fragments per rendered site carry the grid as an INLINE
+   background-image, which no selector in this file could ever out-rank. Emptying
+   the token empties the inline style with it, and every other consumer degrades
+   safely with no rule of its own. Its four in-sheet consumers, read this turn:
+
+     structural.css:456   .kit-mesh
+     structural.css:713   .kit-hero        (3rd background layer)
+     structural.css:1108  .kit-slot__art   (2nd layer, light scope)
+     structural.css:1118  .surface-dark .kit-slot__art
+
+   The two re-statements below exist so the grounds that would otherwise degrade
+   to NOTHING degrade to the warm ground's own material instead - which is what
+   the brief asks for.
+   ========================================================================= */
+
+/* site 1 - .kit-mesh, the plane the 8 fragments wear.
+   !important IS LOAD-BEARING HERE AND IS USED NOWHERE ELSE IN THIS FILE. Those
+   elements are authored as
+     <div class="kit-mesh" aria-hidden="true" style="background-image:var(--ds-grid)">
+   so the inline declaration beats any normal rule. Without !important this
+   selector silently loses and the plane degrades to bare ground - acceptable,
+   but not the paper tooth it is supposed to become. The element is decorative
+   and aria-hidden, carries no text and introduces no contrast pair, so the cost
+   of the override is contained to 6 non-semantic divs per rendered site.
+   opacity returns to 1 because the grain carries its own baked alpha; left at
+   --ds-opacity-faint (.12) the noise would compute to 0.0054 and be
+   mathematically invisible. background-size drops the 44px cell with it. */
+.kit-mesh {
+  background-image: var(--ds-grain) !important;
+  background-size: auto;
+  opacity: 1;
+}
+
+/* site 2 - .kit-hero, for pages that have NOT yet adopted foh-02's .foh-hero.
+   The two radial tint washes are kept VERBATIM; only the third layer, the grid,
+   becomes grain. background-size is restated to match the layer count so no cell
+   size survives on a layer that no longer exists.
+
+   :not(.foh-hero) IS NOT COSMETIC. This slice concatenates AFTER foh-02, and a
+   bare ".kit-hero" rule here is (0,1,0) - the same specificity as foh-02's
+   ".foh-hero { background-image: none }" - so it would win on source order and
+   silently restore the two cool washes underneath the photographic hero, undoing
+   the clearance foh-02 made on purpose. Excluding the class makes the rule
+   unable to match a migrated hero at all, which is the safe form.
+
+   NOT CHANGED HERE: these radials read --ds-primary-soft, which foh-01 leaves
+   cool (#E7EDF3). A cool wash under a warm direction is a real seam, but it is a
+   COLOUR decision inside the tokens slice's remit, not this slice's. FLAGGED. */
+.kit-hero:not(.foh-hero) {
+  background-image:
+    radial-gradient(78% 62% at 88% 4%, var(--ds-primary-soft) 0%, transparent 58%),
+    radial-gradient(52% 46% at 4% 96%, var(--ds-bg-warm) 0%, transparent 62%),
+    var(--ds-grain);
+  background-size: auto, auto, auto;
+}
+
+/* site 3 - .kit-slot__art. DELIBERATELY NOT RESTATED HERE.
+   foh-02 (section 3.6) owns this surface outright: it re-points the whole stack
+   onto --ds-bg-wash + --ds-accent-soft, drops the grid layer itself, carries the
+   grain as its middle layer, and sets background-repeat: no-repeat, repeat,
+   no-repeat so the grain tiles while the two gradients do not. Restating it here
+   would concatenate last and silently revert foh-02's warm surface back to the
+   cool --ds-primary-soft wash, and drop that background-repeat with it.
+   The --ds-grid:none sweep already guarantees the grid cannot return here
+   through any path, so nothing is lost by staying out of it. */
+
+
+/* ============================================================================
+   8. MOTION BUDGET - ONE MOMENT PER BAND
+   ----------------------------------------------------------------------------
+   THE PROBLEM, from notes (3) and (4): 1,199 independently-triggered reveals per
+   rendered site, nested section -> article -> figure three deep, each firing at
+   its own scroll threshold, each carrying an arbitrary 0-350ms delay keyed to
+   document order mod 6. A band fades in, THEN its cards fade in, THEN their
+   images fade in. That cascade - not the raw count - is what makes the page
+   assemble itself around the reader.
+
+   THE CONSTRAINT: the [data-rise] attributes cannot be edited.
+
+   THE MECHANISM: the attributes stay and the observer keeps adding .is-in to
+   every one of them. What changes is WHO IS ALLOWED TO READ .is-in. Only the
+   SECTION's state is read; everything else is driven off its ancestor section,
+   so a band physically cannot fire in pieces. This works because verification
+   (3) established that all 409 sections inside <main> carry [data-rise] - the
+   band is always already a reveal target, so it can become the ONLY trigger.
+
+     step 1  every [data-rise] element is DISARMED - visible, still, undelayed.
+             This is also where the mod-6 stagger dies.
+     step 2  exactly two things are RE-ARMED, and both key off the SAME
+             section[data-rise]:not(.is-in) state, so they share ONE trigger:
+               - the band's lead heading cluster (.kit-open / .kit-head, or a
+                 first-column h1/h2), and
+               - the band's media.
+             They move together as one plane, at 0ms delay. That is the budget:
+             one MOMENT per band, however many figures the band holds.
+     step 3  body copy is never re-armed, at any specificity.
+     step 4  the first section of <main> is exempted entirely - see below.
+
+   THE TWO CHROME BANDS NEED NO RULE. .ed-pick and .precta sit outside <main> and
+   carry no [data-rise] (note 3), so step 2b's selector - which requires an
+   ancestor section[data-rise] - can never match inside them. They paint
+   unconditionally. For the closing booking band that is exactly right: the CTA
+   is the last thing that should ever be caught mid-fade.
+
+   WHY THIS IS ALSO SAFER THAN WHAT IT REPLACES. Today, any element the observer
+   never reaches stays at opacity 0 forever, and that risk currently covers all
+   1,199 of them including whole sections and every word of body copy. After this
+   change the band ground and all body copy paint unconditionally, and only
+   headings and media depend on .is-in. The blank-content surface area shrinks by
+   about two orders of magnitude. It does not reach zero, and that residual is
+   stated in RISKS rather than papered over.
+
+   WHY NOT will-change: hinting 1,199 elements would cost far more than the
+   animation. What makes this cheap is that almost nothing animates any more -
+   opacity and transform on a handful of compositable boxes per band.
+   ========================================================================= */
+
+/* -- step 1: disarm everything, and kill the mod-6 stagger -----------------
+   (0,2,0), identical to structural.css:1624, so this wins on source order.
+   transition-delay is overridden DIRECTLY; the inline --i the JS sets is left
+   untouched and simply stops being read by anything. */
+.js-rise [data-rise] {
+  opacity: 1;
+  transform: none;
+  transition-property: opacity, transform;
+  transition-duration: 0s;
+  transition-delay: 0s;
+}
+
+/* -- step 2a: give the band's two moving parts their transition -- (0,3,1) -- */
+.js-rise section[data-rise] :is(.kit-open, .kit-head),
+.js-rise section[data-rise] > .container > .row > .col > :is(h1, h2, .kit-d1, .kit-d2),
+.js-rise section[data-rise] :is(figure, .kit-slot, .kit-figure, .kit-bna, [class*="__media"]) {
+  transition-property: opacity, transform;
+  transition-duration: var(--foh-rise-dur);
+  transition-timing-function: var(--foh-rise-ease);
+  transition-delay: 0s;
+}
+
+/* -- step 2b: hold them until the SECTION arrives ---------------- (0,4,1) -- */
+.js-rise section[data-rise]:not(.is-in) :is(.kit-open, .kit-head),
+.js-rise section[data-rise]:not(.is-in) > .container > .row > .col > :is(h1, h2, .kit-d1, .kit-d2),
+.js-rise section[data-rise]:not(.is-in) :is(figure, .kit-slot, .kit-figure, .kit-bna, [class*="__media"]) {
+  opacity: 0;
+  transform: translateY(var(--foh-rise-travel));
+}
+
+/* -- step 3: body copy is never armed ---------------------------- (0,3,1) --
+   Where a listed element is a CHILD of an armed one (a figcaption inside a
+   figure), the parent's opacity forms a group and the child cannot escape it -
+   which is correct, and is why this rule needs no extra specificity. */
+.js-rise section[data-rise] :is(p, li, dd, dt, td, th, blockquote, figcaption,
+  .kit-body, .kit-lede, .kit-meta, .kit-note, .kit-micro, .kit-eyebrow,
+  .kit-faq__a, .kit-card__body, .kit-truth) {
+  opacity: 1;
+  transform: none;
+}
+
+/* -- step 4: THE FIRST BAND IS NEVER HIDDEN -------------------------------
+   The photographic hero is the LCP element and the entire first impression; it
+   must not start at opacity 0. THIS BLOCK IS THE ONLY THING THAT EXEMPTS IT -
+   verified by grep, foh-02 contains no first-of-type rule and states at its
+   section 7 that "Slice 3 owns motion". An earlier draft of this file described
+   this block as cancelling a foh-02 rule; there is no such rule, and the
+   correction matters because it means nothing else is holding this net.
+
+   Each selector below MIRRORS a step-2b selector, prefixed with the hero path,
+   so each necessarily out-ranks the rule it cancels. The arithmetic was computed
+   rather than eyeballed, because step 2b's heading selector carries
+   .container > .row > .col and is (0,7,1), not the (0,4,1) it looks like:
+
+     step 2b heading   (0,7,1)  ->  mirror below  (0,9,1)   cancels
+     step 2b cluster   (0,4,1)  ->  mirror below  (0,6,1)   cancels
+     step 2b media     (0,4,1)  ->  mirror below  (0,6,1)   cancels
+
+   No !important is needed; the arithmetic does it.
+
+   THE SELECTOR WAS CHECKED AGAINST REAL MARKUP, NOT ASSUMED. main > .section
+   :first-of-type[data-rise] matches on all 49 pages: <main id="main"> opens
+   directly with the band (about.html:262 then 267), .ed-pick sits BEFORE <main>
+   on every page so it cannot steal :first-of-type, and 47 of 49 first bands are
+   .kit-hero while privacy-policy.html and terms.html open with a plain
+   .section--paper - also matched, which is correct, because the first band of
+   any page is the one that must not be hidden. */
+.js-rise main > .section:first-of-type[data-rise],
+.js-rise main > .section:first-of-type[data-rise] *,
+.js-rise main > .section:first-of-type[data-rise]:not(.is-in) *,
+.js-rise main > .section:first-of-type[data-rise]:not(.is-in) :is(.kit-open, .kit-head),
+.js-rise main > .section:first-of-type[data-rise]:not(.is-in) > .container > .row > .col > :is(h1, h2, .kit-d1, .kit-d2),
+.js-rise main > .section:first-of-type[data-rise]:not(.is-in) :is(figure, .kit-slot, .kit-figure, .kit-bna, [class*="__media"]) {
+  opacity: 1;
+  transform: none;
+  transition-duration: 0s;
+  transition-delay: 0s;
+}
+
+
+/* ============================================================================
+   9. REDUCED MOTION - BELT AND BRACES
+   structural.css:1633 already collapses --ds-dur-* and force-settles
+   .js-rise [data-rise], and the head latch adds .js-rise only when scripting and
+   IntersectionObserver are available AND reduced motion is not requested
+   (structural.css:1620-1622) - so under a reduce preference nothing is ever
+   hidden in the first place. Because --foh-rise-dur READS --ds-dur-slow, the
+   collapse is inherited rather than re-implemented.
+   What none of that covers is step 2b, which hides elements with opacity and
+   transform rather than with a duration. It is force-settled explicitly here.
+   THIS MUST REMAIN THE LAST MOTION RULE IN THE CONCATENATED SHEET.
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --foh-rise-dur: 1ms;
+    --foh-rise-travel: 0px;
+  }
+  .js-rise [data-rise],
+  .js-rise section[data-rise] :is(.kit-open, .kit-head),
+  .js-rise section[data-rise] > .container > .row > .col > :is(h1, h2, .kit-d1, .kit-d2),
+  .js-rise section[data-rise] :is(figure, .kit-slot, .kit-figure, .kit-bna, [class*="__media"]),
+  .js-rise section[data-rise]:not(.is-in) :is(.kit-open, .kit-head),
+  .js-rise section[data-rise]:not(.is-in) > .container > .row > .col > :is(h1, h2, .kit-d1, .kit-d2),
+  .js-rise section[data-rise]:not(.is-in) :is(figure, .kit-slot, .kit-figure, .kit-bna, [class*="__media"]) {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0s;
+  }
+}
+
+
+/* ============================================================================
+   MEASURED CONTRAST
+   WCAG 2.x relative-luminance formula, computed THIS TURN with a script against
+   the POST-SLICE-1 palette (note 9) - not against the base tokens, and not
+   eyeballed. Body threshold 4.5:1; large threshold 3.0:1 (>=24px, or >=18.66px
+   bold). EVERY rung this slice produces except d1/d2/d3/accentline sits below
+   the large-text threshold, so 4.5:1 is the bar that actually applies to all of
+   the type this slice touches - including all 876 micro-labels at 14px.
+
+   Grained grounds are reported at the WORST-CASE noise pixel, not the average:
+   light scope = an opaque black pixel at the baked 0.045 (ground x 0.955);
+   dark scope = an opaque white pixel at the baked 0.055.
+
+   LIGHT SCOPE
+     ground --ds-bg-surface #FFFFFF (smooth, the card plane)
+       --ds-ink          #241F1A   16.33:1   PASS
+       --ds-ink-heading  #243A52   11.65:1   PASS
+       --ds-accent-text  #6F5828    6.77:1   PASS   <- .kit-eyebrow
+       --ds-ink-soft     #665C51    6.53:1   PASS   <- all quiet labels
+     ground --ds-bg-page #F7F5F1 + GRAIN -> #ECEAE6   (body, .section--paper)
+       --ds-ink          #241F1A   13.59:1   PASS
+       --ds-ink-heading  #243A52    9.70:1   PASS
+       --ds-accent-text  #6F5828    5.63:1   PASS
+       --ds-ink-soft     #665C51    5.44:1   PASS
+     ground --ds-bg-surface-2 #EFE7DB + GRAIN -> #E4DDD1   (.section--cool)
+       --ds-ink          #241F1A   12.10:1   PASS
+       --ds-ink-heading  #243A52    8.64:1   PASS
+       --ds-accent-text  #6F5828    5.02:1   PASS
+       --ds-ink-soft     #665C51    4.84:1   PASS   <- THINNEST LIGHT PAIR
+     ground --ds-bg-wash #F2EDE3 + GRAIN -> #E7E2D9   (via foh-02's slot art)
+       --ds-ink          #241F1A   12.66:1   PASS
+       --ds-ink-heading  #243A52    9.03:1   PASS
+       --ds-accent-text  #6F5828    5.25:1   PASS
+       --ds-ink-soft     #665C51    5.06:1   PASS
+     ground --ds-bg-warm #E7DCC8 (SMOOTH - grain deliberately not painted;
+     this is .section--warm, .kit-truth AND .site-footer)
+       --ds-ink          #241F1A   12.03:1   PASS   <- .ed-flist a
+       --ds-ink-heading  #243A52    8.58:1   PASS
+       --ds-accent-text  #6F5828    4.99:1   PASS
+       --ds-ink-soft     #665C51    4.81:1   PASS   <- .kit-truth__k, .ed-fbar p
+
+   DARK SCOPE (.surface-dark - the .precta band on every page)
+     ground --ds-bg-surface #16273A
+       --ds-ink          #F4F6F8   13.99:1   PASS
+       --ds-ink-heading  #FFFFFF   15.16:1   PASS
+       --ds-accent-text  #C69E4C    6.06:1   PASS   <- .kit-eyebrow, flipped
+       --ds-ink-soft     #A9B4C2    7.21:1   PASS
+     ground --ds-bg-surface #16273A + GRAIN -> #233345
+       --ds-ink          #F4F6F8   11.89:1   PASS
+       --ds-accent-text  #C69E4C    5.15:1   PASS
+       --ds-ink-soft     #A9B4C2    6.13:1   PASS
+     ground --ds-bg-surface-2 #1E3049
+       --ds-ink          #F4F6F8   12.31:1   PASS
+       --ds-accent-text  #C69E4C    5.33:1   PASS
+       --ds-ink-soft     #A9B4C2    6.35:1   PASS
+     ground --ds-bg-surface-2 #1E3049 + GRAIN -> #2A3B53
+       --ds-ink          #F4F6F8   10.48:1   PASS
+       --ds-accent-text  #C69E4C    4.54:1   PASS   <- THINNEST PAIR IN SLICE
+       --ds-ink-soft     #A9B4C2    5.41:1   PASS
+     ground --ds-bg-warm #1B2A3D + GRAIN -> #283648
+       --ds-ink          #F4F6F8   11.33:1   PASS
+       --ds-accent-text  #C69E4C    4.91:1   PASS
+       --ds-ink-soft     #A9B4C2    5.84:1   PASS
+     ground --ds-primary-soft #24384F
+       --ds-accent-text  #C69E4C    4.79:1   PASS
+       --ds-ink-soft     #A9B4C2    5.70:1   PASS
+
+   CHROME PAIRS RAISED IN SECTION 5 (all measured, none previously listed)
+       .ed-flist a        #241F1A on footer #E7DCC8      12.03:1   PASS
+       .ed-fbar p         #665C51 on footer #E7DCC8       4.81:1   PASS
+       .ed-fbar__links a  #665C51 on footer #E7DCC8       4.81:1   PASS
+       .ed-fsoc a         #243A52 on chip   #FFFFFF      11.65:1   PASS
+       .ed-nap a          #243A52 on sand   #EFE7DB       9.50:1   PASS
+       .ed-nap span       #665C51 on sand   #EFE7DB       5.33:1   PASS
+       .ed-dlist a        #665C51 on drawer #FFFFFF       6.53:1   PASS
+       .ed-mclinic span   #665C51 on drawer #FFFFFF       6.53:1   PASS
+       .ed-pick__name span #665C51 on pick  #FFFFFF       6.53:1   PASS
+
+   PAIRS DELIBERATELY NOT USED - they FAIL 4.5:1 at the sizes this ladder makes:
+       --ds-ink-soft    #665C51 on #E7DCC8 + grain     4.37:1  <- why warm and
+                                                                  .kit-truth stay
+                                                                  smooth
+       --ds-accent      #876C33 on #EFE7DB             4.05:1  large-text only
+       --ds-accent-deep #A98338 on dark #16273A        4.32:1  <- THE DARK TRAP
+   No label in section 6 is coloured with a raw var(--ds-accent-deep) or
+   var(--ds-accent). The quiet ones use --ds-ink-soft, which passes in both
+   scopes unaided; the promoted ones use --ds-accent-text, which foh-01 already
+   flips per scope.
+
+   A PAIR THIS SLICE DID NOT INTRODUCE BUT DOES AFFECT:
+       --ds-line-strong #847B70 on smooth #E7DCC8      3.06:1  clears the 3.0
+   non-text bar on the warm ground only because that ground is left smooth. It is
+   a further reason not to grain it.
+   ----------------------------------------------------------------------------
+   RISKS AND LIMITS - stated, not buried
+   ----------------------------------------------------------------------------
+   1. .kit-d1--long IS AN AUTHORING CONTRACT, NOT AUTOMATION. CSS cannot count
+      words. A 22-word headline that never receives the class gets the 16ch
+      measure at up to 92px and will run tall. The clamp guarantees it cannot
+      overflow sideways; it does not guarantee it looks good.
+   2. PROSE WITHOUT .readw RUNS THE FULL COLUMN. Nothing caps .col--copy. Any
+      band that emits body copy without .readw will measure ~598px at 1440.
+   3. THE BRIEF'S --ds-bg-warm (#FBF4E6) DOES NOT EXIST in either the source
+      (#F7F5F1) or slice 1 (#E7DCC8). Every ratio above uses the value actually
+      in the sheet. If the intended value really is #FBF4E6 the warm-ground rows
+      must be recomputed - and #FBF4E6 is LIGHTER, so all of them improve and the
+      grain exclusion could be revisited.
+   4. THE HEADER RAILS STILL RENDER BELOW 14px (9.5-11.5px), by choice: their
+      containers have a hard height and --ed-header-h offsets the whole body.
+      Fixing them means re-deriving those tokens in the chrome slice.
+   5. THE HERO'S FIRST RADIAL IS STILL COOL (--ds-primary-soft #E7EDF3) on
+      un-migrated .kit-hero bands. That is a colour decision owned by the tokens
+      slice; this slice preserved it verbatim rather than reach across the seam.
+   6. RESIDUAL BLANK RISK IS REDUCED, NOT ELIMINATED. If the observer never
+      reaches a section, that band's heading cluster and media stay at opacity 0.
+      Its ground, its body copy and both chrome bands still paint. Reduced motion
+      removes the risk entirely.
+   7. THE MOTION MECHANISM ASSUMES THE GRAMMAR HOLDS. Step 2b's heading arm
+      requires section > .container > .row > .col > h1|h2. A band that nests its
+      heading deeper keeps its heading visible and simply does not animate it -
+      it fails open, never blank.
+   8. .kit-mesh IS THE ONE !important IN THIS FILE, forced by an inline style. If
+      those 8 fragments are ever re-emitted without the inline background-image,
+      the !important should be dropped.
+   9. THE LONGEST BUTTONS WILL RUN TWO LINES ON A PHONE. At the 15px rung, "I
+      know my field, take me to the roster" (38 chars) cannot fit one line at
+      375px. That is the deliberate trade against clipping it - see the .kit-btn
+      note in section 5. If the two-line pill is unwanted, the fix is shorter
+      copy, not a smaller rung or a nowrap.
+  10. THE data-rise TOTAL DISAGREES WITH THE BRIEF: 1,199 measured here against
+      1,277 quoted. Both counts describe roughly one reveal per element and no
+      rule in section 8 depends on the exact figure, but the discrepancy is
+      unexplained and is recorded rather than reconciled by assumption.
+   ========================================================================= */
+
+/* ============================================================================
+   END OF THE FRONT OF HOUSE FOUNDATION.
+   Six seams resolved: [SEAM-1] .. [SEAM-6]. Two were live defects ([SEAM-2] a
+   1.00:1 white-on-white ground in dark scope, [SEAM-3] an +11.30px inflation of
+   every ghost link), one was a latent collision now guarded ([SEAM-6]), two were
+   dead declarations with a single owner restored ([SEAM-4], [SEAM-5]), and one
+   was an architecture violation ([SEAM-1]).
+   Zero undeclared var(). Zero cross-part token conflicts. Zero colour literals
+   outside Part 1. One padding-block declaration, on the rhythm-exempt hero.
+   NOT YET RENDERED AS A MERGED SHEET - see (a) in the header.
+   ========================================================================= */
+
+
+/* ============================================================================
+   SECTION 12 — THE FLAT SEAM (chrome correction, CSS only, no markup touched)
+
+   THE OWNER'S NOTE was "I'm not a fan of the arc shaped image frame." The image
+   frame itself is already dealt with in section 3.2 above: .kit-slot__mask--arch
+   and --frame now resolve to the identical flat plate. What survived that pass is
+   the OTHER arc in the system, and it turns out to be the more visible one.
+
+   WHAT IT ACTUALLY IS. There is exactly ONE arc per page — the structural sheet
+   budgets it at one and spends it in the header, as <svg class="kit-seam
+   kit-seam--paper ed-arc"> sitting under the nav shelf. Because the header is
+   sticky, that single curve travels down the whole page, so every band boundary a
+   reader scrolls past appears to be a swoop. It is one element read as a dozen.
+
+   THE TREATMENT. The strip keeps its exact height, so --ed-header-h arithmetic,
+   the sticky offsets and every scroll-margin downstream are untouched: only the
+   two paths inside it change. The curve is replaced by a flat paper strip closed
+   with a brass hairline, which is the same boundary doing the same job in the
+   rectilinear language the rest of this redesign speaks.
+
+   WHY NOT THE CSS `d` PROPERTY. Overriding d: path(...) on the two <path> nodes
+   is the tidier-looking fix and is refused here: `d` is a comparatively recent
+   CSS property, and where it is not honoured the ORIGINAL curved path stays on
+   screen — the failure mode is a silent no-op that looks like success in the one
+   browser used to check it. Hiding the paths and painting the strip with
+   background + border-bottom cannot half-apply.
+
+   TO REVERT: delete this section. Nothing else in the build refers to it.
+   ============================================================================ */
+.site-header .ed-arc{
+  /* TRANSPARENT, not a colour. .site-header already paints #EFE7DB and the shelf
+     lays its radial wash over that, so a solid fill here would step against the
+     shelf bottom (measured: 232,221,203 at the left edge against a 239,231,219
+     base). Transparent lets the header be one continuous surface. */
+  background: transparent;
+  border-bottom: 1px solid rgba(135, 108, 51, .38);   /* --ds-accent at .38 */
+  box-sizing: border-box;
+}
+.site-header .ed-arc .kit-seam__fill,
+.site-header .ed-arc .kit-seam__edge{ display: none; }

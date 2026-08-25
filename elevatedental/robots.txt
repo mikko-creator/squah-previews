@@ -5,9 +5,9 @@
 #
 # KNOWN LIMIT, stated plainly: this file is INERT here. Crawlers read robots.txt only at the ORIGIN
 # root (https://mikko-creator.github.io/robots.txt), and this ships to a project subpath. The real
-# protection is the per-page <meta name="robots" content="noindex"> on all 47 pages, which is live and
+# protection is the per-page <meta name="robots" content="noindex"> on all 49 pages, which is live and
 # verified. This file is kept so the launch floor is complete and so the intent is on the record.
 User-agent: *
 Disallow: /
 
-Sitemap: https://mikko-creator.github.io/squah-previews/elevatedental/sitemap.xml
+Sitemap: https://mikko-creator.github.io/elevatedental-preview/sitemap.xml

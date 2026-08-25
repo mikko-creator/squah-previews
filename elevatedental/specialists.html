@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,54 +266,29 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-6 col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Our specialists</span></div>
-          </div>
-        </div>
-        <h1 id="h01">Dental Specialists in Manila. Meet our 31 dentists.</h1>
-        <p class="kit-status kit-tab"><span class="kit-status__dot" aria-hidden="true"></span>You are at stop 01 of 05</p>
-        <p class="kit-lede readw">Thirty-one published clinician profiles, across nine disciplines and four Metro Manila clinics. This is the roster, not a selection from it.</p>
-        <p class="kit-body readw">Filter it down to the field your case sits in, read the profile of the person who would treat you, and book that appointment specifically.</p>
-        <p class="kit-accentline">You are choosing a clinician here, not a building.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s03">Go straight to the roster</a>
-        </div>
-      </div>
-
-      <div class="col col--span-6 col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/026_07_woman-smile-mirror-consultation-with-dentist-oral-hygiene-mouth-cleaning-service-female-person-assessment-orthodontic-inspection-dental-care-patient-teeth-checkup-scaled.jpg" alt="A clinician in scrubs, mask and gloves holds a hand mirror at the chairside while a seated patient looks at her own smile." width="2560" height="1350" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Chairside</b><span>The person you book is the person who looks at the case.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">The route, five stops</p>
-          <ol class="kit-list kit-list--ledger">
-            <li><span><b>Where you are.</b> The roster, what it is, and what it deliberately is not. You are reading it now.</span></li>
-            <li><a class="kit-link-plain" href="#s02"><b>A place to start.</b> The pinned set, and why no face is standing in one of its four slots today.</a></li>
-            <li><a class="kit-link-plain" href="#s03"><b>The whole bench.</b> Search and sort sit directly above the wall they act on, and the count moves as you type.</a></li>
-            <li><a class="kit-link-plain" href="#s04"><b>Inside one card.</b> Six values, which of them a control can key on today, and which two are still waiting.</a></li>
-            <li><a class="kit-link-plain" href="#s05"><b>Three ways sideways.</b> So a search that returns nobody is never the end of the road.</a></li>
-          </ol>
-        </div>
-        <div class="kit-actions kit-actions--tight">
-          <a class="kit-btn kit-btn--ghost" href="#s02"><span>Take me to the start point</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-consult-room.jpg" alt="A private consultation room with a pale oak desk, two upholstered chairs and a wall screen switched off, late light raking across a deep navy wall." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Dental Specialists in Manila.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Our specialists</p>
+            <p class="foh-hero__lede">Thirty-one published clinician profiles, across nine disciplines and four Metro Manila clinics. This is the roster, not a selection from it.</p>
+            <p class="kit-accentline">You are choosing a clinician here, not a building.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s03">Go straight to the roster</a>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -371,10 +349,6 @@
             <li><span><b>The field they practice in.</b> The same value the roster card carries, so a pinned clinician and a listed clinician are never described differently.</span></li>
             <li><span><b>One sentence approved by that clinician.</b> Which is the only thing a pinned card holds that a roster card does not.</span></li>
           </ol>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The featured selection. Four slots are reserved and the copy around them is final, but the selection itself is an owner decision and has not been supplied. It may not be auto filled from roster order, alphabetical order or recency, and it may not be inferred from the profile pages. Each slot needs a name, credentials as published, a field, and one sentence approved by that clinician. Until then this band states the contract and shows no face, because a pinned card built from a guess is a recommendation the practice never made.</p>
         </div>
         <div class="kit-foot">
           <p class="kit-micro">Next, stop 03</p>
@@ -740,10 +714,6 @@
       </div>
 
       <div class="col col--full" id="ed-roster-foot">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Portraits, profile pages and the roster count. Twenty six roster portraits were supplied in the shared 460 by 575 crop and they are the cards rendered above; the wall is stamped one card per published profile at build, so the remaining profiles drop into the same template unchanged. The 31 per clinician profile pages are deferred in this scope, which is why a card carries the name as plain text rather than a link that would only return you to this page. Before launch, confirm that each portrait matches its profile, that every credential string is current, that the clinician has agreed to the photograph being published, and re-count the roster: the figure is load bearing, it appears in this page's title, in this section, on the homepage counters and in the treatments hub, and if it has moved every instance changes in the same pass.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next, stop 04</p>
           <p class="kit-body readw--wide">The card above is deliberately reduced to the two things the roster set carries today, the photograph and the published name. The next stop opens one card up and names the other four values, says which control each can drive, and marks the ones that are not bound.</p>
@@ -921,10 +891,6 @@
           <p class="kit-micro">End of the route</p>
           <p class="kit-accentline">You do not have to pick the right specialist yourself.</p>
           <p class="kit-body readw--wide">If you know whose name you want, ask for that clinician when you book. If you do not, book the consultation and the case is routed internally to the field it belongs to. Either way a specialist looks at the actual case, and you leave with a written quote before anything is scheduled.</p>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free first consultation. The entry offer is recorded in the brief set as agent derived rather than owner confirmed. Confirm the offer, its conditions and any expiry date before the word free is published anywhere on this page. If it cannot be confirmed, the sentence above ships as written, without it.</p>
         </div>
         <div class="kit-inline">
           <p>The route ends here, and the ask below is the same one whichever stop you came from: tell us what you want looked at and we will place you with the specialist whose field the case belongs to.</p>

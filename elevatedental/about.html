@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,54 +266,29 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
-    <div class="row row--split row--center">
-
-      <div class="col col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">About</span></div>
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-reception.jpg" alt="A clinic reception lounge with pale upholstered armchairs, a low stone table holding a single orchid, warm plaster walls and tall windows screened with sheer linen." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">About Elevate Dental</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">About</p>
+            <p class="foh-hero__lede">Four clinics across Metro Manila.</p>
+            <p class="kit-accentline">Nine disciplines. Thirty-one specialists. One clinic.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--ghost" href="specialists.html"><span>Our Specialists</span></a>
+            </div>
           </div>
-        </div>
-        <h1 id="h01">About Elevate Dental</h1>
-        <p class="kit-accentline">Nine disciplines. Thirty-one specialists. One clinic.</p>
-        <p class="kit-lede readw">Four clinics across Metro Manila. 3D CBCT imaging installed at all four. Eight named systems in daily clinical use. Those are the countable facts about this practice, and they are the reason it is built in this shape rather than another one.</p>
-        <p class="kit-body readw">Complex dental work should not mean being referred somewhere else. That sentence is the whole brief this group was built to.</p>
-        <div class="kit-statband kit-statband--stack" data-rise>
-          <div class="kit-stat">
-            <span class="kit-stat__n kit-tab">4</span>
-            <span class="kit-stat__l">Clinics, Metro Manila</span>
-            <p class="kit-stat__sub">Mitsukoshi BGC and Bonifacio Stopover in Taguig, Shangri-La Plaza in Mandaluyong, Alabang Town Center in Muntinlupa.</p>
-          </div>
-          <div class="kit-stat">
-            <span class="kit-stat__n kit-tab">8</span>
-            <span class="kit-stat__l">Named systems in daily use</span>
-            <p class="kit-stat__sub">Each one named individually further down this page instead of described as a category.</p>
-          </div>
-          <div class="kit-stat">
-            <span class="kit-stat__n kit-tab">1</span>
-            <span class="kit-stat__l">Case plan, written once</span>
-            <p class="kit-stat__sub">A case that crosses more than one discipline is sequenced before the first appointment, by the people who will each carry a stage of it.</p>
-          </div>
-        </div>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--ghost" href="specialists.html"><span>Our Specialists</span></a>
         </div>
       </div>
-
-      <div class="col col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_02_luxury-dental-clinic-in-manila.png" alt="A dental treatment room with a reclining chair, an overhead operating light and a wall-mounted screen showing a panoramic dental X-ray, beside a floor to ceiling window over a city skyline and waterfront." width="1536" height="1024" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Chairside</b><span>The panoramic image is read in the room, on the screen beside the chair.</span></figcaption>
-        </figure>
-      </div>
-
     </div>
   </div>
 </section>
@@ -423,10 +401,6 @@
           <div class="kit-actions kit-actions--tight">
             <a class="kit-btn kit-btn--ghost" href="locations.html"><span>All Locations</span></a>
           </div>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Founding year missing</span>
-          <p>The founding year. No founding year appears anywhere on the current site and none has been supplied, so this band carries the group as it stands and not as it began. This section is built to hold a short origin paragraph in front of the paragraphs above: the year the first clinic opened, who opened it, and the problem it was opened to solve. Nothing has been invented in its place, and no heritage line, no tenure figure and no year may be published until the client supplies the date.</p>
         </div>
       </div>
 
@@ -620,9 +594,8 @@
           </div>
         </div>
 
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Per-clinic roster not supplied</span>
-          <p>The per-clinic roster. Which specialists sit at which clinic is not established, so no named specialist is assigned to a named clinic anywhere in this template. The roster figure is site-wide only and is to be recounted against the published profiles immediately before launch, because a roster change invalidates the figure carried in the hero.</p>
+        <div class="kit-truth">
+          <p>No named specialist is assigned to a named clinic anywhere on this site.</p>
         </div>
 
       </div>
@@ -659,14 +632,6 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Same protocol</b><span>The imaging a plan is built on does not change with the branch.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Affiliation marks not cleared</span>
-          <p>The professional-body marks. Four such marks appear unlabelled on the current site. Membership status and usage rights are unconfirmed for all four, so none is reproduced or named here. When written confirmation arrives, each ships with a text label naming the body in full and stating the nature of the membership. An unlabelled logo wall is decoration, not evidence.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Rating withheld</span>
-          <p>The rating. The bare rating figure carried on the current about page has no platform, no review count and no capture date, and is withheld until all three are supplied. No rating of any kind appears in this template.</p>
-        </div>
       </div>
 
     </div>
@@ -756,10 +721,6 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Same screen</b><span>The plan is shown to the people it belongs to.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consultation offer unconfirmed</span>
-          <p>The consultation offer. A complimentary consultation has only ever appeared inside dated promotions, so no standing free-consultation claim is published here. Confirm whether it is permanent, and on what conditions, before the word free is attached to a consultation anywhere on this template.</p>
-        </div>
       </div>
 
       <div class="col col--full">
@@ -771,9 +732,8 @@
             <li><b class="kit-strong">Means.</b> Continuity of care from the first scan to the final fitting.</li>
           </ul>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Before you book</span>
-          <p>Elevate Dental does not accept HMO or dental insurance. All treatment is self-pay, paid directly to the clinic, and prices are quoted per treatment after clinical assessment. It is stated here rather than at the foot of the page because it is a qualifying fact for a self-paying reader, not fine print.</p>
+        <div class="kit-truth">
+          <p>Elevate Dental does not accept HMO or dental insurance. All treatment is self-pay, paid directly to the clinic, and prices are quoted per treatment after clinical assessment.</p>
         </div>
       </div>
 

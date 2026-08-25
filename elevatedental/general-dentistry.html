@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,36 +266,47 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-lead" aria-labelledby="h-lead" data-rise>
-  <div class="container">
-    <div class="row row--split-rev">
 
-      <div class="col col--copy">
+<section class="section surface-dark kit-hero foh-hero" id="s-lead" aria-labelledby="h-lead" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-mirror-probe.jpg" alt="A long handled mouth mirror lying across a polished round surface beside folded bone linen." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-lead">General Dentistry Philippines. Cleaning and Fillings.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Care on a schedule</p>
+            <p class="foh-hero__lede">The care your teeth need on a schedule, not in an emergency.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s-three">The three treatments</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s-lead-b" data-rise>
+  <div class="container">
+    <div class="row">
+
+      <div class="col col--span-7">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Care on a schedule</span></div>
           </div>
         </div>
-        <h1 id="h-lead">General Dentistry Philippines. Cleaning and Fillings.</h1>
-        <p class="kit-lede readw">General dentistry is the care your teeth need on a schedule, not in an emergency.</p>
         <p class="kit-body readw">It covers your check-up, your cleaning, the small fillings that stop a cavity from becoming a root canal, and the imaging that finds a problem while it is still simple to treat.</p>
         <p class="kit-body readw">Here that work is done by dentists who sit alongside the orthodontists, endodontists, periodontists and surgeons. If your check-up finds something a general dentist does not treat, your next appointment is made in this practice.</p>
         <p class="kit-accentline">Three treatments, one appointment interval, and a plan if something turns up.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s-three">The three treatments</a>
-        </div>
-      </div>
-
-      <div class="col col--media">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/026_07_woman-smile-mirror-consultation-with-dentist-oral-hygiene-mouth-cleaning-service-female-person-assessment-orthodontic-inspection-dental-care-patient-teeth-checkup-scaled.jpg" alt="A seated patient smiling broadly while a masked clinician in green gloves holds a large round hand mirror up in front of her and steadies her cheek." width="2560" height="1350" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Shown, not summarised</b><span>A check-up ends with you looking at what was found.</span></figcaption>
-        </figure>
       </div>
 
     </div>
@@ -684,13 +698,8 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Roster not supplied</span>
-          <p>How many clinicians practise in this field, and their individual qualifications, have not been supplied. Insert the per-field roster and credentials here before launch, each entry linked to its own profile. Per-clinic assignment is blocked, so do not tie a named clinician to a named building when the roster lands.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Interval not evidenced</span>
-          <p>The recall interval. The copy says most patients are seen twice a year, which is the general professional convention rather than a figure this practice has published. If Elevate Dental sets its own recall policy, supply it and this page will state that instead.</p>
+        <div class="kit-truth">
+          <p>Most patients are seen twice a year, which is the general professional convention rather than a figure this practice has published.</p>
         </div>
       </div>
 
@@ -775,10 +784,6 @@
         </div>
         <p class="kit-lede readw">A check-up starts with an examination and the images your case needs.</p>
         <p class="kit-body readw--wide">If everything is sound you leave with a cleaning schedule. If it is not, you are introduced to the person who treats it, on the same day and in the same practice, with your file already in front of them.</p>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Term unconfirmed</span>
-          <p>The consultation fee. The brief directs this page to close on a free first consultation, and no supplied source evidences a fee or the absence of one, so no claim of a complimentary visit is made here. Confirm the exact term and insert it before launch.</p>
-        </div>
         <div class="kit-inline">
           <p>Two cleanings and a repair is the whole of this field. Which one you need takes an examination to settle, and that is a single appointment.</p>
           <div class="kit-inline__acts">

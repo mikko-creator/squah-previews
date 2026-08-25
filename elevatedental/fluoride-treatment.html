@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,55 +266,31 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-7">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Fluoride treatment, pediatric dentistry</span></div>
-          </div>
-        </div>
-        <h1 id="h-start">Fluoride Treatment in the Philippines. From ₱1,200, an indicative market figure rather than an Elevate quote.</h1>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Market figure, not an Elevate quote</span>
-          <span class="kit-tag kit-tab">Adds 5 to 10 minutes to a visit</span>
-        </div>
-        <p class="kit-lede readw">A fluoride treatment puts concentrated fluoride onto the tooth surface in clinic, which hardens enamel against the acid that causes decay.</p>
-        <p class="kit-body readw">The first consultation is free, and it establishes whether this is warranted at all and how often it should be repeated.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before this page is published.</p>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_fluoride-treatment-bp.jpg" alt="A child with an open mouth while gloved hands apply a coating to the upper teeth with a small disposable applicator." width="675" height="585" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>The whole intervention</b><span>One applicator, a measured dose, a few minutes.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is laid out</p>
-          <p class="kit-body readw--wide">This page runs as a route. Seven stages, in the order things actually happen, each numbered so you always know where you are, and each closing by naming the stage that follows it. The map is the next band. It begins with chemistry, because every honest answer further down depends on it.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the seven stages</span></a>
-            <a class="kit-btn kit-btn--ghost" href="#stage-03"><span>Skip to the limits</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-varnish.jpg" alt="A fine applicator brush resting across a small brushed brass dish on woven bone linen." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Fluoride Treatment in the Philippines.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Fluoride treatment, pediatric dentistry</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱1,200. Market figure, not an Elevate quote.</span>
+            </div>
+            <p class="foh-hero__lede">A fluoride treatment puts concentrated fluoride onto the tooth surface in clinic, which hardens enamel against the acid that causes decay.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -495,9 +474,7 @@
           <a class="kit-btn kit-btn--ghost" href="dental-fillings.html" data-page="dental-fillings.html"><span>Dental fillings</span></a>
           <a class="kit-btn kit-btn--ghost" href="dental-sealant.html" data-page="dental-sealant.html"><span>Dental sealants</span></a>
         </div>
-      </div>
 
-      <div class="col col--full">
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 04, the appointment itself, and the reason the instruction afterwards is to do nothing.</p>
@@ -634,17 +611,11 @@
           <li><b class="kit-strong">Digital dental radiography.</b> Early decay between the back teeth is invisible to the eye. A radiograph, taken only where indicated, is what distinguishes a lesion that can still be arrested from one that has passed the point where restoring it is required. That distinction is the difference between the correct treatment and a wasted one.</li>
           <li><b class="kit-strong">3D CBCT imaging.</b> Available at all four clinics, and it has NO role in this appointment. Your child will not be scanned for one. In pediatric dentistry it answers a different question, such as locating an unerupted or impacted permanent tooth.</li>
         </ul>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. The copy leaves the individual pediatric dentistry specialist unnamed, because per-discipline names were not supplied to the copy stage. Pull them from the published roster with discipline and credentials and link each to their profile. Which specialists see children at which clinic is recorded as blocked in client-rules.json, so do not tie a named clinician to a named branch on this page.</p>
-        </div>
         <div class="kit-actions kit-actions--tight">
           <a class="kit-btn kit-btn--ghost" href="specialists.html" data-page="specialists.html"><span>Our Specialists</span></a>
           <a class="kit-btn kit-btn--ghost" href="technology.html" data-page="technology.html"><span>Technology</span></a>
         </div>
-      </div>
 
-      <div class="col col--full">
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 06, the money: an anchor figure, the three things that move it, and how payment works here.</p>
@@ -677,8 +648,7 @@
         </div>
         <p class="kit-lede readw">This starts at ₱1,200, a representative market figure rather than a quoted Elevate fee, and what you are actually buying is an interval rather than a single appointment.</p>
         <div class="kit-truth">
-          <span class="kit-truth__k">About the starting figure</span>
-          <p>The real figure. No Elevate treatment price has been supplied, so every peso amount on this page is representative and anchored to published market ranges. Your own fee is quoted after the examination, which also sets how often the treatment should be repeated.</p>
+          <p>Every peso amount on this page is representative and anchored to published market ranges rather than to an Elevate price list. Your own fee is quoted after the examination, which also sets how often the treatment should be repeated.</p>
         </div>
         <div class="kit-foot">
           <p class="kit-micro">How you pay</p>
@@ -735,8 +705,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">The safety question, answered where you can see it</span>
-          <p>In the doses used professionally it is applied in small, measured quantities specifically to limit how much is swallowed. The genuine concern is TOTAL intake during the years permanent teeth are forming, which is why we ask what your child already uses at home rather than assuming. If you would prefer not to have it applied, say so, and the alternative preventive measures will be set out for you honestly, including what they do and do not achieve. This paragraph is not inside a collapsed panel, because a safety answer a parent has to click to find is one that has been tucked away.</p>
+          <p>In the doses used professionally it is applied in small, measured quantities specifically to limit how much is swallowed. The genuine concern is TOTAL intake during the years permanent teeth are forming, which is why we ask what your child already uses at home rather than assuming. If you would prefer not to have it applied, say so, and the alternative preventive measures will be set out for you honestly, including what they do and do not achieve.</p>
         </div>
       </div>
 
@@ -801,7 +770,7 @@
           <li>Keep the recall interval you have been given.</li>
         </ul>
         <div class="kit-inline">
-          <p>The first consultation is free. Your child is examined, the decay risk is assessed properly, and you are told plainly whether to buy this, on what interval, and what else has to change for it to earn its place.</p>
+          <p>The first consultation is free. Your child is examined, the decay risk is assessed properly, and you are told plainly whether to buy this, on what interval, and what else has to change for it to earn its place. Confirm current consultation terms with the clinic before you book.</p>
           <div class="kit-inline__acts">
             <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
             <a class="kit-btn kit-btn--ghost" href="pediatric-dentistry.html" data-page="pediatric-dentistry.html"><span>Pediatric Dentistry</span></a>
@@ -810,13 +779,8 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consent, not in hand. Designed and not deployed.</span>
-          <p>Early white-spot lesions are charted and photographed here at each visit, which is how remineralization is tracked over time rather than asserted, and none of that is published. Publishing an identifiable patient's clinical images requires documented written consent, and for a child that means a parent or guardian's. It is not in hand: pre-launch blocker B-2.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Build note</span>
-          <p>The word free in the sentence beside this note is subject to the entry-offer confirmation flagged at the start of this route. Until that receipt lands, this stage states what the consultation produces and does not price it.</p>
+        <div class="kit-truth">
+          <p>Early white-spot lesions are charted and photographed here at each visit, which is how remineralization is tracked over time rather than asserted. Publishing an identifiable patient's clinical images requires documented written consent, and for a child that means a parent or guardian's.</p>
         </div>
       </div>
 

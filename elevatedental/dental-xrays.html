@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,38 +266,27 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
 
-      <div class="col col--span-6 col--media">
-        <figure class="kit-slot" data-rise>
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_digital-dental-xray-bp.jpg" alt="An imaging room with a white panoramic and cone-beam unit, a blue lead apron hanging on its column, and a wall-mounted monitor displaying a panoramic radiograph above a keyboard shelf." width="675" height="585" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>In the building</b><span>The unit and the screen that reads it are in the same room.</span></figcaption>
-        </figure>
-      </div>
-
-      <div class="col col--span-6 col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Digital Dental X-rays</span></div>
-          </div>
-        </div>
-        <h1 id="h01">Dental X-rays Philippines: Digital and 3D CBCT</h1>
-        <p class="kit-lede readw">Imaging is how a diagnosis gets made before a treatment is planned.</p>
-        <p class="kit-body readw">An examination shows the surfaces. Radiography shows what sits underneath them: decay between and beneath teeth, infection at a root tip, bone level, unerupted teeth and the exact position of a nerve canal.</p>
-        <p class="kit-body readw">3D CBCT imaging is available at all four clinics, so the scan and the plan happen in the same visit.</p>
-        <p class="kit-accentline">Four kinds of image are taken here, and each one answers a different question.</p>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s03">See what each image answers</a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-lightbox.jpg" alt="A dental radiograph glowing on a wall mounted viewing box in a darkened room." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Dental X-rays Philippines: Digital and 3D CBCT</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Digital Dental X-rays</p>
+            <p class="foh-hero__lede">Imaging is how a diagnosis gets made before a treatment is planned.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s03">See what each image answers</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -307,6 +299,7 @@
   <div class="container">
     <div class="row row--stretch">
 
+      
       <div class="col col--full">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
@@ -319,6 +312,15 @@
           </div>
         </div>
         <p class="kit-lede readw--wide">Four kinds of image are taken here. They are not four versions of one picture: they cover different amounts of you, they answer different questions, and only one of them is three-dimensional.</p>
+      </div>
+
+      <div class="col col--span-6 col--media">
+        <figure class="kit-slot" data-rise>
+          <div class="kit-slot__mask kit-slot__mask--frame">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_03_digital-dental-xray-bp.jpg" alt="An imaging room with a white panoramic and cone-beam unit, a blue lead apron hanging on its column, and a wall-mounted monitor displaying a panoramic radiograph above a keyboard shelf." width="675" height="585" loading="eager" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>In the building</b><span>The unit and the screen that reads it are in the same room.</span></figcaption>
+        </figure>
       </div>
 
       <div class="col col--span-3">
@@ -482,10 +484,6 @@
           <p class="kit-micro">What a matrix cannot decide</p>
           <p class="kit-body readw--wide">Which image you need is decided by the question in front of your dentist, not by which one shows the most. A cone-beam volume is not a better periapical; it is a different instrument with a different dose, and it is used where depth actually changes the plan.</p>
           <p class="kit-body readw--wide">Nothing on this page is a request to have more imaging. The rule this practice works to is the one stated in the technology band: take the image that answers the question and no more than that.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Scope flag for the SEO owner</span>
-          <p>The supplied meta description attaches the four-clinic scope to the whole imaging set. Only the cone-beam scan carries that receipt (client-rules.json proof_rules.cbct-all-clinics), whose restatement rule forbids extending it to any other capability. Either confirm the wider scope with the owner or narrow the meta before launch. The body copy on this page is already narrowed.</p>
         </div>
       </div>
 
@@ -688,13 +686,6 @@
         </figure>
       </div>
 
-      <div class="col col--full">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Reporting role, unconfirmed</span>
-          <p>Imaging here is read by the treating specialist rather than by a dedicated radiography role, and no radiography-trained clinician is named in the supplied handoff. Confirm with the owner whether a named clinician or an outside radiologist reports on cone-beam volumes before this band names anyone. Do not state a per-field count, and do not tie a clinician to a branch.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -744,16 +735,6 @@
             <a class="kit-btn kit-btn--ghost" href="prices.html"><span>See the full price list</span></a>
             <a class="kit-btn kit-btn--ghost" href="technology.html"><span>Full detail on each system</span></a>
           </div>
-        </div>
-
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Billing model, unconfirmed</span>
-          <p>Two separate holds sit on this band. Pre-launch blocker B-1 covers the missing figure, and the billing model itself, whether a scan is charged on its own line or folded into the treatment it informs, is a second open question. Answer both before launch rather than publishing one and inferring the other.</p>
-        </div>
-
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consultation terms, unconfirmed</span>
-          <p>The copy for this page closes on a free first consultation, and its own note records that offer as agent-derived from the intake brief rather than owner-confirmed. Nothing here calls the first visit complimentary, and nothing here claims imaging is included in one.</p>
         </div>
 
         <div class="kit-inline">

@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,47 +266,28 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-7 col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Prosthodontics</span></div>
-          </div>
-        </div>
-        <h1 id="h01">Prosthodontics Philippines: Crowns, Bridges, Dentures</h1>
-        <p class="kit-lede readw">Prosthodontics restores teeth that are damaged and replaces teeth that are gone.</p>
-        <p class="kit-body readw">Crowns, bridges, complete dentures and removable partials are planned, made and fitted through our prosthodontic team.</p>
-        <p class="kit-body readw">The point is continuity. The specialist who assesses your case is the specialist who finishes it, so a complex restoration does not begin with a referral to another clinic.</p>
-        <p class="kit-accentline">Four routes sit under this field, and they differ in what they replace and in whether they come out at night.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s04">Compare all four appliances</a>
-        </div>
-        <div class="kit-foot">
-          <p class="kit-micro">In order of what each one replaces</p>
-          <div class="kit-tags">
-            <span class="kit-tag">Dental Crowns</span>
-            <span class="kit-tag">Dental Bridge</span>
-            <span class="kit-tag">Partial Dentures</span>
-            <span class="kit-tag">Complete Dentures</span>
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-lab-bench.jpg" alt="A dental laboratory bench with pale plaster study models on a bone worktop, fine sculpting tools laid in a row under a brushed brass lamp." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Prosthodontics Philippines: Crowns, Bridges, Dentures</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Prosthodontics</p>
+            <p class="foh-hero__lede">Prosthodontics restores teeth that are damaged and replaces teeth that are gone.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s04">Compare all four appliances</a>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="col col--span-5 col--media">
-        <figure class="kit-slot" data-rise>
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2022_10_denture-treatment-prosthetic-dentistry-implants-2021-08-26-16-25-54-utc.jpg" alt="Dozens of ceramic crown and bridge units laid out on a black work surface beside a pink dental model, at a laboratory bench." width="2560" height="1706" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>The work itself</b><span>Single units and spans, made to a scan before anything is fitted.</span></figcaption>
-        </figure>
-      </div>
-
     </div>
   </div>
 </section>
@@ -547,13 +531,6 @@
         </div>
       </div>
 
-      <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Two cells, empty on purpose</span>
-          <p>No starting figure was supplied for the bridge or for the removable partial, so those two cells say so instead of carrying an invented number. Insert both before launch. The column is right-aligned tabular text with no fixed width and no baked-in digit count, so four digits becoming six changes nothing but the number.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -700,10 +677,6 @@
             <a class="kit-btn kit-btn--ghost" href="treatments.html"><span>All Treatments</span></a>
           </div>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Bench size, unstated</span>
-          <p>The per-field roster is not supplied. How many prosthodontists work here is therefore not stated anywhere on this page, and only the one clinician the handoff sources to this field is named. Pull the rest from the published roster before launch, and do not tie any of them to a named branch: per-clinic assignment is blocked (client-rules.json proof_rules.per-clinic-roster).</p>
-        </div>
       </div>
 
     </div>
@@ -802,14 +775,8 @@
           </div>
         </div>
 
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">No Elevate price has been set</span>
-          <p>No real treatment price has been supplied for any route in this field, so each figure above is anchored to published Philippine market ranges rather than to a price list of ours. Your own figure is quoted per treatment once a specialist has assessed the teeth, the bite and what is left to build on.</p>
-        </div>
-
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consultation terms, unconfirmed</span>
-          <p>The copy for this page closes on a free first consultation, and its own note records that offer as agent-derived from the intake brief rather than owner-confirmed. Nothing on this page therefore claims the consultation is complimentary. Confirm the terms, and what the consultation includes, before launch.</p>
+        <div class="kit-truth">
+          <p>Each figure above is anchored to published Philippine market ranges rather than to a price list of ours. Your own figure is quoted per treatment once a specialist has assessed the teeth, the bite and what is left to build on.</p>
         </div>
 
         <div class="kit-inline">

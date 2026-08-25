@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,7 +266,33 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-shade-rail.jpg" alt="A row of ceramic shade tabs graduating from warm ivory to bright white on a brushed brass rail." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Cosmetic Dentistry Philippines. Veneers and Whitening.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Cosmetic dentistry</p>
+            <p class="foh-hero__lede">Cosmetic dentistry changes the shape, shade and proportion of the teeth you show when you speak.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s04">Compare the four routes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s01b" data-rise>
   <div class="container">
     <div class="row">
 
@@ -272,11 +301,8 @@
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Cosmetic dentistry</span></div>
           </div>
         </div>
-        <h1 id="h01">Cosmetic Dentistry Philippines. Veneers and Whitening.</h1>
-        <p class="kit-lede readw">Cosmetic dentistry changes the shape, shade and proportion of the teeth you show when you speak.</p>
         <p class="kit-body readw">It is planned work, not a single appointment. Your dentist assesses the teeth, the gumline and the way your face frames them, then agrees the design with you before anything is prepared.</p>
         <p class="kit-body readw">The plan is drawn against a scan of your actual face, and it is carried out by dentists who sit alongside the orthodontists, prosthodontists and periodontists this kind of work often needs.</p>
         <p class="kit-accentline">Almost every decision in this field starts as one of two questions.</p>
@@ -285,7 +311,7 @@
       <div class="col col--span-6 col--media">
         <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
           <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_02_art-of-cosmetic-dentistry.png" alt="A smiling woman resting her chin on her hand beside a tooth shade guide and a dental model, with a dentist treating another patient in the background." width="1536" height="1024" loading="eager" decoding="async">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_02_art-of-cosmetic-dentistry.png" alt="A smiling woman resting her chin on her hand beside a tooth shade guide and a dental model, with a dentist treating another patient in the background." width="1536" height="1024" loading="lazy" decoding="async">
           </div>
           <figcaption class="kit-slot__cap"><b>The two axes</b><span>A shade guide and a tooth model, the instruments of each question.</span></figcaption>
         </figure>
@@ -325,13 +351,6 @@
           <div class="kit-card__foot">
             <a class="kit-btn kit-btn--ghost" href="porcelain-veneers.html"><span>Porcelain Veneers</span></a>
           </div>
-        </div>
-      </div>
-
-      <div class="col col--full">
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s04">Compare the four routes</a>
         </div>
       </div>
 
@@ -581,13 +600,11 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Reversibility unconfirmed</span>
-          <p>Reversibility of the two lab-made routes. No supplied source states how much of the front surface a porcelain or zirconia veneer requires, so the matrix says "confirmed at assessment" rather than asserting a figure. Insert the clinical detail before launch. It is the single most consequential cell in this table for a reader deciding between the composite route and the porcelain one.</p>
+        <div class="kit-truth">
+          <p>How much of the front surface a porcelain or zirconia veneer requires is confirmed at your assessment rather than stated here.</p>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Real prices absent</span>
-          <p>Real prices. All four figures are representative market figures anchored to published Philippine market ranges, not to an Elevate Dental price list. No real treatment price has been supplied for these routes, and your own figure is quoted after a clinical assessment.</p>
+        <div class="kit-truth">
+          <p>All four figures are representative market figures anchored to published Philippine market ranges, not to an Elevate Dental price list. Your own figure is quoted after a clinical assessment.</p>
         </div>
       </div>
 
@@ -750,10 +767,6 @@
           <a class="kit-btn kit-btn--ghost" href="specialists.html"><span>See the specialists in cosmetic dentistry</span></a>
           <a class="kit-btn kit-btn--ghost" href="treatments.html"><span>All Treatments</span></a>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Roster not supplied</span>
-          <p>The per-discipline roster. How many specialists work in cosmetic dentistry, and their individual qualifications, have not been supplied. Insert the roster and credentials here before launch, each linked to its own profile. Per-clinic assignment is blocked (client-rules.json proof_rules.per-clinic-roster), so do not tie a named specialist to a named clinic when the roster lands.</p>
-        </div>
       </div>
 
     </div>
@@ -852,11 +865,6 @@
           </div>
         </div>
 
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Pricing blocked</span>
-          <p>No real Elevate Dental treatment price has been supplied for any treatment in this discipline (pre-launch blocker B-1). Every figure on this page is swappable by construction: the card rails and the table cell are right-aligned tabular text with no fixed width and no baked-in digit count, so four digits becoming six changes nothing but the number.</p>
-        </div>
-
       </div>
     </div>
   </div>
@@ -901,9 +909,8 @@
           <p class="kit-micro">The outcome</p>
           <p class="kit-body readw--wide">Cosmetic dentistry is handled in-house by named specialists. Book one consultation instead of chasing a referral. Your case is finished by the people who assessed it.</p>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consultation fee unconfirmed</span>
-          <p>The consultation fee. The brief directs this page to close on a free consultation, and no supplied source evidences a fee or the absence of one, so this page does not claim the consultation is complimentary. Confirm the exact term with Elevate Dental and insert it before launch.</p>
+        <div class="kit-truth">
+          <p>This page does not state that the consultation is free. Confirm the consultation fee with Elevate Dental when you book.</p>
         </div>
         <div class="kit-inline">
           <p>The comparison above narrows the field to one or two routes. Which one is right for your teeth is settled at the assessment, not on a page.</p>

@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-bespoke.css?v=72c550bc">
 
 </head>
@@ -264,7 +267,33 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-treatment-room.jpg" alt="A treatment room with a pale leather dental chair beside a full-height window, tropical foliage outside, deep navy cabinetry and brushed brass fittings." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Nine disciplines. Thirty-one specialists. One clinic.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Elevate Dental, Metro Manila</p>
+            <p class="foh-hero__lede">Complex dental work should not mean being sent somewhere else.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--ghost" href="specialists.html"><span>See our specialists</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s01b" data-rise>
   <div class="container">
     <div class="row row--split row--center">
 
@@ -273,23 +302,17 @@
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Elevate Dental, Metro Manila</span></div>
           </div>
         </div>
-        <h1 id="h01">Nine disciplines. Thirty-one specialists. One clinic.</h1>
         <p class="kit-accentline">Elevating People's Lives, One Smile at a Time.</p>
-        <p class="kit-lede readw">Complex dental work should not mean being sent somewhere else. The clinician your case needs already works here, at one of four clinics across Metro Manila.</p>
+        <p class="kit-lede readw">The clinician your case needs already works here, at one of four clinics across Metro Manila.</p>
         <p class="kit-body readw">Bring the thing you have been putting off. It is assessed, sequenced and carried out by the people who will each take a stage of it, and the plan is written once.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--ghost" href="specialists.html"><span>See our specialists</span></a>
-        </div>
       </div>
 
       <div class="col col--media">
-        <figure class="kit-slot kit-hero__media" data-rise>
+        <figure class="kit-slot" data-rise>
           <div class="kit-slot__mask kit-slot__mask--arch">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_02_luxury-dental-clinic-in-manila.png" alt="A dental treatment room with a reclining chair, an overhead operating light and a wall-mounted screen showing a panoramic dental X-ray, beside a floor to ceiling window over a city skyline and waterfront." width="1536" height="1024" loading="eager" decoding="async">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_02_luxury-dental-clinic-in-manila.png" alt="A dental treatment room with a reclining chair, an overhead operating light and a wall-mounted screen showing a panoramic dental X-ray, beside a floor to ceiling window over a city skyline and waterfront." width="1536" height="1024" loading="lazy" decoding="async">
           </div>
           <figcaption class="kit-slot__cap"><b>Chairside</b><span>The panoramic image is read in the room, on the screen beside the chair.</span></figcaption>
         </figure>
@@ -375,9 +398,8 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Explained once</b><span>The model comes out at the chair, in the room where the plan gets written.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">What that claim does not cover</span>
-          <p>It does not mean every service in dentistry is offered here. Sedation dentistry and an in-house laboratory are not among them. The claim is scoped to the clinical fields named in the next band, and it is accurate at that scope and no wider.</p>
+        <div class="kit-truth">
+          <p>It does not mean every service in dentistry is offered here. Sedation dentistry and an in-house laboratory are not among them. The claim is scoped to the clinical fields named in the next section, and it is accurate at that scope and no wider.</p>
         </div>
         <div class="kit-foot">
           <p class="kit-micro">Stated plainly</p>
@@ -616,8 +638,7 @@
           <div><dt>Starting floors</dt><dd>Not supplied yet</dd></div>
         </dl>
         <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The starting figures drafted for this build were representative market ranges rather than client-supplied numbers, so they are held back instead of printed. Supply the real floors and every treatment page can carry one the same day.</p>
+          <p>The starting figures for treatments on this site are representative market ranges rather than figures set by this practice, so none is printed here.</p>
         </div>
       </div>
 
@@ -996,9 +1017,8 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Unconfirmed, so unclaimed</span>
-          <p>Whether any bank instalment arrangement is running this year has never been confirmed to us, so no financing option is claimed anywhere on this site. Confirm which partners are active and the arrangement can be published with its terms attached. Until that happens, this page says nothing at all about paying over time.</p>
+        <div class="kit-truth">
+          <p>No financing or instalment option is claimed anywhere on this site.</p>
         </div>
         <div class="kit-foot">
           <p class="kit-micro">Where the detail lives</p>

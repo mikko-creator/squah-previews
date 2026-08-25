@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,51 +266,31 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+
+
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
 
-      <div class="col col--span-7">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Dental braces, fixed appliances</span></div>
-          </div>
-        </div>
-        <h1 id="h-start">Dental Braces in the Philippines. Full treatment from ₱90,000, a representative market figure rather than an Elevate quote.</h1>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Market range, not an Elevate price</span>
-          <span class="kit-tag kit-tab">Most cases run 12 to 30 months</span>
-        </div>
-        <p class="kit-lede readw">Braces are fixed appliances bonded to your teeth that move them into alignment over 12 to 30 months, under the control of an orthodontist.</p>
-        <p class="kit-body readw">The first consultation is free, and you leave it knowing your likely timeline and your figure in writing.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before this page is published.</p>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2022_03_woman-with-braces-on-teeth-closeup-2022-02-14-18-04-11-utc-1.jpg" alt="Close-up of a smiling mouth with metal brackets bonded across the upper teeth and an archwire threaded through them." width="1200" height="800" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>A bracket and a wire</b><span>The whole mechanism, on every tooth being moved.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is laid out</p>
-          <p class="kit-body readw--wide">This page runs as a route. Seven stages, in the order the treatment actually happens, each numbered so you always know where you are, and each closing by naming the stage that follows it. The map is the next band. Read straight through, or jump to the stage you came for and follow the hand-offs from there.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the seven stages</span></a>
-            <a class="kit-btn kit-btn--ghost" href="#stage-06"><span>Skip to what it costs</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-bridge-frame.jpg" alt="A lower dental arch model fitted with fixed braces, the brackets and archwire catching the light on a shallow brushed brass dish." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Dental Braces in the Philippines.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Dental braces, fixed appliances</p>
+            <p class="foh-hero__lede">Braces are fixed appliances bonded to your teeth, moving them into alignment over 12 to 30 months under an orthodontist.</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱90,000. Market range, not an Elevate price</span>
+              <span class="kit-tag kit-tab">Most cases run 12 to 30 months</span>
+            </div>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
+            </div>
           </div>
         </div>
       </div>
@@ -321,6 +304,7 @@
   <div class="container">
     <div class="row">
 
+      
       <div class="col col--span-4">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
@@ -335,6 +319,26 @@
         <p class="kit-lede readw">Seven stages, and the last one on the list is the one people skip and then regret.</p>
         <p class="kit-body readw">Retention is not an epilogue bolted onto the end of orthodontics. Teeth drift back toward where they began, so holding them is part of the treatment rather than an optional extra sold afterwards.</p>
         <p class="kit-body readw">The index is plain text and plain links. It works with scripting switched off, and it prints.</p>
+      </div>
+
+      <div class="col col--span-7">
+        <div class="kit-foot">
+          <p class="kit-micro">How this page is laid out</p>
+          <p class="kit-body readw--wide">This page runs as a route. Seven stages, in the order the treatment actually happens, each numbered so you always know where you are, and each closing by naming the stage that follows it. The map is the next band. Read straight through, or jump to the stage you came for and follow the hand-offs from there.</p>
+          <div class="kit-actions kit-actions--tight">
+            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the seven stages</span></a>
+            <a class="kit-btn kit-btn--ghost" href="#stage-06"><span>Skip to what it costs</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col col--span-5">
+        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
+          <div class="kit-slot__mask kit-slot__mask--frame">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2022_03_woman-with-braces-on-teeth-closeup-2022-02-14-18-04-11-utc-1.jpg" alt="Close-up of a smiling mouth with metal brackets bonded across the upper teeth and an archwire threaded through them." width="1200" height="800" loading="eager" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>A bracket and a wire</b><span>The whole mechanism, on every tooth being moved.</span></figcaption>
+        </figure>
       </div>
 
       <div class="col col--span-8">
@@ -632,10 +636,6 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. The copy leaves the individual orthodontist unnamed, because per-discipline names were not supplied to the copy stage. Pull them from the published roster with discipline and credentials and link each to their profile. Which specialists sit at which clinic is recorded as blocked in client-rules.json, so do not tie a named clinician to a named branch on this page.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 05, the three named systems, and a plain statement about when you will not be given a scan.</p>
@@ -746,8 +746,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">Owner receipt, pending</span>
-          <p>The real figure. No Elevate treatment price has been supplied, so every peso amount on this page is representative and anchored to published market ranges. Your own figure is set after a clinical assessment.</p>
+          <p>Every peso amount on this page is representative and anchored to published market ranges. Your own figure is set after a clinical assessment.</p>
         </div>
       </div>
 
@@ -854,8 +853,7 @@
 
       <div class="col col--full">
         <div class="kit-truth">
-          <span class="kit-truth__k">Consent, not in hand. Designed and not deployed.</span>
-          <p>Signed patient consent. Orthodontic cases are recorded here in photographs and scans at the start, during treatment and at debonding, and those records are NOT published on this page. Publishing an identifiable patient's teeth requires that patient's documented written consent and that documentation is not in hand, which is pre-launch blocker B-2. When consent is documented this stage can carry real cases: the starting malocclusion, the appliance used, the months taken and the retention plan. Until then it ships without them rather than with someone else's stock photograph.</p>
+          <p>Orthodontic cases are recorded here in photographs and scans at the start, during treatment and at debonding, and those records are not published on this page. Publishing an identifiable patient's teeth requires that patient's documented written consent.</p>
         </div>
       </div>
 
@@ -869,7 +867,7 @@
           <li>Bring the retainers to every recall so they can be checked for fit and wear.</li>
         </ul>
         <div class="kit-inline">
-          <p>The first consultation is free. You will be examined, your records taken and read by an orthodontist, and you will be told honestly whether a fixed appliance, clear aligners, or a joint plan with another specialist is the right answer for your case.</p>
+          <p>The first consultation is free. You will be examined, your records taken and read by an orthodontist, and you will be told honestly whether a fixed appliance, clear aligners, or a joint plan with another specialist is the right answer for your case. Confirm current consultation terms with the clinic before you book.</p>
           <div class="kit-inline__acts">
             <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
             <a class="kit-btn kit-btn--ghost" href="orthodontics.html" data-page="orthodontics.html"><span>Orthodontics</span></a>
@@ -878,10 +876,6 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Build note</span>
-          <p>The word free in the sentence beside this note is subject to the entry-offer confirmation flagged at the start of this route. Until that receipt lands, this stage states what the consultation produces and does not price it.</p>
-        </div>
         <p class="kit-body readw">The route ends here on purpose, and nothing on it was held back for a phone call. If a band raised something this page did not settle, bring it to the chair and it will be answered against your own records rather than against a web page.</p>
       </div>
 

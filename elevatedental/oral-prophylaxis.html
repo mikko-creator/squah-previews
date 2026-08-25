@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -265,7 +268,37 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-prophy-tray.jpg" alt="A slim ultrasonic scaler handpiece and a polishing angle laid on an oval brushed brass tray over bone linen." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Oral Prophylaxis Philippines.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Oral prophylaxis, the routine clean</p>
+            <p class="foh-hero__lede">Oral prophylaxis is the routine professional clean.</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱2,500, a representative market figure rather than an Elevate price. Market range, not an Elevate fee.</span>
+            </div>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s-start-b" data-rise>
   <div class="container">
     <div class="row">
 
@@ -274,19 +307,10 @@
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Oral prophylaxis, the routine clean</span></div>
           </div>
         </div>
-        <h1 id="h-start">Oral Prophylaxis Philippines. From ₱2,500, a representative market figure rather than an Elevate price.</h1>
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Market range, not an Elevate fee</span>
-        </div>
         <p class="kit-lede readw">Oral prophylaxis is the routine professional clean: plaque and hardened tartar removed from the tooth surface and from the margin where it meets the gum, then the surfaces smoothed so deposits take longer to rebuild.</p>
-        <p class="kit-body readw">Your first consultation is free, and your exact fee is quoted before treatment begins.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html">Ask about this treatment</a>
-        </div>
+        <p class="kit-body readw">Your first consultation is free, and your exact fee is quoted before treatment begins. Confirm current consultation terms with the clinic before you book.</p>
       </div>
 
       <div class="col col--span-5">
@@ -609,10 +633,6 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. Pull the General Dentistry specialists from the published roster with discipline and credentials, and link each to their profile. Which specialists sit at which branch is recorded as blocked in client-rules.json, so do not tie a named clinician to a named clinic on this page.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 05, the three named systems this visit uses, and the single job each of them is the right instrument for.</p>
@@ -728,8 +748,7 @@
         </ul>
         <p class="kit-body readw--wide">Your exact fee is confirmed at consultation, before treatment begins.</p>
         <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The real figure. No Elevate treatment price has been supplied, so every peso amount on this page is representative and anchored to published market ranges. The fee you are given is quoted per treatment, after a clinical assessment.</p>
+          <p>Every peso amount on this page is representative, anchored to published market ranges, and is not a price set by Elevate Dental. The fee you are given is quoted per treatment, after a clinical assessment.</p>
         </div>
       </div>
 
@@ -778,10 +797,6 @@
           </div>
           <figcaption class="kit-slot__cap"><b>A moment, not an outcome</b><span>The mirror at the end of a visit is not a case result.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Held, awaiting the client</span>
-          <p>Signed patient consent. Before and after imagery and named testimonial content for this treatment are held back, because no signed patient release has been supplied for any clinical image, which is pre-launch blocker B-2. This stage ships as prose until documented consent exists. Do not substitute stock photography for a clinical result.</p>
-        </div>
       </div>
 
       <div class="col col--full">
@@ -907,10 +922,6 @@
       </div>
 
       <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Pending owner confirmation</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before this page is published.</p>
-        </div>
         <p class="kit-body readw">The route ends here on purpose. Nine stages, all of them read: what the deposit is, whether this is your appointment or somebody else's, the sequence at the chair, the two disciplines, the three instruments, the figure and what moves it, what the visit leaves behind, the seven questions, and the habit that decides how the next one goes.</p>
         <p class="kit-body readw">If a stage raised something this page did not answer, bring it to the consultation and it will be answered against your own chart rather than against a page.</p>
       </div>

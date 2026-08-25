@@ -1,0 +1,608 @@
+/* ============================================================================
+   ELEVATE DENTAL — MOTION & INTERACTION LAYER
+   Added 2026-08-25 on the owner's direction: "make the design as sick as possible,
+   add awesome animations throughout and hover effects."
+
+   THE RULE THIS LAYER OBEYS: everything animates on the compositor only — transform,
+   opacity, filter and clip-path. Nothing here animates width, height, top, left,
+   margin or padding, so no motion on this site can reflow the page, shift a layout
+   or move a tap target under someone's thumb mid-press. That constraint is what
+   lets the layer be generous without becoming cheap.
+
+   SECOND RULE: this whole file is inert under prefers-reduced-motion. Not damped,
+   not shortened — inert. A reader who has asked their operating system for stillness
+   is not a reader to negotiate with, and on a clinic site some of them have a
+   vestibular reason for asking.
+
+   THIRD RULE: motion is spent where it MEANS something. The hero settles because the
+   page is arriving. A card lifts because it is reachable. A rule draws because you
+   are being led somewhere. Nothing here animates to prove the site can animate.
+   ============================================================================ */
+
+/* --------------------------------------------------------------------------
+   0. TIMING SYSTEM — one vocabulary, so the whole site moves like one object
+   -------------------------------------------------------------------------- */
+:root{
+  --mo-fast: 180ms;
+  --mo-base: 420ms;
+  --mo-slow: 720ms;
+  --mo-drift: 14s;                                   /* the hero's slow settle */
+  /* a soft, confident ease: quick to commit, long to arrive */
+  --mo-ease: cubic-bezier(.22,.61,.24,1);
+  --mo-out:  cubic-bezier(.16,1,.3,1);
+  --mo-spring: cubic-bezier(.34,1.42,.44,1);         /* one gentle overshoot, used sparingly */
+  --mo-stagger: 70ms;
+}
+
+/* ==========================================================================
+   1. THE HERO — arrival, not decoration
+   The band's photograph settles from a slight scale over 14 seconds. It reads as
+   the room breathing rather than as a slideshow effect, because it never loops and
+   never returns: it eases to rest and stays there.
+   ========================================================================== */
+.foh-hero__img{
+  transform-origin: 50% 55%;
+  will-change: transform;
+  animation: mo-settle var(--mo-drift) var(--mo-out) both;
+}
+@keyframes mo-settle{
+  from{ transform: scale(1.085); }
+  to  { transform: scale(1.0); }
+}
+
+/* The headline rises out of the scrim, then the lockup follows it. The order is the
+   reading order, and the delay between them is what makes it feel composed rather
+   than simultaneous. */
+.foh-hero__title{
+  animation: mo-rise 900ms var(--mo-out) 120ms both;
+}
+.foh-hero__eyebrow{ animation: mo-rise 760ms var(--mo-out) 320ms both; }
+.foh-hero__lede   { animation: mo-rise 760ms var(--mo-out) 420ms both; }
+.foh-hero__lockup .kit-actions,
+.foh-hero__lockup .kit-tag,
+.foh-hero__lockup .kit-tags{ animation: mo-rise 760ms var(--mo-out) 520ms both; }
+
+@keyframes mo-rise{
+  from{ opacity: 0; transform: translate3d(0, 26px, 0); }
+  to  { opacity: 1; transform: none; }
+}
+
+/* A hairline of brass draws itself across the foot of the band as the page lands —
+   the one flourish in the hero, and it is the brand's own accent doing it.
+
+   IT LIVES ON .foh-hero__stage, NOT ON THE BAND, AND THAT IS LOAD-BEARING.
+   The first version of this rule used .foh-hero__band::after, which already belonged
+   to the foundation's LOCAL LIFT: the second, lower-band gradient that makes the
+   headline legible over a bright photograph. This sheet loads last, so a 2px
+   decorative line silently replaced it, and the headline collapsed to between
+   1.10:1 and 1.46:1 against its worst patch on every desktop page — white type on a
+   bone-white dental chair.
+   Worth recording HOW that was caught, because the number lied first: the row-averaged
+   contrast check still reported 5.75:1 and PASSED, because a headline spans the full
+   width and a row average hides a bright patch under one word behind dark cabinetry
+   under the rest. Looking at the render is what found it; a per-tile measurement is
+   what confirmed it. A reader does not average a line, they read a word at a time.
+   Never attach anything to .foh-hero__band::before or ::after. Both are spent on
+   legibility, and legibility outranks the flourish. */
+.foh-hero__stage{ position: relative; }
+.foh-hero__stage::after{
+  content: "";
+  position: absolute; left: 0; right: 0;
+  top: var(--foh-hero-h, 62vh); margin-top: -2px;
+  height: 2px;
+  background: var(--ds-accent, #876C33);
+  transform: scaleX(0); transform-origin: 0 50%;
+  animation: mo-draw 1400ms var(--mo-out) 700ms both;
+  pointer-events: none;
+  z-index: 3;
+}
+@keyframes mo-draw{ to{ transform: scaleX(1); } }
+
+/* ==========================================================================
+   2. SCROLL REVEALS — replacing 1,277 twitches with one calm move per band
+   The build already carries [data-rise] on ~409 elements. Rather than re-author
+   every fragment, this re-times what is already there: scroll-driven where the
+   browser supports it, so the reveal is tied to the reader's own scrolling rather
+   than to a timer that fires whenever an observer happens to trip.
+   ========================================================================== */
+@supports (animation-timeline: view()){
+  main [data-rise]{
+    animation: mo-reveal 1ms linear both;
+    animation-timeline: view();
+    animation-range: entry 4% cover 26%;
+  }
+  @keyframes mo-reveal{
+    from{ opacity: 0; transform: translate3d(0, 34px, 0); }
+    to  { opacity: 1; transform: none; }
+  }
+  /* the hero's own children are handled above and must not be double-animated */
+  .foh-hero [data-rise]{ animation-timeline: none; animation: none; opacity: 1; transform: none; }
+}
+
+/* Fallback for engines without scroll-driven animations: the build's existing
+   .is-in class still drives the reveal, just with this layer's timing. */
+@supports not (animation-timeline: view()){
+  main [data-rise]{ opacity: 0; transform: translate3d(0,28px,0); transition: opacity var(--mo-slow) var(--mo-out), transform var(--mo-slow) var(--mo-out); }
+  main [data-rise].is-in,
+  main [data-rise].in-view,
+  main [data-rise].revealed{ opacity: 1; transform: none; }
+  .foh-hero [data-rise]{ opacity: 1; transform: none; }
+}
+
+/* A row of cards arrives as a row, not as a rank of soldiers. Six steps is enough
+   to read as considered; beyond that the last card feels late. */
+.row--stretch > .col:nth-child(1) [data-rise],
+.kit-mediagrid__cards > *:nth-child(1){ animation-delay: 0ms; }
+.row--stretch > .col:nth-child(2) [data-rise],
+.kit-mediagrid__cards > *:nth-child(2){ animation-delay: var(--mo-stagger); }
+.row--stretch > .col:nth-child(3) [data-rise],
+.kit-mediagrid__cards > *:nth-child(3){ animation-delay: calc(var(--mo-stagger) * 2); }
+.row--stretch > .col:nth-child(4) [data-rise],
+.kit-mediagrid__cards > *:nth-child(4){ animation-delay: calc(var(--mo-stagger) * 3); }
+.row--stretch > .col:nth-child(5) [data-rise]{ animation-delay: calc(var(--mo-stagger) * 4); }
+.row--stretch > .col:nth-child(6) [data-rise]{ animation-delay: calc(var(--mo-stagger) * 5); }
+
+/* ==========================================================================
+   3. CARDS — reachable, and they say so
+   Lift, a warmer shadow, a brass edge that grows from the left, and any photograph
+   inside pushing in slightly. Four things, one gesture, 420ms.
+   ========================================================================== */
+.kit-card{
+  transition: transform var(--mo-base) var(--mo-ease),
+              box-shadow var(--mo-base) var(--mo-ease),
+              border-color var(--mo-base) var(--mo-ease);
+  will-change: transform;
+  position: relative;
+}
+.kit-card::after{
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--ds-accent, #876C33);
+  transform: scaleY(0); transform-origin: 50% 0;
+  transition: transform var(--mo-base) var(--mo-out);
+  pointer-events: none;
+}
+.kit-card:hover,
+.kit-card:focus-within{
+  transform: translate3d(0, -6px, 0);
+  box-shadow: 0 2px 4px rgba(22,39,58,.05), 0 22px 48px rgba(22,39,58,.14);
+  border-color: var(--ds-accent, #876C33);
+}
+.kit-card:hover::after,
+.kit-card:focus-within::after{ transform: scaleY(1); }
+
+/* photographs inside a hovered card push in, never out — an image that grows past
+   its frame is the cheap version of this move */
+.kit-card .kit-slot__img,
+.kit-slot__img{
+  transition: transform var(--mo-slow) var(--mo-out), filter var(--mo-slow) var(--mo-out);
+  will-change: transform;
+}
+.kit-card:hover .kit-slot__img{ transform: scale(1.045); }
+.kit-slot:hover .kit-slot__img{ transform: scale(1.035); filter: saturate(1.06); }
+
+/* the mask clips the zoom, so nothing spills */
+.kit-slot__mask{ overflow: hidden; }
+
+/* ==========================================================================
+   4. BUTTONS — the fill arrives from the side you are travelling toward
+   ========================================================================== */
+.kit-btn{
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform var(--mo-fast) var(--mo-ease),
+              box-shadow var(--mo-base) var(--mo-ease),
+              color var(--mo-base) var(--mo-ease);
+}
+.kit-btn::before{
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--ds-accent-deep, #6F5828);
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform var(--mo-base) var(--mo-out);
+  z-index: -1;
+}
+.kit-btn:hover::before,
+.kit-btn:focus-visible::before{ transform: scaleX(1); }
+.kit-btn:hover{ transform: translate3d(0,-2px,0); box-shadow: 0 10px 26px rgba(22,39,58,.18); }
+.kit-btn:active{ transform: translate3d(0,0,0); transition-duration: 60ms; }
+
+/* the primary's trailing rule extends on hover — the site's existing "proceed"
+   gesture, now with somewhere to go */
+.kit-btn--primary::after{ transition: width var(--mo-base) var(--mo-out); }
+.kit-btn--primary:hover::after{ width: 26px; }
+
+/* ==========================================================================
+   5. LINKS — the underline draws rather than blinks
+   ========================================================================== */
+.kit-link-plain,
+.kit-card__foot a,
+.kit-foot a:not(.kit-btn),
+main a:not(.kit-btn):not(.kit-tag):not(.kit-slot__cap a){
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--mo-base) var(--mo-out), color var(--mo-fast) var(--mo-ease);
+  text-decoration: none;
+}
+main a:not(.kit-btn):not(.kit-tag):hover,
+main a:not(.kit-btn):not(.kit-tag):focus-visible{ background-size: 100% 1px; }
+
+/* tags become pressable rather than decorative */
+.kit-tag{
+  transition: transform var(--mo-fast) var(--mo-spring),
+              border-color var(--mo-fast) var(--mo-ease),
+              color var(--mo-fast) var(--mo-ease),
+              background-color var(--mo-fast) var(--mo-ease);
+}
+a.kit-tag:hover{ transform: translate3d(0,-2px,0); border-color: var(--ds-accent, #876C33); color: var(--ds-accent-deep, #6F5828); }
+
+/* ==========================================================================
+   6. THE INDEX RING — the site's own signature, finally moving
+   Every band opens on an unrolled graduated rule. It now draws itself as the band
+   arrives, which is the one place motion is genuinely explaining the structure:
+   the rule IS the page's sense of sequence.
+   ========================================================================== */
+.kit-open__rule{ overflow: hidden; }
+.kit-open__rule > *{
+  transform-origin: 0 50%;
+  animation: mo-draw 1100ms var(--mo-out) both;
+}
+@supports (animation-timeline: view()){
+  .kit-open__rule > *{ animation-timeline: view(); animation-range: entry 0% cover 18%; }
+}
+
+/* ==========================================================================
+   7. STAT NUMERALS — a short confident count-up feel without any script
+   The numerals lift and sharpen as their band arrives. No JS, no counting, no
+   chance of a half-rendered number being read as a real figure.
+   ========================================================================== */
+.kit-stat, .kit-statband__n, .kit-d1, .kit-d2{
+  animation: mo-stat 900ms var(--mo-out) both;
+}
+@keyframes mo-stat{
+  from{ opacity: 0; transform: translate3d(0, 14px, 0) scale(.97); filter: blur(3px); }
+  to  { opacity: 1; transform: none; filter: none; }
+}
+@supports (animation-timeline: view()){
+  .kit-stat, .kit-statband__n, .kit-d1, .kit-d2{ animation-timeline: view(); animation-range: entry 2% cover 22%; }
+}
+
+/* ==========================================================================
+   8. THE DARK BAND — a slow brass sheen, once, as it arrives
+   ========================================================================== */
+.surface-dark .kit-open__head::after,
+.precta::before{
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgba(198,158,76,.10) 50%, transparent 62%);
+  transform: translate3d(-40%,0,0);
+  animation: mo-sheen 2600ms var(--mo-out) 400ms both;
+  pointer-events: none;
+}
+.precta{ position: relative; overflow: hidden; }
+@keyframes mo-sheen{ to{ transform: translate3d(40%,0,0); } }
+
+/* ==========================================================================
+   9. FOCUS — visible, branded, and never removed
+   ========================================================================== */
+a:focus-visible, button:focus-visible, .kit-btn:focus-visible, .kit-card:focus-within{
+  outline: 2px solid var(--ds-accent, #876C33);
+  outline-offset: 3px;
+}
+
+/* ============================================================================
+   PART II — THE REST OF THE SITE
+   Part I moved the hero, the cards, the buttons and the links. Everything below is
+   the long tail the class census turned up: 181 system rows, 168 FAQ items, 41
+   tables, 38 clinician portraits, 125 truth rows, 197 captions and the whole ed-*
+   chrome, none of which carried a single transition.
+
+   Same two rules as Part I. Compositor properties only, and the whole thing goes
+   inert under prefers-reduced-motion (the final section, which MUST stay last in
+   the file — it wins by source order, so anything appended after it would silently
+   escape stillness).
+   ============================================================================ */
+
+/* ==========================================================================
+   11. THE HEADER — condenses as you leave the top of the page, no script
+   The utility bar carries four branch phone numbers. That is the right thing to
+   show someone who has just landed and the wrong thing to keep pinned once they
+   are reading, so it rolls up on scroll and the shelf takes over with a shadow.
+   scroll() timeline, not view() — this tracks the document, not an element.
+   ========================================================================== */
+@supports (animation-timeline: scroll()){
+  .site-header .ed-util{
+    transform-origin: 50% 0;
+    animation: mo-util-roll 1ms linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 220px;
+    will-change: transform, opacity;
+  }
+  @keyframes mo-util-roll{
+    from{ opacity: 1; transform: none; }
+    to  { opacity: 0; transform: translate3d(0,-100%,0); }
+  }
+  .site-header .ed-shelf{
+    animation: mo-shelf-land 1ms linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 60px 240px;
+  }
+  @keyframes mo-shelf-land{
+    from{ box-shadow: 0 0 0 rgba(22,39,58,0); }
+    to  { box-shadow: 0 6px 26px rgba(22,39,58,.12); }
+  }
+}
+
+/* the nav's underline draws from the left, and the current page keeps it drawn */
+.ed-nav__link{
+  position: relative;
+  transition: color var(--mo-fast) var(--mo-ease);
+}
+.ed-nav__link::after{
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -2px;
+  height: 1.5px;
+  background: var(--ds-accent, #876C33);
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform var(--mo-base) var(--mo-out);
+}
+.ed-nav__link:hover::after,
+.ed-nav__link:focus-visible::after,
+.ed-nav__link[aria-current]::after,
+.ed-nav__link[aria-expanded="true"]::after{ transform: scaleX(1); }
+
+/* the caret turns rather than swaps */
+.ed-caret,
+.ed-dcaret{ transition: transform var(--mo-base) var(--mo-spring); }
+.ed-nav__link[aria-expanded="true"] .ed-caret,
+.ed-dnav__sum[aria-expanded="true"] .ed-dcaret{ transform: rotate(180deg); }
+
+/* the logo's index ring turns a quarter when you reach for home */
+.ed-logo__mark{ transition: transform var(--mo-slow) var(--mo-spring); }
+.ed-logo:hover .ed-logo__mark,
+.ed-logo:focus-visible .ed-logo__mark{ transform: rotate(90deg); }
+
+/* the mega panel, the scrims and the drawer arrive rather than appear */
+.ed-mega{ transition: opacity var(--mo-base) var(--mo-out), transform var(--mo-base) var(--mo-out); }
+.ed-scrim,
+.ed-drawer__scrim{ transition: opacity var(--mo-base) var(--mo-ease); }
+.ed-drawer__panel{ transition: transform var(--mo-base) var(--mo-out); }
+.ed-mlink,
+.ed-dnav__link,
+.ed-pick__row{ transition: transform var(--mo-fast) var(--mo-ease), color var(--mo-fast) var(--mo-ease); }
+.ed-mlink:hover,
+.ed-dnav__link:hover,
+.ed-pick__row:hover{ transform: translate3d(4px,0,0); color: var(--ds-accent-deep, #6F5828); }
+
+/* the branch phone numbers in the utility bar */
+.ed-tel{ transition: color var(--mo-fast) var(--mo-ease); }
+.ed-tel__n{ display: inline-block; transition: transform var(--mo-fast) var(--mo-out); }
+.ed-tel:hover .ed-tel__n{ transform: translate3d(0,-1px,0); }
+
+/* ==========================================================================
+   12. THE HERO BAND — a slow parallax against the page
+   The photograph holds back as the page moves, which is what gives a full-bleed
+   band its depth. Capped at 4% of the band height in each direction so the image
+   never pulls away from the scrim that keeps the headline legible.
+   ========================================================================== */
+@supports (animation-timeline: view()){
+  .foh-hero__band{ overflow: hidden; }
+  .foh-hero__img{
+    animation: mo-settle var(--mo-drift) var(--mo-out) both,
+               mo-parallax 1ms linear both;
+    animation-timeline: auto, view();
+    animation-range: normal, entry 0% exit 100%;
+  }
+  @keyframes mo-parallax{
+    from{ translate: 0 -4%; }
+    to  { translate: 0  4%; }
+  }
+}
+
+/* ==========================================================================
+   13. PHOTOGRAPHS — brass brackets draw into the corners on hover
+   The photographs sit in plain rectangular plates. This gives them a way to
+   respond without adding a frame that would be there all the time.
+   ========================================================================== */
+.kit-slot__mask{ position: relative; }
+.kit-slot__mask::before,
+.kit-slot__mask::after{
+  content: "";
+  position: absolute;
+  width: 26px; height: 26px;
+  border: 0 solid var(--ds-accent, #876C33);
+  opacity: 0;
+  transition: opacity var(--mo-base) var(--mo-ease), transform var(--mo-base) var(--mo-out);
+  pointer-events: none;
+  z-index: 2;
+}
+.kit-slot__mask::before{
+  left: 10px; top: 10px;
+  border-left-width: 1.5px; border-top-width: 1.5px;
+  transform: translate3d(-6px,-6px,0);
+}
+.kit-slot__mask::after{
+  right: 10px; bottom: 10px;
+  border-right-width: 1.5px; border-bottom-width: 1.5px;
+  transform: translate3d(6px,6px,0);
+}
+.kit-slot:hover .kit-slot__mask::before,
+.kit-slot:hover .kit-slot__mask::after,
+.kit-card:hover .kit-slot__mask::before,
+.kit-card:hover .kit-slot__mask::after{ opacity: .85; transform: none; }
+
+/* the caption follows its photograph by a beat */
+.kit-slot__cap{ transition: color var(--mo-base) var(--mo-ease), transform var(--mo-base) var(--mo-out); }
+.kit-slot:hover .kit-slot__cap{ transform: translate3d(3px,0,0); }
+
+.kit-mediagrid__media .kit-slot__img{ transition: transform var(--mo-slow) var(--mo-out); }
+.kit-mediagrid__media:hover .kit-slot__img{ transform: scale(1.04); }
+
+/* ==========================================================================
+   14. SYSTEM ROWS — 181 of them, the densest repeated object on the site
+   Each row is a numbered unit with a name, a note and a location. On hover the
+   numeral steps aside, a brass rule appears in the gutter and the row warms.
+   ========================================================================== */
+.kit-sys__unit{
+  position: relative;
+  transition: background-color var(--mo-base) var(--mo-ease);
+}
+.kit-sys__unit::before{
+  content: "";
+  position: absolute; left: 0; top: 6%; bottom: 6%; width: 2px;
+  background: var(--ds-accent, #876C33);
+  transform: scaleY(0); transform-origin: 50% 50%;
+  transition: transform var(--mo-base) var(--mo-out);
+  pointer-events: none;
+}
+.kit-sys__unit:hover{ background-color: var(--ds-bg-wash, rgba(135,108,51,.05)); }
+.kit-sys__unit:hover::before{ transform: scaleY(1); }
+.kit-sys__no{ display: inline-block; transition: transform var(--mo-base) var(--mo-out), color var(--mo-base) var(--mo-ease); }
+.kit-sys__unit:hover .kit-sys__no{ transform: translate3d(3px,0,0); color: var(--ds-accent-deep, #6F5828); }
+.kit-sys__name{ transition: color var(--mo-fast) var(--mo-ease); }
+.kit-sys__unit:hover .kit-sys__name{ color: var(--ds-ink-heading, inherit); }
+
+/* ==========================================================================
+   15. FAQ — the question leans in, the marker turns
+   ========================================================================== */
+.kit-faq__item{ transition: background-color var(--mo-base) var(--mo-ease); }
+.kit-faq__q{
+  position: relative;
+  transition: transform var(--mo-base) var(--mo-out), color var(--mo-fast) var(--mo-ease);
+}
+.kit-faq__item:hover .kit-faq__q{ transform: translate3d(4px,0,0); color: var(--ds-accent-deep, #6F5828); }
+.kit-faq__item[open] .kit-faq__q{ color: var(--ds-accent-deep, #6F5828); }
+.kit-faq__item[open] .kit-faq__a{ animation: mo-rise 420ms var(--mo-out) both; }
+.kit-faq__q::marker{ color: var(--ds-accent, #876C33); }
+
+/* ==========================================================================
+   16. TABLES — 41 of them, all price and comparison data
+   A row tint on hover is the difference between reading a table and scanning one.
+   ========================================================================== */
+.kit-table tbody tr{ transition: background-color var(--mo-fast) var(--mo-ease); }
+.kit-table tbody tr:hover{ background-color: var(--ds-bg-wash, rgba(135,108,51,.06)); }
+.kit-table__num,
+.kit-table__from,
+.kit-tab{ font-variant-numeric: tabular-nums; }
+.kit-table tbody tr:hover .kit-table__num,
+.kit-table tbody tr:hover .kit-table__from{ color: var(--ds-accent-deep, #6F5828); }
+.kit-table__scroll{ scroll-behavior: smooth; }
+
+/* ==========================================================================
+   17. CLINICIAN PORTRAITS AND TRUTH ROWS
+   ========================================================================== */
+.kit-person__media .kit-slot__img,
+.kit-person__media img{ transition: transform var(--mo-slow) var(--mo-out), filter var(--mo-slow) var(--mo-ease); }
+.kit-person:hover .kit-person__media .kit-slot__img,
+.kit-person:hover .kit-person__media img{ transform: scale(1.05); filter: saturate(1.05); }
+.kit-person__name{ transition: color var(--mo-fast) var(--mo-ease); }
+.kit-person:hover .kit-person__name{ color: var(--ds-accent-deep, #6F5828); }
+
+.kit-truth{ transition: border-color var(--mo-base) var(--mo-ease); }
+.kit-truth__k{ display: inline-block; transition: color var(--mo-fast) var(--mo-ease), transform var(--mo-base) var(--mo-out); }
+.kit-truth:hover .kit-truth__k{ color: var(--ds-accent-deep, #6F5828); transform: translate3d(2px,0,0); }
+
+/* ==========================================================================
+   18. DISPLAY QUOTES — the brass mark draws itself as the quote arrives
+   ========================================================================== */
+.kit-quote--display{ position: relative; }
+.kit-quote--display::before{
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--ds-accent, #876C33);
+  transform: scaleY(0); transform-origin: 50% 0;
+  animation: mo-drawy 900ms var(--mo-out) both;
+  pointer-events: none;
+}
+@keyframes mo-drawy{ to{ transform: scaleY(1); } }
+@supports (animation-timeline: view()){
+  .kit-quote--display::before{ animation-timeline: view(); animation-range: entry 0% cover 24%; }
+}
+
+/* ==========================================================================
+   19. THE LIVE DOT — the one ambient loop on the site
+   37 status dots say a branch is open. A dot that says "live" and does not move is
+   a graphic; one that breathes once every four seconds is a state. Kept to opacity
+   so it costs nothing, and it is the ONLY looping animation in this layer.
+   ========================================================================== */
+.kit-status__dot{
+  animation: mo-pulse 4s var(--mo-ease) infinite;
+  will-change: opacity;
+}
+@keyframes mo-pulse{
+  0%, 100%{ opacity: 1; }
+  50%     { opacity: .45; }
+}
+
+/* ==========================================================================
+   20. LEDGERS, EYEBROWS, STAT BANDS
+   ========================================================================== */
+.kit-list--ledger > li{ animation: mo-rise 620ms var(--mo-out) both; }
+@supports (animation-timeline: view()){
+  .kit-list--ledger > li{ animation-timeline: view(); animation-range: entry 0% cover 20%; }
+  .kit-list--ledger > li:nth-child(2){ animation-delay: var(--mo-stagger); }
+  .kit-list--ledger > li:nth-child(3){ animation-delay: calc(var(--mo-stagger) * 2); }
+  .kit-list--ledger > li:nth-child(4){ animation-delay: calc(var(--mo-stagger) * 3); }
+  .kit-list--ledger > li:nth-child(n+5){ animation-delay: calc(var(--mo-stagger) * 4); }
+}
+
+/* every band's eyebrow gets a short brass tick that draws in front of it */
+.kit-eyebrow{ position: relative; }
+.kit-open__head .kit-eyebrow::before{
+  content: "";
+  display: inline-block;
+  width: 18px; height: 1.5px;
+  margin-right: .6em;
+  vertical-align: .32em;
+  background: var(--ds-accent, #876C33);
+  transform: scaleX(0); transform-origin: 0 50%;
+  animation: mo-draw 700ms var(--mo-out) 120ms both;
+}
+@supports (animation-timeline: view()){
+  .kit-open__head .kit-eyebrow::before{ animation-timeline: view(); animation-range: entry 0% cover 16%; }
+}
+
+.kit-statband{ transition: border-color var(--mo-base) var(--mo-ease); }
+.kit-stat{ transition: transform var(--mo-base) var(--mo-out); }
+.kit-statband:hover .kit-stat{ transform: translate3d(0,-2px,0); }
+
+/* the ghost button fills from the opposite side to the primary, so a pair of
+   buttons side by side never reads as one animation played twice */
+.kit-btn--ghost::before{ transform-origin: 100% 50%; }
+
+/* ==========================================================================
+   22. STILLNESS, honoured completely — THIS SECTION MUST STAY LAST IN THE FILE
+   Source order is what makes it win. A rule appended after this block escapes it.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation: none !important;
+    transition: none !important;
+  }
+  main [data-rise],
+  .foh-hero__title, .foh-hero__eyebrow, .foh-hero__lede,
+  .kit-stat, .kit-statband__n, .kit-d1, .kit-d2,
+  .kit-list--ledger > li, .kit-faq__item[open] .kit-faq__a{
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  /* rules that DRAW: their resting state is scale 0, so stillness must land them
+     drawn rather than absent. The stage carries the hero hairline, not the band —
+     the band pseudo-elements are spent on headline legibility (see section 1). */
+  .foh-hero__stage::after,
+  .kit-open__rule > *,
+  .kit-open__head .kit-eyebrow::before{ transform: scaleX(1) !important; }
+  .kit-quote--display::before{ transform: scaleY(1) !important; }
+  .foh-hero__img{ translate: none !important; }
+  /* rules whose resting state is genuinely hidden stay hidden: these are hover
+     affordances, not content. */
+  .kit-card::after,
+  .kit-sys__unit::before{ transform: scaleY(0) !important; }
+  .kit-slot__mask::before,
+  .kit-slot__mask::after{ opacity: 0 !important; }
+  .site-header .ed-util{ opacity: 1 !important; transform: none !important; }
+}

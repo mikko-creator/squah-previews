@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,50 +266,28 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
-
-      <div class="col col--span-5 col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Periodontics</span></div>
-          </div>
-        </div>
-        <h1 id="h01">Periodontics Philippines: Gum Disease Treatment</h1>
-        <p class="kit-lede readw">Periodontics treats the gum and bone that hold your teeth in place.</p>
-        <p class="kit-body readw">Gum disease is quiet at the start: a little blood when you brush, and nothing that hurts. It does not clear up on its own.</p>
-      </div>
-
-      <div class="col col--span-3 col--stretch">
-        <div class="kit-card kit-card--tint kit-card--pad" data-rise>
-          <div class="kit-card__top">
-            <span class="kit-card__label">The stage that decides</span>
-            <span class="kit-card__unit">Now</span>
-          </div>
-          <p class="kit-card__title">Treated at the bleeding stage, it is controlled by cleaning under the gum.</p>
-          <p class="kit-card__body">Left alone it takes bone, and the bone does not come back by itself. That is the whole reason this page asks you to come in early rather than when something hurts.</p>
-        </div>
-      </div>
-
-      <div class="col col--span-4 col--media">
-        <figure class="kit-slot" data-rise>
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_periodontics-main.jpg" alt="A clinician in a white coat holding a tablet showing four numbered diagrams of gum and bone at successive stages, turned so the seated patient beside her can read it." width="675" height="585" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Shown on the screen</b><span>The stages are explained against your own measurements.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s04">Routine clean or deep clean</a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-perio-row.jpg" alt="A set of slim periodontal instruments and a graduated probe fanned across a round brushed brass tray." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Periodontics Philippines: Gum Disease Treatment</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Periodontics</p>
+            <p class="foh-hero__lede">Periodontics treats the gum and bone that hold your teeth in place.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s04">Routine clean or deep clean</a>
+            </div>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -487,13 +468,6 @@
         </div>
       </div>
 
-      <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Figure, not supplied</span>
-          <p>No starting number for this treatment exists anywhere in the supplied handoff, so none is published here and none is estimated. Insert the confirmed figure before launch. Until then the price column is an admission rather than a range, and it may not be presented as a floor.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -638,10 +612,6 @@
             <a class="kit-btn kit-btn--ghost" href="treatments.html"><span>All Treatments</span></a>
           </div>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">No clinician named here</span>
-          <p>The supplied handoff sources no periodontist by name, so this band names nobody rather than borrowing a face or a credential from another field. Pull the periodontists from the published roster before launch, do not state a per-field count, and do not tie a clinician to a branch: per-clinic assignment is blocked (client-rules.json proof_rules.per-clinic-roster).</p>
-        </div>
       </div>
 
     </div>
@@ -732,16 +702,6 @@
           <div class="kit-actions kit-actions--tight">
             <a class="kit-btn kit-btn--ghost" href="prices.html"><span>See the full price list</span></a>
           </div>
-        </div>
-
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Figure, still absent</span>
-          <p>Pre-launch blocker B-1 covers this field too. Nothing on this page may be presented as a price, a range, a floor or an estimate until the owner supplies the real number, and no number has been invented to fill the gap in the meantime.</p>
-        </div>
-
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consultation terms, unconfirmed</span>
-          <p>The copy for this page closes on a free first consultation, and its own note records that offer as agent-derived from the intake brief rather than owner-confirmed. Nothing here therefore calls the first visit complimentary. Confirm the terms, and what the consultation includes, before launch.</p>
         </div>
 
         <div class="kit-inline">

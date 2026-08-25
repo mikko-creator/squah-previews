@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,26 +266,46 @@
 
 
 
-<section class="section section--paper kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
-    <div class="row row--claim">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_Mitsukoshi-Facade.jpg" alt="The Elevate Dental frontage inside Mitsukoshi BGC: a black arched glass shopfront with the gold Elevate Dental sign, with the reception desk and waiting seating visible through the glass." width="1400" height="933" loading="eager" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Dentist BGC Taguig - Mitsukoshi Flagship Clinic</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Grand Central Park, Taguig City</p>
+            <p class="foh-hero__lede">Our flagship clinic is on the second floor of Mitsukoshi BGC.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary kit-tab" href="tel:+639171599284">Call Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s01b" data-rise>
+  <div class="container">
+    <div class="row row--aside">
 
       <div class="col col--copy">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">01 / 08</span>
-            <div><span class="kit-eyebrow">Grand Central Park, Taguig City</span></div>
           </div>
         </div>
-        <h1 id="h01">Dentist BGC Taguig - Mitsukoshi Flagship Clinic</h1>
-        <p class="kit-lede readw">Our flagship clinic is on the second floor of Mitsukoshi BGC, at 8th Avenue corner 36th Street in Grand Central Park.</p>
         <p class="kit-body readw">It opens seven days a week and closes at 20:00 every day, which makes it the clinic to book when the only hour you have is after work. 3D CBCT imaging is installed here, so a case that needs a three-dimensional scan is scanned in the same building where it is planned and treated.</p>
         <p class="kit-body readw">This is a specialist clinic, not a general branch with a visiting dentist. Our specialists work by discipline, and complex work is planned inside the group rather than sent elsewhere.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary kit-tab" href="tel:+639171599284">Call Us</a>
-        </div>
         <div class="kit-inline">
           <p>Stage 01 of 08. This page runs as a route, in the order you will actually use it: where the clinic is, how to get up to it, when it opens, who works there, what is installed there, what you can book there, and what to know before you take a slot.</p>
           <div class="kit-inline__acts">
@@ -309,15 +332,6 @@
             <p class="kit-stat__sub">Reached from inside the mall, with no separate street entrance.</p>
           </div>
         </div>
-      </div>
-
-      <div class="col col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_Mitsukoshi-Facade.jpg" alt="The Elevate Dental frontage inside Mitsukoshi BGC: a black arched glass shopfront with the gold Elevate Dental sign, with the reception desk and waiting seating visible through the glass." width="1400" height="933" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Frontage</b><span>Second floor, Mitsukoshi BGC.</span></figcaption>
-        </figure>
       </div>
 
     </div>
@@ -422,14 +436,6 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Reception</b><span>What you walk into on level two.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Exact wayfinding, held</span>
-          <p>The unit, the entrance and the lift bank. The unit number, the nearest mall entrance to use, and the closest lift bank are not in the supplied source, and neither is the nearest public-transport stop or the walking route from it. Confirm all of them before publication so the wayfinding is exact rather than approximate. Until then this section names the block, the floor and the directory, which are verified, and names nothing that is not.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The map cell, held</span>
-          <p>The map. The copy specifies a pin at 2F Mitsukoshi BGC, 8th Avenue corner 36th Street, Grand Central Park, Taguig City, offering walking directions as well as driving directions, because the clinic is reached on foot once you are inside Grand Central Park. No map provider or map asset is cleared for this build, so the cell carries the clinic's own photograph and the map ships when the pin can be placed exactly.</p>
-        </div>
       </div>
 
     </div>
@@ -486,8 +492,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">Holiday hours, held</span>
-          <p>Days that fall outside the standard week. Holiday hours can differ from the schedule above and the holiday schedule has not been supplied. Publish it, or publish a line telling patients to call and check, rather than implying the standard week always holds.</p>
+          <p>Holiday hours can differ from the schedule above. Please call the clinic to check before visiting on a public holiday.</p>
         </div>
         <div class="kit-foot">
           <p class="kit-micro">The last appointment of the day</p>
@@ -541,9 +546,8 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Treatment room</b><span>One of the rooms at this branch.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">This clinic roster, held</span>
-          <p>Who sits on the bench here. Which specialists sit on the bench here, and on which days, is not recorded in the supplied source. Per-clinic rosters must come from the owner. Do not assume every specialist practises at every site, and do not name a specialist on this page until their clinic assignment is confirmed in writing.</p>
+        <div class="kit-truth">
+          <p>This page does not name which specialists sit on the bench here, or on which days.</p>
         </div>
       </div>
 
@@ -635,9 +639,8 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Where a scan is read</b><span>A treatment room at this branch.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Per site equipment, held</span>
-          <p>Everything installed beyond the scanner. Only CBCT is verified at all four clinics. Which of the other seven units stand in these rooms is not recorded per site, so this section names them as systems the group works with and claims nothing further. Confirm the per-clinic equipment list before this section names any of them as available here.</p>
+        <div class="kit-truth">
+          <p>These are systems the group works with; this page does not state which of them are installed at this clinic.</p>
         </div>
         <div class="kit-inline">
           <p>Stage 06 of 08. Next, what you can actually book at this address.</p>
@@ -798,8 +801,7 @@
 
       <div class="col col--full">
         <div class="kit-truth">
-          <span class="kit-truth__k">The delivery schedule, held</span>
-          <p>Which practices actually run at this address. Which of these practices run at this address, and on which days, follows the specialist schedule, and that schedule is not recorded per clinic. Until it is, this page routes to each discipline hub rather than stating that all of them are delivered at this address.</p>
+          <p>This page links to each practice the group delivers; it does not state which of them run at this address, or on which days.</p>
         </div>
         <div class="kit-inline">
           <p>Stage 07 of 08. One stage left, and it is the one worth reading before you pick a date.</p>
@@ -849,14 +851,6 @@
           </div>
           <figcaption class="kit-slot__cap"><b>Room three</b><span>Seen from the corridor at this branch.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Signed patient consent, held. Designed and not deployed.</span>
-          <p>Signed patient consent. Consent for republication has not been confirmed, so no testimonial text, patient name, or before-and-after clinical image appears on this page. Republishing a patient's words or clinical photographs without a signed release is a legal exposure, not a content gap. This block stays as it is until the release file exists.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">The consultation fee, held</span>
-          <p>Whether a first visit is chargeable. The brief carries a free first consultation, sourced to an agent-derived entry rather than a client-supplied one, so it is not published here. Confirm whether a consultation fee applies at this clinic and, if so, what it is. A consultation offer must not ship on inference.</p>
-        </div>
       </div>
 
       <div class="col col--full">

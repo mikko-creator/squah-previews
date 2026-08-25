@@ -1875,7 +1875,19 @@ a.kit-card { text-decoration: none; color: var(--ds-ink); }
    same one line the LOCKED chrome sheet already spends for the mega panel card
    (.ed-mega .kit-card{height:100%}), applied through the structure hook rather
    than as a class on it. */
-.row--stretch > .col > .kit-card { height: 100%; }
+/* SCOPED TO :only-child 2026-08-25 — SECOND COPY OF THE SAME PIN.
+   This sheet declares `.row--stretch > .col > .kit-card { height:100% }` TWICE, here and again
+   in the promoted T-HUB/c block further down, each authored independently with its own
+   rationale. Scoping only the later copy changed nothing at all, because THIS one still matched
+   and still won — the fix landed on the copy I happened to be reading while its sibling stayed
+   stale, which is the exact non-propagation class the chrome-carrier gate exists to prevent.
+   Caught by re-measuring after the first edit rather than trusting it: the cards were still
+   rendering at exactly the column height (777.891px), which is only possible if height:100% was
+   still applying from somewhere.
+   Both copies now carry :only-child. See the fuller note on the later copy for the measured
+   defect (up to 1,239px of card content clipped away by .section{overflow:hidden} on two live
+   pages) and for the census showing 216 of 222 pinned cards are unaffected by the narrowing. */
+.row--stretch > .col > .kit-card:only-child { height: 100%; }
 
 
 /* ============================================================================
@@ -1945,11 +1957,29 @@ a.kit-card { text-decoration: none; color: var(--ds-ink); }
    Measured at 375: the band-03 cards render 376, 420, 376 and 398px, which is
    content-height, exactly as G7 requires.
    ========================================================================== */
-.row--stretch > .col > .kit-card,
-.col--stretch > .kit-card { height: 100%; }
+/* SCOPED TO :only-child 2026-08-25 — this was deleting real content from the live site.
+   THE DEFECT. height:100% equalises card heights across a row, which is right when a column
+   holds ONE card: the card fills the stretched column and the row reads level. But where a
+   column holds THREE cards, EACH became 100% of that column, so they stacked to three times its
+   height and `.section{overflow:hidden}` (line ~356) silently clipped the remainder. Measured
+   before the fix, at 1440 and again at 375:
+       removable-partial-dentures  #stage-03   +1239px clipped at 1440, +1561px at 375
+       tooth-scaling-and-root-planning #stage-04 +1165px clipped at 1440, +1634px at 375
+   Whole cards were invisible to every visitor, on a published page, and no gate could see it:
+   the markup is valid, the cards exist in the DOM, and overflow:hidden is deliberate (it clips
+   the atmosphere layers in section 4).
+   The same over-tall card is also what turned the margin-top:auto below into white holes of up
+   to 538px between a three-line paragraph and its footer link — one cause, two symptoms.
+   WHY :only-child IS SAFE HERE, counted rather than assumed. Census of all 222 pinned cards
+   across the 49 pages: 216 are the sole child of their column and keep the pin exactly as
+   before; 6 sit in the multi-card columns that caused the bug and correctly lose it; and 0 have
+   a non-card sibling, so no card anywhere loses equalising as a side effect. The trade costs
+   nothing. */
+.row--stretch > .col > .kit-card:only-child,
+.col--stretch > .kit-card:only-child { height: 100%; }
 
-.row--stretch > .col > .kit-card > .kit-card__body + .kit-card__foot,
-.col--stretch > .kit-card > .kit-card__body + .kit-card__foot { margin-top: auto; }
+.row--stretch > .col > .kit-card:only-child > .kit-card__body + .kit-card__foot,
+.col--stretch > .kit-card:only-child > .kit-card__body + .kit-card__foot { margin-top: auto; }
 
 /* RULE 3, also found by rendering. The chrome's header is position:fixed and the
    chrome sheet clears it exactly ONCE, with main{padding-top:var(--ed-header-h)}.

@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,44 +266,29 @@
 
 
 
-<section class="section section--cool kit-hero" id="s01" aria-labelledby="h01" data-rise>
+
+<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
 
-      <div class="col col--span-7 col--copy">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Insights and care</span></div>
-          </div>
-        </div>
-        <h1 id="h01">Insights and Care</h1>
-        <p class="kit-status kit-tab"><span class="kit-status__dot" aria-hidden="true"></span>Nine categories live. Post migration scope still open</p>
-        <p class="kit-lede readw">Plain answers on what treatments cost, how to choose between options, and how to look after your teeth between visits.</p>
-        <p class="kit-body readw">Most people research a dental treatment for weeks before they book one. The two questions that decide it are almost always the same: what does this cost, and how do I choose between the options in front of me. This library is weighted toward those two, and written by the specialists who do the work.</p>
-        <p class="kit-accentline">Nothing here is a substitute for an examination.</p>
-        <p class="kit-body readw">An article can tell you what a treatment involves and what it typically costs. It cannot tell you whether it is right for your case, because that requires looking at your teeth.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s02">Start with three pieces</a>
-        </div>
-      </div>
-
-      <div class="col col--span-5 col--media">
-        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--arch">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2020_03_Blog.png" alt="A teenage patient in fixed braces smiles from the dental chair, with the unit's tray and mirror in the foreground." width="1024" height="683" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Mid treatment</b><span>Most of what is written here is about the middle, not the after.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this index is filtered, and what it says when nothing matches</p>
-          <p class="kit-body readw--wide">Every card carries three values so the toolbar acts on real content rather than shipping inert: its category, its tags, and its date. The list is sorted by that date, most recent first. The source brief listed category and tags twice each; that duplication is recorded and deduplicated rather than quietly fixed.</p>
-          <p class="kit-quote kit-quote--display readw">No article matches those filters. Clear one filter to widen the list, or see everything. If your question is not answered here, ask it at a consultation, or send it through the contact form and it will reach a specialist in that discipline.</p>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-journal-desk.jpg" alt="A flat lay of a closed notebook, two brass pens and a cup of coffee on a pale desk with eucalyptus sprigs." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h01">Insights and Care</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Insights and care</p>
+            <p class="kit-status kit-tab"><span class="kit-status__dot" aria-hidden="true"></span>Nine categories live. Post migration scope still open</p>
+            <p class="foh-hero__lede">Plain answers on what treatments cost, how to choose between options, and how to look after your teeth between visits.</p>
+            <p class="kit-accentline">Nothing here is a substitute for an examination.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s02">Start with three pieces</a>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -313,6 +301,7 @@
   <div class="container">
     <div class="row row--stretch">
 
+      
       <div class="col col--full">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
@@ -326,6 +315,23 @@
         </div>
         <p class="kit-status kit-tab"><span class="kit-status__dot" aria-hidden="true"></span>Three pinned. Selection to be confirmed by the owner</p>
         <p class="kit-lede readw--wide">Ask what a treatment costs in this market and the answers come back from directories and aggregators rather than from anyone who would be doing the work. That is the gap these three exist to close.</p>
+      </div>
+
+      <div class="col col--span-7">
+        <div class="kit-foot">
+          <p class="kit-micro">How this index is filtered, and what it says when nothing matches</p>
+          <p class="kit-body readw--wide">Every card carries three values so the toolbar acts on real content rather than shipping inert: its category, its tags, and its date. The list is sorted by that date, most recent first. The source brief listed category and tags twice each; that duplication is recorded and deduplicated rather than quietly fixed.</p>
+          <p class="kit-quote kit-quote--display readw">No article matches those filters. Clear one filter to widen the list, or see everything. If your question is not answered here, ask it at a consultation, or send it through the contact form and it will reach a specialist in that discipline.</p>
+        </div>
+      </div>
+
+      <div class="col col--span-5 col--media">
+        <figure class="kit-slot kit-hero__media" data-rise style="box-shadow: var(--ds-shadow-lift);">
+          <div class="kit-slot__mask kit-slot__mask--arch">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2020_03_Blog.png" alt="A teenage patient in fixed braces smiles from the dental chair, with the unit's tray and mirror in the foreground." width="1024" height="683" loading="eager" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>Mid treatment</b><span>Most of what is written here is about the middle, not the after.</span></figcaption>
+        </figure>
       </div>
 
       <div class="col col--span-4">
@@ -362,10 +368,6 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The pinned selection. The three above are chosen from the published library for cost intent and decision intent, which is what this hub is strategically for. Confirm the selection, and confirm that each piece's own content still matches its title, before it is pinned. Titles are transcribed exactly as published; the one line descriptions beneath them are editorial framing written for this index rather than extracted from the articles. Individual post pages are part of the deferred migration, which is why no title on this page is a link.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <div class="kit-actions kit-actions--tight">
@@ -516,10 +518,6 @@
       <div class="col col--span-7">
         <p class="kit-micro">Who writes it, and how cost is handled</p>
         <p class="kit-body readw--wide">Articles are written and reviewed by the specialists who practice in that discipline. Where a piece discusses cost, it explains what moves the figure, because the honest answer to what a treatment costs is a range and the reasons for it rather than a single number.</p>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Migration scope, open</span>
-          <p>The existing library runs to 185 posts. Whether all of them carry across, or the set is pruned and consolidated, is an open owner decision and it is not made here. Whichever way it goes, three rules apply to every post that ships: any peso figure in it is representative until real figures are supplied and may not be presented as a price, any retired claim in the body is rewritten to its safe version before migration, and any clinical image without documented patient consent does not travel. Migration is a rewrite pass, not a copy pass.</p>
-        </div>
       </div>
 
       <div class="col col--span-5 col--media">

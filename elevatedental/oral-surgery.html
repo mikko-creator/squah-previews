@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,7 +266,33 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-open" aria-labelledby="h-open" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s-open" aria-labelledby="h-open" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-theatre.jpg" alt="An empty treatment room with deep navy cabinetry, brushed brass handles and an overhead operating light above the chair." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-open">Oral Surgery Philippines. Extractions and Implants.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Below the surface</p>
+            <p class="foh-hero__lede">Oral surgery is the part of dentistry that works below the surface.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="#s-scan">How a case is planned</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section section--paper" id="s-open-b" data-rise>
   <div class="container">
     <div class="row">
 
@@ -272,11 +301,8 @@
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">01</span>
-            <div><span class="kit-eyebrow">Below the surface</span></div>
           </div>
         </div>
-        <h1 id="h-open">Oral Surgery Philippines. Extractions and Implants.</h1>
-        <p class="kit-lede readw">Oral surgery is the part of dentistry that works below the surface.</p>
         <p class="kit-body readw">It removes a tooth that cannot be saved, places an implant in the bone that held one, and treats the bone and soft tissue around both. It is planned from a three-dimensional scan rather than a flat image, because what matters is where the nerve, the sinus and the bone actually are.</p>
         <p class="kit-body readw">Here it is performed in the same practice that will restore the tooth afterwards, so the surgical plan and the restorative plan are drawn together.</p>
       </div>
@@ -284,7 +310,7 @@
       <div class="col col--span-5 col--media">
         <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
           <div class="kit-slot__mask kit-slot__mask--circle">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2022_03_How-to-Care-for-Your-Dental-Implants.jpg" alt="A clinician in a white coat holding a small pink demonstration model that shows a threaded implant beside a natural tooth root, pointing at it with a pen while a seated patient watches." width="1200" height="800" loading="eager" decoding="async">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2022_03_How-to-Care-for-Your-Dental-Implants.jpg" alt="A clinician in a white coat holding a small pink demonstration model that shows a threaded implant beside a natural tooth root, pointing at it with a pen while a seated patient watches." width="1200" height="800" loading="lazy" decoding="async">
           </div>
           <figcaption class="kit-slot__cap"><b>Explained on a model first</b><span>The components are shown before anything is agreed to.</span></figcaption>
         </figure>
@@ -309,13 +335,6 @@
           </div>
           <p class="kit-card__title">A space that has to be answered</p>
           <p class="kit-card__body">A gap is not a neutral state. Neighbouring teeth lean into it and the bone that held the root begins to reduce. What fills it, and whether the site needs building up first, is decided at the same consultation as the removal.</p>
-        </div>
-      </div>
-
-      <div class="col col--full">
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="#s-scan">How a case is planned</a>
         </div>
       </div>
 
@@ -350,9 +369,8 @@
           <li><b class="kit-strong">Removal of cysts and lesions</b> in the jaw.</li>
         </ul>
         <p class="kit-body readw--wide">Every procedure is carried out with local anaesthesia, and your surgeon takes you through what to expect during the appointment and through the healing period before you consent to it.</p>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Not claimed here</span>
-          <p>Sedation. No supplied source evidences sedation dentistry at this practice, so it is not offered on this page in any form. If it exists, supply the detail and the qualification behind it and this is the band it belongs in. Until then a reader who needs it should ask on the phone rather than infer it from a page.</p>
+        <div class="kit-truth">
+          <p>Sedation dentistry is not claimed anywhere on this page. A reader who needs it should ask on the phone rather than infer it from a page.</p>
         </div>
       </div>
 
@@ -429,9 +447,8 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Interval not published</span>
-          <p>How long a placed implant is left before the crown goes on. That interval varies with the site and the bone, and no figure has been supplied for this practice, so none is printed. Your surgeon confirms it for your case after the scan. Insert the practice's own typical range before launch if one exists.</p>
+        <div class="kit-truth">
+          <p>How long a placed implant is left before the crown goes on varies with the site and the bone, and no figure is published here. Your surgeon confirms it for your case after the scan.</p>
         </div>
       </div>
 
@@ -614,13 +631,11 @@
             <a class="kit-btn kit-btn--ghost" href="prices.html"><span>Treatment Prices</span></a>
           </div>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Figures not real</span>
-          <p>Both numbers above are representative market figures anchored to published Philippine ranges rather than to an Elevate price list, and no Elevate figure has been supplied for either treatment. Your own figure is quoted per tooth or per implant, after the scan.</p>
+        <div class="kit-truth">
+          <p>Both numbers above are representative market figures anchored to published Philippine ranges rather than to an Elevate price list. Your own figure is quoted per tooth or per implant, after the scan.</p>
         </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Graft cost unknown</span>
-          <p>Bone grafting. The copy states that a site needing volume is quoted separately, and no starting figure for grafting has been supplied, so none appears. Supply it and it belongs in this band beside the two above.</p>
+        <div class="kit-truth">
+          <p>A site needing bone volume is quoted separately, and no starting figure for grafting is published here.</p>
         </div>
       </div>
 
@@ -649,13 +664,8 @@
         <p class="kit-body readw">A consultation here starts with an examination and a cone beam scan where the case calls for one. Four things are covered before you decide: what the images show, what the procedure involves, what the healing period asks of you, and what happens to the space afterwards.</p>
         <p class="kit-body readw--wide">That last one is the part most often left out elsewhere, and it is the reason this page routes to a restorative field two bands above. A surgical plan that stops at the extraction is half a plan.</p>
 
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Term unconfirmed</span>
-          <p>The consultation fee. The brief directs this page to close on a free first consultation, and no supplied source evidences a fee or the absence of one, so no complimentary visit is claimed here. Confirm the exact term and insert it before launch.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Roster not supplied</span>
-          <p>How many surgeons practise here, and their individual qualifications, have not been supplied. Insert the roster and credentials before launch, each entry linked to its own profile. Per-clinic assignment is blocked, so do not tie a named surgeon to a named building when it lands.</p>
+        <div class="kit-truth">
+          <p>Whether the first consultation carries a fee is not stated on this page, and no complimentary visit is claimed.</p>
         </div>
 
         <div class="kit-inline">

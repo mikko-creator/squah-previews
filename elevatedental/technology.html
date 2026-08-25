@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -265,43 +268,25 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
   <div class="container">
     <div class="row">
 
-      <div class="col col--span-7">
-        <div class="kit-open">
-          <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
-          <div class="kit-open__head">
-            <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Diagnostic and treatment systems</span></div>
-          </div>
-        </div>
-        <h1 id="h-start">Dental Technology. The eight systems we use, and what each one changes for you.</h1>
-        <p class="kit-lede readw">Eight named diagnostic and treatment systems, used across every treatment we offer, with 3D CBCT imaging available at all four clinics.</p>
-        <p class="kit-body readw">This is not a spec sheet. Every system below is named, described in plain language, and tied to the part of your treatment it actually affects. Where a system is not installed at every clinic, this page says so rather than leaving you to assume.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="treatments.html">All Treatments</a>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
-          <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_digital-xrays-main.jpg" alt="A patient in a lead apron held in the head positioner of a panoramic imaging unit while a clinician in blue gloves squares the bite piece against her face." width="675" height="585" loading="eager" decoding="async">
-          </div>
-          <figcaption class="kit-slot__cap"><b>Positioned, not guessed</b><span>The scan starts with the head squared to the arm.</span></figcaption>
-        </figure>
-      </div>
-
       <div class="col col--full">
-        <div class="kit-foot">
-          <p class="kit-micro">How this page is laid out</p>
-          <p class="kit-body readw--wide">Eight stages, one per system or pair of systems, each numbered so you always know where you are and each closing by naming the one that follows. The map is the next band. Read straight through, or jump to the machine you came for and follow the hand-offs from there.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="#s-route"><span>See the eight stages</span></a>
-            <a class="kit-btn kit-btn--ghost" href="#stage-07"><span>Skip to what each clinic has</span></a>
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-imaging-suite.jpg" alt="An imaging suite holding a large cone-beam scanner in pale composite, against a deep navy wall with brushed brass trim and soft cove lighting." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Dental Technology. The eight systems we use.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Diagnostic and treatment systems</p>
+            <p class="foh-hero__lede">Eight named diagnostic and treatment systems, used across every treatment we offer, with 3D CBCT imaging available at all four clinics.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="treatments.html">All Treatments</a>
+            </div>
           </div>
         </div>
       </div>
@@ -314,9 +299,12 @@
 
 <section class="section section--cool" id="s-route" aria-labelledby="h-route" data-rise>
   <div class="container">
+
+    
+    
     <div class="row">
 
-      <div class="col col--span-4">
+      <div class="col col--span-8">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
@@ -332,6 +320,15 @@
         <p class="kit-body readw">The index is plain text and plain links. It works with scripting switched off, it prints, and it is the same spine every treatment page on this site uses.</p>
       </div>
 
+      <div class="col col--span-4">
+        <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
+          <div class="kit-slot__mask kit-slot__mask--frame">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_digital-xrays-main.jpg" alt="A patient in a lead apron held in the head positioner of a panoramic imaging unit while a clinician in blue gloves squares the bite piece against her face." width="675" height="585" loading="eager" decoding="async">
+          </div>
+          <figcaption class="kit-slot__cap"><b>Positioned, not guessed</b><span>The scan starts with the head squared to the arm.</span></figcaption>
+        </figure>
+      </div>
+
       <div class="col col--span-8">
         <ol class="kit-list kit-list--ledger" data-rise>
           <li><span><b>Why a name is worth more than an adjective.</b> What a machine's name commits us to, and what it stops us claiming. <a href="#stage-01">Go to stage 01</a></span></li>
@@ -345,7 +342,15 @@
         </ol>
       </div>
 
-      <div class="col col--full">
+      <div class="col col--span-4">
+        <div class="kit-foot">
+          <p class="kit-micro">How this page is laid out</p>
+          <p class="kit-body readw--wide">Eight stages, one per system or pair of systems, each numbered so you always know where you are and each closing by naming the one that follows. The map is the next band. Read straight through, or jump to the machine you came for and follow the hand-offs from there.</p>
+          <div class="kit-actions kit-actions--tight">
+            <a class="kit-btn kit-btn--ghost" href="#h-route"><span>See the eight stages</span></a>
+            <a class="kit-btn kit-btn--ghost" href="#stage-07"><span>Skip to what each clinic has</span></a>
+          </div>
+        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 01, the argument this whole page rests on: why we publish machine names at all, and what naming them stops us from saying.</p>
@@ -390,8 +395,7 @@
           <figcaption class="kit-slot__cap"><b>Something to point at</b><span>A record two people can look at together.</span></figcaption>
         </figure>
         <div class="kit-truth">
-          <span class="kit-truth__k">The limit that comes with it</span>
-          <p>Only one system on this page is verified as installed at every one of the four sites, and stage 07 states which one rather than implying that every machine sits on every floor. The other seven rows of that table are marked as awaiting the practice's own inventory, and no cell in it is filled in by guesswork from a branch page, a photograph or a treatment listing.</p>
+          <p>Cone beam CT is the one system confirmed as installed at all four clinics. Availability of the other systems at any particular clinic is not stated on this page.</p>
         </div>
       </div>
 
@@ -481,10 +485,6 @@
         </div>
         <p class="kit-lede readw">One records the shape of your teeth. The other records the shape of your face.</p>
         <p class="kit-body readw">Most clinics that scan at all scan only the first. The difference between a set of teeth that is correct on a model and a set of teeth that looks right on you is decided by the second.</p>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Named, not pictured</span>
-          <p>No first-party photograph of either scanner exists anywhere in the asset library this build was given, so this band names them in type and shows nothing. A stock photograph of a similar-looking machine would be a picture of somebody else's equipment presented as ours.</p>
-        </div>
       </div>
 
       <div class="col col--span-8">
@@ -773,10 +773,6 @@
             </tbody>
           </table>
         </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>Per-clinic installation. Only the four-site scope of the cone beam scanner is confirmed from first-party material published by the clinic. Installation of the remaining seven systems has not been confirmed one site at a time, and no cell above may be completed by guesswork from a branch page, a photograph or a treatment listing. Until the owner supplies the inventory, the table ships with the imaging row stated plainly and every other cell marked as awaiting confirmation.</p>
-        </div>
       </div>
 
       <div class="col col--full">
@@ -814,7 +810,7 @@
         </div>
         <p class="kit-lede readw">A scanner produces a file. A laser produces a cut. What either is worth depends entirely on who reads the file and what plan is built from it, and that is the half of this page no equipment list can show you.</p>
         <p class="kit-body readw">The systems above are operated by 31 specialists across four Metro Manila clinics, and your scan is read by the one whose field your case belongs to. The implant plan is read by an oral surgeon. The canal is read by an endodontist. The bite is read by a prosthodontist. One scan, read by the right person, is the whole argument for keeping them in the same practice.</p>
-        <p class="kit-body readw">Your first consultation is free. It ends with a written quote, and the plan behind it is built on measured data rather than estimation.</p>
+        <p class="kit-body readw">Your first consultation is free. It ends with a written quote, and the plan behind it is built on measured data rather than estimation. Confirm current consultation terms with the clinic before you book.</p>
         <div class="kit-inline">
           <p>Bring the question you came to this page with. It will be answered against your own scan rather than against a list of machines.</p>
           <div class="kit-inline__acts">
@@ -831,10 +827,6 @@
           </div>
           <figcaption class="kit-slot__cap"><b>The half that is not a machine</b><span>Someone has to read what the machine produced.</span></figcaption>
         </figure>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before this page is published.</p>
-        </div>
       </div>
 
       <div class="col col--full">

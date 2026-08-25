@@ -11,10 +11,13 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400..700&display=swap">
-<link rel="stylesheet" href="design-system/tokens.css?v=ce620247">
-  <link rel="stylesheet" href="design-system/chrome.css?v=1899da7c">
-  <link rel="stylesheet" href="design-system/structural.css?v=9f9ddf66">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&amp;family=Montserrat:ital,wght@0,300..700;1,300..700&amp;display=swap">
+<link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=ce620247">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=1899da7c">
+  <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=130bcea3">
+  <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=747d7a0a">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
 </head>
@@ -263,41 +266,54 @@
 
 
 
-<section class="section section--paper kit-hero" id="s-start" aria-labelledby="h-start" data-rise>
+<section class="section surface-dark kit-hero foh-hero" id="s-start" aria-labelledby="h-start" data-surface="dark" data-rise>
+  <div class="container">
+    <div class="row">
+      <div class="col col--full">
+        <div class="foh-hero__stage">
+          <figure class="foh-hero__band">
+            <img class="foh-hero__img" src="assets/gen-hero-sterile-field.jpg" alt="A prepared sterile field: crisply folded bone-white drapes and a brushed brass tray of covered instruments under soft overhead light." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
+            <div class="foh-hero__inner">
+              <h1 class="foh-hero__title" id="h-start">Oral Surgery Procedures in the Philippines.</h1>
+            </div>
+          </figure>
+          <div class="foh-hero__lockup">
+            <p class="foh-hero__eyebrow">Oral surgery, at four Metro Manila clinics</p>
+            <div class="kit-tags">
+              <span class="kit-tag kit-tag--accent kit-tab">From ₱6,000. Indicative figure, not an Elevate price</span>
+            </div>
+            <p class="foh-hero__lede">Oral surgery covers surgical extractions and the procedures around them, planned on a 3D CBCT scan.</p>
+            <div class="kit-actions">
+              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
+              <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section section--paper" id="s-start-b" data-rise>
   <div class="container">
     <div class="row">
 
-      <div class="col col--full">
+      <div class="col col--span-7">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">Start</span>
-            <div><span class="kit-eyebrow">Oral surgery, at four Metro Manila clinics</span></div>
           </div>
         </div>
-        <h1 id="h-start">Oral Surgery Procedures in the Philippines. From ₱6,000, an indicative market figure for surgery of this kind rather than an Elevate quote.</h1>
-      </div>
-
-      <div class="col col--span-7">
-        <div class="kit-tags">
-          <span class="kit-tag kit-tag--accent kit-tab">Indicative figure, not an Elevate price</span>
-        </div>
-        <p class="kit-lede readw">Oral surgery covers surgical extractions and the procedures around them, planned on a 3D CBCT scan and carried out with ultrasonic instrumentation, using a local anesthetic.</p>
-        <p class="kit-body readw">The first consultation is free, and you leave it knowing what your own imaging actually reveals and what your case will cost.</p>
-        <div class="kit-actions">
-          <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-          <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
-        </div>
-        <div class="kit-truth">
-          <span class="kit-truth__k">Owner data, held</span>
-          <p>The free initial consultation is recorded in the fact registry as agent derived, D-OFFER-009, not client confirmed. Confirm the offer and any conditions attached to it, or strike the sentence, before this page is published.</p>
-        </div>
+        <p class="kit-body readw">The first consultation is free, and you leave it knowing what your own imaging actually reveals and what your case will cost. Confirm current consultation terms with the clinic before you book.</p>
       </div>
 
       <div class="col col--span-5">
         <figure class="kit-slot" data-rise style="box-shadow: var(--ds-shadow-lift);">
           <div class="kit-slot__mask kit-slot__mask--frame">
-            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_oral-surgery-main.jpg" alt="A masked clinician in a surgical gown and glasses looking down at work, lit from above by an operating light against a dark background." width="675" height="585" loading="eager" decoding="async">
+            <img class="kit-slot__img" src="assets/elevatedental.ph_wp-content_uploads_2026_04_oral-surgery-main.jpg" alt="A masked clinician in a surgical gown and glasses looking down at work, lit from above by an operating light against a dark background." width="675" height="585" loading="lazy" decoding="async">
           </div>
           <figcaption class="kit-slot__cap"><b>The operator</b><span>On this page it is the surgeon, not an appliance, that you are choosing.</span></figcaption>
         </figure>
@@ -715,10 +731,6 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-truth">
-          <span class="kit-truth__k">Build data, held</span>
-          <p>Named clinicians. The copy leaves the individual oral surgery specialist unnamed, because per-discipline names were not supplied to the copy stage. Pull them from the published roster with discipline and credentials and link each to their profile. Which specialists operate at which clinic is recorded as blocked in client-rules.json, so do not tie a named clinician to a named branch on this page.</p>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 07, the three named instruments, and one thing this practice does not offer.</p>
@@ -830,8 +842,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">Owner receipt, pending</span>
-          <p>The real figure. No Elevate treatment price has been supplied, so every peso amount on this page is representative and anchored to published market ranges. Each procedure is quoted after a clinical assessment.</p>
+          <p>Every peso amount on this page is representative and anchored to published market ranges - it is not a price quoted by Elevate Dental. Each procedure is quoted after a clinical assessment.</p>
         </div>
       </div>
 
@@ -844,6 +855,10 @@
         </ul>
         <p class="kit-body readw--wide">The exact figure is confirmed at consultation, after the scan has been read, and it is given to you in writing before the procedure is booked.</p>
         <p class="kit-accentline">The written figure states whether imaging, medication and the review appointment are included.</p>
+      </div>
+
+      
+      <div class="col col--span-7">
         <div class="kit-foot">
           <p class="kit-micro">How you pay</p>
           <p class="kit-quote kit-quote--display readw">Elevate Dental does not accept HMO or dental insurance. All treatment is self-pay.</p>
@@ -858,7 +873,7 @@
         </div>
       </div>
 
-      <div class="col col--full">
+      <div class="col col--span-5">
         <div class="kit-foot">
           <p class="kit-micro">Next</p>
           <p class="kit-body readw--wide">Stage 09, the last one: the risks named in full, the eight questions people actually ask, and what to do in the days after.</p>
@@ -890,8 +905,7 @@
           </div>
         </div>
         <div class="kit-truth">
-          <span class="kit-truth__k">The risks, stated rather than summarised</span>
-          <p>Every surgical procedure carries risk, and yours is explained before you consent rather than after. For lower wisdom teeth the specific ones are temporary or, less commonly, lasting altered sensation in the lip, chin or tongue if the nerve is disturbed, along with bleeding, infection, dry socket, and sinus communication for upper molars. The scan exists precisely to quantify the nerve risk in your case in advance rather than discovering it during the procedure. This paragraph is not inside a collapsed panel, because a risk you have to click to find is a risk that has been hidden.</p>
+          <p>Every surgical procedure carries risk, and yours is explained before you consent rather than after. For lower wisdom teeth the specific ones are temporary or, less commonly, lasting altered sensation in the lip, chin or tongue if the nerve is disturbed, along with bleeding, infection, dry socket, and sinus communication for upper molars. The scan exists precisely to quantify the nerve risk in your case in advance rather than discovering it during the procedure.</p>
         </div>
       </div>
 
@@ -955,17 +969,6 @@
             <a class="kit-btn kit-btn--secondary" href="contact.html" data-page="contact.html">Ask about this treatment</a>
             <a class="kit-btn kit-btn--ghost" href="oral-surgery.html" data-page="oral-surgery.html"><span>Oral Surgery</span></a>
           </div>
-        </div>
-      </div>
-
-      <div class="col col--span-5">
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Consent, not in hand. Designed and not deployed.</span>
-          <p>Signed patient consent. Surgical cases are documented here with pre-operative scans, intra-operative records and healing reviews, and none of that is published on this page. Publishing an identifiable patient's imaging or clinical photographs requires documented written consent and it is not in hand, which is pre-launch blocker B-2. When consent exists this stage can carry real cases: what the scan showed, what approach was chosen and why, and how the site healed.</p>
-        </div>
-        <div class="kit-truth" data-rise>
-          <span class="kit-truth__k">Build note</span>
-          <p>The word free in the sentence beside this note is subject to the entry-offer confirmation flagged at the start of this route. Until that receipt lands, this stage states what the consultation produces and does not price it.</p>
         </div>
       </div>
 
