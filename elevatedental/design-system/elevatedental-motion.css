@@ -551,18 +551,15 @@ a:focus-visible, button:focus-visible, .kit-btn:focus-visible, .kit-card:focus-w
 
 /* every band's eyebrow gets a short brass tick that draws in front of it */
 .kit-eyebrow{ position: relative; }
-.kit-open__head .kit-eyebrow::before{
-  content: "";
-  display: inline-block;
-  width: 18px; height: 1.5px;
-  margin-right: .6em;
-  vertical-align: .32em;
-  background: var(--ds-accent, #876C33);
-  transform: scaleX(0); transform-origin: 0 50%;
-  animation: mo-draw 700ms var(--mo-out) 120ms both;
-}
+/* REMOVED 2026-08-26 on owner instruction: "remove all the em-dashes in each section
+   titles". It was never a character - this site contains zero em and zero en dashes, they
+   are hard banned. It was THIS: an 18px brass bar drawn in front of every band eyebrow on
+   all 373 of them, added by me earlier in this same layer. Deleted at source rather than
+   overridden in foh.css, because motion.css loads AFTER foh.css and its display value won.
+   The animation hooks below that referenced it are neutralised with it. */
+.kit-open__head .kit-eyebrow::before{ content: none; }
 @supports (animation-timeline: view()){
-  .kit-open__head .kit-eyebrow::before{ animation-timeline: view(); animation-range: entry 0% cover 16%; }
+  /* eyebrow bar removed - nothing to animate */
 }
 
 .kit-statband{ transition: border-color var(--mo-base) var(--mo-ease); }
@@ -595,7 +592,7 @@ a:focus-visible, button:focus-visible, .kit-btn:focus-visible, .kit-card:focus-w
      the band pseudo-elements are spent on headline legibility (see section 1). */
   .foh-hero__stage::after,
   .kit-open__rule > *,
-  .kit-open__head .kit-eyebrow::before{ transform: scaleX(1) !important; }
+  /* eyebrow bar removed */
   .kit-quote--display::before{ transform: scaleY(1) !important; }
   .foh-hero__img{ translate: none !important; }
   /* rules whose resting state is genuinely hidden stay hidden: these are hover

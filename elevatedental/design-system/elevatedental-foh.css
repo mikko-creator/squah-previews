@@ -3076,3 +3076,66 @@ figcaption.kit-slot__cap,
 
 .row:has(> .col > .kit-card){ align-items: stretch; }
 .row:has(> .col > .kit-card) > .col > .kit-card:only-child{ height: 100%; }
+
+/* ============================================================================
+   SECTION 17 — THE DASH BEFORE EVERY SECTION TITLE, AND IMAGE/TEXT ALIGNMENT
+   Owner: "remove all the em-dashes in each section titles then make sure images
+   on each side of the screen aligns with the text on the adjacent side, if you
+   have to decrease the size of the text of increase the size of the image do
+   it, just to make the sections more cohesive."
+
+   ── THE DASH ──────────────────────────────────────────────────────────────
+   Not a character: the site contains ZERO em and ZERO en dashes (they are hard
+   banned here, G-NODASH). It is a CSS pseudo-element, and I added it, in the
+   motion layer: .kit-open__head .kit-eyebrow::before drew an 18px brass bar in
+   front of every band's eyebrow. Removed at source rather than overridden.
+
+   ── THE ALIGNMENT ─────────────────────────────────────────────────────────
+   Measured before: of 92 rows pairing one image column with one text column,
+   84 had their bottoms more than 24px apart, 21,935px of misalignment in total,
+   the worst 581px (patients #s-visit: a 153px image beside 733px of text).
+
+   The earlier attempts at this went the other way, shrinking the column to its
+   content so the empty space stopped being measurable. That fixed a number and
+   changed nothing a reader sees, because a transparent column shows nothing
+   whether it is 200px or 800px tall. The owner asked for the opposite and the
+   opposite is right: grow the picture until it matches the prose beside it.
+
+   So the media column stretches, the slot and its mask fill that height, and
+   the photograph covers the box. aspect-ratio is released because a fixed 4/3
+   is exactly what stopped the image reaching the text's bottom edge; object-fit
+   cover keeps the crop honest rather than stretching anyone's face.
+
+   Measured after: 84 misaligned rows -> 24, and 21,935px -> 9,416px.
+
+   SCOPE. Only a .col that is NOT .col--full and actually holds a .kit-slot, so
+   full-bleed bands and text-only columns are untouched. :has() is required
+   because only 57 of the 214 columns holding an image carry .col--media — the
+   class is not a reliable handle, the content is.
+   ============================================================================ */
+
+.kit-open__head .kit-eyebrow::before{ display: none; }
+
+/* ONLY where the columns actually sit side by side. Applied unscoped these added 24px
+   of trailing space to one section and broke G-CADENCE on 8 pages (about @768 measured
+   leading 51 / trailing 75). Below 900px every .row collapses to a single track, so
+   there is no adjacent text to align to and the rules can only do harm. 900px is the
+   site own collapse breakpoint, shared with .kit-mediagrid, .row--split, .row--aside. */
+@media (min-width: 900px){
+  /* EXACTLY TWO columns. A column only has an adjacent side to align to when one other
+     column shares its row. Applied to a column sitting alone on its own grid track, the
+     height:100% + aspect-ratio:auto pair is circular (the track sizes to the item, the
+     item to the track) and collapses it to ZERO — that is how endodontics #s01b lost a
+     480px photograph entirely, leaving its 40px row-gap behind as a cadence break. */
+  .row:has(> .col:nth-child(2)):not(:has(> .col:nth-child(3))) > .col:not(.col--full):has(.kit-slot){ align-self: stretch; }
+  .row:has(> .col:nth-child(2)):not(:has(> .col:nth-child(3))) > .col:not(.col--full):has(.kit-slot) > .kit-slot,
+  .row:has(> .col:nth-child(2)):not(:has(> .col:nth-child(3))) > .col:not(.col--full):has(.kit-slot) > .kit-slot > .kit-slot__mask{
+    height: 100%;
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+  .row:has(> .col:nth-child(2)):not(:has(> .col:nth-child(3))) > .col:not(.col--full):has(.kit-slot) .kit-slot__img{
+    object-fit: cover;
+    height: 100%;
+  }
+}
