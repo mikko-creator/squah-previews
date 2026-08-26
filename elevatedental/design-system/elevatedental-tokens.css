@@ -57,8 +57,8 @@
   --ds-r-pill: 999px;
 
   /* -- IDENTITY: type ----------------------------------------------------- */
-  --ds-font-display: "Playfair Display","Iowan Old Style",Georgia,"Times New Roman",serif;
-  --ds-font-body: "Montserrat","Helvetica Neue",Arial,sans-serif;
+  --ds-font-display: "Fraunces","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --ds-font-body: "Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
   --ds-font-mono: ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",monospace;
 
   /* -- IDENTITY: space + measure ------------------------------------------ */

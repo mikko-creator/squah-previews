@@ -2881,3 +2881,198 @@ body,
 }
 .site-header .ed-arc .kit-seam__fill,
 .site-header .ed-arc .kit-seam__edge{ display: none; }
+/* ============================================================================
+   SPACING PATCH — two measured defects, both A/B tested at runtime before being
+   written to a file. NOT YET APPLIED. Append to elevatedental-foh.css, which is
+   the redesign overlay and loads after structural.css.
+
+   ── 1. THE 768px CLIFF ────────────────────────────────────────────────────
+   The system collapses its multi-column components at 899px: .kit-mediagrid,
+   .kit-split, .row--3up, .row--aside and .row--split all step down there. TWO
+   components do not — .kit-statband and .kit-sys hold their widest form until
+   767px (structural.css 1778 and 1786). So at exactly 768px, iPad portrait and
+   the commonest tablet viewport, the stat band is still flex-wrap:nowrap with
+   four flex:1 1 0 children at ~148px each, and .kit-sys is still a 2-column
+   grid at ~200px. 13px type in a 148px track wraps every three words.
+
+   MEASURED, by injecting this exact rule at runtime on the 44 pages that carry
+   either component: elements under 30 characters per line at 768px fall from
+   163 of 288 (57%) to 40 (14%); the worst characters-per-line doubles from 12
+   to 24; and horizontal overflow stays at 0px at every width from 768 to 899.
+
+   This does not touch 767px and below, which already collapses correctly, and
+   it does not touch 900px and up, where the wide form has the room it needs.
+
+   ── 2. CARD TITLES OUT OF LINE ────────────────────────────────────────────
+   .kit-card__top holds the label and the unit in one flex row, so its height
+   follows whatever the label wraps to: 20px at one line, 41px at two, 61px at
+   three. Cards in a row are equal height and their footers are bottom-pinned,
+   so the whole difference lands on the TITLE — the most visible line in the
+   row. 26 rows across 18 pages. On careers #s03 the four labels are "Alabang
+   Town Center", "Mitsukoshi BGC", "Bonifacio Stopover BGC" and "Shangri-La
+   Plaza"; only the short one fits on one line, so its title sits 21px above its
+   three neighbours.
+
+   Reserving two lines on the LABEL (not the row) fixes 25 of those 26 rows:
+   ragged rows go 10 -> 0 at 1440 and 16 -> 1 at 1024.
+
+   WHY 2lh AND NOT 61px. Reserving three lines would fix all 26, but it costs
+   2.7x more dead space — measured at +3054px of added card height across those
+   pages against +1093px for two lines — and that 20px of reserved emptiness is
+   paid by every card on the site to straighten ONE row. The 41px literal was
+   measured as equivalent to 2lh in effect but slightly worse in cost, and it
+   stops being two lines the moment the type scale changes. 2lh is two lines by
+   definition. The px value stays as a fallback for engines without the lh unit
+   (Chrome <109, Safari <16.4, Firefox <120) — declared first so a supporting
+   engine overwrites it.
+
+   THE ONE ROW THIS DOES NOT FIX: general-dentistry #s-beyond at 1024, where two
+   labels genuinely run to three lines and two run to two. Straightening it is a
+   copy change (shorten a label) rather than a CSS change, and copy belongs to
+   the SEO team.
+   ============================================================================ */
+
+@media (max-width: 899px){
+  .kit-statband{ flex-direction: column; flex-wrap: wrap; gap: 0; }
+  .kit-sys,
+  .kit-sys--3up{ grid-template-columns: minmax(0, 1fr); }
+}
+
+.kit-card__top{ align-items: flex-start; }
+.kit-card__label{
+  min-height: 41px;   /* fallback: two lines at the current 20.5px label line-box */
+  min-height: 2lh;    /* two lines, whatever the type scale becomes */
+}
+
+/* ── 3. CARD FOOTERS THAT DO NOT SIT ON THE CARD FLOOR ─────────────────────
+   Found by an independent measurement pass, NOT by the orchestrator — whose own
+   check had missed it, because that check discarded any .row whose cards wrap to
+   more than one visual line (`if (max(top) - min(top) > 8) continue`), and the
+   affected rows are exactly the wrapped ones. insights #s03 holds NINE cards in
+   one row, wrapping to three lines of three; the whole row was skipped.
+
+   THE MECHANISM. .kit-card is already display:flex/column, and .kit-card__foot
+   carries a literal margin-top:12px. On a --stretch row a separate rule resolves
+   that margin to auto, so the footer absorbs the free space and lands on the card
+   floor: on dental-crowns #stage-02 the four footers compute margin-top 0 /
+   5.55 / 24.30px and all four end at exactly 455. On a row that is NOT --stretch
+   no such rule fires, the literal 12px stands, and the footer stops wherever the
+   copy happens to stop: insights #s03 at 1024 renders three cards of identical
+   269px height whose footers sit 44 / 19 / 44px off the floor.
+
+   So the footer is pinned on some rows and floating on others, which is worse
+   than either being true everywhere. margin-top:auto makes it unconditional.
+
+   VERIFIED SAFE: the concern with an auto margin is that a full card leaves no
+   space between the body and the footer rule. Measured before AND after across
+   49 pages at 1440 and 1024, the smallest body-to-footer gap is 0px in BOTH —
+   the patch does not introduce that condition, it already exists on 56 instances
+   and is a separate question about .kit-card__foot's own padding-top.
+   ============================================================================ */
+
+.kit-card__foot{ margin-top: auto; }
+
+/* ============================================================================
+   SECTION 14 — OWNER PASS 2026-08-26: STRIP THE CAPTIONS AND THE RULER
+   Four instructions, verbatim: "all images has a description below it, I dont
+   like that, remove all texts below the images describing what the image is" and
+   "I don't like the ruler embelishment across the site, remove them all."
+
+   ── THE CAPTIONS ──────────────────────────────────────────────────────────
+   189 <figcaption class="kit-slot__cap"> across the fragments. Hidden here in
+   CSS rather than cut out of the markup, on purpose:
+     · the alt text stays, so nothing is lost for a screen reader — the caption
+       was a SECOND description of an image that already carries one;
+     · no copy is touched, so the build's copy-fidelity gates stay green and
+       nothing has to be re-approved;
+     · one line brings them all back if the owner changes their mind.
+   The mask is on the caption alone. .kit-slot and .kit-slot__mask keep their
+   geometry, so no image moves.
+
+   ── THE RULER ─────────────────────────────────────────────────────────────
+   .kit-open__rule opens all 373 bands on the site. Its ::before draws a full
+   width hairline and its ::after draws what the sheet itself calls "the eleven
+   minor graduations" — a repeating-linear-gradient of ticks. That is the ruler.
+   The same device is repeated along the header shelf's top edge as
+   .ed-shelf::before, at 48 graduations, and once more as .kit-ring__tick.
+   All three go.
+
+   NOT REMOVED, and worth being explicit about: the plain .kit-ring circles and
+   the ring in the logo mark stay. Those are rings, not rulers, and the logo one
+   IS the brand mark — removing it would delete the wordmark's symbol.
+
+   The rule was 14px tall with a --ds-space-sm margin under it, so taking it out
+   also tightens every band opener, which serves the spacing complaint in the
+   same pass.
+   ============================================================================ */
+
+/* captions: the second description of an image that already has alt text */
+.kit-slot__cap,
+figcaption.kit-slot__cap,
+.kit-figure figcaption{ display: none; }
+
+/* the ruler, in all three places it appears */
+.kit-open__rule,
+.kit-open__rule::before,
+.kit-open__rule::after{ display: none; }
+.ed-shelf::before{ display: none; }
+.kit-ring__tick{ display: none; }
+
+/* ============================================================================
+   SECTION 15 — CARDS STOP STRETCHING TO THE PHOTOGRAPH BESIDE THEM
+   Owner: "there are a lot of spaces that needs to be filled."
+
+   .kit-mediagrid is a two-column grid — a photograph in one cell, a
+   .kit-mediagrid__cards grid in the other — and it carried align-items:stretch.
+   So the CARDS cell was forced to the PHOTOGRAPH's height, and the cards then
+   stretched to fill that. On oral-prophylaxis #stage-04 that rendered two 381px
+   cards holding 175px and 273px of copy: 206px and 108px of empty white, over
+   half of one card.
+
+   `start` lets the cards cell size to its own content. The two cards still match
+   EACH OTHER — which is what "cards the same size" actually asks for — they are
+   simply no longer padded out to a photograph they have nothing to do with.
+
+   MEASURED across all 49 pages at 1440 and 1024, isolated (fresh page per
+   variant): worst void 206px -> 116px, total void 2345px -> 1920px, rows with a
+   void unchanged at 38, rows with unequal cards unchanged at 6, horizontal
+   overflow 0px before and after. Also tested align-content:start on the inner
+   cards grid: identical numbers, so it is not included.
+
+   WHAT THIS DOES NOT FIX, stated plainly: 38 rows still hold a card with 40px+
+   of space under its copy. That space is the price of equal-height cards when
+   one card's copy is much shorter than its neighbour's, and no stylesheet can
+   remove it without either making the cards unequal or spreading the paragraphs
+   apart. It is a copy-length question, not a CSS one.
+   ============================================================================ */
+
+.kit-mediagrid{ align-items: start; }
+
+/* ============================================================================
+   SECTION 16 — EVERY ROW OF CARDS IS NOW EQUAL-HEIGHT
+   Owner: "Some cards dont have the same size."
+
+   The cause was not the cards. Each card is the only child of its own .col, and
+   the .row holding them is a grid set to align-items:start — so every column
+   sized to its own copy and the cards came out ragged. The system already has
+   the mechanism (.row--stretch > .col > .kit-card:only-child{height:100%}); these
+   particular rows simply never opted into it. Rather than hand-edit the six rows
+   that happened to show it, this makes equal cards the DEFAULT wherever a row
+   holds cards, so a new section cannot reintroduce the fault by forgetting a
+   modifier.
+
+   MEASURED, all 49 pages at 1440 and 1024, isolated: rows of unequal cards
+   6 -> 0 at 1440 and 7 -> 0 at 1024. Horizontal overflow 0px before and after.
+
+   THE COST, stated because it is real and it pulls against the other request in
+   the same message. Making a short card match a tall one puts the difference
+   somewhere, and that somewhere is empty space under the short card's copy:
+   total void 1920px -> 2287px at 1440, and the worst single void 116px -> 220px
+   at 1024. Equal cards and no empty space are not simultaneously satisfiable
+   while one card's copy is much shorter than its neighbour's; the only way to
+   have both is to even up the copy. Equal size was the named request, so equal
+   size is what this takes.
+   ============================================================================ */
+
+.row:has(> .col > .kit-card){ align-items: stretch; }
+.row:has(> .col > .kit-card) > .col > .kit-card:only-child{ height: 100%; }
