@@ -333,23 +333,6 @@
       </div>
 
       <div class="col col--full">
-        <div class="kit-card kit-card--tint kit-card--pad" data-rise>
-          <div class="kit-card__top">
-            <span class="kit-card__label">Four pinned slots, reserved</span>
-            <svg class="kit-ring" width="28" height="28" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-              <circle class="kit-ring__track" cx="50" cy="50" r="38" stroke-width="3"/>
-              <line class="kit-ring__index" x1="50" y1="12" x2="50" y2="33" stroke-width="5"/>
-            </svg>
-          </div>
-          <p class="kit-card__title">What each pinned card will carry, once the four names land.</p>
-          <ol class="kit-list kit-list--ledger">
-            <li><span><b>A photograph.</b> The same roster crop every other card on this page uses, so the pinned set reads as part of the bench rather than a separate advertisement.</span></li>
-            <li><span><b>The clinician's name.</b> Exactly as it is published on their own profile.</span></li>
-            <li><span><b>Credentials, as published.</b> Copied from the profile, never expanded, abbreviated or re-ordered by the page.</span></li>
-            <li><span><b>The field they practice in.</b> The same value the roster card carries, so a pinned clinician and a listed clinician are never described differently.</span></li>
-            <li><span><b>One sentence approved by that clinician.</b> Which is the only thing a pinned card holds that a roster card does not.</span></li>
-          </ol>
-        </div>
         <div class="kit-foot">
           <p class="kit-micro">Next, stop 03</p>
           <p class="kit-body readw--wide">Either way, the next stop is the same one: the controls, and the wall they act on. The controls sit directly above the cards rather than in a separate band, so nothing you set is out of sight of what it changes.</p>
@@ -383,37 +366,28 @@
         <p class="kit-lede readw--wide">Every published profile appears below. The list holds 31 specialists, and the count on this page and the count on the profile set are the same number by design: this page shows the bench, all of it, without a shortlist standing in front of it.</p>
       </div>
 
-      <div class="col col--span-4">
+      <div class="col col--span-6">
         <label class="kit-field" for="ed-find">
           <span class="kit-label">Find by name</span>
           <input class="kit-input" type="search" id="ed-find" name="ed-find" placeholder="Type a surname" autocomplete="off">
-          <span class="kit-help">Keys on the name printed on the card. Live.</span>
+          <span class="kit-help">Searches the names printed on the cards below.</span>
         </label>
       </div>
 
-      <div class="col col--span-4">
+      <div class="col col--span-6">
         <label class="kit-field" for="ed-sort">
           <span class="kit-label">Sort</span>
           <select class="kit-select" id="ed-sort" name="ed-sort">
             <option value="az" selected>Name, A to Z</option>
             <option value="za">Name, Z to A</option>
           </select>
-          <span class="kit-help">Keys on the surname the card carries. Live.</span>
+          <span class="kit-help">Orders the cards by surname.</span>
         </label>
       </div>
 
-      <div class="col col--span-4">
-        <label class="kit-field" for="ed-clinic">
-          <span class="kit-label">Clinic</span>
-          <select class="kit-select" id="ed-clinic" name="ed-clinic" disabled aria-describedby="ed-clinic-help">
-            <option>Clinic filter available once schedules are confirmed</option>
-          </select>
-          <span class="kit-help" id="ed-clinic-help">Ships disabled. Which clinician practises at which clinic is not confirmed.</span>
-        </label>
-      </div>
 
       <div class="col col--full">
-        <p class="kit-note readw--wide">Two of the four controls specified for this page are live today, and the count above the wall updates as you use them. The clinic control ships disabled because the per clinic schedule has not been supplied. The control that keys on a clinician's field is not here at all: no card carries a field value until the profile sync runs, and a control that keys on a value the rows do not carry is a broken control dressed as a working one. The nine hubs are set out at the last stop instead, where they are honestly routes rather than filters.</p>
+        <p class="kit-note readw--wide">Search by surname, or sort the list from A to Z. The count below updates as you type, so you can see how many clinicians match before you scroll through them. To find out which days a particular specialist works at a particular clinic, call that clinic directly and ask: the four direct lines are at the foot of every page, and the front desk answers them. If you would rather start from a field of dentistry than from a name, the nine discipline hubs are set out at the end of this page. Each card below shows the clinician's photograph and the name their profile is published under, and the list opens in alphabetical order by surname. Every clinician on the published roster appears in it, and the order changes only when you change the sort.</p>
         <div class="kit-actions kit-actions--tight">
           <p class="kit-status kit-tab" aria-live="polite"><span class="kit-status__dot" aria-hidden="true"></span><b id="ed-shown">26</b> of <b id="ed-total">26</b> cards shown</p>
           <button class="kit-btn kit-btn--secondary" type="button" id="ed-clear">Clear the search</button>
@@ -716,7 +690,6 @@
       <div class="col col--full" id="ed-roster-foot">
         <div class="kit-foot">
           <p class="kit-micro">Next, stop 04</p>
-          <p class="kit-body readw--wide">The card above is deliberately reduced to the two things the roster set carries today, the photograph and the published name. The next stop opens one card up and names the other four values, says which control each can drive, and marks the ones that are not bound.</p>
           <div class="kit-actions kit-actions--tight">
             <a class="kit-btn kit-btn--ghost" href="#s04"><span>Open one card up</span></a>
           </div>
@@ -744,49 +717,8 @@
           </div>
         </div>
         <p class="kit-status kit-tab"><span class="kit-status__dot" aria-hidden="true"></span>You are at stop 04 of 05</p>
-        <p class="kit-lede readw--wide">The card is one template, stamped once per clinician, with the filter values carried on the card itself. That is what makes the toolbar above filter real content rather than decorate the page.</p>
       </div>
 
-      <div class="col col--span-6">
-        <div class="kit-sys kit-sys--3up" data-rise>
-          <div class="kit-sys__unit">
-            <span class="kit-sys__no">Value 01</span>
-            <p class="kit-sys__name">Photograph</p>
-            <p class="kit-sys__note">The roster crop, 460 by 575, applied to every clinician so the bench reads as one bench.</p>
-            <span class="kit-sys__where"><i aria-hidden="true"></i>On the card now</span>
-          </div>
-          <div class="kit-sys__unit">
-            <span class="kit-sys__no">Value 02</span>
-            <p class="kit-sys__name">Name</p>
-            <p class="kit-sys__note">Published exactly as the profile publishes it. This is the key the search and the sort both read.</p>
-            <span class="kit-sys__where"><i aria-hidden="true"></i>On the card now</span>
-          </div>
-          <div class="kit-sys__unit">
-            <span class="kit-sys__no">Value 03</span>
-            <p class="kit-sys__name">Link to the profile</p>
-            <p class="kit-sys__note">One destination per card. The per clinician profile pages are deferred in this scope, so the name ships as plain text rather than as a link back to this page.</p>
-            <span class="kit-sys__where"><i aria-hidden="true"></i>Held by the owner</span>
-          </div>
-          <div class="kit-sys__unit">
-            <span class="kit-sys__no">Value 04</span>
-            <p class="kit-sys__name">Credentials</p>
-            <p class="kit-sys__note">Copied from the profile, never expanded or re-ordered by the page. Two are published today; the rest bind at build.</p>
-            <span class="kit-sys__where"><i aria-hidden="true"></i>Binds at build</span>
-          </div>
-          <div class="kit-sys__unit">
-            <span class="kit-sys__no">Value 05</span>
-            <p class="kit-sys__name">Field practised</p>
-            <p class="kit-sys__note">The value a field control would key on. Until it binds, the nine hubs are offered as routes at the last stop instead.</p>
-            <span class="kit-sys__where"><i aria-hidden="true"></i>Binds at build</span>
-          </div>
-          <div class="kit-sys__unit">
-            <span class="kit-sys__no">Value 06</span>
-            <p class="kit-sys__name">Clinic</p>
-            <p class="kit-sys__note">Which clinician practises where is not confirmed, so the card omits the row rather than guessing at it.</p>
-            <span class="kit-sys__where"><i aria-hidden="true"></i>Held by the owner</span>
-          </div>
-        </div>
-      </div>
 
       <div class="col col--span-6 col--media">
         <figure class="kit-slot" data-rise>
@@ -798,7 +730,7 @@
       </div>
 
       <div class="col col--full">
-        <p class="kit-micro">What the profile adds, once those pages are published</p>
+        <p class="kit-micro">What the profile adds</p>
         <ol class="kit-list kit-list--ledger">
           <li><span><b>Training.</b> Where the clinician qualified and what they went on to study, which is the part of a specialist claim that is checkable rather than asserted.</span></li>
           <li><span><b>The treatments that clinician performs.</b> Named, so you can match your own case to a person rather than to a department.</span></li>
@@ -807,7 +739,6 @@
         <p class="kit-body readw--wide">Read it before you book. A specialist page that tells you nothing beyond a name is not doing its job, and neither is a roster you cannot narrow.</p>
         <div class="kit-foot">
           <p class="kit-micro">Next, stop 05</p>
-          <p class="kit-body readw--wide">Two of the six values above are not bound yet, which means a search can come back with nobody in it. The last stop is what happens then.</p>
           <div class="kit-actions kit-actions--tight">
             <a class="kit-btn kit-btn--ghost" href="#s05"><span>Where to go if nobody matches</span></a>
           </div>
