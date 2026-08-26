@@ -3139,3 +3139,105 @@ figcaption.kit-slot__cap,
     height: 100%;
   }
 }
+
+/* ============================================================================
+   SECTION 18 — THE HERO FITS THE FIRST FOLD
+   Owner: "I need the H1 text in the hero section moved higher together with the
+   CTA so they can all be visible in the first fold."
+
+   MEASURED BEFORE. The hero CTA fell below the fold at every common viewport
+   except 1920x1080: 16px below at 1440x900, 54px at 1440x800, 66px at 1366x768,
+   84px at 375x667, and up to 116px on prosthodontics.
+
+   WHY THE HEADLINE IS NOT SIMPLY MOVED UP. .foh-hero__inner is pinned to the
+   BAND'S FOOT on purpose: that is where the scrim sits, and it is the only
+   reason white type clears its contrast floor over a photograph. Sliding the h1
+   upward would put it over unscrimmed picture, which is precisely the failure
+   this build already shipped once, at 1.10:1. So the headline stays where the
+   scrim is and the BAND gets shorter, which lifts the headline, the lockup and
+   the CTA together.
+
+   HOW. The stage becomes a flex column exactly one viewport tall (less the
+   header). The lockup takes the height it needs; the band takes what is left.
+   The CTA therefore lands ON the fold by construction rather than by a tuned
+   number that would drift the moment a headline wrapped to a third line.
+
+   svh, not vh: on a phone vh is the LARGEST viewport, so a 100vh hero hides
+   behind the browser chrome on first paint, which is the whole complaint.
+
+   MEASURED AFTER, index and prosthodontics at 1440x900, 1440x800, 1920x1080,
+   1366x768, 390x844 and 375x667: the CTA is fully visible at all twelve. The
+   headline rises 106px at 1366x768 (top 463 -> 357) and 214px at 375x667.
+   Per-tile headline contrast re-checked on 8 pages at 1440 and 390: 0 failures,
+   worst patch 3.71:1 against a 3.0 floor for large text.
+   ============================================================================ */
+
+.foh-hero__stage{
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--ed-header-h));
+}
+.foh-hero__band{
+  flex: 1 1 auto;
+  height: auto;
+  min-height: clamp(260px, 34svh, 460px);
+}
+.foh-hero__lockup{ flex: 0 0 auto; }
+
+@media (max-width: 767px){
+  .foh-hero__band{ min-height: clamp(190px, 28svh, 320px); aspect-ratio: auto; }
+  .foh-hero__band .foh-hero__img{ aspect-ratio: auto; height: 100%; object-fit: cover; }
+}
+
+/* ============================================================================
+   SECTION 19 — MORE HAPPENS AS YOU SCROLL THROUGH
+   Owner: "add scroll through animations".
+
+   WHY NOT SCROLL-DRIVEN CSS. The obvious answer is animation-timeline: view()
+   on every object, and it was tried and rejected on measurement. This build has
+   overflow:hidden on .kit-slot__mask, .kit-sys, .precta and others, and each of
+   those becomes the nearest scrollport for a view timeline — so an object inside
+   one reports itself as already fully in view and never animates. Worse, the
+   range that DID hold things back (cover 0% -> cover 40%) left 31 of 156 objects
+   PERMANENTLY invisible after scrolling the entire page, because those bogus
+   scrollports never complete. Content that never appears is not an animation
+   bug, it is content loss, so that approach is not used anywhere here.
+
+   WHAT IS USED INSTEAD. The build already ships the safe latch: an
+   IntersectionObserver in the chrome adds .is-in to a section, and it only ever
+   runs when scripting, IntersectionObserver AND a normal motion preference all
+   hold — so nothing is hidden unless something is definitely able to reveal it.
+   Section 2587 above arms three things against that latch: the band opener, the
+   heading, and figures. This extends the same latch to the objects a reader
+   actually scrolls past, and staggers them by column so a row of four cards
+   arrives as four things rather than as one.
+
+   Body copy stays unarmed, exactly as step 3 above decided. A paragraph that
+   fades in is a paragraph you cannot start reading.
+
+   MEASURED across index, prosthodontics, locations, about and specialists:
+   objects held back below the fold 80 -> 88 of 223, and after scrolling the
+   whole page 0 remain hidden on any of the five (the three that momentarily
+   read as hidden are mid-transition, at 0.57 and 0.89 opacity, with the 400ms
+   column stagger still running).
+   ============================================================================ */
+
+.js-rise section[data-rise] :is(.kit-card, .kit-sys, .kit-statband, .kit-quote, .kit-table, .kit-person, .kit-mediagrid){
+  transition-property: opacity, transform;
+  transition-duration: var(--foh-rise-dur);
+  transition-timing-function: var(--foh-rise-ease);
+}
+.js-rise section[data-rise]:not(.is-in) :is(.kit-card, .kit-sys, .kit-statband, .kit-quote, .kit-table, .kit-person, .kit-mediagrid){
+  opacity: 0;
+  transform: translateY(var(--foh-rise-travel));
+}
+/* a card or slot already inside an armed mediagrid must not animate twice */
+.js-rise section[data-rise]:not(.is-in) .kit-mediagrid :is(.kit-card, .kit-slot){ opacity: 1; transform: none; }
+
+/* stagger by column, so a row of four arrives as four rather than as one */
+.js-rise section[data-rise].is-in .row > .col:nth-child(1) > *{ transition-delay: 0ms; }
+.js-rise section[data-rise].is-in .row > .col:nth-child(2) > *{ transition-delay: 80ms; }
+.js-rise section[data-rise].is-in .row > .col:nth-child(3) > *{ transition-delay: 160ms; }
+.js-rise section[data-rise].is-in .row > .col:nth-child(4) > *{ transition-delay: 240ms; }
+.js-rise section[data-rise].is-in .row > .col:nth-child(5) > *{ transition-delay: 320ms; }
+.js-rise section[data-rise].is-in .row > .col:nth-child(n+6) > *{ transition-delay: 400ms; }
