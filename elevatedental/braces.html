@@ -14,7 +14,7 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&amp;family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&amp;display=swap">
 <link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=f2d9eae2">
-  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=9e907e59">
+  <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=c2a93e77">
   <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
   <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=cf488732">
   <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=8c282509">
@@ -88,11 +88,11 @@
   <div class="ed-scrim" id="mega-scrim" hidden></div>
 
   
-  <div class="ed-mega" id="mega" hidden aria-labelledby="mega-trigger">
+  <div class="ed-mega surface-dark" id="mega" hidden aria-labelledby="mega-trigger">
     <div class="ed-wrap ed-mega__in">
       <div class="ed-mega__grid">
 
-        <div class="ed-mega__col">
+        <div class="ed-mega__col ed-mega__col--disc">
           <span class="kit-eyebrow">Nine disciplines</span>
           <ul class="ed-mlist">
             <li><a class="ed-mlink" href="general-dentistry.html" data-page="general-dentistry.html">General Dentistry</a></li>
@@ -107,20 +107,41 @@
           </ul>
         </div>
 
-        <div class="ed-mega__col">
+        <div class="ed-mega__col ed-mega__col--feat">
           <span class="kit-eyebrow">Most requested</span>
-          <ul class="ed-mlist">
-            <li><a class="ed-mlink" href="invisalign.html" data-page="invisalign.html">Invisalign</a></li>
-            <li><a class="ed-mlink" href="porcelain-veneers.html" data-page="porcelain-veneers.html">Porcelain Veneers</a></li>
-            <li><a class="ed-mlink" href="braces.html" data-page="braces.html">Braces</a></li>
-            <li><a class="ed-mlink" href="laser-teeth-whitening.html" data-page="laser-teeth-whitening.html">Teeth Whitening</a></li>
-            <li><a class="ed-mlink" href="dental-implant.html" data-page="dental-implant.html">Dental Implants</a></li>
-            <li><a class="ed-mlink" href="airflow.html" data-page="airflow.html">Airflow Cleaning</a></li>
-            <li><a class="ed-mlink" href="root-canal-treatment.html" data-page="root-canal-treatment.html">Root Canal Treatment</a></li>
-          </ul>
+          <div class="ed-mtiles">
+            <a class="ed-mtile ed-mtile--wide" href="invisalign.html" data-page="invisalign.html">
+              <span class="ed-mtile__frame"><img class="ed-mtile__img" src="assets/gen-hero-aligner.jpg" alt="" loading="lazy" decoding="async"></span>
+              <span class="ed-mtile__name">Invisalign</span>
+            </a>
+            <a class="ed-mtile" href="porcelain-veneers.html" data-page="porcelain-veneers.html">
+              <span class="ed-mtile__frame"><img class="ed-mtile__img" src="assets/gen-hero-shade-guide.jpg" alt="" loading="lazy" decoding="async"></span>
+              <span class="ed-mtile__name">Porcelain Veneers</span>
+            </a>
+            <a class="ed-mtile" href="braces.html" data-page="braces.html">
+              <span class="ed-mtile__frame"><img class="ed-mtile__img" src="assets/gen-hero-brackets.jpg" alt="" loading="lazy" decoding="async"></span>
+              <span class="ed-mtile__name">Braces</span>
+            </a>
+            <a class="ed-mtile" href="laser-teeth-whitening.html" data-page="laser-teeth-whitening.html">
+              <span class="ed-mtile__frame"><img class="ed-mtile__img" src="assets/gen-hero-whitening-lamp.jpg" alt="" loading="lazy" decoding="async"></span>
+              <span class="ed-mtile__name">Teeth Whitening</span>
+            </a>
+            <a class="ed-mtile" href="dental-implant.html" data-page="dental-implant.html">
+              <span class="ed-mtile__frame"><img class="ed-mtile__img" src="assets/gen-hero-implant-parts.jpg" alt="" loading="lazy" decoding="async"></span>
+              <span class="ed-mtile__name">Dental Implants</span>
+            </a>
+            <a class="ed-mtile" href="airflow.html" data-page="airflow.html">
+              <span class="ed-mtile__frame"><img class="ed-mtile__img" src="assets/gen-hero-airflow-mist.jpg" alt="" loading="lazy" decoding="async"></span>
+              <span class="ed-mtile__name">Airflow Cleaning</span>
+            </a>
+            <a class="ed-mtile" href="root-canal-treatment.html" data-page="root-canal-treatment.html">
+              <span class="ed-mtile__frame"><img class="ed-mtile__img" src="assets/gen-hero-tooth-section.jpg" alt="" loading="lazy" decoding="async"></span>
+              <span class="ed-mtile__name">Root Canal Treatment</span>
+            </a>
+          </div>
         </div>
 
-        <div class="ed-mega__col">
+        <div class="ed-mega__col ed-mega__col--where">
           <span class="kit-eyebrow">Where we practise</span>
           <div class="ed-mlist">
             <a class="ed-mclinic" href="bgc-mitsukoshi.html" data-page="bgc-mitsukoshi.html"><b>Mitsukoshi BGC</b><span class="kit-tab">Mon to Fri 11:00 to 20:00, Sat to Sun 10:30 to 20:00</span></a>
@@ -130,29 +151,18 @@
           </div>
         </div>
 
-        <div class="ed-mega__col">
-          <div class="kit-card kit-card--tint">
-            <div class="kit-card__top">
-              <span class="kit-card__label">Start here</span>
-              <svg class="kit-ring" width="28" height="28" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-                <circle class="kit-ring__track" cx="50" cy="50" r="38" stroke-width="3"/>
-                <line class="kit-ring__index" x1="50" y1="12" x2="50" y2="33" stroke-width="5"/>
-              </svg>
-            </div>
-            <p class="kit-card__title">Not sure which treatment you need?</p>
-            <p class="kit-card__body">Thirty-one specialists across nine disciplines. Tell us what you want looked at and we will place you with the one who handles it.</p>
-            <div class="kit-card__foot">
-              <a class="kit-btn kit-btn--ghost" href="treatments.html" data-page="treatments.html"><span>All Treatments</span></a>
-              <a class="kit-btn kit-btn--ghost" href="prices.html" data-page="prices.html"><span>Treatment Prices</span></a>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <div class="ed-mega__foot">
-        <p class="kit-note">Self-pay clinic. We do not accept HMO or dental insurance. Every treatment is paid directly.</p>
-        <a class="kit-btn kit-btn--primary" href="#book">Book an Appointment</a>
+        <div class="ed-mega__foot-say">
+          <p class="kit-note">Not sure which treatment you need? Thirty-one specialists across nine disciplines. Tell us what you want looked at and we will place you with the one who handles it.</p>
+          <p class="kit-note">Self-pay clinic. We do not accept HMO or dental insurance. Every treatment is paid directly.</p>
+        </div>
+        <div class="ed-mega__foot-act">
+          <a class="kit-btn kit-btn--ghost" href="treatments.html" data-page="treatments.html"><span>All Treatments</span></a>
+          <a class="kit-btn kit-btn--ghost" href="prices.html" data-page="prices.html"><span>Treatment Prices</span></a>
+          <a class="kit-btn kit-btn--primary" href="#book">Book an Appointment</a>
+        </div>
       </div>
     </div>
   </div>

@@ -717,3 +717,115 @@ details[open] > .ed-dnav__sum .ed-dcaret{ transform: translateY(1px) rotate(-135
   }
   .ed-fsoc a[href]::before{ content: none; }
 }
+
+/* ==========================================================================
+   ED MEGA v2 - THE BENCH + PICTURES
+
+   The panel was four columns of 13.5px text links: a sitemap dump, and the owner
+   called it boring. It becomes a dark bench instead. Three things carry it:
+
+   1. THE GROUND FLIPS. The panel takes .surface-dark, so it drops out of the light
+      header as a deliberate slab rather than as more of the same page. Because that
+      class is the design system's own, every existing rule in this file that reads a
+      --ds-* token flips with it and needs no duplicate here.
+   2. THE DISCIPLINES ARE NUMBERED. Nine disciplines is a fixed, complete set, so a
+      leading-zero index is information (there are nine, this is the fourth) and not
+      decoration. The names move to the display face at a readable size.
+   3. MOST-REQUESTED BECOMES PICTURES. Seven treatments, each showing the photograph
+      its own page opens with, so the tile previews the destination. Seven tiles into
+      a four-across grid leaves a hole, so the first spans two cells as a feature and
+      the eight cells fill exactly.
+
+   The tint card that was the fourth column is gone, but nothing it held is: both its
+   links and its full sentence moved into the foot, which is now a two-part row.
+   ========================================================================== */
+
+.ed-mega{
+  border-bottom: 2px solid var(--ds-accent);   /* brass edge closes the slab */
+}
+.ed-mega__in{ padding-block: var(--ds-space-md) var(--ds-space-md); }
+
+/* three columns now, not four. The middle carries the pictures and takes the room. */
+.ed-mega__grid{
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 2.5fr) minmax(0, 1.02fr);
+  gap: var(--ds-space-lg);
+  align-items: start;
+}
+.ed-mega .kit-eyebrow{ color: var(--ds-accent-light); }
+
+/* -- the numbered disciplines --------------------------------------------- */
+.ed-mega__col--disc .ed-mlist{ counter-reset: ed-disc; }
+.ed-mega__col--disc .ed-mlist li{ counter-increment: ed-disc; margin-top: 0; }
+.ed-mega__col--disc .ed-mlink{
+  position: relative;
+  padding: 6px 0 6px 28px;
+  font-family: var(--ds-font-display);
+  font-size: 15.5px; font-weight: 500; line-height: 1.3;
+  color: var(--ds-ink);
+}
+.ed-mega__col--disc .ed-mlink::before{
+  content: counter(ed-disc, decimal-leading-zero);
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  font-family: var(--ds-font-mono); font-size: 10px; letter-spacing: .08em;
+  color: var(--ds-accent-light);
+  font-variant-numeric: tabular-nums;
+}
+/* --ds-accent-deep is the correct hover on a LIGHT ground and the wrong one here:
+   on the dark panel a hover must brighten, not darken. */
+.ed-mega .ed-mlink:hover,
+.ed-mega .ed-mclinic:hover b{ color: var(--ds-accent-light); }
+.ed-mega__col--disc .ed-mlink:hover{ padding-left: 34px; }
+
+/* -- the picture grid ------------------------------------------------------ */
+.ed-mtiles{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: var(--ds-space-sm);
+}
+/* seven treatments into eight cells: the first is the feature and takes two. */
+.ed-mtile--wide{ grid-column: span 2; }
+.ed-mtile{ display: block; text-decoration: none; min-width: 0; }
+.ed-mtile__frame{
+  display: block; overflow: hidden;
+  height: clamp(92px, 8.2vw, 128px);
+  border-radius: var(--ds-r-surface);
+  background: var(--ds-primary-soft);
+}
+/* an explicit frame height, not a per-tile aspect-ratio: the feature tile is twice as
+   wide as its neighbours, so an aspect-ratio would make it twice as tall and break the
+   row. A fixed height keeps every tile on the same baseline whatever its span. */
+.ed-mtile__img{
+  display: block; width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--ds-dur-slow) var(--ds-ease-out);
+}
+.ed-mtile:hover .ed-mtile__img{ transform: scale(1.06); }
+.ed-mtile__name{
+  display: block; margin-top: 8px;
+  font-family: var(--ds-font-display); font-weight: 500;
+  font-size: 14px; line-height: 1.25;
+  color: var(--ds-ink);
+  transition: color var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-mtile:hover .ed-mtile__name{ color: var(--ds-accent-light); }
+.ed-mtile:focus-visible .ed-mtile__frame{ outline: 2px solid var(--ds-accent-light); outline-offset: 3px; }
+
+/* -- clinics --------------------------------------------------------------- */
+.ed-mega .ed-mclinic{ padding: 8px 0; }
+.ed-mega .ed-mclinic b{ font-size: 14.5px; }
+
+/* -- the foot now carries what the fourth column used to ------------------- */
+.ed-mega__foot{ align-items: flex-end; gap: var(--ds-space-md); }
+.ed-mega__foot-say{ flex: 1 1 460px; min-width: 0; }
+.ed-mega__foot-say .kit-note + .kit-note{ margin-top: 6px; }
+.ed-mega__foot-act{
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--ds-space-xs);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .ed-mtile__img{ transition: none; }
+  .ed-mtile:hover .ed-mtile__img{ transform: none; }
+  .ed-mega__col--disc .ed-mlink:hover{ padding-left: 28px; }
+}
