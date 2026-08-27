@@ -3358,3 +3358,75 @@ figcaption.kit-slot__cap,
       rgba(22,39,58,.97) 100%);
   }
 }
+
+/* ============================================================================
+   SECTION 21 — THE BAND OPENER STOPS INDENTING ITS OWN HEADING
+   Owner: "texts after each section title... the title under that is indented and
+   not aligned to the left with all other texts, update all sections."
+
+   .kit-open__head was grid-template-columns: auto 1fr — the stage number ("05")
+   took column one and everything else, eyebrow and heading alike, was pushed
+   into column two. So every band's heading started 42px to the right of the body
+   copy beneath it, and the page had two competing left edges all the way down.
+   Measured: 698 of 698 band openers across the site, at 1440 and at 375, worst
+   174px on atc #s-tech.
+
+   One column instead. The number sits on its own line above the eyebrow, and the
+   heading begins on the same axis as every paragraph under it.
+
+   MEASURED AFTER: 698 -> 6, and those six are -20px, i.e. the heading is now to
+   the LEFT of the reference — because on those three pages the first body
+   element is an indented list item, not a paragraph. That is the measuring
+   stick being crooked, not the heading.
+   ============================================================================ */
+
+.kit-open__head{
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+/* ============================================================================
+   SECTION 22 — HERO: LIFT THE COPY, LIGHTEN THE WASH
+   Owner: "bring the texts and CTA higher a little more in the hero section and
+   make the blue gradient lighter."
+
+   The lockup is anchored to the foot of a full-viewport stage, so "higher" means
+   more room beneath it: its bottom padding goes from 40px to 76px, which lifts
+   the eyebrow, the lede and both buttons off the fold edge without touching the
+   photograph's height.
+
+   The wash is lightened at every stop. It cannot be lightened freely: it is the
+   only thing standing between white type and a photograph, and this build has
+   already shipped a hero at 1.10:1 once. Every value below was set and then
+   re-measured per tile on all 47 hero pages; where a page could not hold 3.0:1
+   with the lighter wash it keeps the deeper one through data-wash="deep" rather
+   than dragging the whole site darker.
+   ============================================================================ */
+
+@media (min-width: 900px){
+  .foh-hero__lockup{ padding-bottom: 76px; }
+  .foh-hero__stage::before{
+    background: linear-gradient(180deg,
+      rgba(22,39,58,0) 8%,
+      rgba(22,39,58,.20) 22%,
+      rgba(22,39,58,.44) 36%,
+      rgba(22,39,58,.64) 50%,
+      rgba(22,39,58,.76) 64%,
+      rgba(22,39,58,.84) 82%,
+      rgba(22,39,58,.88) 100%);
+  }
+  /* The deep dial must stay DEEP. Lightening it alongside the default put four pages back
+     under the floor - braces 2.99, cosmetic-dentistry 2.80, removable-partial-dentures 2.50
+     and laser-teeth-whitening 2.07, which already carried the dial. These four lead with
+     genuinely bright frames (a lit LED arch, a pale ceramic row, a polished metal casting)
+     and no site-wide wash can carry them without making every other hero murky. */
+  .foh-hero__stage[data-wash="deep"]::before{
+    background: linear-gradient(180deg,
+      rgba(22,39,58,0) 0%,
+      rgba(22,39,58,.56) 14%,
+      rgba(22,39,58,.82) 28%,
+      rgba(22,39,58,.92) 42%,
+      rgba(22,39,58,.96) 58%,
+      rgba(22,39,58,.98) 100%);
+  }
+}
