@@ -1170,6 +1170,97 @@
     });
   }
   if(megaScrim) megaScrim.addEventListener("click", function(){ setMega(false); });
+
+  /* --- hover-to-open -----------------------------------------------------
+     Measured geometry this is sized against: the trigger ends at y=106 and the
+     panel starts at y=144, so a pointer travelling from one to the other crosses
+     38px of header arc that belongs to NEITHER. Closing on plain mouseleave would
+     shut the panel mid-journey, so leaving starts a timer that entering the panel
+     cancels. Opening waits a beat because the panel dims the whole page behind it,
+     and a sweep across the nav on the way elsewhere should not strobe it.
+
+     Every path here is gated on a fine hover-capable pointer AND on the panel not
+     being display:none, so touch keeps tap-to-toggle and the sub-1100 layout (where
+     the drawer is the menu) cannot be made to open an invisible panel. --------- */
+  var HOVER_OPEN_MS = 110;
+  var HOVER_CLOSE_MS = 260;
+  var openTimer = null, closeTimer = null;
+
+  function hoverCapable(){
+    if(!mega || !megaTrigger) return false;
+    if(!window.matchMedia || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return false;
+    /* Ask the TRIGGER, not the panel. The panel is closed by the [hidden] attribute,
+       and [hidden] IS display:none - so testing the panel here returns false exactly
+       when the panel is shut, which is the only moment hover needs to open it. That
+       guard could only ever open an already-open panel. The trigger is the thing being
+       hovered, so if it has no rendered box the desktop nav is folded away and the
+       drawer is the menu: below the 1100px collapse its width measures 0, at 1440 it
+       measures 76. That reading is independent of whether the panel is open. */
+    return megaTrigger.getBoundingClientRect().width > 0;
+  }
+  function cancelOpen(){ if(openTimer){ clearTimeout(openTimer); openTimer = null; } }
+  function cancelClose(){ if(closeTimer){ clearTimeout(closeTimer); closeTimer = null; } }
+  function isOpen(){ return megaTrigger.getAttribute("aria-expanded") === "true"; }
+
+  function hoverOpen(){
+    if(!hoverCapable()) return;
+    cancelClose();
+    if(isOpen()) return;
+    cancelOpen();
+    openTimer = setTimeout(function(){ openTimer = null; setMega(true); }, HOVER_OPEN_MS);
+  }
+  function hoverClose(delay){
+    if(!hoverCapable()) return;
+    cancelOpen();
+    cancelClose();
+    closeTimer = setTimeout(function(){ closeTimer = null; setMega(false); }, delay);
+  }
+
+  if(megaTrigger){
+    megaTrigger.addEventListener("mouseenter", hoverOpen);
+  }
+  if(mega){
+    mega.addEventListener("mouseenter", cancelClose);
+  }
+
+  /* THE DEAD ZONE STOPS EXISTING IF THE HOVER ZONE IS THE HEADER.
+
+     Closing on the trigger's own mouseleave means the 38px of header arc between the
+     trigger and the panel starts a countdown the pointer then has to outrun. A hesitant
+     move across it loses the race and the panel shuts on the way to itself, which is
+     measurably what happened: crossing at a deliberate pace closed it every time.
+
+     But .site-header CONTAINS the trigger, the arc AND the panel (the panel is absolutely
+     positioned, so it leaves the header 144px tall while rendering down to 669 - it is
+     still a descendant). mouseleave does not fire when the pointer moves to a descendant,
+     so binding the close to the HEADER makes trigger, arc and panel one continuous region
+     with no gap to cross. The race is removed rather than outrun. */
+  if(header){
+    header.addEventListener("mouseleave", function(){ hoverClose(HOVER_CLOSE_MS); });
+  }
+
+  /* ...except the scrim is a header descendant too, and it covers the whole page below
+     the header whenever the panel is open. Without this the header could never be left
+     while open, and the panel would sit there for good. Moving onto the dimmed page is
+     the clearest possible signal that the reader is done with the menu. */
+  if(megaScrim){
+    megaScrim.addEventListener("mouseenter", function(){ hoverClose(HOVER_CLOSE_MS); });
+  }
+  /* another nav item takes over immediately: the open panel is covering what the
+     reader has just moved to, so it should not sit there waiting out a timer. */
+  Array.prototype.forEach.call(document.querySelectorAll(".ed-nav__link"), function(link){
+    if(link === megaTrigger) return;
+    link.addEventListener("mouseenter", function(){
+      if(!hoverCapable()) return;
+      cancelOpen();
+      if(isOpen()){ cancelClose(); setMega(false); }
+    });
+  });
+  /* a click that closes the panel must not be undone by the pointer still resting
+     on the trigger, and a click that opens it must not be shut by a stale timer. */
+  if(megaTrigger){
+    megaTrigger.addEventListener("click", function(){ cancelOpen(); cancelClose(); });
+  }
   document.addEventListener("click", function(e){
     if(!mega || mega.hidden) return;
     if(mega.contains(e.target) || (megaTrigger && megaTrigger.contains(e.target))) return;
