@@ -3481,3 +3481,95 @@ figcaption.kit-slot__cap,
      off the edge. Below this width each line may wrap again inside its own block. */
   .foh-hero__title .foh-hero__tline{ text-wrap: wrap; }
 }
+
+/* ==========================================================================
+   SECTION 24 - CLOSE THE GAP UNDER THE THREE LINE HEADLINE
+
+   Measured: 62px of clear space between the headline and the eyebrow at every
+   desktop width, made of two separate paddings that happen to stack:
+   .foh-hero__inner padding-bottom 18px plus .foh-hero__lockup padding-top 44px.
+   With a two line headline that read as breathing room. With three lines it
+   reads as a hole.
+
+   WHICH KNOB DOES WHAT, because it is not the obvious one. The stage is a two
+   row grid: the headline sits in row 1 aligned to its END, and the lockup is
+   row 2, auto sized, therefore pinned to the stage bottom. That gives:
+
+     gap under the headline = inner padding-bottom + lockup padding-top
+     eyebrow position       = stage bottom - content height - lockup padding-BOTTOM
+
+   So padding-top closes the gap and padding-BOTTOM lifts the cluster. Cutting
+   padding-top alone in order to raise the text would in fact lower it, because a
+   shorter lockup drops its own top edge and the headline is pinned to that edge.
+
+   Both are therefore changed together: the gap closes from 62px to 24px, and the
+   eyebrow, lede and buttons all rise 36px. The headline itself moves about 2px,
+   so the contrast just measured against the wash is left undisturbed.
+
+   Desktop only. On a phone the gap already measures 44px against a 30px headline,
+   which is proportionally the same breathing room, and the mobile hero has its own
+   stacking where the lockup is not bottom pinned in the same way. */
+@media (min-width: 900px){
+  .foh-hero__inner{ padding-bottom: 14px; }
+  .foh-hero__lockup{
+    padding-top: 14px;
+    padding-bottom: 112px;
+  }
+}
+
+/* ==========================================================================
+   SECTION 25 - THE BRASS HAIRLINE STOPS FLOATING AT A FIXED HEIGHT
+
+   .foh-hero__stage::after draws a 2px brass rule at top: 62vh. That height is
+   content independent: it knows nothing about where the headline ends or where
+   the lockup begins, and it only ever missed the text by luck. Raising the
+   lockup 36px in SECTION 24 spent that luck. Measured after the raise, the rule
+   crossed the LEDE at 1024x768 and 900x800, and ran straight through the BUTTON
+   ROW at 1280x800.
+
+   So it is re-anchored to the top edge of the lockup, which is a real boundary
+   in the layout: the seam where the photograph gives way to the dark panel. It
+   now sits in the gap between the headline and the eyebrow at every width and
+   can never intersect a line of text, because that gap is padding by
+   construction. The gap is re-split 14px / 14px so the rule has equal air above
+   and below rather than being crushed against the headline.
+
+   The draw-in animation is carried across rather than dropped: same keyframes,
+   same timing, now on the lockup. The stillness block below lands it drawn for
+   readers who ask for reduced motion, which is what the motion sheet does for
+   the rule it replaces.
+
+   THE LOCKUP WASH ALSO STARTS SOONER. Its gradient was tuned for content that
+   began 44px below its top edge; that content now begins 14px below it, so the
+   eyebrow sat where the panel was still nearly transparent and measured 4.18:1
+   against a 4.5 floor. The early stops are raised so the panel has arrived by
+   the time the first line of text does. */
+@media (min-width: 900px){
+  .foh-hero__stage::after{ display: none; }
+
+  .foh-hero__lockup{ position: relative; }
+  .foh-hero__lockup::before{
+    content: "";
+    position: absolute; left: 0; right: 0; top: 0;
+    height: 2px;
+    background: var(--ds-accent);
+    transform: scaleX(0); transform-origin: 0 50%;
+    animation: mo-draw 1400ms var(--mo-out, cubic-bezier(.16,1,.3,1)) 700ms both;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .foh-hero__lockup{
+    background: linear-gradient(180deg,
+      rgba(22,39,58,0) 0%,
+      rgba(22,39,58,.40) 4%,
+      rgba(22,39,58,.66) 12%,
+      rgba(22,39,58,.82) 24%,
+      rgba(22,39,58,.93) 64%,
+      rgba(22,39,58,.97) 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .foh-hero__lockup::before{ transform: scaleX(1) !important; animation: none !important; }
+}
