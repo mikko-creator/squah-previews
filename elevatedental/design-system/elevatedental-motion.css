@@ -574,6 +574,67 @@ a:focus-visible, button:focus-visible, .kit-btn:focus-visible, .kit-card:focus-w
    22. STILLNESS, honoured completely — THIS SECTION MUST STAY LAST IN THE FILE
    Source order is what makes it win. A rule appended after this block escapes it.
    ========================================================================== */
+
+/* ============================================================================
+   PART IV - THE MOTION LAYER'S CSS SIDE
+
+   Everything here supports the JavaScript in assets/elevatedental-flare.js, which
+   runs on Motion (motion.dev). Two jobs only: paint the one element that layer
+   creates, and stand down the handful of CSS rules that would otherwise be
+   driving the same property as Motion at the same moment.
+
+   Every rule is scoped to .mo-js, a class the script adds to <html> ONLY after it
+   has confirmed the library is present. Nothing below applies unless Motion is
+   genuinely running, so a failed or blocked script changes nothing at all.
+   ============================================================================ */
+
+/* The scroll-linked reading rule. It is created by the script, so it never exists
+   in the markup and cannot affect a page where the script did not run. */
+.mo-progress{
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ds-accent), var(--ds-accent-light, #C69E4C));
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  z-index: 120;
+  pointer-events: none;
+}
+
+/* HAND-OVER, and it cannot use transform. .kit-card carries mo-reveal on an
+   animation-timeline: view(), and a filled CSS animation outranks inline styles in
+   the cascade, so anything Motion writes to transform is overwritten on every frame.
+   Measured: the inline style read translateY(-6px) scale(1.012) while the computed
+   value stayed the identity matrix. The stylesheet's own .kit-card:hover lift loses
+   that same fight, which is why cards have had no working hover lift at all.
+
+   The independent transform properties are free - the card computes translate: none
+   and scale: none - and they compose with transform instead of replacing it. So the
+   spring drives two custom properties and these feed them in. Nothing here fights
+   the reveal, and the reveal keeps doing its job. */
+.mo-js .kit-card,
+.mo-js .ed-mtile{
+  --mo-y: 0px;
+  --mo-s: 1;
+  translate: 0 var(--mo-y);
+  scale: var(--mo-s);
+}
+.mo-js .kit-card{
+  transition-property: box-shadow, border-color, background-color, color;
+}
+
+/* The mega tiles are the same story, one level down: the stylesheet scales the
+   IMAGE inside the tile, and Motion lifts the TILE. Those are different elements
+   and do not conflict, so the image scale is deliberately left alone. */
+
+/* The primary button keeps its CSS lift as the resting hover state; the magnetic
+   script adds to it from there and returns it to zero on leave. Its transition is
+   narrowed for the same reason as the card. */
+.mo-js .kit-btn--primary{
+  transition-property: background-color, border-color, color, box-shadow;
+}
+
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
     animation: none !important;
@@ -602,4 +663,10 @@ a:focus-visible, button:focus-visible, .kit-btn:focus-visible, .kit-card:focus-w
   .kit-slot__mask::before,
   .kit-slot__mask::after{ opacity: 0 !important; }
   .site-header .ed-util{ opacity: 1 !important; transform: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  /* the reading rule is ornament: it does not appear at all when motion is declined,
+     and the script already skips creating it. This is the belt to that braces. */
+  .mo-progress{ display: none !important; }
 }
