@@ -3429,4 +3429,55 @@ figcaption.kit-slot__cap,
       rgba(22,39,58,.96) 58%,
       rgba(22,39,58,.98) 100%);
   }
+
+  /* A THIRD HEADLINE LINE REACHES HIGHER THAN THE WASH WAS BUILT FOR.
+
+     The headline is bottom-anchored, so breaking it onto three lines grows it UPWARD
+     into the brightest part of the frame. Measured on the homepage the moment it went
+     to three lines: the top line read 1.42:1 at 1440x768 and 1.70:1 at 1280x800,
+     against a near-white sky at rgb(213,217,217). The default wash is only .20 opaque
+     at 22% of the stage, which is exactly the band that line now occupies.
+
+     The deep dial would fix it and is the wrong instrument: it is built for pages whose
+     whole frame is bright, and it would darken this photograph everywhere to solve a
+     problem that exists in one band. This variant instead lifts only the upper middle
+     and keeps the peak at .88, identical to the lightened default, so the lower two
+     thirds of the picture stay exactly as light as they are today. */
+  .foh-hero__stage[data-wash="tall"]::before{
+    background: linear-gradient(180deg,
+      rgba(22,39,58,0) 0%,
+      rgba(22,39,58,.40) 10%,
+      rgba(22,39,58,.58) 22%,
+      rgba(22,39,58,.68) 36%,
+      rgba(22,39,58,.76) 50%,
+      rgba(22,39,58,.83) 70%,
+      rgba(22,39,58,.88) 100%);
+  }
+}
+
+/* ==========================================================================
+   SECTION 23 - THE HERO HEADLINE BREAKS ON ITS OWN SENTENCES
+
+   It read as one sentence wrapping wherever the column ran out, which put the
+   break mid-clause and made the three claims read as a paragraph. Each sentence
+   is now its own block, so the headline is three lines that break where the
+   meaning breaks.
+
+   THERE IS ROOM, and the direction it grows matters. The headline sits in row 1
+   of the hero grid aligned to its END, 18px above the lockup at every desktop
+   width. So a third line does not push the lockup down; it grows UPWARD into the
+   empty space over the photograph. Measured before the change: 321px of clear
+   space above the headline at 1440x900 and 189px at 1440x768, against a 61px
+   line box.
+
+   The balance is dropped because it fights an explicit break: text-wrap:balance
+   would try to even out lines that have already been decided by the sentences. */
+.foh-hero__title .foh-hero__tline{
+  display: block;
+  text-wrap: nowrap;
+}
+@media (max-width: 560px){
+  /* on a narrow phone a sentence is wider than the column, and nowrap would send it
+     off the edge. Below this width each line may wrap again inside its own block. */
+  .foh-hero__title .foh-hero__tline{ text-wrap: wrap; }
 }
