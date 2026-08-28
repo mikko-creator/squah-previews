@@ -3573,3 +3573,68 @@ figcaption.kit-slot__cap,
 @media (prefers-reduced-motion: reduce){
   .foh-hero__lockup::before{ transform: scaleX(1) !important; animation: none !important; }
 }
+
+/* ==========================================================================
+   SECTION 26 - kit-terms, THE TERMS LEDGER
+
+   Section 06 explains an absence: the practice has not supplied starting
+   prices. It used to do that in a 7/5 split whose right column ran out 325px
+   before the left one, with the reassuring part (quoted after assessment, in
+   writing before work starts) set as small grey label rows in the short
+   column, and a bare hyphen printed under Starting floors.
+
+   The ledger goes full width, so there is no second column left to run dry,
+   and gives every term the same three-part line: what it is called, what it
+   is, and one plain sentence saying what that means for the reader. The row
+   that was a hyphen now reads "Not published yet" and carries the reason on
+   the same line, which is the honest version of the same fact.
+
+   The last row is marked --open and takes the deeper brass, because an
+   unanswered term is the one a reader is most likely to be looking for.
+   ========================================================================== */
+.kit-terms{
+  margin: var(--ds-space-md) 0 var(--ds-space-md);
+  border-top: 2px solid var(--ds-accent);
+}
+.kit-terms__row{
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.5fr) minmax(0, 2fr);
+  gap: var(--ds-space-lg);
+  align-items: baseline;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--ds-hairline);
+}
+.kit-terms__k{
+  font-family: var(--ds-font-mono);
+  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  /* the DEEPER brass, not --ds-accent. Measured on the paper ground at this size,
+     --ds-accent reads 4.44:1 against a 4.5 floor for text under 18px. It is a narrow
+     miss but a real one, and there is no reason to ship a new element already under
+     the line. --ds-accent-deep measures 6.05:1 on the same ground. */
+  color: var(--ds-accent-deep);
+}
+.kit-terms__v{
+  margin: 0;
+  font-family: var(--ds-font-display); font-weight: 500;
+  font-size: 19px; line-height: 1.25;
+  color: var(--ds-ink-heading);
+}
+.kit-terms__n{
+  margin: 0;
+  font-size: 14px; line-height: 1.55;
+  color: var(--ds-ink-soft);
+}
+/* the unanswered term carries the deeper brass: it is the row a reader
+   hunting for a price will land on, so it is the one that must not look
+   like an oversight. */
+.kit-terms__row--open .kit-terms__v{ color: var(--ds-accent-deep); }
+
+/* Stacked below the split, where three columns would leave nothing readable
+   in any of them. The key sits above its value, the note under both. */
+@media (max-width: 899px){
+  .kit-terms__row{
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 0;
+  }
+}
