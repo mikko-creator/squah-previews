@@ -3638,3 +3638,137 @@ figcaption.kit-slot__cap,
     padding: 16px 0;
   }
 }
+
+
+/* ==========================================================================
+   SECTION 28 - THE BENCH, AN ENDLESS FULL WIDTH CAROUSEL
+
+   Twelve portraits shot on four different backdrops (grey, pink, teal, slate;
+   239 RGB units apart) read as a collage when tiled in a grid. Here they run
+   as one full-bleed strip in a single duotone, and whoever reaches the centre
+   is lifted out of it: full colour, larger, and with the background removed so
+   the clinician stands on the section's own ground rather than in a frame.
+
+   The strip loops. The script clones the set either side and shifts the scroll
+   back by one whole set whenever it drifts, so the twelfth is always followed
+   by the first in both directions.
+
+   Exactly one is ever highlighted, because the winner is the SMALLEST distance
+   to centre rather than anything within a threshold: two neighbours can both be
+   near the middle, only one can be nearest.
+   ========================================================================== */
+.ed-bench{ position: relative; margin-top: var(--ds-space-md); }
+
+.ed-bench__track{
+  display: flex;
+  gap: 56px;              /* a 168px card grown to 1.34 overhangs 28.6px each side */
+  list-style: none;
+  margin: 0;
+  padding: 46px 0 var(--ds-space-sm);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;               /* the strip is dragged, not scrollbar-driven */
+  -ms-overflow-style: none;
+}
+.ed-bench__track::-webkit-scrollbar{ display: none; }
+.ed-bench__track.is-shifting{ scroll-snap-type: none; scroll-behavior: auto; }
+
+.ed-bench__item{
+  flex: 0 0 auto;
+  width: 168px;
+  scroll-snap-align: center;
+  padding-bottom: 6px;
+}
+
+.ed-bench__person{ margin: 0; }
+.ed-bench__frame{
+  position: relative;
+  transform-origin: 50% 100%;
+  aspect-ratio: var(--foh-ar-face, 1);
+  border-radius: var(--foh-r-plate);
+  overflow: hidden;
+  background: var(--ds-primary-soft);
+  transition: transform .5s cubic-bezier(.16,1,.3,1),
+              border-radius .4s cubic-bezier(.16,1,.3,1),
+              background-color .4s linear;
+}
+.ed-bench__tile,
+.ed-bench__cut{
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 16%;
+  transition: opacity .45s cubic-bezier(.16,1,.3,1), filter .5s cubic-bezier(.16,1,.3,1);
+}
+.ed-bench__tile{ filter: grayscale(1) contrast(1.06) brightness(1.02); }
+.ed-bench__cut{ opacity: 0; object-fit: contain; object-position: 50% 100%; }
+
+/* the washes sit on the frame: .kit-slot__mask::before/::after are already the
+   brass corner brackets used across the site and must not be taken */
+.ed-bench__frame::before,
+.ed-bench__frame::after{
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 2;
+  transition: opacity .45s cubic-bezier(.16,1,.3,1);
+}
+.ed-bench__frame::after{
+  background: linear-gradient(180deg, rgba(36,58,82,.30), rgba(36,58,82,.52));
+  mix-blend-mode: multiply;
+}
+.ed-bench__frame::before{ background: rgba(198,158,76,.16); mix-blend-mode: screen; }
+
+.ed-bench__name{
+  margin: 12px 0 0;
+  font-family: var(--ds-font-display); font-weight: 500;
+  font-size: 14.5px; line-height: 1.3;
+  min-height: 2.6em;     /* two lines reserved so the row cannot jolt as the lead changes */
+  text-align: center;
+  color: var(--ds-ink-soft);
+  transition: color .4s linear, font-size .4s cubic-bezier(.16,1,.3,1);
+}
+
+/* ---- the one in the middle ---- */
+.ed-bench__item.is-lead .ed-bench__frame{
+  transform: scale(1.34);       /* from the bottom edge, so the name below never moves */
+  background: transparent;
+  border-radius: 0;
+}
+.ed-bench__item.is-lead .ed-bench__tile{ opacity: 0; }
+.ed-bench__item.is-lead .ed-bench__cut{ opacity: 1; filter: none; }
+.ed-bench__item.is-lead .ed-bench__frame::before,
+.ed-bench__item.is-lead .ed-bench__frame::after{ opacity: 0; }
+.ed-bench__item.is-lead .ed-bench__name{ color: var(--ds-ink-heading); font-size: 16.5px; }
+
+/* the strip runs to both edges, so the ends fade rather than being chopped */
+.ed-bench__edge{ position: relative; }
+.ed-bench__edge::before,
+.ed-bench__edge::after{
+  content: ""; position: absolute; top: 0; bottom: 0; width: clamp(40px, 7vw, 120px);
+  pointer-events: none; z-index: 3;
+}
+.ed-bench__edge::before{ left: 0; background: linear-gradient(90deg, var(--ds-bg-warm, #EFE7DB), transparent); }
+.ed-bench__edge::after{ right: 0; background: linear-gradient(270deg, var(--ds-bg-warm, #EFE7DB), transparent); }
+
+.ed-bench__nav{
+  display: flex; gap: var(--ds-space-xs); justify-content: center;
+  margin-top: var(--ds-space-sm);
+}
+.ed-bench__btn{
+  width: 42px; height: 42px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--ds-hairline); background: transparent;
+  color: var(--ds-ink-heading); font: inherit; line-height: 1;
+  transition: border-color .2s linear, color .2s linear;
+}
+.ed-bench__btn:hover{ border-color: var(--ds-accent); color: var(--ds-accent-deep); }
+.ed-bench__btn:focus-visible{ outline: 2px solid var(--ds-accent); outline-offset: 2px; }
+
+@media (max-width: 899px){
+  .ed-bench__item{ width: 132px; }
+  .ed-bench__track{ gap: 40px; padding-top: 34px; }
+  .ed-bench__item.is-lead .ed-bench__frame{ transform: scale(1.28); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .ed-bench__track{ scroll-behavior: auto; }
+  .ed-bench__frame, .ed-bench__tile, .ed-bench__cut, .ed-bench__name,
+  .ed-bench__frame::before, .ed-bench__frame::after{ transition: none; }
+  .ed-bench__item.is-lead .ed-bench__frame{ transform: none; }
+}
