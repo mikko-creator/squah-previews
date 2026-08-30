@@ -3772,3 +3772,94 @@ figcaption.kit-slot__cap,
   .ed-bench__frame::before, .ed-bench__frame::after{ transition: none; }
   .ed-bench__item.is-lead .ed-bench__frame{ transform: none; }
 }
+
+/* ==========================================================================
+   SECTION 29 - THE NINE HUBS, AS AN ENDLESS STRIP
+
+   Nine identical 186px white boxes with generic "Field 01" labels tiled into
+   a spreadsheet 1274px tall, and carried no imagery at all even though each
+   of the nine hub pages already had a matched photograph.
+
+   They are now picture cards on the same endless loop as the bench, so nine
+   fields cost one row rather than three.
+
+   THE REAL FIX IS NOT THE HEIGHT. The lede promised "go straight to the
+   treatment you already have a name for" and not one of the nine treatment
+   lists contained a link. They are links now, twenty of them, each target
+   checked to exist before it was written.
+
+   No centre highlight here, unlike the bench: it was not asked for, and
+   singling out one clinical field would read as an emphasis the treatment
+   count does not support.
+   ========================================================================== */
+.ed-hubs{ position: relative; margin-top: var(--ds-space-md); }
+
+.ed-hubs__track{
+  display: flex;
+  gap: var(--ds-space-md);
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--ds-space-sm);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ed-hubs__track::-webkit-scrollbar{ display: none; }
+.ed-hubs__track.is-shifting{ scroll-snap-type: none; scroll-behavior: auto; }
+
+.ed-hub{
+  flex: 0 0 auto;
+  width: clamp(260px, 27vw, 360px);
+  scroll-snap-align: center;
+}
+.ed-hub__card{
+  margin: 0; height: 100%;
+  display: flex; flex-direction: column;
+  background: var(--ds-bg-surface);
+  border: 1px solid var(--ds-hairline);
+  border-radius: var(--ds-r-surface);
+  overflow: hidden;
+  transition: border-color var(--ds-dur-fast) var(--ds-ease-out),
+              box-shadow var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-hub__card:hover{ border-color: var(--ds-accent); box-shadow: var(--ds-shadow-card); }
+
+.ed-hub__media{ display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--ds-primary-soft); }
+.ed-hub__media img{
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform var(--ds-dur-slow) var(--ds-ease-out);
+}
+.ed-hub__card:hover .ed-hub__media img{ transform: scale(1.05); }
+
+.ed-hub__body{ padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.ed-hub__top{ display: flex; justify-content: space-between; align-items: baseline; }
+.ed-hub__n{ font-family: var(--ds-font-mono); font-size: 10.5px; letter-spacing: .14em; color: var(--ds-accent-deep); }
+.ed-hub__c{ font-size: 11.5px; color: var(--ds-ink-soft); }
+.ed-hub__title{ margin: 0; font-family: var(--ds-font-display); font-weight: 500; font-size: 21px; line-height: 1.15; color: var(--ds-ink-heading); }
+.ed-hub__list{ margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--ds-ink-soft); }
+
+/* every treatment is a real target, underlined so it reads as one inside prose */
+.ed-hub__t{
+  color: var(--ds-accent-deep);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(135,108,51,.35);
+}
+.ed-hub__t:hover{ color: var(--ds-ink-heading); border-bottom-color: var(--ds-accent); }
+
+/* the strip runs to both edges, so the ends fade rather than being chopped */
+.ed-hubs__edge::before,
+.ed-hubs__edge::after{
+  content: ""; position: absolute; top: 0; bottom: 0; width: clamp(30px, 5vw, 90px);
+  pointer-events: none; z-index: 3;
+}
+.ed-hubs__edge::before{ left: 0; background: linear-gradient(90deg, var(--ds-bg-warm, #EFE7DB), transparent); }
+.ed-hubs__edge::after{ right: 0; background: linear-gradient(270deg, var(--ds-bg-warm, #EFE7DB), transparent); }
+
+.ed-hubs__nav{ display: flex; gap: var(--ds-space-xs); justify-content: center; margin-top: var(--ds-space-sm); }
+
+@media (prefers-reduced-motion: reduce){
+  .ed-hubs__track{ scroll-behavior: auto; }
+  .ed-hub__card, .ed-hub__media img{ transition: none; }
+  .ed-hub__card:hover .ed-hub__media img{ transform: none; }
+}
