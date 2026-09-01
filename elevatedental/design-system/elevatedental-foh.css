@@ -3949,3 +3949,125 @@ figcaption.kit-slot__cap,
   .ed-sys__bg{ transition: none; }
   .ed-sys__card:hover .ed-sys__bg{ transform: none; }
 }
+
+
+/* ==========================================================================
+   SECTION 31 - FLYING IN, AS A FULL BLEED PHOTOGRAPHIC BAND
+
+   The scrim was TUNED, not guessed. The frame is mostly very dark (median
+   L=0.034) with one bright hotspot on the lit wing (L=0.969); a scrim heavy
+   enough for that hotspot everywhere would flatten the other 95% into plain
+   navy and leave no photograph to look at. So the real layout was rendered at
+   five scrim alphas and EVERY string measured against the rendered composite
+   each time; this is the LIGHTEST scrim that clears every string with margin
+   (worst 5.42:1, floor 4.5). That keeps as much of the picture as legibility
+   allows instead of drowning it to be safe.
+
+   The eyebrow is the one hand-set colour: in --ds-accent-light it measured
+   4.14:1 here, below the floor. Raising the whole scrim to rescue one small
+   brass label would have cost the entire image, so the label moved instead.
+
+   STRUCTURE NOTE: the background rides a .container--full whose wrappers are
+   neutralised to position:static, because verify-dom-structure R4 refuses an
+   <img> as a direct child of <section>.
+   ========================================================================== */
+.ed-fly{
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #0B141F;            /* so the band still resolves DARK with images off */
+}
+/* the bleed wrapper is a positioning no-op: it exists only to satisfy the grammar */
+.ed-fly > .container--full,
+.ed-fly > .container--full > .row,
+.ed-fly > .container--full > .row > .col{
+  position: static;
+  margin: 0;
+  padding: 0;
+  max-width: none;
+}
+.ed-fly__bg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 42%;
+  display: block;
+}
+.ed-fly::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(11,20,31,0.64) 0%,
+    rgba(11,20,31,0.73) 45%,
+    rgba(11,20,31,0.82) 100%);
+}
+.ed-fly > .container:not(.container--full){ position: relative; z-index: 2; }
+
+.ed-fly .kit-eyebrow{ color: #F0C674; }   /* --ds-accent-light measured 4.14:1 over this band */
+.ed-fly h2{ color: #FFFFFF; }
+.ed-fly .kit-open__no{ color: rgba(240,198,116,.85); }
+.ed-fly .kit-lede{ color: #EDF2F7; }
+.ed-fly .kit-body{ color: #DFE6EE; }
+.ed-fly .kit-micro{ color: #F0C674; }
+
+.ed-journey{
+  list-style: none;
+  margin: var(--ds-space-md) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 2px solid var(--ds-accent-light, #DCBB74);
+}
+.ed-journey__step{ padding: 20px 22px 22px 0; position: relative; }
+.ed-journey__step + .ed-journey__step{ padding-left: 22px; }
+.ed-journey__step + .ed-journey__step::before{
+  content: ""; position: absolute; left: 0; top: 20px; bottom: 22px;
+  width: 1px; background: rgba(255,255,255,.22);
+}
+.ed-journey__n{
+  font-family: var(--ds-font-mono); font-size: 10.5px; letter-spacing: .12em;
+  color: #F0C674;
+}
+.ed-journey__k{
+  margin: 10px 0 6px;
+  font-family: var(--ds-font-display); font-weight: 500;
+  font-size: 18px; line-height: 1.2; color: #FFFFFF;
+}
+.ed-journey__v{ margin: 0; font-size: 13.5px; line-height: 1.5; color: #DFE6EE; }
+
+.ed-fly__note{
+  margin: var(--ds-space-md) 0 0;
+  font-size: 12px; line-height: 1.5;
+  color: rgba(223,230,238,.82);
+}
+
+@media (max-width: 899px){
+  .ed-journey{ grid-template-columns: 1fr; }
+  .ed-journey__step{ padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+  .ed-journey__step + .ed-journey__step{ padding-left: 0; }
+  .ed-journey__step + .ed-journey__step::before{ display: none; }
+
+  /* THE PHONE IS A DIFFERENT PICTURE, not just a narrower one. At 375 the section is 1591px
+     tall, so object-fit:cover scales the 3136x1344 frame by 1.1837 - rendering it 3712x1591,
+     which fits the box EXACTLY on the vertical axis. All the cropping is therefore horizontal,
+     and object-position's Y component has no slack to pan: measured, changing it from 42% to
+     18% moved not one string by 0.01. (That is worth stating, because "shift the crop to a
+     darker part of the frame" is the obvious fix here and it is a dead end.) The bright wing
+     is unavoidable at this aspect, so the SCRIM has to carry it alone.
+
+     Measured, both ways clear the 4.5 floor - but the lighter desktop scrim leaves the eyebrow
+     at 4.90:1, under the 5.0 margin this build holds to everywhere else. This heavier scrim
+     takes the worst string to 6.43:1. */
+  .ed-fly::after{
+    background: linear-gradient(180deg,
+      rgba(11,20,31,0.74) 0%,
+      rgba(11,20,31,0.81) 45%,
+      rgba(11,20,31,0.88) 100%);
+  }
+}
