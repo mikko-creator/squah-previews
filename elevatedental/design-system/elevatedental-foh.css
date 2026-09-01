@@ -4071,3 +4071,57 @@ figcaption.kit-slot__cap,
       rgba(11,20,31,0.88) 100%);
   }
 }
+
+/* ==========================================================================
+   SECTION 32 - HOW PAYMENT WORKS, AS SIX NAMED METHODS
+
+   The section stated its six payment methods as PROSE ("in cash, by bank
+   cheque, by bank transfer, by debit or credit card, or by QR") and scattered
+   three refusals across a quote, a body line and a truth box. Its job is to
+   draw a boundary around the offer, and the boundary was invisible. The six
+   methods are now a counted rail, and the section ENDS on the currency line:
+   the owner asked for everything below it removed, which took out the
+   financing truth box and the new-patients link. That link is not orphaned;
+   patients.html is still reached 4 other ways from this page.
+
+   The H2 is deliberately absent: the owner asked for it gone. Because the
+   section had been wired aria-labelledby="h11", the accessible name moved onto
+   the section as aria-label rather than being left pointing at a deleted id,
+   which would have resolved silently to nothing.
+
+   The cash icon carries a PESO mark, not a dollar. The line directly beneath
+   this rail says fees are quoted in Philippine pesos.
+   ========================================================================== */
+.ed-pay__cap{
+  margin: var(--ds-space-md) 0 10px;
+  font-family: var(--ds-font-mono); font-size: 10.5px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ds-accent-deep);
+}
+.ed-methods{
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(6, minmax(0,1fr));
+  border-top: 2px solid var(--ds-accent);
+}
+.ed-method{ padding: 16px 16px 18px 0; position: relative; }
+.ed-method + .ed-method{ padding-left: 16px; }
+.ed-method + .ed-method::before{
+  content:""; position:absolute; left:0; top:16px; bottom:18px; width:1px; background: var(--ds-hairline);
+}
+.ed-method__n{
+  display:block; font-family: var(--ds-font-mono); font-size:10px;
+  letter-spacing:.12em; color: var(--ds-accent-deep);
+}
+.ed-method__i{ display:block; margin: 12px 0 10px; color: var(--ds-accent); }
+.ed-method__k{
+  display:block; font-family: var(--ds-font-display); font-weight:500;
+  font-size:16px; line-height:1.2; color: var(--ds-ink-heading);
+}
+.ed-pay__pesos{ margin: 14px 0 0; font-size: 13px; color: var(--ds-ink-soft); }
+
+@media (max-width: 899px){
+  .ed-methods{ grid-template-columns: 1fr 1fr; }
+  .ed-method{ padding: 14px 12px 16px 0; border-bottom: 1px solid var(--ds-hairline); }
+  .ed-method + .ed-method{ padding-left: 0; }
+  .ed-method + .ed-method::before{ display:none; }
+  .ed-method__i{ margin: 10px 0 8px; }
+}

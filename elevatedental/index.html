@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=f2d9eae2">
   <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=c2a93e77">
   <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
-  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=df789282">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=93adbeb4">
   <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=6931248b">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
@@ -1106,39 +1106,56 @@
 
 
 
-<section class="section section--cool" id="s11" aria-labelledby="h11" data-rise>
+<section class="section section--cool ed-pay" id="s11" aria-label="How payment works" data-rise>
   <div class="container">
-    <div class="row row--split">
-
-      <div class="col col--span-7">
+    <div class="row row--tight">
+      <div class="col col--full">
         <div class="kit-open">
           <div class="kit-open__rule"><span class="kit-open__idx"></span></div>
           <div class="kit-open__head">
             <span class="kit-open__no">11</span>
             <div>
               <span class="kit-eyebrow">Before you book</span>
-              <h2 id="h11">How payment works</h2>
             </div>
           </div>
         </div>
         <p class="kit-quote kit-quote--display readw">Elevate Dental does not accept HMO or dental insurance. All treatment is self-pay.</p>
         <p class="kit-body readw">That is the first thing most patients in this city ask, so it is answered on the front page instead of at the counter. Every fee is settled directly with the branch that treats you.</p>
-        <p class="kit-body readw">Payment is taken at the clinic in cash, by bank cheque, by bank transfer, by debit or credit card, or by QR. Fees are quoted in Philippine pesos.</p>
+        <p class="ed-pay__cap">Accepted at the clinic</p>
+        <ul class="ed-methods">
+          <li class="ed-method">
+            <span class="ed-method__n">01</span>
+            <svg class="ed-method__i" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7.4 5.2v13.6"/><path d="M7.4 5.2h5.1a3.5 3.5 0 0 1 0 7H7.4"/><path d="M4.9 8.6h13.4"/><path d="M4.9 11.2h13.4"/></svg>
+            <span class="ed-method__k">Cash</span>
+          </li>
+          <li class="ed-method">
+            <span class="ed-method__n">02</span>
+            <svg class="ed-method__i" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.6" y="5" width="18.8" height="14" rx="1.8"/><path d="M6 9.2h6.4"/><path d="M6 15.4c1.7-2 3-.4 4.3-1.6s2.4-1.4 4 .8"/><path d="M15.6 11.8h2.8"/></svg>
+            <span class="ed-method__k">Bank cheque</span>
+          </li>
+          <li class="ed-method">
+            <span class="ed-method__n">03</span>
+            <svg class="ed-method__i" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.8 9.2h12.6"/><path d="M13.9 6.7 16.4 9.2l-2.5 2.5"/><path d="M20.2 14.8H7.6"/><path d="M10.1 12.3 7.6 14.8l2.5 2.5"/></svg>
+            <span class="ed-method__k">Bank transfer</span>
+          </li>
+          <li class="ed-method">
+            <span class="ed-method__n">04</span>
+            <svg class="ed-method__i" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.4" y="5.4" width="19.2" height="13.2" rx="2"/><rect x="5.2" y="9.4" width="5.4" height="4.2" rx="0.8"/><path d="M7.9 9.4v4.2"/></svg>
+            <span class="ed-method__k">Debit card</span>
+          </li>
+          <li class="ed-method">
+            <span class="ed-method__n">05</span>
+            <svg class="ed-method__i" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.4" y="5.4" width="19.2" height="13.2" rx="2"/><path d="M2.4 9.9h19.2" stroke-width="2.6"/><path d="M5.6 15h4.2"/><path d="M16.4 15h2.6"/></svg>
+            <span class="ed-method__k">Credit card</span>
+          </li>
+          <li class="ed-method">
+            <span class="ed-method__n">06</span>
+            <svg class="ed-method__i" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.2" y="3.2" width="6.6" height="6.6" rx="1"/><rect x="14.2" y="3.2" width="6.6" height="6.6" rx="1"/><rect x="3.2" y="14.2" width="6.6" height="6.6" rx="1"/><path d="M14.2 14.2h2.8"/><path d="M20.8 14.2v2.8"/><path d="M17.4 17.6h1.8"/><path d="M14.2 20.8h2.8"/></svg>
+            <span class="ed-method__k">QR</span>
+          </li>
+        </ul>
+        <p class="ed-pay__pesos">Fees are quoted in Philippine pesos.</p>
       </div>
-
-      <div class="col col--span-5">
-        <div class="kit-truth">
-          <p>No financing or instalment option is claimed anywhere on this site.</p>
-        </div>
-        <div class="kit-foot">
-          <p class="kit-micro">Where the detail lives</p>
-          <p class="kit-body">The guide for new patients covers what a first visit involves and what to bring to it.</p>
-          <div class="kit-actions kit-actions--tight">
-            <a class="kit-btn kit-btn--ghost" href="patients.html"><span>New patients</span></a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
