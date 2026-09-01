@@ -3863,3 +3863,89 @@ figcaption.kit-slot__cap,
   .ed-hub__card, .ed-hub__media img{ transition: none; }
   .ed-hub__card:hover .ed-hub__media img{ transform: none; }
 }
+
+/* ==========================================================================
+   SECTION 30 - THE EIGHT NAMED SYSTEMS, AS A PHOTOGRAPHIC STRIP
+
+   Was a two column block: prose and a photograph on the left, eight cards in a
+   dark grid on the right. Three faults, all measured. Seven of the eight cards
+   carried the badge "Named installed system" inside a section headed "each one
+   named" - a tautology printed seven times, given the same weight as the one
+   badge that says something ("Every branch"). None of the eight linked anywhere,
+   though technology.html carries a passage on every one with usable anchors. And
+   it ran 1131px on desktop, 2604px on a phone.
+
+   Now one full-bleed strip on the shared endless carousel: 833px, every system
+   linked to its own passage, and only the badge that carries information kept.
+
+   THE SCRIM IS LOAD-BEARING, not decoration. White type sits on eight different
+   photographs, so it is the only thing between the reader and whatever the image
+   happens to be doing. Measured on all eight after the fact: worst string 5.73:1
+   against a 4.5 floor.
+   ========================================================================== */
+
+.ed-sys-strip{ position: relative; margin-top: var(--ds-space-md); }
+.ed-sys-strip__track{
+  display: flex; gap: var(--ds-space-md); list-style: none; margin: 0;
+  padding: 0 0 var(--ds-space-sm);
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.ed-sys-strip__track::-webkit-scrollbar{ display: none; }
+.ed-sys-strip__track.is-shifting{ scroll-snap-type: none; scroll-behavior: auto; }
+
+.ed-sys{ flex: 0 0 auto; width: clamp(270px, 28vw, 380px); scroll-snap-align: center; }
+.ed-sys__card{
+  position: relative; margin: 0; height: 100%; min-height: 340px;
+  border-radius: var(--ds-r-surface); overflow: hidden;
+  display: flex; align-items: flex-end;
+  background: #16273A;
+}
+.ed-sys__bg{
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  transition: transform var(--ds-dur-slow) var(--ds-ease-out);
+}
+.ed-sys__card:hover .ed-sys__bg{ transform: scale(1.05); }
+
+/* THE SCRIM IS LOAD-BEARING. White type sits on a photograph here, so this is the only
+   thing standing between the reader and whatever the image is doing underneath. It is
+   heaviest where the text sits and clears toward the top so the picture still reads. */
+.ed-sys__card::after{
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(11,20,31,.18) 0%,
+    rgba(11,20,31,.52) 38%,
+    rgba(11,20,31,.86) 68%,
+    rgba(11,20,31,.94) 100%);
+}
+.ed-sys__body{ position: relative; z-index: 2; padding: 22px 22px 24px; }
+.ed-sys__name{ margin: 0 0 8px; font-family: var(--ds-font-display); font-weight: 500; font-size: 20px; line-height: 1.2; }
+.ed-sys__name a{
+  color: #FFFFFF; text-decoration: none;
+  border-bottom: 1px solid rgba(240,198,116,.55);
+}
+.ed-sys__name a:hover{ color: var(--ds-accent-light, #DCBB74); border-bottom-color: var(--ds-accent-light, #DCBB74); }
+.ed-sys__note{ margin: 0; font-size: 13.5px; line-height: 1.55; color: #DFE6EE; }
+.ed-sys__where{
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
+  font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ds-accent-light, #DCBB74);
+}
+.ed-sys__where::before{ content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.ed-sys-strip__edge::before,
+.ed-sys-strip__edge::after{
+  content: ""; position: absolute; top: 0; bottom: 0; width: clamp(30px, 5vw, 90px);
+  pointer-events: none; z-index: 3;
+}
+.ed-sys-strip__edge::before{ left: 0; background: linear-gradient(90deg, var(--ds-bg-cool, #EFEDE6), transparent); }
+.ed-sys-strip__edge::after{ right: 0; background: linear-gradient(270deg, var(--ds-bg-cool, #EFEDE6), transparent); }
+
+.ed-sys-strip__nav{ display: flex; gap: var(--ds-space-xs); justify-content: center; margin-top: var(--ds-space-sm); }
+
+@media (prefers-reduced-motion: reduce){
+  .ed-sys-strip__track{ scroll-behavior: auto; }
+  .ed-sys__bg{ transition: none; }
+  .ed-sys__card:hover .ed-sys__bg{ transform: none; }
+}
