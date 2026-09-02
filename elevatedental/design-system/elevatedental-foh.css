@@ -4183,7 +4183,8 @@ figcaption.kit-slot__cap,
 /* text and marks on glass */
 .ed-nav__link, .ed-logo__word{ color: #EEF3F8; }
 .ed-nav__link:hover{ color: #FFFFFF; }
-.ed-caret{ border-top-color: #EEF3F8; }
+/* the border-top recolour that used to sit here was a no-op: the caret is drawn
+   with border-right and border-bottom. Corrected in SECTION 36. */
 .kit-ring__track{ stroke: rgba(255,255,255,.45); }
 .kit-ring__index{ stroke: #E8C77A; }
 .ed-burger i, .ed-burger i::before, .ed-burger i::after{ background: #EEF3F8; }
@@ -4271,4 +4272,221 @@ figcaption.kit-slot__cap,
 
 @media (max-width: 1100px){
   .ed-shelf{ border-radius: 999px; }
+}
+
+
+/* ==========================================================================
+   SECTION 35 - THE HOMEPAGE HERO AS A PHOTOGRAPH CARD
+
+   The old hero put the H1 at y=401, the vertical MIDPOINT, so the top 303px
+   was photograph with nothing on it; the content column was 52% of the width,
+   leaving ~690px empty; and a wash covered the lower 60% of the picture. The
+   picture now leads and the text sits on its own glass panel.
+
+   NO WASH OVER THE IMAGE. A bottom gradient had to reach 0.97 opacity before
+   white type cleared 4.5:1 over the bright parts, which drowned half the
+   photograph. Measured alternative: give the text its own panel and leave the
+   image alone. Panel sweep: 0.50 -> 3.43 (fails), 0.58 -> 4.26 (fails),
+   0.66 -> 5.32, 0.72 -> 6.34. The panel ships at 0.66 and roughly three
+   quarters of the photograph is completely unobscured.
+
+   THE FOLD. aspect-ratio 16/9 fixed the card at 781px, so the CTA sat at
+   y=901 on every screen: 201px below the fold at 700px tall, 133 at 768,
+   101 at 800, 1 at 900. Only a 1080px screen saw the button. The card now
+   takes its height from the viewport and the whole hero fits above the fold
+   at every tested height.
+
+   Scoped to hz-*; the other 30 heroes keep foh-hero-* untouched.
+   ========================================================================== */
+/* FULL BLEED. The card was inset 26px a side with a 32px radius; the owner wants the
+   photograph edge to edge. The radius goes with the inset: a rounded corner clipped by the
+   viewport edge reads as a rendering fault, not as a corner.
+
+   padding-block: 0 matches what .foh-hero already does at line 1024. Without it this section
+   inherited the standard 95.04px section rhythm and left a navy band between the header and a
+   full bleed photograph, which read as a mistake. Heroes are exempt from the cadence gate:
+   verify-section-rhythm.mjs sets HERO_EXEMPT true and matches isHero = /hero/.test(cls); this
+   section carries kit-hero, so it qualifies on the same terms the old hero did. */
+.hz{ padding-block: 0; }
+.hz .container--full{ padding-inline: 0; }
+.hz-card{
+  position: relative;
+  border-radius: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0B141F;
+  /* svh, not vh: on mobile browsers vh ignores the collapsing toolbar and would
+     push the button under it.
+     The offset is measured, not guessed. It was 240px while the section still carried the
+     95.04px rhythm padding, which put the card top at 193px. With padding-block: 0 the card
+     starts at the header bottom instead, 98px, so the offset comes down to 140px: the card
+     then ends 42px short of the fold, which is what lets the next section peek. */
+  height: min(781px, calc(100svh - 140px));
+  min-height: 420px;
+}
+.hz-img{
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%;
+  display: block;
+}
+.hz-say{
+  position: absolute; z-index: 2;
+  left: clamp(20px, 3vw, 40px); bottom: clamp(20px, 3vw, 40px);
+  max-width: 640px; padding: clamp(22px, 2.4vw, 32px);
+  border-radius: 26px;
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  background: rgba(18, 32, 47, 0.66);
+  border: 1px solid rgba(255,255,255,.20);
+  box-shadow: 0 22px 60px rgba(11,20,31,.36), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.hz-h{
+  margin: 0 0 14px;
+  font-family: var(--ds-font-display); font-weight: 500;
+  font-size: clamp(28px, 3.4vw, 50px); line-height: 1.06;
+  color: #FFFFFF; letter-spacing: -.01em;
+}
+.hz-h__l{ display: block; text-wrap: nowrap; }
+.hz-lede{
+  margin: 0 0 20px; max-width: 46ch;
+  font-size: clamp(14px, 1.1vw, 16.5px); line-height: 1.5; color: #E3EAF2;
+}
+
+
+
+@media (max-width: 899px){
+  .hz .container--full{ padding-inline: 0; }
+  /* the phone STACKS, it does not crop: holding a fixed height while the image, the pills and
+     the panel stack inside overflowed the card and painted the H1 on top of the gold button */
+  .hz-card{ height: auto; min-height: 0; border-radius: 0; display: flex; flex-direction: column; }
+  .hz-img{ position: relative; inset: auto; height: 300px; flex: 0 0 auto; }
+  .hz-h__l{ display: inline; text-wrap: wrap; }
+  .hz-h{ font-size: clamp(27px, 8vw, 38px); }
+  .hz-say{
+    position: static; max-width: none; order: 3;
+    border-radius: 0; border: 0; border-top: 1px solid rgba(255,255,255,.14);
+    box-shadow: none; background: rgba(18,32,47,.94);
+    padding: 22px 20px 26px;
+  }
+}
+
+
+/* ==========================================================================
+   SECTION 36 - THE RESULTS DROPDOWN, AND LEGIBLE CARETS
+
+   The bar carried eleven top level items. Patients and Insights now sit under
+   Results, taking it to nine and giving the nav room to breathe.
+
+   Results stops being a plain link and becomes a trigger, so results.html is
+   linked FIRST inside the panel; otherwise it would be orphaned from the nav,
+   exactly as the mega links treatments.html as "All Treatments".
+
+   THE CARET WAS AN ACTUAL BUG. It is a rotated square drawn with border-RIGHT
+   and border-BOTTOM in --ds-accent-deep (#6F5828). SECTION 33 tried to
+   recolour it with border-top-color, which the caret does not use, so that
+   rule never did anything and the arrows stayed dark brown gold on dark glass.
+   Both real borders are set here, in the lighter gold used elsewhere in this
+   build for legible brass on a dark ground.
+
+   The panel is CSS driven (:hover / :focus-within) and completely independent
+   of the mega panel's JS, which is untouched.
+   ========================================================================== */
+/* Measured against the capsule the carets actually sit on, rgb(95,103,111):
+     #6F5828  1.18:1  the original, effectively invisible
+     #C69E4C  2.30:1  --ds-accent-light, still under the bar
+     #F0C674  3.57:1  clears
+     #F5D89A  4.15:1  <- shipped: clearly lighter, still unmistakably gold
+     #FFE3AE  4.61:1  ample, but drifting to cream
+   The 3:1 bar is WCAG's non-text contrast minimum for UI components, which is
+   the right standard for an arrow; 4.15 leaves real headroom above it. */
+.ed-caret, .ed-dcaret{
+  border-right-color: #F5D89A;
+  border-bottom-color: #F5D89A;
+}
+
+/* The capsule carries overflow:hidden so its pill ends clip their content. That also clipped
+   this dropdown, which lives inside the bar: measured, only 19px of a 141px panel rendered and
+   the last link was not clickable at all. The mega panel escapes because it is a SIBLING of
+   .ed-shelf, not a child. Nothing inside the bar actually paints to the rounded ends (the
+   content is inset by the shelf padding), so the clip can be released. */
+.ed-shelf{ overflow: visible; }
+.ed-has-sub{ position: relative; }
+.ed-sub{
+  position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(6px);
+  z-index: 60; min-width: 190px; margin: 0; padding: 8px;
+  list-style: none;
+  border-radius: 18px;
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  background: rgba(18, 32, 47, 0.86);
+  border: 1px solid rgba(255,255,255,.20);
+  box-shadow: 0 18px 46px rgba(11,20,31,.34), inset 0 1px 0 rgba(255,255,255,.22);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--ds-dur-fast) var(--ds-ease-out), transform var(--ds-dur-fast) var(--ds-ease-out);
+}
+.ed-has-sub:hover .ed-sub,
+.ed-has-sub:focus-within .ed-sub,
+.ed-has-sub.is-open .ed-sub{
+  opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+}
+.ed-sub a{
+  display: block; padding: 9px 14px; border-radius: 10px;
+  font-size: 13.5px; color: #EDF2F7; text-decoration: none; white-space: nowrap;
+}
+.ed-sub a:hover, .ed-sub a:focus-visible{ background: rgba(255,255,255,.12); color: #FFFFFF; }
+
+/* the panel is desktop only; below the collapse the drawer already carries all three */
+@media (max-width: 1100px){
+  .ed-sub{ display: none; }
+}
+@media (prefers-reduced-motion: reduce){
+  .ed-sub{ transition: none; }
+}
+
+
+/* ==========================================================================
+   SECTION 37 - THE NAV CTA AS A GOLD OUTLINED PILL
+
+   The reference is a metallic gold RIM around a dark fill, not a filled gold
+   slab. The rim is a real gradient, layered padding-box over border-box, so it
+   catches light along its length instead of being one flat stroke.
+
+   The label changed from "Book an Appointment" to "Call now", so the
+   destination changed with it: a button that says call and does not lead to a
+   number is a broken promise. It points at contact.html, which carries all
+   four direct lines. There is no single correct tel: for a four branch
+   practice, and hard coding one would silently favour a branch.
+
+   SECTION 34 gave this button a filled chrome-gold face; that is superseded
+   here. Both are scoped to .ed-shelf__in .ed-cta-m, so page buttons elsewhere
+   on the site keep their own treatment.
+   ========================================================================== */
+.ed-shelf__in .ed-cta-m{
+  /* the dark fill sits on padding-box, the gold rim on border-box */
+  background-color: transparent;
+  background-image:
+    linear-gradient(180deg, #1B2E44 0%, #16273A 100%),
+    linear-gradient(135deg, #8A6A28 0%, #F5D89A 22%, #FFF3D4 38%, #E8C77A 55%, #A9812F 78%, #F0C674 100%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 2px solid transparent;
+  color: #F7ECD2;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.18),
+    0 2px 14px rgba(11,20,31,.34),
+    0 0 22px rgba(245,216,154,.22);   /* the soft bloom the reference has */
+  text-shadow: 0 1px 2px rgba(6,12,20,.5);
+}
+.ed-shelf__in .ed-cta-m:hover{
+  background-image:
+    linear-gradient(180deg, #21384F 0%, #1A2D42 100%),
+    linear-gradient(135deg, #A9812F 0%, #FFF3D4 24%, #FFFFFF 40%, #F5D89A 58%, #C09442 80%, #FFE9B8 100%);
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.18),
+    0 2px 16px rgba(11,20,31,.38),
+    0 0 30px rgba(245,216,154,.34);
+}
+.ed-shelf__in .ed-cta-m:focus-visible{
+  outline: 2px solid #F5D89A;
+  outline-offset: 3px;
 }

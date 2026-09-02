@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="design-system/elevatedental-tokens.css?v=f2d9eae2">
   <link rel="stylesheet" href="design-system/elevatedental-chrome.css?v=c2a93e77">
   <link rel="stylesheet" href="design-system/elevatedental-structural.css?v=447f44f6">
-  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=e657f51e">
+  <link rel="stylesheet" href="design-system/elevatedental-foh.css?v=9caf5fb0">
   <link rel="stylesheet" href="design-system/elevatedental-motion.css?v=6931248b">
   <link rel="stylesheet" href="design-system/brand-card-standard.css?v=0b43a67a">
 
@@ -64,17 +64,22 @@
           <li class="ed-nav__item"><a class="ed-nav__link" href="technology.html" data-page="technology.html"><span class="ed-navlabel">Technology</span></a></li>
           <li class="ed-nav__item"><a class="ed-nav__link" href="prices.html" data-page="prices.html"><span class="ed-navlabel">Prices</span></a></li>
           <li class="ed-nav__item"><a class="ed-nav__link" href="locations.html" data-page="locations.html"><span class="ed-navlabel">Locations</span></a></li>
-          <li class="ed-nav__item"><a class="ed-nav__link" href="results.html" data-page="results.html"><span class="ed-navlabel">Results</span></a></li>
+          <li class="ed-nav__item ed-has-sub">
+            <button class="ed-nav__link" type="button" id="results-trigger" aria-expanded="false" aria-controls="results-menu"><span class="ed-navlabel">Results</span><i class="ed-caret" aria-hidden="true"></i></button>
+            <ul class="ed-sub" id="results-menu" aria-labelledby="results-trigger">
+              <li><a href="results.html" data-page="results.html">Results</a></li>
+              <li><a href="patients.html" data-page="patients.html">Patients</a></li>
+              <li><a href="insights.html" data-page="insights.html">Insights</a></li>
+            </ul>
+          </li>
           <li class="ed-nav__item"><a class="ed-nav__link" href="dental-tourism.html" data-page="dental-tourism.html"><span class="ed-navlabel">Dental Tourism</span></a></li>
-          <li class="ed-nav__item"><a class="ed-nav__link" href="patients.html" data-page="patients.html"><span class="ed-navlabel">Patients</span></a></li>
           <li class="ed-nav__item"><a class="ed-nav__link" href="about.html" data-page="about.html"><span class="ed-navlabel">About</span></a></li>
-          <li class="ed-nav__item"><a class="ed-nav__link" href="insights.html" data-page="insights.html"><span class="ed-navlabel">Insights</span></a></li>
           <li class="ed-nav__item"><a class="ed-nav__link" href="contact.html" data-page="contact.html"><span class="ed-navlabel">Contact</span></a></li>
         </ul>
       </nav>
 
       
-      <a class="kit-btn kit-btn--primary ed-cta-m" href="#book">Book an Appointment</a>
+      <a class="kit-btn kit-btn--primary ed-cta-m" href="contact.html" data-page="contact.html">Call now</a>
       <button class="ed-burger hamburger" type="button" id="hamburger" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Open menu"><i aria-hidden="true"></i></button>
     </div>
   </div>
@@ -277,25 +282,16 @@
 
 
 
-<section class="section surface-dark kit-hero foh-hero" id="s01" aria-labelledby="h01" data-surface="dark" data-rise>
-  <div class="container">
+<section class="section surface-dark kit-hero hz" id="s01" aria-labelledby="h01" data-surface="dark">
+  <div class="container container--full">
     <div class="row">
       <div class="col col--full">
-        <div class="foh-hero__stage" data-wash="tall">
-          <figure class="foh-hero__band">
-            <img class="foh-hero__img" src="assets/gen-hero-treatment-room.jpg" alt="A treatment room with a pale leather dental chair beside a full-height window, tropical foliage outside, deep navy cabinetry and brushed brass fittings." width="3136" height="1344" loading="eager" fetchpriority="high" decoding="async">
-            
-          </figure>
-          <div class="foh-hero__inner">
-              <h1 class="foh-hero__title" id="h01"><span class="foh-hero__tline">Nine disciplines.</span> <span class="foh-hero__tline">Thirty-one specialists.</span> <span class="foh-hero__tline">One clinic.</span></h1>
-            </div>
-          <div class="foh-hero__lockup">
-            <p class="foh-hero__eyebrow">Elevate Dental, Metro Manila</p>
-            <p class="foh-hero__lede">Complex dental work should not mean being sent somewhere else.</p>
-            <div class="kit-actions">
-              <a class="kit-btn kit-btn--primary" href="contact.html">Book an Appointment</a>
-              <a class="kit-btn kit-btn--ghost" href="specialists.html"><span>See our specialists</span></a>
-            </div>
+        <div class="hz-card">
+          <img class="hz-img" src="assets/owner-hero-child-and-clinician.jpg" alt="A clinician in a mask and gloves examining a smiling child seated in a dental chair, holding a hand mirror for her." width="2560" height="1707" loading="eager" fetchpriority="high" decoding="async">
+          <div class="hz-say">
+            <h1 class="hz-h" id="h01"><span class="hz-h__l">Nine disciplines.</span> <span class="hz-h__l">Thirty-one specialists.</span> <span class="hz-h__l">One clinic.</span></h1>
+            <p class="hz-lede">Complex dental work should not mean being sent somewhere else.</p>
+            <a class="kit-btn kit-btn--primary hz-cta" href="contact.html">Book an Appointment</a>
           </div>
         </div>
       </div>
@@ -1345,6 +1341,29 @@
 
   var header = document.querySelector(".site-header");
   var mega = document.getElementById("mega");
+  /* --- the Results dropdown ------------------------------------------------
+     Deliberately independent of the mega panel above: opening and closing is
+     CSS (:hover / :focus-within), so this only mirrors state into aria and
+     handles Escape. Nothing here can affect the mega. */
+  var subItem = document.querySelector(".ed-has-sub");
+  var subTrigger = document.getElementById("results-trigger");
+  if (subItem && subTrigger) {
+    var syncSub = function (open) { subTrigger.setAttribute("aria-expanded", open ? "true" : "false"); };
+    subItem.addEventListener("mouseenter", function () { syncSub(true); });
+    subItem.addEventListener("mouseleave", function () { syncSub(false); });
+    subItem.addEventListener("focusin", function () { syncSub(true); });
+    subItem.addEventListener("focusout", function (e) {
+      if (!subItem.contains(e.relatedTarget)) syncSub(false);
+    });
+    subTrigger.addEventListener("click", function () {
+      syncSub(subTrigger.getAttribute("aria-expanded") !== "true");
+      subItem.classList.toggle("is-open");
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { syncSub(false); subItem.classList.remove("is-open"); subTrigger.blur(); }
+    });
+  }
+
   var megaTrigger = document.getElementById("mega-trigger");
   var megaScrim = document.getElementById("mega-scrim");
   var drawer = document.getElementById("drawer-root");
