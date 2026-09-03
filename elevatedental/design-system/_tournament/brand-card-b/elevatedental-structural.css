@@ -1,0 +1,139 @@
+/* ============================================================================
+   elevatedental, BRAND CARD CONCEPT B "Warm Clinical", STRUCTURAL SHEET.
+
+   Token pure by contract: zero colour literals live here. Every colour, radius,
+   duration and easing is referenced through the identity tokens declared in
+   elevatedental-tokens.css. This sheet owns LAYOUT only (the sheet wrapper, the
+   section rhythm, the grid systems, the reveal motion, the breakpoints).
+   Component skins and reading measures live in the identity sheet's own inline
+   style block, where the specimen can show them beside the tokens they consume.
+
+   Layout provenance: 00-globals/specs/_MODERN-WOW-SPEC.md section 6 (negative
+   space with rhythm, one offset grid moment) and the sector blueprint's
+   generous banding at 40-research/composition-medical-health.md.
+   ============================================================================ */
+
+*,
+*::before,
+*::after{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  background:var(--ds-bg-surface-2);
+  color:var(--ds-ink);
+  font-family:var(--ds-font-body);
+  font-size:17px;
+  line-height:1.8;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{max-width:100%;display:block}
+
+/* --- the sheet: one continuous warm ground carrying grain plus two washes -- */
+.ed-sheet{
+  position:relative;
+  max-width:var(--ds-container-max);
+  margin:0 auto;
+  padding:0 clamp(20px,5vw,56px) var(--ds-space-xl);
+  background:
+    var(--ds-glow-warm),
+    var(--ds-glow-wash),
+    var(--ds-bg-surface-2);
+}
+.ed-sheet::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:var(--ds-grain);
+  mix-blend-mode:multiply;
+  pointer-events:none;
+}
+.ed-sheet > *{position:relative;z-index:1}
+
+/* --- section rhythm: a hairline seam, generous vertical air ---------------- */
+.ed-sheet section{
+  padding:var(--ds-section-py) 0;
+  border-top:1px solid var(--ds-line);
+}
+.ed-sheet section:first-of-type{border-top:0}
+
+/* --- grid systems --------------------------------------------------------- */
+.ed-grid{display:grid;gap:clamp(18px,2.4vw,28px)}
+.ed-lockups,
+.ed-photos,
+.ed-cards,
+.ed-motifset{grid-template-columns:repeat(3,1fr)}
+.ed-fields{grid-template-columns:repeat(2,1fr)}
+
+/* the palette wall is the one deliberate offset grid on the sheet */
+.ed-bento{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:var(--ds-space-sm);
+  margin-top:var(--ds-space-lg);
+}
+.ed-swatch--wide{grid-column:span 2}
+.ed-swatch--tall{grid-row:span 2}
+
+/* --- the type specimen table ---------------------------------------------- */
+.ed-typerow{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:clamp(18px,3vw,44px);
+  align-items:baseline;
+  padding:var(--ds-space-md) 0;
+  border-bottom:1px solid var(--ds-line);
+}
+.ed-typerow:last-child{border-bottom:0}
+
+/* --- the applied vignette split ------------------------------------------- */
+.ed-vignette__body{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:clamp(26px,4vw,58px);
+  align-items:center;
+  padding:clamp(34px,4.4vw,60px) clamp(28px,4vw,56px) clamp(20px,3vw,34px);
+}
+
+/* --- control and tag rows -------------------------------------------------- */
+.ed-btnrow{display:flex;flex-wrap:wrap;gap:var(--ds-space-sm);align-items:center;margin-top:var(--ds-space-lg)}
+.ed-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:var(--ds-space-sm)}
+.ed-stack{display:flex;flex-wrap:wrap;gap:var(--ds-space-md);align-items:center;margin-top:var(--ds-space-md)}
+
+/* --- motion: staggered scroll reveal, reduced motion honoured -------------- */
+body.ed-js .ed-reveal{opacity:0;transform:translateY(16px)}
+body.ed-js .ed-reveal.ed-in{
+  opacity:1;
+  transform:none;
+  transition:opacity .7s var(--ds-ease-out),transform .7s var(--ds-ease-out);
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  body.ed-js .ed-reveal{opacity:1;transform:none}
+}
+
+/* --- breakpoints ----------------------------------------------------------- */
+@media (max-width:1000px){
+  .ed-bento{grid-template-columns:repeat(2,1fr)}
+  .ed-swatch--tall{grid-row:auto}
+  .ed-lockups,
+  .ed-photos,
+  .ed-cards,
+  .ed-motifset{grid-template-columns:repeat(2,1fr)}
+  .ed-vignette__body{grid-template-columns:1fr}
+  .ed-vignette__media{max-width:340px}
+}
+
+@media (max-width:720px){
+  .ed-lockups,
+  .ed-photos,
+  .ed-cards,
+  .ed-motifset,
+  .ed-fields,
+  .ed-bento{grid-template-columns:1fr}
+  .ed-swatch--wide{grid-column:auto}
+  .ed-typerow{grid-template-columns:1fr;gap:10px}
+}

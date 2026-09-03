@@ -1,0 +1,158 @@
+/* ============================================================================
+   elevatedental, BRAND CARD CONCEPT B "Warm Clinical", IDENTITY TOKENS.
+
+   Stage 1 artifact. This sheet is the concept's candidate IDENTITY token
+   declaration, re-filled from the canonical token API at
+   .claude/design-system-unified/00-globals/tokens/tokens.css.
+
+   It emits IDENTITY only (palette, type, signature, the constrained radius
+   role set). It deliberately does NOT emit the SYSTEM families (z-index scale,
+   opacity scale, motion extension): those are brand agnostic and are added by
+   the graft step after the owner pick.
+
+   Derived from:
+     _handoff/visual-direction.md  (C7, LOCKED) light ground, dark ratio 0,
+       restrained energy, no dark hero. Dark is punctuation at most.
+     _handoff/elevatedental-tokens-spec.md (C6) the existing brand furniture,
+       recorded, not mandated: navy, bronze, muted green, gold, near black,
+       white grounds, Playfair Display over Montserrat, self hosted.
+     40-research/composition-medical-health.md  the sector blueprint:
+       calming tint washes (F4 / J10), circle masked imagery (H2 / H5),
+       the A2 circle up arc seam, appointment CTA as the spine.
+
+   CONCEPT B ARGUMENT: a patient choosing a dentist is choosing to be looked
+   after. Muted green and warm neutrals carry the ground as the calming
+   register, deep navy anchors headings and every primary control, gold is the
+   single moment of warmth and never carries a word.
+
+   Contrast, computed against the white ground:
+     ink        #1F2124   16.1:1
+     navy       #243A52   11.7:1
+     green      #4F6754    6.2:1
+     ink soft   #5A6472    6.0:1
+     bronze     #876C33    4.9:1   (text safe, the warm accent that may carry copy)
+     gold       #C69E4C    2.5:1   (decorative ONLY; 4.7:1 on navy, so it is the
+                                    legible accent once the surface flips dark)
+   ============================================================================ */
+
+:root{
+  /* --- INK ------------------------------------------------------------- */
+  --ds-ink:#1F2124;
+  --ds-ink-soft:#5A6472;
+  --ds-ink-heading:#243A52;
+  --ds-ink-on-dark:#F5F2EB;
+
+  /* --- SURFACE. Light is the ground, always. --------------------------- */
+  --ds-bg-surface:#FFFFFF;
+  --ds-bg-surface-2:#F7F4EE;
+  --ds-bg-warm:#EDF1EC;
+
+  /* --- PRIMARY, the anchor ---------------------------------------------- */
+  --ds-primary:#243A52;
+  --ds-primary-deep:#1B2C3E;
+  --ds-primary-soft:#E7ECF1;
+
+  /* --- ACCENT, the calming register ------------------------------------- */
+  --ds-accent:#4F6754;
+  --ds-accent-deep:#3C5041;
+  --ds-accent-soft:#E3EAE3;
+  --ds-accent-2:#876C33;
+  --ds-accent-ink:#6E5622;
+
+  /* --- SIGNATURE, decorative warmth ------------------------------------- */
+  --ds-signature:#C69E4C;
+  --ds-signature-soft:rgba(198,158,76,.14);
+
+  /* --- LINE + SCRIM ------------------------------------------------------ */
+  --ds-line:#E4DFD4;
+  --ds-line-cool:#D9E1D9;
+  --ds-line-hair:rgba(36,58,82,.10);
+  --ds-scrim:rgba(31,33,36,.45);
+
+  /* --- SHADOW. Layered, never a single flat drop. ------------------------ */
+  --ds-shadow-rest:0 1px 2px rgba(36,58,82,.05);
+  --ds-shadow-card:0 1px 3px rgba(36,58,82,.06),0 14px 34px rgba(36,58,82,.07);
+  --ds-shadow-lift:0 2px 5px rgba(36,58,82,.07),0 26px 56px rgba(36,58,82,.13);
+  --ds-inset-hi:inset 0 1px 0 rgba(255,255,255,.72);
+
+  /* --- RADIUS, the constrained role set (control / surface / pill).
+         Concept B pushes surface large on purpose: care reads as softness. -- */
+  --ds-r-control:10px;
+  --ds-r-surface:28px;
+  --ds-r-pill:999px;
+
+  /* --- TYPE. Playfair Display and Montserrat are SELF HOSTED by the client.
+         No font link is emitted anywhere in this concept. The stacks fall back
+         to a like shaped local face if a weight is missing. ----------------- */
+  --ds-font-display:"Playfair Display","Iowan Old Style",Georgia,"Times New Roman",serif;
+  --ds-font-body:"Montserrat","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+
+  /* --- LAYOUT ------------------------------------------------------------ */
+  --ds-container-max:1180px;
+  --ds-section-py:clamp(56px,7vw,96px);
+  --ds-space-xs:8px;
+  --ds-space-sm:14px;
+  --ds-space-md:24px;
+  --ds-space-lg:40px;
+  --ds-space-xl:64px;
+
+  /* --- MOTION. Signature durations only. --------------------------------- */
+  --ds-dur-fast:.18s;
+  --ds-dur:.32s;
+  --ds-ease:cubic-bezier(.4,0,.2,1);
+  --ds-ease-out:cubic-bezier(.16,1,.3,1);
+
+  /* --- MATERIAL: grain veil plus two soft washes (WOW spec 3 and 5) ------- */
+  --ds-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  --ds-glow-wash:radial-gradient(72% 62% at 14% 0%,rgba(79,103,84,.11),transparent 70%);
+  --ds-glow-warm:radial-gradient(52% 52% at 94% 6%,rgba(198,158,76,.14),transparent 72%);
+
+  /* --- SIGNATURE GEOMETRY: the circle up arc seam and the medallion ring -- */
+  --ed-arc-h:104px;
+  --ed-arc-w:180%;
+  --ed-arc-rise:360px;
+  --ed-ring-gap:8px;
+  --ed-ring-w:1px;
+}
+
+/* ============================================================================
+   DARK SURFACE. Punctuation only, one band per page at most, and only when a
+   band earns it. The measured brand is light dominant at dark ratio 0, so this
+   block exists to keep a stray dark section HONEST (it flips the same tokens
+   rather than inheriting the light values), not to invite a dark hero.
+   On navy the roles rotate: gold becomes the legible accent at 4.7:1, and the
+   green steps back to a ground tint.
+   ============================================================================ */
+.surface-dark{
+  --ds-ink:#F5F2EB;
+  --ds-ink-soft:rgba(245,242,235,.74);
+  --ds-ink-heading:#FFFFFF;
+  --ds-ink-on-dark:#F5F2EB;
+
+  --ds-bg-surface:#243A52;
+  --ds-bg-surface-2:#1B2C3E;
+  --ds-bg-warm:#25384C;
+
+  --ds-primary:#F5F2EB;
+  --ds-primary-deep:#FFFFFF;
+  --ds-primary-soft:rgba(245,242,235,.12);
+
+  --ds-accent:#C69E4C;
+  --ds-accent-deep:#D8B463;
+  --ds-accent-soft:rgba(198,158,76,.16);
+  --ds-accent-2:#D8B463;
+  --ds-accent-ink:#F0DDB4;
+
+  --ds-signature:#C69E4C;
+  --ds-signature-soft:rgba(198,158,76,.20);
+
+  --ds-line:rgba(245,242,235,.16);
+  --ds-line-cool:rgba(245,242,235,.12);
+  --ds-line-hair:rgba(245,242,235,.10);
+  --ds-scrim:rgba(11,18,26,.55);
+
+  --ds-shadow-rest:0 1px 2px rgba(6,12,20,.36);
+  --ds-shadow-card:0 1px 3px rgba(6,12,20,.42),0 14px 34px rgba(6,12,20,.34);
+  --ds-shadow-lift:0 2px 5px rgba(6,12,20,.46),0 26px 56px rgba(6,12,20,.42);
+  --ds-inset-hi:inset 0 1px 0 rgba(255,255,255,.10);
+}
